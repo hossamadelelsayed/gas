@@ -1,0 +1,39 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title  style="font-family: cairo" >
+      <ion-row>
+        <ion-col text-center col-3>
+       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+       </ion-col>
+       <ion-col class="titlename" col-6>
+       اضف تقييمك
+       </ion-col >
+       <ion-col text-center col-3>
+ <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
+ </ion-col></ion-row>
+    </ion-title>
+  </ion-navbar>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list >
+ <img class="logo" src="assets/imgs/agent_pin.png">
+ <h5 class="name">اسم الموزع</h5>
+ <ion-row class="r">
+   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+   <ion-icon style="font-size:3rem; color:gray;" ios="ios-star" md="ios-star-outline"></ion-icon>
+ </ion-row>
+   
+    <textarea class="add" placeholder=" اضف تعليقك" ></textarea>
+       
+  <button class="btn" ion-button round >اضف تقييمك</button>
+  </ion-list>
+</ion-content>

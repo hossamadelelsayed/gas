@@ -1,0 +1,52 @@
+page-payway {
+    .content{
+        background-color: aliceblue;
+    }
+    .titlename{
+        font-family: cairo;
+        text-align: center;
+        color: gray;
+    }
+.lab{
+    font-family: cairo;
+        padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -26px;
+    }
+.chpayway{
+    font-weight: 600;
+    font-family: cairo;
+    color: gray;
+    
+}
+.addpay{
+    margin-left: -28px;
+        margin-right: -28px;
+    color: gray;
+    font-size: 2rem;
+}
+.plusicon{
+    font-size: 30px;
+       margin-right: 6px;
+    margin-left: 6px;
+}
+    [dir="ltr"] .plusicon{
+    font-size: 30px;
+     padding: 0 0px 0 10px;
+}
+.tr{
+       margin-top: 20px;
+    height: 27px;
+}
+.col{
+    padding: 0;
+}
+
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+}

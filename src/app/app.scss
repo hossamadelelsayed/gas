@@ -1,4 +1,72 @@
-// http://ionicframework.com/docs/theming/
+// http://ionicframework.com/docs/v2/theming/
+
+.menu{
+    text-align: center;
+    font-family: cairo;
+    color: gray;
+    font-size: 1.7rem;
+    
+}
+.header-md::after{
+    background-image: none !important;
+
+}
+.logo{
+        display: block;
+    margin: 0 auto;
+    height: 22%;
+}
+.toolbar-background-md {background-color: white;
+}
+.toolbar-ios { 
+    min-height: 60px;
+}
+.toolbar-ios ion-title{
+padding: 24px 4px 11px 4px;}
+.picker-md .picker-wrapper {
+    height: 260px;
+    border-top: 0.55px solid #dedede;
+    background: #fff;
+    border-radius: 30px 30px 0px 0px;
+}
+.picker-ios .picker-wrapper {
+    height: 260px;
+    border-top: 0.55px solid #dedede;
+    background: #fff;
+    border-radius: 30px 30px 0px 0px;
+}
+.btchange{
+    background-color: #FF530D;
+    float: right;
+    font-family: cairo;
+ 
+}
+[dir="rtl"] .btchange{
+ background-color: #FF530D;
+    float: left;
+    font-family: cairo;
+}
+.plus{
+    background-color: #FF530D;
+     width: 37px;
+     height: 37px;
+         float: right;
+}
+[dir="rtl"] .plus{
+    background-color: #FF530D;
+     width: 37px;
+     height: 37px;
+     float: left;
+}
+.arrow{
+        font-size: 2rem;
+    color: orangered;
+}
+[dir="ltr"] .arrow{
+        font-size: 2rem;
+    color: orangered;
+        transform: rotate(180deg);
+}
 
 
 // App Global Sass

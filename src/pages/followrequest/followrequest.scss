@@ -1,0 +1,48 @@
+page-followrequest {
+.back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+.content{
+  background: url("../assets/imgs/map.png");
+
+}
+.titlename{
+    text-align: center;
+    font-family: cairo;
+    color: gray;
+}
+.im{
+  height: 37px;
+}
+h5{
+    font-family: cairo;
+    color: gray;
+}
+p{
+    font-family: cairo;
+    color: gray;
+}
+.ro{
+      background-color: white;
+    border-radius: 91px;
+   
+    margin-left: 10px;
+    margin-right: 10px;
+}
+  .ro2{
+    background-color: white;
+    border-radius: 90px;
+   
+        margin-bottom: 10px;
+  }
+      .footer-md::before{
+        background-image: none;
+    }
+}

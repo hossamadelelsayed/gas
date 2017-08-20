@@ -1,0 +1,27 @@
+page-settings {
+.content{
+    background-color: aliceblue;
+}
+.titlename{
+    color: gray;
+    text-align: center;
+}
+.row{
+    height: 50px;
+    font-family: cairo;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: gray;
+}
+
+.back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+}

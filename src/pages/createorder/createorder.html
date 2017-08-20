@@ -1,0 +1,67 @@
+
+<ion-header>
+  <ion-navbar>
+   <ion-title  style="font-family: cairo" >
+      <ion-row>
+        <ion-col text-center col-3>
+       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+       </ion-col>
+       <ion-col class="titlename" col-6>
+       طلب جديد
+       </ion-col>
+       <ion-col text-center col-3>
+ <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
+ </ion-col></ion-row>
+    </ion-title>
+  </ion-navbar>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+<ion-content padding>
+<ion-grid>
+<ion-list no-lines>
+<h4>عدد الانابيب</h4>
+<ion-row>
+  <ion-col col-4 >
+  <button class="plus" ion-button round icon-only>
+<ion-icon  name="ios-add"></ion-icon></button></ion-col>
+ <ion-col col-4> <p class="no">3</p></ion-col>
+<ion-col col-4><button class="minus" ion-button round icon-only>
+  <ion-icon  name="remove"></ion-icon></button>
+  </ion-col>
+</ion-row>
+  <hr>
+<ion-row>
+<ion-col><h4 >تاكيد مكانك</h4></ion-col>
+<ion-col><button class="btchange" ion-button round>تغيير</button></ion-col>
+    </ion-row><ion-row> <h4 style="color: gray;">شارع الملك سليمان حي العرب</h4></ion-row> 
+  <hr>
+  <ion-row>
+    <form radio-group style="font-size: 2.2rem; color: gray;" action="">
+      
+       <h4 style="color: black">اختيار طريقة الدفع</h4>
+
+   <ion-label class="lab"><span> دفع نقدي </span></ion-label>
+  <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
+  <br>
+   <ion-label class="lab2" >Visa 455656*****</ion-label>
+  <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
+  <br>
+  <button class="addpay" ion-button clear> <ion-icon class="plusicon" name="ios-add"></ion-icon>
+  <span (click)="gotoaddcard()"> اضف طريقة دفع </span></button>
+</form>
+  </ion-row> <hr>
+
+<ion-item  class="check">
+  <ion-label>تحديد الميعاد شهريا بنفس التاريخ</ion-label>
+  <ion-checkbox color="orangee" checked="fales"></ion-checkbox>
+</ion-item>
+  <hr>
+  <div class="d">
+    <button class="reqnow" ion-button round (click)="gotohistory()" >اطلب الان</button>
+    <button class="reqlater" ion-button round (click)="gotoorderlater()">اطلب لاحقا</button>
+  </div>
+  </ion-list>
+</ion-grid>
+</ion-content>

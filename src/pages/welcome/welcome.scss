@@ -1,0 +1,48 @@
+page-welcome {
+
+.header-md::after{
+    background-image: none !important;
+
+}
+.header-ios{
+   display: none;
+
+}
+
+span{
+    font-family: cairo;
+}
+.content{
+    background: url("../assets/imgs/welcome_bg.png");
+    background-size: 40%;
+    background-position-x: 100%;
+    background-repeat: no-repeat;
+    background-position-y: 63%;
+    background-color: white;
+}
+    .logo{
+        display: block;
+    height: 27%;
+  
+    margin: 0 auto;
+    margin-top: 18%;
+    }
+.reqnow{
+    background-color: #FF530D;
+    height: 59px;
+    width: 40%;
+    font-size: 2rem;
+}
+.reqlater{
+        background-color: black;
+    height: 59px;
+    width: 40%;
+    font-size: 2rem;
+}
+.d{
+    text-align: center;
+    margin-top: 61%;}
+    .footer-md::before{
+        background-image: none;
+    }
+}

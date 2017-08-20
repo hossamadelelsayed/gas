@@ -1,0 +1,98 @@
+page-createorder {
+    .content{
+        background-color:aliceblue;
+    }
+    .titlename{
+        text-align: center;
+        color: gray;
+            font-family: cairo;
+    }
+  .back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+.addpay{
+    margin-left: -28px;
+        margin-right: -28px;
+    color: gray;
+    font-size: 2rem;
+}
+.plusicon{
+    font-size: 30px;
+       margin-right: 6px;
+    margin-left: 6px;
+}
+    [dir="ltr"] .plusicon{
+    font-size: 30px;
+     padding: 0 0px 0 10px;
+}
+.no{
+    text-align: center;
+    border: 1px solid;
+    border-color: gray;
+    border-radius: 36px;
+        height: 30px;
+    margin-top: 6px;
+    padding-top: 5px;
+    color: #FF530D;
+        font-size: 1.7rem;
+}
+.d{
+   text-align: center;
+
+}
+
+.minus{
+    background-color: #FF530D;
+     width: 37px;
+     height: 37px;
+}
+.reqnow{
+    background-color: #FF530D;
+    height: 59px;
+    width: 40%;
+    font-size: 2rem;
+    font-family: cairo;
+}
+.reqlater{
+        background-color: black;
+    height: 59px;
+    width: 40%;
+    font-size: 2rem;
+       font-family: cairo;
+}
+ 
+    h4{
+        font-family: cairo;
+            font-size: 1.8rem;
+    }
+    span{
+        font-family: cairo;
+            font-size: 1.8rem;
+    }
+    .check{
+     background-color:aliceblue;
+    margin-right: -33px;
+    color: gray;
+    font-family: cairo;
+   
+    }
+    .lab{
+            padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -26px;
+    }
+    .lab2{
+            padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -26px;
+        direction: ltr;
+    }
+   
+} 

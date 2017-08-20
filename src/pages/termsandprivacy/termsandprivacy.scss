@@ -1,0 +1,20 @@
+page-termsandprivacy {
+  .titlename{
+        font-family: cairo;
+        color: gray;
+        text-align: center;
+    }
+.content{
+    background-color: aliceblue;
+}
+.back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+}

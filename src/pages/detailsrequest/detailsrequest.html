@@ -1,0 +1,36 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title class="titlename">تفاصيل الطلب</ion-title>
+  </ion-navbar>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-row>
+<img src="assets/imgs/agent_pin.png">
+
+<div class="dstar">
+  <h5 style="font-family: cairo; color: gray">اسم الموزع</h5>
+ <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+<ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+<ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+<ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
+<ion-icon style="font-size: 25px;color: gray" ios="ios-star" md="md-star-outline"></ion-icon>
+</div>
+ </ion-row>
+  <hr>
+<ion-row><h6>رقم الطلب</h6><p >5758856</p></ion-row> <hr>
+<ion-row><h6>حالة الطلب</h6><p >قيد الانتظار</p></ion-row><hr>
+ <ion-row><h6>عدد الانابيب</h6><p >3</p></ion-row><hr>
+<ion-row><h6>موعد الطلب</h6><p>الان</p></ion-row><hr>
+<ion-row><h6> موقعك</h6><p style="color:gray">شارع الملك سليمان حي العرب</p></ion-row><hr>
+<ion-row (click)="gotoflloerequest()"><h6> طريقة الدفع</h6><p style="color:gray" >دفع نقدى</p></ion-row>
+<div class="d">
+<button class="reqnow" ion-button round > تعديل الطلب</button>
+<button class="reqlater" ion-button round> الغاء الطلب</button>
+</div>
+</ion-list>
+</ion-content>

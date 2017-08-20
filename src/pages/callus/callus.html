@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title  style="font-family: cairo" >
+      <ion-row>
+        <ion-col text-center col-3>
+       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+       </ion-col>
+       <ion-col class="titlename"  col-6>
+       اتصل بنا
+       </ion-col>
+       <ion-col text-center col-3>
+ <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
+ </ion-col></ion-row>
+    </ion-title>
+  </ion-navbar>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item class="other">
+    <ion-input   type="text" placeholder="اخر النوع" >
+    </ion-input>
+       </ion-item>
+
+    <textarea class="in"  placeholder=" اضف رائيك " ></textarea>
+      
+  <button ion-button round class="btn">ارسل</button>
+  </ion-list>
+</ion-content>

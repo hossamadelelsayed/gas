@@ -1,1 +1,27 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="nav">
+<ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+  <ion-content>
+    <img class="logo" src="assets/imgs/agent_pin.png">
+    <ion-list no-lines>
+      <button ion-item class="menu" (click)="onLoad(historyPage)">طلباتي
+      </button>
+      <button ion-item class="menu" (click)="onLoad(profilePage)">ملفي الشخصي
+      </button>
+      <button ion-item class="menu" (click)="onLoad(notificationsPage)"> الاشعارات
+      </button>
+      <button ion-item class="menu" (click)="onLoad(settingsPage)"> الاعدادات
+      </button>
+      <button ion-item class="menu" (click)="onLoad(callusPage)">اتصل بنا
+      </button>
+      <button ion-item class="menu" (click)="onLoad(aboutaprogramPage)">عن البرنامج
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+
+<ion-nav [root]="welcomePage "#nav></ion-nav>

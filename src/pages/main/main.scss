@@ -1,0 +1,47 @@
+page-main {
+.back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color:orangered;
+}
+.content{
+  background: url("../assets/imgs/map.png");
+
+}
+.titlename{
+    text-align: center;
+    color: gray;
+        font-family: cairo;
+}
+
+.reqnow{
+    background-color: #FF530D;
+    height: 59px;
+    width: 40%;
+    font-size: 2rem;
+    font-family: cairo;
+}
+.reqlater{
+        background-color: black;
+    height: 59px;
+    width: 40%;
+    font-size: 2rem;
+       font-family: cairo;
+}
+
+.footer-md::before{
+        background-image: none;
+    }
+    .toolbar-ios {
+        padding: 17px 4px 20px 4px;
+    }
+    .buttons{
+       text-align: center;
+    }
+    
+}

@@ -1,0 +1,102 @@
+page-orderlater {
+    .content{
+        background-color:aliceblue;
+    }
+  .back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+.titlename{
+    color: gray;
+    text-align: center;
+    font-family: cairo;
+}
+.addpay{
+    margin-left: -28px;
+        margin-right: -28px;
+    color: gray;
+    font-size: 2rem;
+}
+
+.plusicon{
+    font-size: 30px;
+       margin-right: 6px;
+    margin-left: 6px;
+}
+    [dir="ltr"].plusicon{
+    font-size: 30px;
+     padding: 0 0px 0 10px;
+}
+.no{
+    text-align: center;
+    border: 1px solid;
+    border-color: gray;
+    border-radius: 36px;
+        height: 30px;
+    margin-top: 6px;
+    padding-top: 5px;
+    color: #FF530D;
+        font-size: 1.7rem;
+}
+.d{
+       
+      margin: auto;
+    display: block;
+
+}
+.plus{
+    background-color: #FF530D;
+     width: 37px;
+     height: 37px;
+         float: left;
+}
+[dir="rtl"].plus{
+    background-color: #FF530D;
+     width: 37px;
+     height: 37px;
+     float: right;
+}
+.minus{
+    background-color: #FF530D;
+     width: 37px;
+     height: 37px;
+}
+
+.reqlater{
+        background-color: black;
+    height: 59px;
+    width: 40%;
+    font-size: 2rem;
+       font-family: cairo;
+       margin: auto;
+    display: block;
+}
+ 
+    h4{
+        font-family: cairo;
+            font-size: 1.8rem;
+    }
+    span{
+        font-family: cairo;
+            font-size: 1.8rem;
+    }
+    .check{
+     background-color:aliceblue;
+    margin-right: -33px;
+    color: gray;
+    font-family: cairo;
+   
+    }
+    .lab{
+            padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -26px;
+    }
+   
+}

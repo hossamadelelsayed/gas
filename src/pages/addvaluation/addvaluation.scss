@@ -1,0 +1,62 @@
+page-addvaluation {
+.content{
+    background-color: aliceblue;
+}
+.titlename{
+    color: gray;
+    font-family: cairo;
+    text-align: center;
+}
+.logo{
+    margin: 0 auto;
+    display: block;
+    height: 110px;
+}
+.name{
+    text-align: center;
+    color: gray;
+    font-size: 2rem;
+    font-family: cairo;
+}
+.r{
+        text-align: center;
+    margin: 0 auto;
+    display: block;
+        margin-top: 30px;
+    margin-bottom: 30px;
+}
+.stars{
+    font-size: 3rem;
+    color: orangered;
+}
+.add{
+       border-radius: 20px;
+  
+    
+    display: block;
+    margin: 0 auto;
+    height: 150px;
+background-color: #F2F2F2;
+    width: 92%;
+    font-family: cairo;
+      border: aliceblue
+}
+.btn{
+    display: block;
+    margin: 0 auto;
+    background-color: orangered;
+    font-size: 1.7rem;
+    font-family: cairo;
+    margin-top: 100px;
+}
+.back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color:orangered;
+}
+}

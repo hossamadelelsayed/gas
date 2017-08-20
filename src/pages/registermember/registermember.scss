@@ -1,0 +1,53 @@
+page-registermember {
+.header-md::after{
+    background-image: none !important;
+
+}
+img{
+           display: block;
+    margin: 0 auto;
+    height: 115px;
+
+}
+p{
+    text-align: center;
+        color: #403a3a;
+    font-family: -webkit-pictograph;
+}
+.icon{
+        color:#FF530D;
+    margin-top: 14px;
+    font-size: 2.2rem;
+}
+.li{
+    padding-top: 69px;
+}
+.enter{
+    background-color: #FF530D;
+    font-size: 1.8rem;
+    height: 47px;
+}
+.fpass{
+    font-size: 1.7rem;
+    color: gray;
+    width: 43%;
+    margin-right: 29%;
+}
+.reg{
+    color: #FF530D;
+}
+.new{
+    margin: 0 auto;
+    display: block;
+    }
+   .back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+    }

@@ -1,0 +1,88 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title  style="font-family: cairo" >
+      <ion-row>
+        <ion-col text-center col-3>
+       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+       </ion-col>
+       <ion-col class="titlename" col-6>
+       الاعدادات
+       </ion-col>
+       <ion-col text-center col-3>
+ <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
+ </ion-col></ion-row>
+    </ion-title>
+  </ion-navbar>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+
+
+<ion-content padding>
+
+<ion-list >
+  <ion-row (click)="gotonotifications()">
+    <ion-col col-1>
+      <img src="assets/imgs/profile_edit_profile.png">
+    </ion-col>
+    <ion-col col-10>
+      الاشعارات
+    </ion-col>
+    <ion-col col-1>
+     <ion-icon class="arrow" name="arrow-back"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <hr>
+  <ion-row (click)="chlang()">
+    <ion-col col-1>
+      <img src="assets/imgs/profile_edit_profile.png">
+    </ion-col>
+    <ion-col col-10>
+      اللغة
+    </ion-col>
+    <ion-col col-1>
+      <ion-icon class="arrow" name="arrow-back"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <hr>
+  <ion-row (click)="gototermsandprivacy()">
+    <ion-col col-1>
+      <img src="assets/imgs/profile_payment.png">
+    </ion-col >
+    <ion-col col-10>
+      الشروط و الخصوصية
+    </ion-col>
+    <ion-col col-1>
+     <ion-icon class="arrow" name="arrow-back"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <hr>
+  <ion-row (click)="gotoaboutprogram()">
+    <ion-col col-1>
+      <img src="assets/imgs/profile_location.png">
+    </ion-col>
+    <ion-col col-10>
+      عن البرنامج
+    </ion-col>
+    <ion-col col-1>
+      <ion-icon class="arrow" name="arrow-back"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <hr>
+  <ion-row (click)="gotocallus()">
+    <ion-col col-1>
+      <img src="assets/imgs/profile_logout.png">
+    </ion-col>
+    <ion-col col-10>
+      اتصل بنا
+    </ion-col>
+    <ion-col col-1>
+      <ion-icon class="arrow" name="arrow-back"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <hr>
+</ion-list>
+
+</ion-content>

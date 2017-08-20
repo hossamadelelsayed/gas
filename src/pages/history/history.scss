@@ -1,0 +1,125 @@
+page-history {
+   
+ .content{
+        background-color:aliceblue;
+    }
+  .titlename{
+      color: gray;
+      font-family: cairo;
+      text-align: center;
+  }
+
+  
+.logo{
+     width: 20%;
+    margin-top: -12%;
+    margin-right: -3%;
+}
+.head{
+        
+    margin-right: 89px;
+
+}
+
+.mo{
+   text-align: center;
+    margin-top: -32px;
+    font-family: cairo;
+}
+
+.time{
+    color: gray;
+    margin-top: 22px;
+    direction: ltr;
+    margin-left: 144px;
+    float: right;
+}
+.card{
+    border-radius: 10px;
+    width: 100%;
+    margin-right: 0px;
+}
+
+.reqno{
+     text-align: center;
+     font-family: cairo;
+       direction: ltr;
+    
+
+}
+.row{
+       background-color: white;
+    border-radius: 12px;
+    margin-top: -7px;
+}
+.linder{
+     width: 8%;
+    height: 0%;
+    margin: auto;
+    display: block;
+}
+.payment{
+    width: 10%;
+    height: 0%;
+   margin: auto;
+    display: block; 
+   
+}
+.pending{
+   width: 8%;
+    height: 0%;
+margin: auto;
+    display: block;
+}
+.pra{
+    margin-right: 2%;
+    margin-top: 2%;
+    font-family: cairo;
+}
+.segment-md .segment-button.activated{
+    border-color: orangered;
+    color: gray;
+    font-size: 1.8rem;
+}
+.toolbar-ios .segment-button {
+    max-width: none;
+    height: 2.6rem;
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+  
+}
+.segment-ios .segment-button.activated{
+    border-color: orangered;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    background-color: none;
+    font-size: 1.8rem;
+    color: gray;
+    margin-top: 30px;
+}
+.segment-ios .segment-button{
+    border-color: white;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    background-color: white;
+    font-size: 1.8rem;
+    color: gray;
+    margin-top: 30px;
+}
+.toolbar-title-ios{
+        padding-top: 24px;
+}
+ .back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+
+}

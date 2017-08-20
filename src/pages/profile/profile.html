@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title  style="font-family: cairo" >
+      <ion-row>
+        <ion-col text-center  col-3>
+       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+       </ion-col>
+       <ion-col class="titlename" col-6>
+       الملف الشخصي
+       </ion-col>
+       <ion-col text-center  col-3>
+ <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
+ </ion-col></ion-row>
+    </ion-title>
+  </ion-navbar>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+<ion-content padding>
+  <img class="imgd" src="assets/imgs/agent_pin.png">
+  <h4>اسم العميل</h4>
+<ion-list >
+
+  <ion-row >
+    <ion-col col-1><img src="assets/imgs/profile_edit_profile.png"></ion-col>
+    <ion-col col-10> <h5>تعديل الملف الشخصي</h5></ion-col>
+
+       <ion-col col-1>
+            <ion-icon class="arrow" name="arrow-back"></ion-icon>
+
+        </ion-col>
+  </ion-row>
+      <hr>
+       <ion-row (click)="gopayway()">
+    <ion-col col-1><img src="assets/imgs/profile_payment.png"></ion-col>
+    <ion-col col-10> <h5>طرق الدفع</h5></ion-col>
+       <ion-col col-1>     <ion-icon class="arrow" name="arrow-back"></ion-icon>
+</ion-col>
+  </ion-row>
+      <hr>
+       <ion-row (click)="addaddresses()">
+    <ion-col col-1><img src="assets/imgs/profile_location.png"></ion-col>
+    <ion-col col-10> <h5>اضف اماكن الاستلام</h5></ion-col>
+       <ion-col col-1>     <ion-icon class="arrow" name="arrow-back"></ion-icon>
+</ion-col>
+  </ion-row>
+      <hr>
+       <ion-row>
+    <ion-col col-1><img src="assets/imgs/profile_logout.png"></ion-col>
+    <ion-col col-10> <h5>الخروج من البرنامج</h5></ion-col>
+       <ion-col col-1>     <ion-icon class="arrow" name="arrow-back"></ion-icon>
+</ion-col>
+  </ion-row>
+     <hr>
+</ion-list>
+</ion-content>

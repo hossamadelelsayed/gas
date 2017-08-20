@@ -1,0 +1,31 @@
+page-notifications {
+.content{
+    background-color: aliceblue;
+}
+.titlename{
+    color: gray;
+    text-align: center;
+}
+.h{
+    font-family: cairo;
+    font-size: 1.7rem;
+    color: gray;
+    font-weight: bold;
+}
+.h2{
+    font-family: cairo;
+        color: orangered;
+    font-weight: 500;
+    font-size: 1.7rem;
+}
+.back-button-md.show-back-button {
+    display: none;
+}
+.back-button-text-ios {
+ 
+    display: none;
+}
+.back-button-ios.show-back-button{
+    color: orangered;
+}
+}

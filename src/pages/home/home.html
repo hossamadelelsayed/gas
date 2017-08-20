@@ -1,14 +1,43 @@
+<!DOCTYPE html>
 <ion-header>
+  <meta charset="utf-8">
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
+    <ion-title style="background-color: white">
+     <button ion-button clear style="color: gray;" (click)="gotocreateorder()" >تخطى</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding >
+   <img src="assets/imgs/login_logo.png"> 
+ <form #f="ngForm" >
+   <ion-list no-lines class="li" >
+   <ion-row>
+     <ion-col col-1>
+  <ion-icon class="icon" ios="ios-mail" md="ios-mail-outline"></ion-icon>
+     </ion-col>
+     <ion-col col-11>
+       <ion-item>
+    <ion-input   type="email" placeholder="البريد الالكتروني" ></ion-input>
+       </ion-item>
+     </ion-col> 
+   </ion-row>
+   <ion-row>
+     <ion-col col-1>
+     <ion-icon class="icon" ios="ios-lock" md="ios-lock-outline"></ion-icon>
+     </ion-col>
+     <ion-col col-11>
+       <ion-item>
+    <ion-input type="password" placeholder="كلمة المرور" ></ion-input>
+       </ion-item>
+     </ion-col>  
+   </ion-row> 
+    <button class="enter" ion-button block round (click)="gotocreateorder()" >تسجيل دخول</button>
+    <button class="fpass" ion-button  clear (click)="gotoforgotpassword()">نسيت كلمة المرور ؟</button>
+    <div class="new">
+    <p>ليس لديك حساب ؟<span
+     class="reg" (click)="gotoreg()" >سجل الان</span></p>
+    </div>
+    </ion-list>
+ </form>
 </ion-content>

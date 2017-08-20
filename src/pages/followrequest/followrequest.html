@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title  style="font-family: cairo" >
+      <ion-row>
+        <ion-col text-center col-3>
+       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+       </ion-col>
+       <ion-col class="titlename" col-6>
+       تتبع الطلب
+       </ion-col>
+       <ion-col text-center col-3>
+ <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
+ </ion-col></ion-row>
+    </ion-title>
+  </ion-navbar>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+<ion-content padding>
+ <ion-list>
+  
+   <ion-footer>
+      <ion-row class="ro2">
+     <ion-col col-4>
+     <img style="height: 92px;" src="assets/imgs/agent_pin.png">
+     </ion-col>
+    <ion-col style="margin-top: 25px;" col-8>
+     <h5>اسم الموزع</h5>
+     <P>3 km</P>
+    </ion-col>   </ion-row>
+<ion-row  class="ro">
+  <ion-col >
+   <button ion-button clear><img class="im" src="assets/imgs/call.png"></button>
+  </ion-col>
+    <ion-col >
+     <button ion-button clear><img class="im" src="assets/imgs/message.png"></button>
+    </ion-col>
+    <ion-col>
+       <button ion-button clear (click)="gotoaddvaluation()"><img class="im" src="assets/imgs/whatsapp.png"></button> 
+    </ion-col>
+</ion-row>
+   </ion-footer>
+ </ion-list>
+</ion-content>

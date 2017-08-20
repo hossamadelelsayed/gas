@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title style="text-align: center; font-family: cairo" > <ion-icon style="float: left" ios="ios-list" md="ios-list"></ion-icon>
+      غاز السعودية
+ <ion-icon style="float: right" ios="ios-search" md="md-search"></ion-icon>
+    </ion-title>
+  </ion-navbar>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+</style>
+</ion-header>
+<ion-content padding>
+   <ion-footer>
+     <img class="m" src="assets/imgs/agent_pin.png">
+      <ion-row class="ro2">  
+       <ion-col class="km">km 3</ion-col>
+<ion-col text-center >
+     <h6 style="margin-top: 42px; color:gray;">اسم الموزع</h6><br>
+     <div style="margin-top: -18px;
+    font-size: 1.8rem;">
+        <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star"></ion-icon>
+     </div>
+</ion-col>   
+   </ion-row>
+<ion-row  class="ro">
+  <ion-col >
+   <button ion-button clear><img class="im" src="assets/imgs/call.png"></button>
+  </ion-col>
+    <ion-col >
+     <button ion-button clear><img class="im" src="assets/imgs/message.png"></button>
+    </ion-col>
+    <ion-col>
+       <button ion-button clear (click)="gotoaddvaluation()"><img class="im" src="assets/imgs/whatsapp.png"></button> 
+    </ion-col>
+      <ion-col>
+        <button class="btn" ion-button round>اطلبة</button>
+      </ion-col>
+</ion-row>
+   </ion-footer>
+</ion-content>
