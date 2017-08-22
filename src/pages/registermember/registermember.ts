@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import{MainPage} from "../main/main";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import firebase from 'firebase';
 
 /**
  * Generated class for the RegistermemberPage page.
@@ -19,16 +20,18 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 export class RegistermemberPage {
 
   constructor(private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
-// this.authService.register("heshamsalama1212901022@gmail.com","123456")
-// .catch(error =>{
-//   console.log("errrr",error);
-//
-// });
-this.authService.doLogin("heshamsalama1212901022@gmail.com","123456").then(user=>{
-  console.log("user",user);
-  console.log("user",user.o);
+     // this.authService.doLogin("heshamsalama1212901022@gmail.com","123456").catch(error =>{
+    //   console.log("login error",error);
+    // });
 
+//registeration
+this.authService.AnonymousSignIn();
+this.authService.register("heshamsalama1212901022@gmail.com","123456","hesham","0100")
+.catch(error =>{
+  console.log("registeration error",error);
 });
+// this.authService.userTransfere("heshamsalama1212901022@gmail.com","123456");
+
   }
 
   ionViewDidLoad() {

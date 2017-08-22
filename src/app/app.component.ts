@@ -6,7 +6,7 @@ import { WelcomePage } from './../pages/welcome/welcome';
 import { ProfilePage } from './../pages/profile/profile';
 
 import { Component,ViewChild } from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Platform,Events} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {TranslateService} from "@ngx-translate/core";
@@ -28,7 +28,7 @@ export class MyApp {
   notificationsPage=NotificationsPage;
   aboutaprogramPage=AboutaprogramPage
   @ViewChild('nav') nav:NavController;
-  constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public translate : TranslateService ,
+  constructor(events :Events,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public translate : TranslateService ,
   private menuCtrl:MenuController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -44,5 +44,3 @@ this.nav.push(page);
 this.menuCtrl.close();
   }
 }
-
-

@@ -46,6 +46,7 @@ import { ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import * as firebase from "firebase";
 import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebase-database';
+import { Events } from 'ionic-angular';
 
 const firebaseConfig = {
 
@@ -132,7 +133,7 @@ firebase.initializeApp(firebaseConfig);
     SplashScreen,
 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider,
+    AuthServiceProvider,Events,
     FirebaseDatabaseProvider  ]
 })
 export class AppModule {}
