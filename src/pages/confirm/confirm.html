@@ -9,9 +9,7 @@
   <ion-navbar>
     <ion-title></ion-title>
   </ion-navbar>
-<style>
-@import url('https://fonts.googleapis.com/css?family=Cairo');
-</style>
+
 </ion-header>
 
 
@@ -19,13 +17,13 @@
   <ion-list no-lines>
 <img class="sms" src="assets/imgs/sms.png">
 <div class="par">
-  <p>في انتظار الكشف التلقائى<br>
-رسالة نصية ستصل لرقم هاتفك النقال</p>
+  <p>{{'Waiting for automatic detection'|translate}}<br>
+{{'A text message well be sent to your Phone Number'|translate}}</p>
  
 </div>
 <div dir="ltr">
 <h4 text-center>025 2494 1238 
-<button class="edit" ion-button clear> تعديل</button></h4></div>
+<button class="edit" ion-button clear> {{'Edit'| translate}}</button></h4></div>
   <ion-row>
     <ion-col>
      <ion-item>
@@ -49,10 +47,10 @@
     </ion-col>
   </ion-row>
   <p style=" margin-top: 36px; text-align: center;">2:32 min</p>
-  <button class="btn" ion-button round>استمر</button>
+  <button class="btn" ion-button round>{{'Continue'|translate}}</button>
  
-  <p class="pp">لم تصلك الرسالة</p>
-  <button class="btn2" ion-button clear>ارسلها مجددا</button>
+  <p class="pp">{{'Dont receive the message'|translate}}</p>
+  <button class="btn2" ion-button clear>{{'Send again'|translate}}</button>
  
    </ion-list>
 </ion-content>

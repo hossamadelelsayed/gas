@@ -7,18 +7,12 @@
   <ion-content>
     <img class="logo" src="assets/imgs/agent_pin.png">
     <ion-list no-lines>
-      <button ion-item class="menu" (click)="onLoad(historyPage)">طلباتي
-      </button>
-      <button ion-item class="menu" (click)="onLoad(profilePage)">ملفي الشخصي
-      </button>
-      <button ion-item class="menu" (click)="onLoad(notificationsPage)"> الاشعارات
-      </button>
-      <button ion-item class="menu" (click)="onLoad(settingsPage)"> الاعدادات
-      </button>
-      <button ion-item class="menu" (click)="onLoad(callusPage)">اتصل بنا
-      </button>
-      <button ion-item class="menu" (click)="onLoad(aboutaprogramPage)">عن البرنامج
-      </button>
+      <button ion-item class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
+      <button ion-item class="menu" (click)="onLoad(profilePage)">{{'Profile'|translate}}</button>
+      <button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notification'|translate}}</button>
+      <button ion-item class="menu" (click)="onLoad(settingsPage)">{{'Settings'|translate}}</button>
+      <button ion-item class="menu" (click)="onLoad(callusPage)">{{'Call us'|translate}}</button>
+      <button ion-item class="menu" (click)="onLoad(aboutaprogramPage)">{{'About'|translate}}</button>
     </ion-list>
   </ion-content>
 </ion-menu>
