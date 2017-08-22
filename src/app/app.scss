@@ -35,6 +35,7 @@ padding: 24px 4px 11px 4px;}
     background: #fff;
     border-radius: 30px 30px 0px 0px;
 }
+
 .btchange{
     background-color: #FF530D;
     float: right;
@@ -57,6 +58,30 @@ padding: 24px 4px 11px 4px;}
      width: 37px;
      height: 37px;
      float: left;
+}
+@font-face {
+  font-family: 'Cairo-Regular';
+  src: url('../assets/fonts/ar/Cairo-Regular.ttf') ;
+  font-weight: normal;
+  font-style: normal;
+  
+}
+[dir="rtl"] :not(ion-icon) {
+  font-family: 'Cairo-Regular' !important;
+}
+[dir="ltr"] :not(ion-icon) {
+  font-family: 'Lora-Regular' !important;
+  text-transform: none;
+}
+[dir="rtl"] .has-title-only .tab-button-text {
+  
+  white-space: normal;
+  font-family: 'Cairo-Regular' !important;
+}
+[dir="ltr"] .has-title-only .tab-button-text {
+  
+  white-space: normal;
+  font-family: 'Lora-Regular' !important;
 }
 .arrow{
         font-size: 2rem;

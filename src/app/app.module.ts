@@ -21,6 +21,10 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {Http, HttpModule} from "@angular/http";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {CreateorderPage} from"../pages/createorder/createorder";
@@ -28,6 +32,9 @@ import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {HistoryPage} from "../pages/history/history";
 import{TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
 import{OrderlaterPage} from "../pages/orderlater/orderlater";
+export function createTranslateLoader(http: Http) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [
     MyApp,
@@ -57,7 +64,15 @@ import{OrderlaterPage} from "../pages/orderlater/orderlater";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    HttpModule,
+    IonicModule.forRoot(MyApp),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [Http]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

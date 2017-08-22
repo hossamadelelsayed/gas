@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <ion-navbar>
     <ion-title style="background-color: white">
-     <button ion-button clear style="color: gray;"  (click)="gotocreateorder()">تخطى</button>
+     <button ion-button clear style="color: gray;"  (click)="gotocreateorder()">{{'Skip'| translate}}</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -18,7 +18,17 @@
      </ion-col>
      <ion-col col-11>
        <ion-item>
-    <ion-input   type="email" placeholder="الاسم بالكامل" ></ion-input>
+    <ion-input   type="text" placeholder="{{'Full Name'| translate}}" ></ion-input>
+       </ion-item>
+     </ion-col> 
+   </ion-row>
+    <ion-row>
+     <ion-col col-1>
+  <ion-icon class="icon" ios="ios-mail" md="ios-mail-outline"></ion-icon>
+     </ion-col>
+     <ion-col col-11>
+       <ion-item>
+    <ion-input   type="email" placeholder="{{'Email'|translate}}" ></ion-input>
        </ion-item>
      </ion-col> 
    </ion-row>
@@ -28,7 +38,7 @@
      </ion-col>
      <ion-col col-8>
        <ion-item>
-    <ion-input   type="number" placeholder="رقم الهاتف " ></ion-input>
+    <ion-input   type="number" placeholder="{{'Phone Number'| translate}}" ></ion-input>
        </ion-item>
      </ion-col >
       <ion-col col-3>
@@ -43,15 +53,15 @@
      </ion-col>
      <ion-col col-11>
        <ion-item>
-    <ion-input type="password" placeholder="كلمة المرور" ></ion-input>
+    <ion-input type="password" placeholder="{{'Password'| translate}}" ></ion-input>
        </ion-item>
      </ion-col>  
    </ion-row> 
-    <button class="enter" ion-button block round (click)="gotoconfirm()" >تسجيل عضوية</button>
+    <button class="enter" ion-button block round (click)="gotoconfirm()" > {{'Signup'| translate}}</button>
 
     <ion-row class="new">
-    <p> لديك حساب ؟<span
-      class="reg"(click)="gotohome()" > تسجيل دخول </span></p>
+    <p> {{'Already have an Account?'| translate}}<span
+      class="reg"(click)="gotohome()" >{{'Login'| translate}} </span></p>
     </ion-row>
     </ion-list>
  </form>
