@@ -41,13 +41,11 @@ export class AuthServiceProvider {
   //send customer info to database authentication succses
   submitUserInfo(name:any ,phoneNo :any,userId :any,email:any){
     let rootRef = firebase.database().ref("customers/"+userId);
-
-rootRef.child("name").set(name);
- rootRef.child("email").set(email);
- rootRef.child("phoneNo").set(phoneNo);
-
- let nameEmailRef = firebase.database().ref(phoneNo);
-nameEmailRef.child(phoneNo).set(email);
+     rootRef.child("name").set(name);
+     rootRef.child("email").set(email);
+     rootRef.child("phoneNo").set(phoneNo);
+     let nameEmailRef = firebase.database().ref(phoneNo);
+     nameEmailRef.child(phoneNo).set(email);
   }
   //signIn annonimously beforelogin
   AnonymousSignIn(){

@@ -46,10 +46,11 @@ import { ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import * as firebase from "firebase";
 import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebase-database';
+import { CustomerProvider } from '../providers/customer/customer';
+import {CustomerMapPage} from "../pages/customer-map/customer-map";
 
 const firebaseConfig = {
-
-  apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
+      apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
       authDomain: "gasksa-f284a.firebaseapp.com",
       databaseURL: "https://gasksa-f284a.firebaseio.com",
       projectId: "gasksa-f284a",
@@ -81,7 +82,8 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage
+    OrderlaterPage ,
+    CustomerMapPage
 
   ],
   imports: [
@@ -124,8 +126,8 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage
-
+    OrderlaterPage ,
+    CustomerMapPage
   ],
   providers: [
     StatusBar,
@@ -133,6 +135,7 @@ firebase.initializeApp(firebaseConfig);
 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
-    FirebaseDatabaseProvider  ]
+    FirebaseDatabaseProvider,
+    CustomerProvider  ]
 })
 export class AppModule {}
