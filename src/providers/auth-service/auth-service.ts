@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from "firebase";
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Events } from 'ionic-angular';
 // import {NavController} from 'ionic-angular';
 
 /*
@@ -14,12 +15,13 @@ import 'rxjs/add/operator/map';
 export class AuthServiceProvider {
   public fireAuth: any;
   public userData: any;
-  constructor(public http: Http ) {
+  constructor(public http: Http,private events :Events) {
     this.fireAuth = firebase.auth();
      this.userData = firebase.database().ref('customers');
   }
   //login by phone and password
 //friest getting email using phone no
+
   getLogInEmail(phoneNo:any){
 
     let emailRef = firebase.database().ref(phoneNo);
@@ -86,12 +88,28 @@ console.log("user exist");
 
   //login and returns err msg if err occare
   doLogin(email: string, password: string): any {
-    return this.fireAuth.signInWithEmailAndPassword(email, password).catch(err=>
+    return this.fireAuth.signInWithEmailAndPassword(email, password).then(user=>{
+      let userId=user.uid;
+this.getUserInfo(user.uid,"customers");
+    }).catch(err=>
     {
       console.log("log in failed msg",err.message);
     });
   }
 
+  getUserInfo(userId:any ,userType :any){
+let infoRef=firebase.database().ref(userType+"/"+userId);
+let self=this;
+infoRef.once("value")
+  .then(function(snapshot) {
+ self.events.publish('userName', snapshot.val());
+    return snapshot.val();
+
+});
+
+ // self.events. unsubscribe('user');
+
+  }
 //register a user and transfere him from anonymous user to a user using email and passwo
 userTransfere(email :any ,password:any){
   let credential = firebase.auth.EmailAuthProvider.credential(email, password);

@@ -44,10 +44,12 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+
 import * as firebase from "firebase";
 import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebase-database';
 import { Events } from 'ionic-angular';
-
+import { UserInfoProvider } from '../providers/user-info/user-info';
+import { IonicStorageModule } from '@ionic/storage';
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -92,7 +94,7 @@ firebase.initializeApp(firebaseConfig);
     AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
-
+        IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -134,6 +136,7 @@ firebase.initializeApp(firebaseConfig);
 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
-    FirebaseDatabaseProvider  ]
+    FirebaseDatabaseProvider,
+    UserInfoProvider ,IonicStorageModule ]
 })
 export class AppModule {}

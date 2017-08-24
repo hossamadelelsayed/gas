@@ -20,17 +20,7 @@ import firebase from 'firebase';
 export class RegistermemberPage {
 
   constructor(private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
-     // this.authService.doLogin("heshamsalama1212901022@gmail.com","123456").catch(error =>{
-    //   console.log("login error",error);
-    // });
 
-//registeration
-this.authService.AnonymousSignIn();
-this.authService.register("heshamsalama1212901022@gmail.com","123456","hesham","0100")
-.catch(error =>{
-  console.log("registeration error",error);
-});
-// this.authService.userTransfere("heshamsalama1212901022@gmail.com","123456");
 
   }
 
