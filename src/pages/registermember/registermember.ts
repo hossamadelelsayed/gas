@@ -20,41 +20,7 @@ import firebase from 'firebase';
 export class RegistermemberPage {
 
   constructor(private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
-//registeration
-// this.authService.register("heshamsalama1212901022@gmail.com","123456")
-// .catch(error =>{
-//   console.log("errrr",error);
-//
-// });
-//login
-//sign in annonimously
-this.authService.doLogin("heshamsalama1212901022@gmail.com","11111111").then(user=>{
-let email=this.authService. getLogInEmail("0100");
-console.log("email returned using phone",email);
-  // this.authService.submitUserInfo("hesham","0100",user.uid,user.email);
 
-  // let rootRef = firebase.database().ref();
-
-// let adaRef = rootRef.child("users/ada").set("kkkk");
-
-//   console.log("user",user.uid);
-//    rootRef = firebase.database().ref("hello");
-//subscribe to a datasnapshot
-// rootRef.once("value")
-//   .then(function(snapshot) {
-  //   let key = snapshot.key; // null
-  //     console.log("errrr",key);
-  //
-  //   let firstName = snapshot.child("hello2").val(); // "Ada"
-  //   console.log("chiled",firstName);
-  //
-  // });
-});
-// this.authService.resetPassword("heshamsalama1212901022@gmail.com");
-
-//for logout
-
-// this.authService.doLogout();
 
   }
 

@@ -14,7 +14,6 @@ export class CustomerProvider {
 
   constructor(public http: Http,public authService : AuthServiceProvider) {
     console.log('Hello CustomerProvider Provider');
-    this.authService.do
     //this.authService.doLogin("","");
   }
 

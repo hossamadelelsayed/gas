@@ -136,6 +136,8 @@ firebase.initializeApp(firebaseConfig);
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     FirebaseDatabaseProvider,
-    CustomerProvider  ]
+    CustomerProvider  ,
+    AuthServiceProvider,
+    FirebaseDatabaseProvider  ]
 })
 export class AppModule {}
