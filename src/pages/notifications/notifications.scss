@@ -1,6 +1,6 @@
 page-notifications {
 .content{
-    background-color: aliceblue;
+    background-color: $color-background;
 }
 .titlename{
     color: gray;
@@ -14,7 +14,7 @@ page-notifications {
 }
 .h2{
     font-family: cairo;
-        color: orangered;
+        color: $color-primary;
     font-weight: 500;
     font-size: 1.7rem;
 }
@@ -26,6 +26,6 @@ page-notifications {
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
 }

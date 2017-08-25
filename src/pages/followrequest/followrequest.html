@@ -2,13 +2,13 @@
   <ion-navbar>
     <ion-title >
       <ion-row>
-        <ion-col text-center col-3>
-       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+        <ion-col text-center col-1>
+       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-6>
-       تتبع الطلب
+       <ion-col class="titlename" col-10>
+         {{'Track'|translate}}
        </ion-col>
-       <ion-col text-center col-3>
+       <ion-col text-center col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
  </ion-col></ion-row>
     </ion-title>
@@ -24,7 +24,7 @@
      <img style="height: 92px;" src="assets/imgs/agent_pin.png">
      </ion-col>
     <ion-col style="margin-top: 25px;" col-8>
-     <h5>اسم الموزع</h5>
+     <h5> {{'agent name'|translate}}</h5>
      <P>3 km</P>
     </ion-col>   </ion-row>
 <ion-row  class="ro">

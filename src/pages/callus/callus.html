@@ -2,13 +2,13 @@
   <ion-navbar>
     <ion-title >
       <ion-row>
-        <ion-col text-center col-3>
-       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+        <ion-col text-center col-1>
+       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename"  col-6>
-       اتصل بنا
+       <ion-col class="titlename"  col-10>
+         {{'Call us'|translate}}
        </ion-col>
-       <ion-col text-center col-3>
+       <ion-col text-center col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
  </ion-col></ion-row>
     </ion-title>
@@ -19,12 +19,12 @@
 <ion-content padding>
   <ion-list>
     <ion-item class="other">
-    <ion-input   type="text" placeholder="اخر النوع" >
+    <ion-input   type="text" placeholder="اخر النوع"  >
     </ion-input>
        </ion-item>
 
-    <textarea class="in"  placeholder=" اضف رائيك " ></textarea>
+    <textarea class="in"  placeholder="{{'comment'|translate}}"></textarea>
       
-  <button ion-button round class="btn">ارسل</button>
+  <button ion-button round class="btn">{{'Send'|translate}}</button>
   </ion-list>
 </ion-content>

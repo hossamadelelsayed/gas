@@ -5,13 +5,13 @@
  <ion-title >
    
       <ion-row>
-        <ion-col text-center  col-3>
-       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+        <ion-col text-center  col-1>
+           <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-6>
-       طلباتي
+       <ion-col class="titlename" col-10>
+       {{'History'|translate}}
        </ion-col>
-       <ion-col text-center  col-3>
+       <ion-col text-center  col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
  </ion-col></ion-row><hr>
     </ion-title>
@@ -19,10 +19,10 @@
   <ion-toolbar >
     <ion-segment style="background-color: white;" [(ngModel)]="requests" >
       
-      <ion-segment-button class="segment-button activated" pressed="true;" >طلبات حالية</ion-segment-button>
+      <ion-segment-button style="text-transform: none;" class="segment-button activated" pressed="true;" > {{'Current Orders'|translate}}</ion-segment-button>
       <ion-segment-button 
        style="
-    font-size: 1.8rem;color: gray;text-align: center;"  >طلبات سابقة</ion-segment-button>
+    font-size: 1.8rem;color: gray;text-align: center;text-transform: none;">{{'Orders History'|translate}}</ion-segment-button>
     </ion-segment>
   
   </ion-toolbar>
@@ -34,16 +34,16 @@
   <ion-card-header class="head" >
   </ion-card-header>
   <ion-card-content (click)="gotodetailsrequest()">
-   <p class="reqno">  1454545 طلب رقم </p><br>
+   <p class="reqno">  1454545 {{'Order Number'|translate}} </p><br>
      <img  class="logo" src="assets/imgs/agent_pin.png"><br>
-   <p class="mo"> اسم الموزع: احمد السعد</p><br>
+   <p class="mo">{{'agent name'|translate}}: احمد السعد</p><br>
    <p class="time">14 jan 2017 -10:45AM</p>
   </ion-card-content>
 </ion-card>
 <ion-row class="row">
-<img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 انبوبة</p>
+<img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 {{'Cylinder'|translate}}</p>
 <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
-<img class="pending" src="assets/imgs/pending.png"><p class="pra">قيد الانتظار</p>
+<img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
 </ion-row>
 <ion-card class="card" >
       
@@ -51,16 +51,16 @@
   
   </ion-card-header>
   <ion-card-content  (click)="gotodetailsrequest()" >
-   <p class="reqno">  1454545 طلب رقم </p><br>
+   <p class="reqno">  1454545 {{'Order Number'|translate}} </p><br>
      <img  class="logo" src="assets/imgs/agent_pin.png"><br>
-   <p class="mo"> اسم الموزع: احمد السعد</p><br>
+   <p class="mo">{{'agent name'|translate}}: احمد السعد</p><br>
    <p class="time">14 jan 2017 -10:45AM</p>
   </ion-card-content>
 </ion-card>
 <ion-row class="row">
-<img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 انبوبة</p>
+<img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 {{'Cylinder'|translate}}</p>
 <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
-<img class="pending" src="assets/imgs/accept.png"><p class="pra">تم قبولها</p>
+<img class="pending" src="assets/imgs/accept.png"><p class="pra">{{'Accepted'|translate}}</p>
 </ion-row>
 </ion-list>
 </ion-content>

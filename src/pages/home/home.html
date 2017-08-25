@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <ion-navbar>
     <ion-title style="background-color: white">
-     <button ion-button clear style="color: gray;" (click)="gotocreateorder()" >{{'Skip'|translate}}</button>
+     <button ion-button clear class="Skip" (click)="gotocreateorder()" >{{'Skip'|translate}}</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -12,15 +12,16 @@
    <img src="assets/imgs/login_logo.png"> 
  <form #f="ngForm" >
    <ion-list no-lines class="li" >
-   <ion-row>
+  <ion-row>
      <ion-col col-1>
-  <ion-icon class="icon" ios="ios-mail" md="ios-mail-outline"></ion-icon>
+   <ion-icon ios="ios-call" md="ios-call-outline"></ion-icon>
      </ion-col>
      <ion-col col-11>
        <ion-item>
-    <ion-input   type="email" placeholder="{{'Email'|translate}}" ></ion-input>
+    <ion-input   type="number" placeholder="{{'Phone Number'| translate}}" pattern="[0-9]*" maxlength="9"></ion-input>
        </ion-item>
-     </ion-col> 
+     </ion-col >
+      
    </ion-row>
    <ion-row>
      <ion-col col-1>

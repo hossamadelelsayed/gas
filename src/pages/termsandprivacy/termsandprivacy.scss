@@ -5,7 +5,7 @@ page-termsandprivacy {
         text-align: center;
     }
 .content{
-    background-color: aliceblue;
+    background-color: $color-background;
 }
 .back-button-md.show-back-button {
     display: none;
@@ -15,6 +15,6 @@ page-termsandprivacy {
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
 }

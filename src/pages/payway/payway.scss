@@ -1,6 +1,6 @@
 page-payway {
     .content{
-        background-color: aliceblue;
+        background-color: $color-background;
     }
     .titlename{
         text-align: center;
@@ -44,6 +44,6 @@ page-payway {
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: gray;
 }
 }

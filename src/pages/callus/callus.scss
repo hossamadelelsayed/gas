@@ -1,6 +1,6 @@
 page-callus {
  .content{
-        background-color:aliceblue;
+        background-color:$color-background;
     }
     .back-button-md.show-back-button {
     display: none;
@@ -10,7 +10,7 @@ page-callus {
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
 .titlename{
     color: gray;
@@ -19,7 +19,7 @@ page-callus {
 .in{
         border-radius: 20px;
   
-   
+   font-size: 2rem;
     display: block;
     margin: 0 auto;
     height: 200px;
@@ -37,7 +37,7 @@ background-color: #F2F2F2;
 .btn{
         display: block;
     margin: 0 auto;
-    background-color: orangered;
+    background-color: $color-primary;
     margin-top: 100px;
     font-size: 2rem;
     padding: 11px 60px 11px 60px;

@@ -32,32 +32,9 @@ import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {HistoryPage} from "../pages/history/history";
 import{TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
 import{OrderlaterPage} from "../pages/orderlater/orderlater";
-//
-// import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-// import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
-
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { ToastController } from 'ionic-angular';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import * as firebase from "firebase";
-import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebase-database';
-import { CustomerProvider } from '../providers/customer/customer';
-import {CustomerMapPage} from "../pages/customer-map/customer-map";
-
-const firebaseConfig = {
-      apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
-      authDomain: "gasksa-f284a.firebaseapp.com",
-      databaseURL: "https://gasksa-f284a.firebaseio.com",
-      projectId: "gasksa-f284a",
-      storageBucket: "gasksa-f284a.appspot.com",
-      messagingSenderId: "783994879598"
-  };
-firebase.initializeApp(firebaseConfig);
 @NgModule({
   declarations: [
     MyApp,
@@ -82,18 +59,13 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage ,
-    CustomerMapPage
-
+    OrderlaterPage
+    
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
-
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -126,18 +98,14 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage ,
-    CustomerMapPage
+    OrderlaterPage
+   
   ],
   providers: [
     StatusBar,
     SplashScreen,
-
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider,
-    FirebaseDatabaseProvider,
-    CustomerProvider  ,
-    AuthServiceProvider,
-    FirebaseDatabaseProvider  ]
+    
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
 })
 export class AppModule {}

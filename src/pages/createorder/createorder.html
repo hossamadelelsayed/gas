@@ -3,13 +3,13 @@
   <ion-navbar>
    <ion-title>
       <ion-row>
-        <ion-col text-center col-3>
-       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+        <ion-col text-center col-1>
+       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-6>
+       <ion-col class="titlename" col-10>
 {{'New Order'|translate}}
        </ion-col>
-       <ion-col text-center col-3>
+       <ion-col text-center col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
  </ion-col></ion-row>
     </ion-title>
@@ -52,7 +52,7 @@
   </ion-row> <hr>
 
 <ion-item  class="check">
-  <ion-label>تحديد الميعاد شهريا بنفس التاريخ</ion-label>
+  <ion-label>{{'Choose the same time and date'|translate}}</ion-label>
   <ion-checkbox color="orangee" checked="fales"></ion-checkbox>
 </ion-item>
   <hr>

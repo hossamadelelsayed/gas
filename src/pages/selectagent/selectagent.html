@@ -1,11 +1,10 @@
 <ion-header>
   <ion-navbar>
-    <ion-title style="text-align: center;"> <ion-icon style="float: left" ios="ios-list" md="ios-list"></ion-icon>
+    <ion-title style="text-align: center;"> <ion-icon style="float: left" ios="ios-menu" md="ios-menu"></ion-icon>
       غاز السعودية
  <ion-icon style="float: right" ios="ios-search" md="md-search"></ion-icon>
     </ion-title>
   </ion-navbar>
- 
 </ion-header>
 <ion-content padding>
    <ion-footer>
@@ -26,17 +25,17 @@
    </ion-row>
 <ion-row  class="ro">
   <ion-col >
-   <button ion-button clear><img class="im" src="assets/imgs/call.png"></button>
+  <button class="btn" ion-button round>اطلبة</button>
   </ion-col>
-    <ion-col >
-     <button ion-button clear><img class="im" src="assets/imgs/message.png"></button>
-    </ion-col>
-    <ion-col>
-       <button ion-button clear (click)="gotoaddvaluation()"><img class="im" src="assets/imgs/whatsapp.png"></button> 
-    </ion-col>
-      <ion-col>
-        <button class="btn" ion-button round>اطلبة</button>
-      </ion-col>
+  <ion-col >
+  <button ion-button clear (click)="gotoaddvaluation()"><img class="im" src="assets/imgs/whatsapp.png"></button> 
+  </ion-col>
+  <ion-col>
+  <button ion-button clear><img class="im" src="assets/imgs/message.png"></button>
+  </ion-col>
+  <ion-col>
+  <button ion-button clear><img class="im" src="assets/imgs/call.png"></button>
+  </ion-col>
 </ion-row>
-   </ion-footer>
+</ion-footer>
 </ion-content>

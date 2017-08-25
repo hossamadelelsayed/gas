@@ -1,6 +1,6 @@
 page-address {
 .content{
-    background-color: aliceblue;
+    background-color: $color-background;
 }
 .edite{
      
@@ -31,7 +31,7 @@ p{
 }
 .arrow{
    font-size: 2rem;
-    color: orangered;
+    color: $color-primary;
     
 }
 .addpay{
@@ -47,6 +47,6 @@ p{
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
 }

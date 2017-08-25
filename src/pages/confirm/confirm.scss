@@ -19,17 +19,17 @@ page-confirm {
     text-align: center;
 }
 .btn{
-    background-color: #FF530D;
+    background-color: $color-primary;
         display: block;
     margin: 0 auto;
     font-size: 2rem;
     padding-right: 10%;
     padding-left: 10%;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 .btn2{
     
-    color:  #FF530D;
+    color: $color-primary;
     display: block;
     margin: 0 auto;
         margin-top: -20px;
@@ -37,12 +37,12 @@ page-confirm {
 
 .pp{
     text-align: center;
-    margin-top: 16%;
+    margin-top: 7%;
     height: 10%;
 }
 .edit{
        color: gray;
-    border: 1px solid #FF530D;
+    border: 1px solid $color-primary;
     width: 13%;
     font-size: 1.5rem;
     height: 24px;
