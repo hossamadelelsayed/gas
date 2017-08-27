@@ -38,34 +38,24 @@ export class AuthServiceProvider {
       });
 
   }
-  getLogInType(phoneNo:any){
+  phoneLogin(phoneNo:any,password :any){
 
     let typeRef = firebase.database().ref(phoneNo);
 
-
+let self=this;
     typeRef.once("value")
       .then(function(snapshot) {
 
-        let type = snapshot.child(phoneNo+"/type").val(); // "Ada"
+        let type = snapshot.child(phoneNo+"/type").val();
+        self.events.publish('user type', type);
 
-        console.log("id     :  ",type);
-        return  type;
+let email = snapshot.child(phoneNo+"/email").val();
+self.doLogin(email,password);
+
 
       });
 
   }
-
-  //signIn annonimously beforelogin
-  AnonymousSignIn(){
-    return this.fireAuth.signInAnonymously().catch(function(error) {
-     // Handle Errors here.
-     let errorCode = error.code;
-     let errorMessage = error.message;
-     console.log("error.message",error.message);
-     // ...
-   });
-  }
-
 
   //login and returns err msg if err occare
   doLogin(email: string, password: string): any {
@@ -78,6 +68,19 @@ this.getUserInfo(user.uid,"customers");
       this.events.publish('login error', err);
     });
   }
+  //signIn annonimously beforelogin
+  AnonymousSignIn(){
+    return this.fireAuth.signInAnonymously().catch(function(error) {
+     // Handle Errors here.
+     let errorCode = error.code;
+     let errorMessage = error.message;
+     console.log("error.message",error.message);
+     // ...
+   });
+  }
+
+
+
 
   getUserInfo(userId:any ,userType :any){
 let infoRef=firebase.database().ref(userType+"/"+userId);
