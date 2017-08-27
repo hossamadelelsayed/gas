@@ -107,19 +107,19 @@ console.log("Error upgrading anonymous account", error);
   register(email: string, password: string,name :string,phoneNo:any): any {
 
 
-  return this.fireAuth.createUserWithEmailAndPassword(email, password)
-    .then((newUser) => {
-    this.userData.child(newUser.uid).set({email: email});
-let      user = firebase.auth().currentUser;
-this.submitUserInfo(name,phoneNo,user.uid,email);
-      user.sendEmailVerification().then(function() {
-       // Email sent.
-      }).catch(function(error) {
-this.events.publish('vrification error', error);
-      });
-    }).catch(function(error) {
-      this.events.publish('registretion error', error);
-    });
+  return this.fireAuth.createUserWithEmailAndPassword(email, password);
+//     .then((newUser) => {
+//     this.userData.child(newUser.uid).set({email: email});
+// let      user = firebase.auth().currentUser;
+// this.submitUserInfo(name,phoneNo,user.uid,email);
+//       user.sendEmailVerification().then(function() {
+//        // Email sent.
+//       }).catch(function(error) {
+// this.events.publish('vrification error', error);
+//       });
+//     }).catch(function(error) {
+//       this.events.publish('registretion error', error);
+//     });
   }
 
   //send customer info to database when authentication succses
