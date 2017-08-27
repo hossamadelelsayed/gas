@@ -14,7 +14,11 @@ export class WelcomePage {
 
   constructor(private events:Events,private storage:Storage ,private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
 this.authService.AnonymousSignIn();
+<<<<<<< HEAD
   // this.authService.phoneLogin("010","123456");
+=======
+  this.authService.phoneLogin("0100","123456");
+>>>>>>> 6f86f32d5771caeb43461209a7b5e60652f500e3
 // this.userInfo;
 // console.log("uuuuuuuuu",this.userInfo.name);
   }
