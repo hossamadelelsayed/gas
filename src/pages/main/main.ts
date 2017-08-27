@@ -2,14 +2,9 @@ import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
 
-/**
- * Generated class for the MainPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 
 @Component({
   selector: 'page-main',
@@ -17,7 +12,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MainPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public menuCtrl: MenuController ) {
   }
 
   ionViewDidLoad() {
@@ -29,4 +26,8 @@ gotocreatorder(){
 gotoselrct(){
   this.navCtrl.push(SelectagentPage);
 }
+toggleMenu()
+  {
+    this.menuCtrl.toggle();
+  }
 }
