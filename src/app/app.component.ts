@@ -36,8 +36,8 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
-    this.translate.setDefaultLang('ar');
-    platform.setDir('rtl', true);
+    this.translate.setDefaultLang('en');
+    platform.setDir('ltr', true);
   }
   onLoad(page:any){
 this.nav.push(page);

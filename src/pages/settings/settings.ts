@@ -4,6 +4,7 @@ import {NotificationsPage} from "../notifications/notifications";
 import{CallusPage} from "../callus/callus";
 import{AboutaprogramPage}from "../aboutaprogram/aboutaprogram";
 import {TermsandprivacyPage} from "../termsandprivacy/termsandprivacy";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'page-settings',
@@ -11,7 +12,7 @@ import {TermsandprivacyPage} from "../termsandprivacy/termsandprivacy";
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public platform: Platform,private translate: TranslateService ) {
   }
 
   ionViewDidLoad() {
