@@ -44,8 +44,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import * as firebase from "firebase";
 import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebase-database';
 import { Events } from 'ionic-angular';
-import { UserInfoProvider } from '../providers/user-info/user-info';
 import { IonicStorageModule } from '@ionic/storage';
+import { DistributorProvider } from '../providers/distributor/distributor';
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -131,6 +131,7 @@ firebase.initializeApp(firebaseConfig);
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
-    UserInfoProvider ,IonicStorageModule ]
+  IonicStorageModule,
+    DistributorProvider ]
 })
 export class AppModule {}

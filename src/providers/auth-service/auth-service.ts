@@ -95,6 +95,8 @@ console.log("user exist");
     return this.fireAuth.signInWithEmailAndPassword(email, password).then(user=>{
       let userId=user.uid;
 this.getUserInfo(user.uid,"customers");
+this.events.publish('user:created', user);
+
     }).catch(err=>
     {
       console.log("log in failed msg",err.message);
@@ -134,8 +136,10 @@ this.submitUserInfo(name,phoneNo,user.uid,email);
       user.sendEmailVerification().then(function() {
        // Email sent.
       }).catch(function(error) {
-console.log("vrification error",error);
+this.events.publish('vrification error', error);
       });
+    }).catch(function(error) {
+      this.events.publish('registretion error', error);
     });
   }
 
@@ -145,7 +149,8 @@ console.log("vrification error",error);
 resetPassword(email: string): any {
   return this.fireAuth.sendPasswordResetEmail(email).catch(err=>
   {
-    console.log("log in failed msg",err.message);
+    this.events.publish('resetPassword error', err.message);
+
   });
 }
 //logout
