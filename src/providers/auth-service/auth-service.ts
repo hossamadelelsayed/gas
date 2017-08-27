@@ -54,30 +54,7 @@ export class AuthServiceProvider {
       });
 
   }
-  //send customer info to database when authentication succses
-  submitUserInfo(name:any ,phoneNo :any,userId :any,email:any){
-    let rootRef = firebase.database().ref("customers/"+userId);
-     rootRef.child("name").set(name);
-     rootRef.child("email").set(email);
-     rootRef.child("phoneNo").set(phoneNo);
 
-    let nameEmailRef = firebase.database().ref(phoneNo+"/email");
-    //check  if phoneNo entered dont have an email in firebase
-    nameEmailRef.once("value")
-      .then(function(snapshot) {
-        if(snapshot.val() ==null )    {
-        let rootRef = firebase.database().ref("customers/"+userId);
-        rootRef.child("name").set(name);
-        rootRef.child("email").set(email);
-        rootRef.child("phoneNo").set(phoneNo);
-         // let nameEmailRef = firebase.database().ref(phoneNo);
-        nameEmailRef.set(email);
-        }else {
-console.log("user exist");
-        }
-
-      });
-  }
   //signIn annonimously beforelogin
   AnonymousSignIn(){
     return this.fireAuth.signInAnonymously().catch(function(error) {
@@ -95,11 +72,10 @@ console.log("user exist");
     return this.fireAuth.signInWithEmailAndPassword(email, password).then(user=>{
       let userId=user.uid;
 this.getUserInfo(user.uid,"customers");
-this.events.publish('user:created', user);
 
     }).catch(err=>
     {
-      console.log("log in failed msg",err.message);
+      this.events.publish('login error', err);
     });
   }
 
@@ -108,7 +84,7 @@ let infoRef=firebase.database().ref(userType+"/"+userId);
 let self=this;
 infoRef.once("value")
   .then(function(snapshot) {
- self.events.publish('userName', snapshot.val());
+ self.events.publish('user info', snapshot.val());
     return snapshot.val();
 
 });
@@ -143,7 +119,30 @@ this.events.publish('vrification error', error);
     });
   }
 
+  //send customer info to database when authentication succses
+  submitUserInfo(name:any ,phoneNo :any,userId :any,email:any){
+    let rootRef = firebase.database().ref("customers/"+userId);
+     rootRef.child("name").set(name);
+     rootRef.child("email").set(email);
+     rootRef.child("phoneNo").set(phoneNo);
 
+    let nameEmailRef = firebase.database().ref(phoneNo+"/email");
+    //check  if phoneNo entered dont have an email in firebase
+    nameEmailRef.once("value")
+      .then(function(snapshot) {
+        if(snapshot.val() ==null )    {
+        let rootRef = firebase.database().ref("customers/"+userId);
+        rootRef.child("name").set(name);
+        rootRef.child("email").set(email);
+        rootRef.child("phoneNo").set(phoneNo);
+         // let nameEmailRef = firebase.database().ref(phoneNo);
+        nameEmailRef.set(email);
+        }else {
+console.log("user exist");
+        }
+
+      });
+  }
 
 //resetPassword
 resetPassword(email: string): any {

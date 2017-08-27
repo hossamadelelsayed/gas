@@ -13,16 +13,8 @@ import { Events } from 'ionic-angular';
 export class WelcomePage {
 
   constructor(private events:Events,private storage:Storage ,private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
+this.authService.AnonymousSignIn();
 
- this.authService.doLogin("heshamsalama1212901022@gmail.com","123456").then(data=>{
-  //  console.log("login returns name",data.name);
-
-  this.events.subscribe('userName', (user) => {
-  console.log("name",user.name);
-
-   });
-
- });
 // this.userInfo;
 // console.log("uuuuuuuuu",this.userInfo.name);
   }
