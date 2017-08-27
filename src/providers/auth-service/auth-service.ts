@@ -110,7 +110,7 @@ console.log("Error upgrading anonymous account", error);
   return this.fireAuth.createUserWithEmailAndPassword(email, password)
     .then((newUser) => {
     this.userData.child(newUser.uid).set({email: email});
-let      user = firebase.auth().currentUser;
+let      user =  firebase.auth().currentUser;
 this.submitUserInfo(name,phoneNo,user.uid,email);
       user.sendEmailVerification().then(function() {
        // Email sent.
