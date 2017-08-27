@@ -38,45 +38,35 @@ export class AuthServiceProvider {
       });
 
   }
-  getLogInType(phoneNo:any){
+  phoneLogin(phoneNo:any,password :any){
 
     let typeRef = firebase.database().ref(phoneNo);
 
-
+let self=this;
     typeRef.once("value")
       .then(function(snapshot) {
 
-        let type = snapshot.child(phoneNo+"/type").val(); // "Ada"
+        let type = snapshot.child(phoneNo+"/type").val();
+        self.events.publish('user type', type);
 
-        console.log("id     :  ",type);
-        return  type;
+let email = snapshot.child(phoneNo+"/email").val();
+self.doLogin(email,password);
+
 
       });
 
   }
-  //send customer info to database when authentication succses
-  submitUserInfo(name:any ,phoneNo :any,userId :any,email:any){
-    let rootRef = firebase.database().ref("customers/"+userId);
-     rootRef.child("name").set(name);
-     rootRef.child("email").set(email);
-     rootRef.child("phoneNo").set(phoneNo);
 
-    let nameEmailRef = firebase.database().ref(phoneNo+"/email");
-    //check  if phoneNo entered dont have an email in firebase
-    nameEmailRef.once("value")
-      .then(function(snapshot) {
-        if(snapshot.val() ==null )    {
-        let rootRef = firebase.database().ref("customers/"+userId);
-        rootRef.child("name").set(name);
-        rootRef.child("email").set(email);
-        rootRef.child("phoneNo").set(phoneNo);
-         // let nameEmailRef = firebase.database().ref(phoneNo);
-        nameEmailRef.set(email);
-        }else {
-console.log("user exist");
-        }
+  //login and returns err msg if err occare
+  doLogin(email: string, password: string): any {
+    return this.fireAuth.signInWithEmailAndPassword(email, password).then(user=>{
+      let userId=user.uid;
+this.getUserInfo(user.uid,"customers");
 
-      });
+    }).catch(err=>
+    {
+      this.events.publish('login error', err);
+    });
   }
   //signIn annonimously beforelogin
   AnonymousSignIn(){
@@ -90,25 +80,14 @@ console.log("user exist");
   }
 
 
-  //login and returns err msg if err occare
-  doLogin(email: string, password: string): any {
-    return this.fireAuth.signInWithEmailAndPassword(email, password).then(user=>{
-      let userId=user.uid;
-this.getUserInfo(user.uid,"customers");
-this.events.publish('user:created', user);
 
-    }).catch(err=>
-    {
-      console.log("log in failed msg",err.message);
-    });
-  }
 
   getUserInfo(userId:any ,userType :any){
 let infoRef=firebase.database().ref(userType+"/"+userId);
 let self=this;
 infoRef.once("value")
   .then(function(snapshot) {
- self.events.publish('userName', snapshot.val());
+ self.events.publish('user info', snapshot.val());
     return snapshot.val();
 
 });
@@ -143,7 +122,30 @@ this.events.publish('vrification error', error);
     });
   }
 
+  //send customer info to database when authentication succses
+  submitUserInfo(name:any ,phoneNo :any,userId :any,email:any){
+    let rootRef = firebase.database().ref("customers/"+userId);
+     rootRef.child("name").set(name);
+     rootRef.child("email").set(email);
+     rootRef.child("phoneNo").set(phoneNo);
 
+    let nameEmailRef = firebase.database().ref(phoneNo+"/email");
+    //check  if phoneNo entered dont have an email in firebase
+    nameEmailRef.once("value")
+      .then(function(snapshot) {
+        if(snapshot.val() ==null )    {
+        let rootRef = firebase.database().ref("customers/"+userId);
+        rootRef.child("name").set(name);
+        rootRef.child("email").set(email);
+        rootRef.child("phoneNo").set(phoneNo);
+         // let nameEmailRef = firebase.database().ref(phoneNo);
+        nameEmailRef.set(email);
+        }else {
+console.log("user exist");
+        }
+
+      });
+  }
 
 //resetPassword
 resetPassword(email: string): any {
