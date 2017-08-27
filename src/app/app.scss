@@ -37,24 +37,24 @@ padding: 24px 4px 11px 4px;}
 }
 
 .btchange{
-    background-color: #FF530D;
+    background-color: #ff8d15;
     float: right;
     font-family: cairo;
  
 }
 [dir="rtl"] .btchange{
- background-color: #FF530D;
+ background-color: #ff8d15;
     float: left;
-    font-family: cairo;
+
 }
 .plus{
-    background-color: #FF530D;
+    background-color: #ff8d15;
      width: 37px;
      height: 37px;
          float: right;
 }
 [dir="rtl"] .plus{
-    background-color: #FF530D;
+    background-color: #ff8d15;
      width: 37px;
      height: 37px;
      float: left;
@@ -64,10 +64,12 @@ padding: 24px 4px 11px 4px;}
   src: url('../assets/fonts/ar/Cairo-Regular.ttf') ;
   font-weight: normal;
   font-style: normal;
+
   
 }
 [dir="rtl"] :not(ion-icon) {
   font-family: 'Cairo-Regular' !important;
+  font-size: 1.5rem !important;
 }
 [dir="ltr"] :not(ion-icon) {
   font-family: 'Lora-Regular' !important;
@@ -77,23 +79,64 @@ padding: 24px 4px 11px 4px;}
   
   white-space: normal;
   font-family: 'Cairo-Regular' !important;
+  font-size: 1.5rem !important;
 }
 [dir="ltr"] .has-title-only .tab-button-text {
   
   white-space: normal;
   font-family: 'Lora-Regular' !important;
 }
+.lab{
+            padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -44px;
+    }
+  [dir="ltr"] .lab{
+            padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -21px;
+    }  
+     .lab2{
+            padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -44px;
+        direction: ltr;
+    }
+   [dir="ltr"]  .lab2{
+            padding-right: 30px;
+       padding-left: 30px;
+        margin-bottom: -21px;
+        direction: ltr;
+    } 
+    .year{
+    margin-top: 29px;
+}
+[dir="ltr"] .year{
+    margin-top: 22px;
+}
+
 .arrow{
         font-size: 2rem;
-    color: orangered;
+    color: #ff8d15;
 }
 [dir="ltr"] .arrow{
         font-size: 2rem;
-    color: orangered;
+    color: #ff8d15;
         transform: rotate(180deg);
 }
-
-
+.datetime-md {
+    padding: 0;
+}
+.Skip{
+    color: gray;
+    float: left
+}
+[dir="ltr"] .Skip{
+    color: gray;
+    float: right;
+}
+$color-primary :#ff8d15;
+$color-background:#f5f7f9;
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These

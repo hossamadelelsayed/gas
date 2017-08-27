@@ -4,8 +4,8 @@
    <ion-title >
       <ion-row>
        <ion-col class="titlename" col-11>
-       طرق الدفع
-       </ion-col>
+{{'Pay way'|translate}}   
+    </ion-col>
        <ion-col col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
  </ion-col></ion-row>
@@ -17,8 +17,8 @@
 <div >
     <form radio-group style="font-size: 2.2rem; color: gray;" action="">
       
-       <h4 class="chpayway">اختيار طريقة الدفع</h4>
-   <ion-label class="lab"><span> دفع نقدي </span></ion-label>
+       <h4 class="chpayway">{{'Choose pay way'|translate}}</h4>
+   <ion-label class="lab"><span>{{'Cash'|translate}}</span></ion-label>
   <ion-radio color="orangee"  checked="fales"></ion-radio><br>
   <br>
   <ion-row>
@@ -32,7 +32,7 @@
   </ion-row>
   <br>
   <button class="addpay" ion-button clear> <ion-icon class="plusicon" name="ios-add"></ion-icon>
-  <span (click)="gotoaddcard()"> اضف طريقة دفع </span></button>
+  <span (click)="gotoaddcard()">{{'Add pay way'|translate}}</span></button>
 </form>
 </div>
 </ion-content>

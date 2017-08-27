@@ -2,13 +2,13 @@
   <ion-navbar>
     <ion-title >
       <ion-row>
-        <ion-col text-center  col-3>
-       <ion-icon  ios="ios-list" md="ios-list"></ion-icon>
+        <ion-col text-center  col-1>
+       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename"  col-6>
+       <ion-col class="titlename"  col-10>
       {{'Gas Ksa'|translate}} 
        </ion-col>
-       <ion-col text-center col-3>
+       <ion-col text-center col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
  </ion-col></ion-row>
     </ion-title>
@@ -18,7 +18,7 @@
   <ion-footer>
     <div class="buttons">
       <button class="reqnow" ion-button round (click)="gotocreatorder()" >{{'Order now'|translate}}</button>
- <button class="reqlater" ion-button round><ion-datetime displayFormat="DDD/MMM/h/mm/A" [(ngModel)]="myDate">حدد</ion-datetime>{{'Order later'|translate}}</button>
+ <button class="reqlater" ion-button round><ion-datetime style="width: 0;" displayFormat="DDD/MMM/h/mm/A" [(ngModel)]="myDate"></ion-datetime>{{'Order later'|translate}}</button>
   
   
   </div>

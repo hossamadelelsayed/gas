@@ -1,6 +1,6 @@
 page-addvaluation {
 .content{
-    background-color: aliceblue;
+    background-color: $color-background;
 }
 .titlename{
     color: gray;
@@ -25,9 +25,10 @@ page-addvaluation {
 }
 .stars{
     font-size: 3rem;
-    color: orangered;
+    color: $color-primary;
 }
 .add{
+    font-size: 2rem;
        border-radius: 20px;
   
     
@@ -41,9 +42,9 @@ background-color: #F2F2F2;
 .btn{
     display: block;
     margin: 0 auto;
-    background-color: orangered;
+    background-color: $color-primary;
     font-size: 1.7rem;
-    margin-top: 80px;
+    margin-top: 65px;
 }
 .back-button-md.show-back-button {
     display: none;
@@ -53,6 +54,7 @@ background-color: #F2F2F2;
     display: none;
 }
 .back-button-ios.show-back-button{
-    color:orangered;
+    color:$color-primary;
 }
+
 }

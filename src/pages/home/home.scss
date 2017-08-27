@@ -12,7 +12,7 @@ page-home {
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: gray;
 }
 
 img{
@@ -28,16 +28,18 @@ p{
     color: #403a3a;
     font-family: -webkit-pictograph;
 }
+
 .icon{
-        color:#FF530D;
+        color:$color-primary;
     margin-top: 14px;
     font-size: 2.3rem;
 }
 .li{
-    padding-top: 69px;
+    padding-top: 50px;
 }
 .enter{
-    background-color: #FF530D;
+    margin-top: 34px;
+    background-color:$color-primary;
     font-size: 1.8rem;
     height: 47px;
 }
@@ -49,11 +51,11 @@ p{
     display: block;
 }
 .reg{
-    color: #FF530D;
+    color: $color-primary;
    
 }
 .new{
-    padding-top: 50px;
+    padding-top: 15px;
     text-align: center;
     width: 60%;
     margin: auto;

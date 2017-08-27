@@ -1,6 +1,6 @@
 page-profile {
     .content{
-            background-color: aliceblue;
+            background-color: $color-background;
     }
         .titlename{
             color: gray;
@@ -19,7 +19,7 @@ h5{
 }
 .arrow{
         font-size: 2rem;
-    color: orangered;
+    color: $color-primary;
 }
 h4{
     text-align: center;
@@ -35,6 +35,6 @@ h4{
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
 }

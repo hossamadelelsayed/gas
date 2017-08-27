@@ -32,10 +32,6 @@ import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {HistoryPage} from "../pages/history/history";
 import{TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
 import{OrderlaterPage} from "../pages/orderlater/orderlater";
-//
-// import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-// import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
-
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -60,6 +56,7 @@ const firebaseConfig = {
       messagingSenderId: "783994879598"
   };
 firebase.initializeApp(firebaseConfig);
+
 @NgModule({
   declarations: [
     MyApp,
@@ -90,9 +87,6 @@ firebase.initializeApp(firebaseConfig);
   imports: [
     BrowserModule,
     HttpModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot(),
     TranslateModule.forRoot({

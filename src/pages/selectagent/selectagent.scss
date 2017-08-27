@@ -7,7 +7,7 @@ page-selectagent {
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: black
+    color: #333333;
 }
 .content{
   background: url("../assets/imgs/map.png");
@@ -40,7 +40,7 @@ page-selectagent {
     margin-bottom: -55px;
 }
 .btn{
-    background-color: orangered;
+    background-color: $color-primary;
     font-family: cairo;
     font-size: 2rem;
         padding: 21px 30px 24px 30px;

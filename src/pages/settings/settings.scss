@@ -1,6 +1,6 @@
 page-settings {
 .content{
-    background-color: aliceblue;
+    background-color: $color-background;
 }
 .titlename{
     color: gray;
@@ -21,6 +21,6 @@ page-settings {
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
 }

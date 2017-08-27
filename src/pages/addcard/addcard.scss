@@ -1,6 +1,6 @@
 page-addcard {
 .content{
-    background-color: aliceblue;
+    background-color: $color-background;
     padding: 20px 40px 21px 44px;
 }
 .titlename{
@@ -14,7 +14,7 @@ page-addcard {
 
 }
 .btn{
-        background-color: #FF530D;
+        background-color: $color-primary;
     font-size: 1.8rem;
   
     margin-top: 155px;
@@ -22,12 +22,13 @@ page-addcard {
 
 }
 .password{
-    color: #FF530D;
+    color: $color-primary;
     font-size: 2rem;
  
 }
+
 .item {
-    background-color: aliceblue;
+    background-color: $color-background;
 }
 
 .back-button-text-ios {
@@ -35,6 +36,6 @@ page-addcard {
     display: none;
 }
 .back-button.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
 }

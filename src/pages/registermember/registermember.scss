@@ -15,15 +15,16 @@ p{
     font-family: -webkit-pictograph;
 }
 .icon{
-        color:#FF530D;
+        color:$color-primary;
     margin-top: 14px;
     font-size: 2.2rem;
 }
 .li{
-    padding-top: 60px;
+    padding-top: 40px;
 }
 .enter{
-    background-color: #FF530D;
+    margin-top: 30px;
+    background-color:$color-primary;
     font-size: 1.8rem;
     height: 47px;
 }
@@ -34,7 +35,7 @@ p{
     margin-right: 29%;
 }
 .reg{
-    color: #FF530D;
+    color: $color-primary;
 }
 .new{
     margin: 0 auto;
@@ -48,6 +49,6 @@ p{
     display: none;
 }
 .back-button-ios.show-back-button{
-    color: orangered;
+    color: $color-primary;
 }
     }

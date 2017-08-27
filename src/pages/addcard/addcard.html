@@ -2,10 +2,10 @@
   <ion-navbar>
     <ion-title class="addcards" > 
       <ion-row>
-        <ion-col class="titlename" col-9>
-       اضف كارت جديد
+        <ion-col class="titlename" col-11>
+       {{'Add new card'|translate}}
         </ion-col>
-        <ion-col text-center col-3>
+        <ion-col text-center col-1>
  <ion-icon  ios="ios-search" md="md-search"></ion-icon>
         </ion-col>
       </ion-row>
@@ -17,30 +17,30 @@
 <ion-list  no-lines>
   <ion-row>
      <ion-item>
-    <ion-input   type="number" placeholder="رقم الكارت " ></ion-input>
+    <ion-input   type="number" placeholder="{{'card number'|translate}}" ></ion-input>
        </ion-item>
   </ion-row>
       <ion-row>
         <ion-col >
-           <label class="password">ميعاد الانتهاء</label>
+           <label class="password">{{'Expires'|translate}}</label>
      <ion-item>
-    <ion-input   type="number" placeholder=" شهر " ></ion-input>
+    <ion-input   type="text" placeholder="{{'Month'|translate}}" maxlength="2"></ion-input>
        </ion-item>
         </ion-col>
        <ion-col>
      <ion-item>
-    <ion-input style="margin-top: 36px;"  type="number" placeholder=" سنة " ></ion-input>
+    <ion-input class="year" type="text" placeholder="{{'Year'|translate}}" maxlength="4" ></ion-input>
        </ion-item>
         </ion-col>
   </ion-row>
       <ion-row>
         <ion-col col-6>
-            <label class="password"> الرقم السري</label>
+            <label class="password">{{'password'|translate}}</label>
       <ion-item>
-    <ion-input   type="number" placeholder="من 3 ارقام" ></ion-input>
+    <ion-input   type="password" placeholder="{{'3 numbers'|translate}}" maxlength="3"></ion-input>
        </ion-item>
         </ion-col>
   </ion-row>
-      <button ion-button block round class="btn" >اضف الكارت</button>
+      <button ion-button block round class="btn" >{{'Add card'|translate}}</button>
 </ion-list>
 </ion-content>

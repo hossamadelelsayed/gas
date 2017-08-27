@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <ion-navbar>
     <ion-title style="background-color: white">
-     <button ion-button clear style="color: gray;"  (click)="gotocreateorder()">{{'Skip'| translate}}</button>
+     <button ion-button clear class="Skip"  (click)="gotocreateorder()">{{'Skip'| translate}}</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -36,12 +36,12 @@
      <ion-col col-1>
    <ion-icon ios="ios-call" md="ios-call-outline"></ion-icon>
      </ion-col>
-     <ion-col col-8>
+     <ion-col col-7>
        <ion-item>
-    <ion-input   type="number" placeholder="{{'Phone Number'| translate}}" ></ion-input>
+    <ion-input   type="number" placeholder="{{'Phone Number'| translate}}" pattern="[0-9]*" maxlength="14"></ion-input>
        </ion-item>
      </ion-col >
-      <ion-col col-3>
+      <ion-col col-4>
          <ion-item>
     <ion-input   type="number" placeholder="+966" ></ion-input>
        </ion-item> 
