@@ -46,10 +46,13 @@ let self=this;
     typeRef.once("value")
       .then(function(snapshot) {
 
-        let type = snapshot.child(phoneNo+"/type").val();
-        self.events.publish('user type', type);
+        let type = snapshot.child("type").val();
 
-let email = snapshot.child(phoneNo+"/email").val();
+
+let email = snapshot.child("email").val();
+console.log("email ...",snapshot);
+console.log("type ...",type);
+
 self.doLogin(email,password);
 
 
@@ -59,14 +62,14 @@ self.doLogin(email,password);
 
   //login and returns err msg if err occare
   doLogin(email: string, password: string): any {
-    return this.fireAuth.signInWithEmailAndPassword(email, password).then(user=>{
-      let userId=user.uid;
-this.getUserInfo(user.uid,"customers");
-
-    }).catch(err=>
-    {
-      this.events.publish('login error', err);
-    });
+    return this.fireAuth.signInWithEmailAndPassword(email, password);
+//     .then(user=>{
+//       let userId=user.uid;
+// this.getUserInfo(user.uid,"customers");
+//
+//     }).catch(err=>
+//     {
+//     });
   }
   //signIn annonimously beforelogin
   AnonymousSignIn(){
@@ -87,7 +90,6 @@ let infoRef=firebase.database().ref(userType+"/"+userId);
 let self=this;
 infoRef.once("value")
   .then(function(snapshot) {
- self.events.publish('user info', snapshot.val());
     return snapshot.val();
 
 });
@@ -149,11 +151,7 @@ console.log("user exist");
 
 //resetPassword
 resetPassword(email: string): any {
-  return this.fireAuth.sendPasswordResetEmail(email).catch(err=>
-  {
-    this.events.publish('resetPassword error', err.message);
-
-  });
+  return this.fireAuth.sendPasswordResetEmail(email);
 }
 //logout
 doLogout(): any {
