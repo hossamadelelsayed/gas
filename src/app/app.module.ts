@@ -46,6 +46,8 @@ import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebas
 import { Events } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { DistributorProvider } from '../providers/distributor/distributor';
+import {MainService} from "../providers/main-service";
+
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -127,7 +129,7 @@ firebase.initializeApp(firebaseConfig);
   providers: [
     StatusBar,
     SplashScreen,
-
+    MainService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,

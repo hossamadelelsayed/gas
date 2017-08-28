@@ -15,6 +15,7 @@ export class WelcomePage {
 
   constructor(private events:Events,private storage:Storage ,private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
 this.authService.AnonymousSignIn();
+<<<<<<< HEAD
   this.authService.phoneLogin("0100","123456");
 //
 // let user = firebase.auth().currentUser;
@@ -23,6 +24,11 @@ this.events.subscribe('user:created', (user) => {
     console.log("llll",user);
   });
 
+=======
+
+// this.userInfo;
+// console.log("uuuuuuuuu",this.userInfo.name);
+>>>>>>> 4a135866881e16d5958ce149b1a3e30e2c671d57
   }
 
   ionViewDidLoad() {
