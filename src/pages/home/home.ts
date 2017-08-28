@@ -21,7 +21,7 @@ public password:any;
   }
 
 gotocreateorder(){
-<<<<<<< HEAD
+
   let self=this;
 this.auth.phoneLogin(this.mobile,this.password);
 this.events.subscribe('user:created', (user) => {
@@ -37,10 +37,10 @@ this.events.subscribe('user:created', (user) => {
     }
   });
   
-=======
+
 this.navCtrl.push(MainPage);
 this.auth.phoneLogin('0100','123456');
->>>>>>> 404faa739428ba99c7c216f60059c8bf297e07ff
+
 }
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
