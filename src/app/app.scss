@@ -60,12 +60,16 @@ padding: 24px 4px 11px 4px;}
      float: left;
 }
 @font-face {
+  font-family: 'Lora-Regular';
+  src: url('../assets/fonts/en/Lora-Regular.ttf') ;
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: 'Cairo-Regular';
   src: url('../assets/fonts/ar/Cairo-Regular.ttf') ;
   font-weight: normal;
   font-style: normal;
-
-  
 }
 [dir="rtl"] :not(ion-icon) {
   font-family: 'Cairo-Regular' !important;
