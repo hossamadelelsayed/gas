@@ -50,26 +50,32 @@ let self=this;
 
 
 let email = snapshot.child("email").val();
-console.log("email ...",snapshot);
-console.log("type ...",type);
 
 self.doLogin(email,password);
 
 
       });
-
+  // return this.fireAuth.signInWithEmailAndPassword(email, password);
   }
 
   //login and returns err msg if err occare
   doLogin(email: string, password: string): any {
-    return this.fireAuth.signInWithEmailAndPassword(email, password);
-//     .then(user=>{
-//       let userId=user.uid;
-// this.getUserInfo(user.uid,"customers");
-//
-//     }).catch(err=>
-//     {
-//     });
+    console.log("email ",email);
+    console.log("pass ",password);
+
+    return this.fireAuth.signInWithEmailAndPassword(email, password)
+    .then(user=>{
+      let userId=user.uid;
+      console.log("uid ",user.uid);
+      console.log("virification ",user.emailVerified);
+      console.log("user ",user);
+      this.events.publish('user:created', user);
+
+this.getUserInfo(user.uid,"customers");
+
+    }).catch(err=>
+    {
+    });
   }
   //signIn annonimously beforelogin
   AnonymousSignIn(){
