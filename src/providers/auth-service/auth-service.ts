@@ -57,12 +57,8 @@ let self=this;
         let type = snapshot.child("type").val();
 
 let email = snapshot.child("email").val();
-<<<<<<< HEAD
 self.events.publish('email status', email);
 self.events.publish('type', type);
-=======
-self.subscribe.publish('email status', email);
->>>>>>> 404faa739428ba99c7c216f60059c8bf297e07ff
 
 self.doLogin(email,password);
 
