@@ -18,6 +18,7 @@ this.authService.AnonymousSignIn();
   this.authService.phoneLogin("0100","123456");
 //
 // let user = firebase.auth().currentUser;
+// this.register("hrhf0","0200","23789","jdhjhj");
 this.events.subscribe('user:created', (user) => {
     // user and time are the same arguments passed in `events.publish(user, time)`
     console.log("llll",user);

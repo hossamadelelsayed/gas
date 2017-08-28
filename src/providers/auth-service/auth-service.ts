@@ -3,6 +3,8 @@ import * as firebase from "firebase";
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 // import {NavController} from 'ionic-angular';
 
 /*
@@ -15,7 +17,7 @@ import { Events } from 'ionic-angular';
 export class AuthServiceProvider {
   public fireAuth: any;
   public userData: any;
-  constructor(public http: Http,private events :Events) {
+  constructor(private storage:Storage, public http: Http,private events :Events) {
     this.fireAuth = firebase.auth();
      this.userData = firebase.database().ref('customers');
   }
@@ -39,7 +41,13 @@ export class AuthServiceProvider {
 
   }
   phoneLogin(phoneNo:any,password :any){
+    this.storage.ready().then(() => {
+    });
 
+    this.storage.set('phoneNo', phoneNo);
+    this.storage.get('phoneNo').then((phoneNo) => {
+  //phone no
+    });
     let typeRef = firebase.database().ref(phoneNo);
 
 let self=this;
@@ -48,8 +56,8 @@ let self=this;
 
         let type = snapshot.child("type").val();
 
-
 let email = snapshot.child("email").val();
+self.subscribe.publish('email status', email);
 
 self.doLogin(email,password);
 
@@ -60,9 +68,13 @@ self.doLogin(email,password);
 
   //login and returns err msg if err occare
   doLogin(email: string, password: string): any {
+
     console.log("email ",email);
     console.log("pass ",password);
 
+//   let EmailAuthProvider = new firebase.auth.GoogleAuthProvider();
+//
+// let credential = firebase.auth.EmailAuthProvider.credential(email, password);
     return this.fireAuth.signInWithEmailAndPassword(email, password)
     .then(user=>{
       let userId=user.uid;
@@ -116,6 +128,7 @@ console.log("Error upgrading anonymous account", error);
 
 
   return this.fireAuth.createUserWithEmailAndPassword(email, password);
+
 //     .then((newUser) => {
 //     this.userData.child(newUser.uid).set({email: email});
 // let      user = firebase.auth().currentUser;
@@ -186,8 +199,9 @@ userNameRef.child("name").set(name);
 }
 
 
-editCustomerPhoneNo(phoneNo :any,newPhoneNo :any){
-
+editCustomerPhoneNo(newPhoneNo :any){
+  //get current phone no from storage
+let phoneNo="";
   let user = firebase.auth().currentUser;
 let userPhoneRef=firebase.database().ref("customers/"+user.uid);
 
