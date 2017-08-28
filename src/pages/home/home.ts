@@ -17,7 +17,7 @@ public password:any;
   }
 
 gotocreateorder(){
-// this.navCtrl.push(MainPage);
+this.navCtrl.push(MainPage);
 this.auth.phoneLogin('0100','123456');
 }
 gotoforgotpassword(){
