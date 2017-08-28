@@ -6,7 +6,7 @@
   "Email":"البريد الالكتروني",
   "Password":"كلمة المرور",
   "Phone Number":"رقم الهاتف",
-  "Already have an Account?":"لديك حساب؟",
+  "Already have an Account?":" لديك حساب؟ ",
   "Edit":"تعديل",
   "Waiting for automatic detection":"في انتظار الكشف التلقائى",
   "A text message well be sent to your Phone Number":"رسالة نصية ستصل لرقم هاتفك النقال",
@@ -70,6 +70,8 @@
   "Accepted":"تم قبولها",
   "Orders History":"طلبات سابقة",
   "Date":"الميعاد",
-  "comment":"اضف رائيك"
+  "comment":"اضف رائيك",
+  "you must register":"يجب التسجيل اولا",
+  "Login Done sucessfully":"تم الدخول بنجاح"
 
 }
