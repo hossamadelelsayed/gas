@@ -37,10 +37,6 @@ this.events.subscribe('user:created', (user) => {
     }
   });
   
-
-this.navCtrl.push(MainPage);
-this.auth.phoneLogin('0100','123456');
-
 }
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
