@@ -20,7 +20,7 @@ export class WelcomePage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public menuCtrl: MenuController  ) {
-// this.menuCtrl.swipeEnable(false);
+this.menuCtrl.swipeEnable(false);
 this.authService.AnonymousSignIn();
   // this.authService.phoneLogin("0100","123456");
 //
