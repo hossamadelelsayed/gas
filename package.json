@@ -69,7 +69,8 @@
       "ionic-plugin-keyboard": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-camera": {},
-      "cordova-plugin-nativestorage": {}
+      "cordova-plugin-nativestorage": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "android"

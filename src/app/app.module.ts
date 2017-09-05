@@ -53,6 +53,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { DistributorProvider } from '../providers/distributor/distributor';
 import {MainService} from "../providers/main-service";
 
+import * as GeoFire from "geofire";
+import { Geolocation } from '@ionic-native/geolocation';
 
 const firebaseConfig = {
 
@@ -136,6 +138,7 @@ firebase.initializeApp(firebaseConfig);
     StatusBar,
     SplashScreen,
     MainService,
+    Geolocation,
  Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
