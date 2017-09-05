@@ -14,8 +14,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { RegistermemberPage } from './../pages/registermember/registermember';
 import { MainPage } from './../pages/main/main';
-import {TeamregisterPage} from "../pages/teamregister/teamregister";
-import {EditaccountPage} from "../pages/editaccount/editaccount";
+import {TeamregisterPage} from "./../pages/teamregister/teamregister";
+import {EditaccountPage} from "./../pages/editaccount/editaccount";
 
 import { WelcomePage } from './../pages/welcome/welcome';
 import { ConfirmPage } from './../pages/confirm/confirm';
@@ -136,7 +136,7 @@ firebase.initializeApp(firebaseConfig);
     StatusBar,
     SplashScreen,
     MainService,
- Camera, 
+ Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
