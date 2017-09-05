@@ -77,6 +77,7 @@ export class AuthServiceProvider {
         this.fireAuth.signInWithEmailAndPassword(email, password)
           .then(user=>{
             let userId=user.uid;
+            console.log("loged in id",userId);
             this.events.publish('user:created', user);
             this.events.publish('userId', user.uid);
             this.getUserInfo(user.uid,"customers");
@@ -104,9 +105,9 @@ export class AuthServiceProvider {
 
 
   getUserInfo(userId:any ,userType :any){
-  let infoRef=firebase.database().ref(userType+"/"+userId);
-  let self=this;
-  infoRef.once("value")
+    let infoRef=firebase.database().ref(userType+"/"+userId);
+    let self=this;
+    infoRef.once("value")
   .then(function(snapshot) {
     return snapshot.val();
 
@@ -124,13 +125,56 @@ console.log("Anonymous account successfully upgraded", user);
 console.log("Error upgrading anonymous account", error);
 });
 }
-  register(email: string, password: string,name :string,phoneNo:any): any {
 
 
-  return this.fireAuth.createUserWithEmailAndPassword(email, password);
+  register(type:any,email: string, password: string,name :string,phoneNo:any): Promise<any> {
+    let promise = new Promise((resolve, reject )=>{
 
+      let nameEmailRef = firebase.database().ref(phoneNo);
+      //check  if phoneNo entered dont have an email in firebase
+      nameEmailRef.once("value")
+        .then((snapshot) => {
+          if(snapshot.val() ==null ){
+            this.fireAuth.createUserWithEmailAndPassword(email, password)
+              .then((user)=>{
+                let userId=user.uid;
+                let rootRef = firebase.database().ref(type+"/"+userId);
+                rootRef.child("name").set(name).then(()=>{resolve()}).catch((err)=>{reject(err)});
+                rootRef.child("email").set(email).then(()=>{resolve()}).catch((err)=>{reject(err)});
+                rootRef.child("phoneNo").set(phoneNo).then(()=>{resolve()}).catch((err)=>{reject(err)});
+
+                let nameEmailRef = firebase.database().ref(phoneNo);
+                //check  if phoneNo entered dont have an email in firebase
+                nameEmailRef.once("value")
+                  .then((snapshot) =>{
+                    // if(snapshot.val() ==null )    {
+                    let rootRef = firebase.database().ref(type+"/"+userId);
+                    rootRef.child("name").set(name).then(()=>{resolve()}).catch((err)=>{reject(err)});
+                    rootRef.child("email").set(email).then(()=>{resolve()}).catch((err)=>{reject(err)});
+                    rootRef.child("phoneNo").set(phoneNo).then(()=>{resolve()}).catch((err)=>{reject(err)});
+                    // let nameEmailRef = firebase.database().ref(phoneNo);
+                    nameEmailRef.child("email").set(email).then(()=>{resolve()}).catch((err)=>{reject(err)});;
+                    nameEmailRef.child("type").set(type).then(()=>{resolve()}).catch((err)=>{reject(err)});;
+                    //
+                    // }else {
+                    //   console.log("user exist");
+                    //   reject("phone err");
+                    //   // this.userDelet().then(data=>{
+                    //   //   console.log("deleted",data);
+                    //   //   reject("phone err");
+                    //   // });
+                    // }
+
+                  });
+                 resolve(user);
+              }).catch((err)=>{reject(err)});
+            // resolve()
+          }else{reject("phone taken")}
+
+      });
+    });
+    return promise;
   }
-
   //send customer info to database when authentication succses
   submitUserInfo(name:any ,phoneNo :any,userId :any,email:any){
 
@@ -184,12 +228,14 @@ editCustomerName(name :string) : Promise<boolean>{
       resolve(true);
     }).catch((err)=>reject(err));
   });
-  return promise ;
+  return promise;
 
 }
 oldPhoneNo :any;
 
-editCustomerPhoneNo(newPhoneNo :any,user:any) : Promise<boolean>{
+editCustomerPhoneNo(newPhoneNo :any) : Promise<boolean>{
+let user = firebase.auth().currentUser.uid;
+  console.log(user);
   let promise = new Promise((resolve, reject) => {
     let userPhoneRef=firebase.database().ref("customers/"+user);
     userPhoneRef.once("value")
@@ -212,4 +258,19 @@ editCustomerPhoneNo(newPhoneNo :any,user:any) : Promise<boolean>{
   });
   return promise ;
  }
+  getUserName(type: any):Promise<string>{
+    let promise = new Promise((resolve, reject) => {
+      let name="";
+      let user = firebase.auth().currentUser.uid;
+      let ref=firebase.database().ref(type+'/'+user);
+      ref.child("name").once('value').then((snapshot)=>{
+        if (snapshot.val() !=null){
+          name= snapshot.val();
+          resolve(name);
+        }else{reject("user")}
+
+      });
+    });
+    return promise;
+  }
 }

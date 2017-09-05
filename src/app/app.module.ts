@@ -12,6 +12,10 @@ import { ProfilePage } from './../pages/profile/profile';
 
 import { RegistermemberPage } from './../pages/registermember/registermember';
 import { MainPage } from './../pages/main/main';
+import {TeamregisterPage} from "../pages/teamregister/teamregister";
+import {EditaccountPage} from "../pages/editaccount/editaccount";
+
+
 import { WelcomePage } from './../pages/welcome/welcome';
 import { ConfirmPage } from './../pages/confirm/confirm';
 import { ForgotpasswordPage } from './../pages/forgotpassword/forgotpassword';
@@ -84,7 +88,7 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage
+    OrderlaterPage,EditaccountPage,TeamregisterPage
 
   ],
   imports: [
@@ -124,14 +128,14 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage
+    OrderlaterPage,EditaccountPage,TeamregisterPage
 
   ],
   providers: [
     StatusBar,
     SplashScreen,
     MainService,
-  
+
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
