@@ -2,7 +2,7 @@ import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from "firebase";
 import * as GeoFire from "geofire";
@@ -33,7 +33,8 @@ export class MainPage {
   markerRef:any;
   myLatLng:any;
   hits = new BehaviorSubject([])
-  constructor(public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams,
+              public menuCtrl: MenuController ) {
 /// Reference database location for GeoFire
 
 
@@ -121,8 +122,13 @@ self.myLatLng ={lat:location[0],lng:location[1]};
 
 gotocreatorder(){
 // Create a Firebase reference where GeoFire will store its information
+this.navCtrl.push(CreateorderPage);
 
 }
 current:any;
+toggleMenu()
+  {
+    this.menuCtrl.toggle();
+  }
 
 }
