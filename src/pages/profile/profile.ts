@@ -5,6 +5,7 @@ import { PaywayPage } from './../payway/payway';
 import { AddcardPage } from './../addcard/addcard';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController,Platform} from 'ionic-angular';
+import {EditaccountPage} from "./../editaccount/editaccount";
 
 @Component({
   selector: 'page-profile',
@@ -36,6 +37,9 @@ addaddresses(){
 toggleMenu()
 {
   this.menuCtrl.toggle();
+}
+gotoeditaccount(){
+this.navCtrl.push(EditaccountPage);
 }
 exit(){
   this.platform.exitApp();

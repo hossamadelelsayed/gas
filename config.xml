@@ -87,5 +87,9 @@
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="cordova-plugin-nativestorage" spec="^2.2.2" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
+<<<<<<< HEAD
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3" />
+=======
+    <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
+>>>>>>> 90e960eb25bd40ecaf0d0db38194ec8f433cf514
 </widget>
