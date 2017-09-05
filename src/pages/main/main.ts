@@ -15,6 +15,7 @@ export class MainPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public menuCtrl: MenuController ) {
+                this.menuCtrl.swipeEnable(true);
   }
 
   ionViewDidLoad() {
