@@ -1,8 +1,7 @@
-<ion-menu [content]="nav" *ngIf="MainService.lang == 'ar'">
+<ion-menu [content]="nav">
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-    </ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
   <ion-content>
@@ -14,26 +13,11 @@
       <button ion-item class="menu" (click)="onLoad(settingsPage)">{{'Settings'|translate}}</button>
       <button ion-item class="menu" (click)="onLoad(callusPage)">{{'Call us'|translate}}</button>
       <button ion-item class="menu" (click)="onLoad(aboutaprogramPage)">{{'About'|translate}}</button>
+      <button ion-item class="menu" (click)="onLoad(registermemberPage)">{{'Register'|translate}}</button>
+      <button ion-item class="menu" (click)="onLoad(teamregisterPage)">{{'Join Our Team'|translate}}</button>
     </ion-list>
   </ion-content>
 </ion-menu>
-<ion-menu [content]="nav" *ngIf="MainService.lang == 'en'">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title></ion-title>
-      </ion-toolbar>
-    </ion-header>
-      <ion-content>
-        <img class="logo" src="assets/imgs/agent_pin.png">
-        <ion-list no-lines>
-          <button ion-item class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
-          <button ion-item class="menu" (click)="onLoad(profilePage)">{{'Profile'|translate}}</button>
-          <button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notifications'|translate}}</button>
-          <button ion-item class="menu" (click)="onLoad(settingsPage)">{{'Settings'|translate}}</button>
-          <button ion-item class="menu" (click)="onLoad(callusPage)">{{'Call us'|translate}}</button>
-          <button ion-item class="menu" (click)="onLoad(aboutaprogramPage)">{{'About'|translate}}</button>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
+
 
 <ion-nav [root]="welcomePage "#nav></ion-nav>
