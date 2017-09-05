@@ -89,8 +89,9 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage,EditaccountPage,TeamregisterPage
-
+    OrderlaterPage,
+    EditaccountPage,
+    TeamregisterPage
   ],
   imports: [
     BrowserModule,
@@ -129,7 +130,9 @@ firebase.initializeApp(firebaseConfig);
     NotificationsPage,
     SelectagentPage,
     TermsandprivacyPage,
-    OrderlaterPage,EditaccountPage,TeamregisterPage
+    OrderlaterPage,
+    EditaccountPage,
+    TeamregisterPage
 
   ],
   providers: [

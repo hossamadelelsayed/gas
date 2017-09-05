@@ -4,7 +4,9 @@ import { CallusPage } from './../pages/callus/callus';
 import { HistoryPage } from './../pages/history/history';
 import { WelcomePage } from './../pages/welcome/welcome';
 import { ProfilePage } from './../pages/profile/profile';
+import { RegistermemberPage } from './../pages/registermember/registermember';
 
+import {TeamregisterPage} from "./../pages/teamregister/teamregister";
 import { Component,ViewChild } from '@angular/core';
 import {Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -28,6 +30,8 @@ export class MyApp {
   callusPage=CallusPage;
   notificationsPage=NotificationsPage;
   aboutaprogramPage=AboutaprogramPage
+  teamregisterPage=TeamregisterPage;
+  registermemberPage=RegistermemberPage;
   @ViewChild('nav') nav:NavController;
    public  MainService = MainService;
   constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public translate : TranslateService ,
