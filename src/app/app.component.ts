@@ -45,7 +45,5 @@ export class MyApp {
 this.nav.push(page);
 this.menuCtrl.close();
   }
-  
+
 }
-
-

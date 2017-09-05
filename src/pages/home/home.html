@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<ion-header>
+  <meta charset="utf-8">
+  <ion-navbar>
+    <ion-title style="background-color: white">
+     <button ion-button clear class="Skip" (click)="gotocreateorder()" >{{'Skip'|translate}}</button>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+   <img src="assets/imgs/login_logo.png"> 
+ <form #f="ngForm" >
+   <ion-list no-lines class="li" >
+  <ion-row>
+     <ion-col col-1>
+   <ion-icon ios="ios-call" md="ios-call-outline"></ion-icon>
+     </ion-col>
+     <ion-col col-11>
+       <ion-item>
+    <ion-input  [(ngModel)]="mobile" type="number" name="mobile" required placeholder="{{'Phone Number'| translate}}" pattern="[0-9]*" ></ion-input>
+       </ion-item>
+     </ion-col >
+      
+   </ion-row>
+   <ion-row>
+     <ion-col col-1>
+     <ion-icon class="icon" ios="ios-lock" md="ios-lock-outline"></ion-icon>
+     </ion-col>
+     <ion-col col-11>
+       <ion-item>
+    <ion-input  [(ngModel)]="password" type="password" name="password" required placeholder="{{'Password'|translate}}" ></ion-input>
+       </ion-item>
+     </ion-col>  
+   </ion-row> 
+   
+    <button [disabled]="!f.valid"  class="enter" ion-button block round (click)="gotocreateorder()" >{{'Login'|translate}}</button>
+    <button class="fpass" ion-button  clear (click)="gotoforgotpassword()">{{'Forgot Password'|translate}}</button>
+    <div class="new">
+    <p>{{'Create acount'|translate}}<span
+     class="reg" (click)="gotoreg()" >{{'Signup now'|translate}}</span></p>
+    </div>
+    </ion-list>
+ </form>
+</ion-content>
