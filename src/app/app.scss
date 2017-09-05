@@ -5,6 +5,7 @@
     font-family: cairo;
     color: gray;
     font-size: 1.7rem;
+  
     
 }
 .header-md::after{
@@ -60,12 +61,16 @@ padding: 24px 4px 11px 4px;}
      float: left;
 }
 @font-face {
+  font-family: 'Lora-Regular';
+  src: url('../assets/fonts/en/Lora-Regular.ttf') ;
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: 'Cairo-Regular';
   src: url('../assets/fonts/ar/Cairo-Regular.ttf') ;
   font-weight: normal;
   font-style: normal;
-
-  
 }
 [dir="rtl"] :not(ion-icon) {
   font-family: 'Cairo-Regular' !important;
@@ -89,7 +94,7 @@ padding: 24px 4px 11px 4px;}
 .lab{
             padding-right: 30px;
        padding-left: 30px;
-        margin-bottom: -44px;
+        margin-bottom: -26px;
     }
   [dir="ltr"] .lab{
             padding-right: 30px;
@@ -135,6 +140,27 @@ padding: 24px 4px 11px 4px;}
     color: gray;
     float: right;
 }
+.back-button-md.show-back-button {
+    display: none;
+}
+
+.back-button-ios.show-back-button{
+    display:none;
+}
+[dir="ltr"] .bar-button[icon-only]{
+    transform: rotate(180deg);
+}
+.titlename{
+    color: gray;
+    text-align: center;
+    padding-right: 40px;
+}
+[dir="ltr"] .titlename{
+        color: gray;
+        text-align: center;
+       padding-left: 40px;
+}
+
 $color-primary :#ff8d15;
 $color-background:#f5f7f9;
 // App Global Sass

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
 import{AddcardPage} from "../addcard/addcard";
 
 @Component({
@@ -8,11 +8,15 @@ import{AddcardPage} from "../addcard/addcard";
 })
 export class OrderlaterPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,  public menuCtrl: MenuController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderlaterPage');
   }
 gotoaddcard(){this.navCtrl.push(AddcardPage);}
+toggleMenu()
+{
+  this.menuCtrl.toggle();
+}
 }

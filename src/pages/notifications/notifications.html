@@ -1,12 +1,16 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar> <ion-buttons right>
+      <button ion-button navPop icon-only>
+          <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
     <ion-title >
       <ion-row>
         <ion-col text-center col-1>
-      <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+      <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
        <ion-col class="titlename" col-10>
-       {{'Notification'|translate}}
+       {{'Notifications'|translate}}
        </ion-col>
        <ion-col text-center col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
@@ -18,18 +22,19 @@
 
 
 <ion-content padding>
+  
 <ion-list >
   <ion-row>
-    <ion-item  style="background-color: gainsboro;">
-      <h5 class="h">تم قبول طلبك برقم 355655</h5>
+    <ion-item  style="background-color: #F2F2F2;">
+      <h5 class="h">{{'Your request accepted Number '|translate}}355655</h5>
       <h6 class="h2">20/5/2017</h6>
     </ion-item>
     <ion-item>
-      <h5 class="h">تم رفض طلبك من قبل الموزع برقم 45886</h5>
+      <h5 class="h">{{'Order rejected by distributor Number '|translate}}45886</h5>
       <h6 class="h2">20/5/2017</h6>
     </ion-item>
-    <ion-item  style="background-color: gainsboro;">
-      <h5 class="h">تم توصيل الانبوبة بنجاح برقم 6456456456</h5>
+    <ion-item  style="background-color: #F2F2F2;">
+      <h5 class="h">{{'A cylinder successfully delivered Number '|translate}}6456456456</h5>
       <h6 class="h2">20/5/2017</h6>
     </ion-item>
   </ion-row>

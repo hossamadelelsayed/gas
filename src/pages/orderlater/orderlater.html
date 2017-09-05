@@ -1,10 +1,15 @@
 
 <ion-header>
   <ion-navbar>
+      <ion-buttons right>
+          <button ion-button navPop icon-only>
+              <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+          </button>
+      </ion-buttons>
     <ion-title>
       <ion-row>
         <ion-col text-center col-1>
-       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+       <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
        <ion-col class="titlename" col-10>
 {{'New Order'|translate}}
@@ -20,7 +25,7 @@
 <ion-grid>
 <ion-list no-lines>
 <h4>{{'Number of cylinders'|translate}}</h4>
-<ion-row>
+<ion-row style="height:47px;">
   <ion-col col-4 >
   <button class="plus" ion-button round icon-only>
 <ion-icon  name="ios-add"></ion-icon></button></ion-col>
@@ -30,13 +35,13 @@
   </ion-col>
 </ion-row>
   <hr>
-<ion-row>
-<ion-col><h4 >{{'Confirm your location'|translate}}</h4></ion-col>
+<ion-row style="height:34px;">
+<ion-col><h5>{{'Confirm your location'|translate}}</h5></ion-col>
 <ion-col><button class="btchange" ion-button round>{{'Change'|translate}}
   </button></ion-col>
     </ion-row><ion-row> <h4 style="color: gray;">شارع الملك سليمان حي العرب</h4></ion-row> 
   <hr>
-  <ion-row>
+  <ion-row style="height:34px;">
 <ion-col><h4 >{{'Date'|translate}}</h4></ion-col>
 <ion-col><button class="btchange" ion-button round>{{'Change'|translate}}
   </button></ion-col>
@@ -49,10 +54,10 @@
 
    <ion-label class="lab"><span>{{'Cash'|translate}}</span></ion-label>
   <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
-  <br>
+  
    <ion-label class="lab" >Visa 455656*****</ion-label>
   <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
-  <br>
+  
   <button class="addpay" ion-button clear> <ion-icon class="plusicon" name="ios-add"></ion-icon>
   <span (click)="gotoaddcard()">{{'Add pay way'|translate}}</span></button>
 </form>

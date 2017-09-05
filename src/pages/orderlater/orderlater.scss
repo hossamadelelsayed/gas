@@ -40,7 +40,7 @@ page-orderlater {
     border-radius: 36px;
         height: 30px;
     margin-top: 6px;
-    padding-top: 5px;
+    padding-top: 1px;
     color: $color-primary;
         font-size: 1.7rem;
 }
@@ -84,11 +84,11 @@ page-orderlater {
             font-size: 1.8rem;
     }
     .check{
-     background-color:aliceblue;
+     background-color:$color-background;
     margin-right: -33px;
     color: gray;
-   
+   margin-bottom: -7px;
     }
-    
+  
    
 }

@@ -3,6 +3,8 @@ import * as firebase from "firebase";
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 // import {NavController} from 'ionic-angular';
 
 /*
@@ -15,7 +17,7 @@ import { Events } from 'ionic-angular';
 export class AuthServiceProvider {
   public fireAuth: any;
   public userData: any;
-  constructor(public http: Http,private events :Events) {
+  constructor(private storage:Storage, public http: Http,private events :Events) {
     this.fireAuth = firebase.auth();
      this.userData = firebase.database().ref('customers');
   }
@@ -38,45 +40,55 @@ export class AuthServiceProvider {
       });
 
   }
-  phoneLogin(phoneNo:any,password :any){
+  phoneLogin(phoneNo:any,password :any): Promise <string>{
 
-    let typeRef = firebase.database().ref(phoneNo);
+    let self=this;
 
-let self=this;
-    typeRef.once("value")
-      .then(function(snapshot) {
+    let promise = new Promise((resolve, reject )=>{
+      let typeRef = firebase.database().ref(phoneNo);
+      typeRef.once("value")
+        .then(function(snapshot) {
 
-        let type = snapshot.child("type").val();
+          let type = snapshot.child("type").val();
+
+          let email : string = snapshot.child("email").val();
+          if(email!=null){  resolve(email);}
+          else
+            reject({message:"Invalid Phone Number"});
+          console.log("ee",email);
+          self.events.publish('email status', email);
+          self.events.publish('type', type);
+
+        });
+
+    });
 
 
-let email = snapshot.child("email").val();
 
-self.doLogin(email,password);
-
-
-      });
-  // return this.fireAuth.signInWithEmailAndPassword(email, password);
+    return promise;
   }
+
+
 
   //login and returns err msg if err occare
-  doLogin(email: string, password: string): any {
-    console.log("email ",email);
-    console.log("pass ",password);
-
-    return this.fireAuth.signInWithEmailAndPassword(email, password)
-    .then(user=>{
-      let userId=user.uid;
-      console.log("uid ",user.uid);
-      console.log("virification ",user.emailVerified);
-      console.log("user ",user);
-      this.events.publish('user:created', user);
-
-this.getUserInfo(user.uid,"customers");
-
-    }).catch(err=>
-    {
+  doLogin(phoneNo: string, password: string): Promise <string>{
+    let promise = new Promise((resolve, reject )=>{
+      this.phoneLogin(phoneNo,password).then(email=>{
+        this.fireAuth.signInWithEmailAndPassword(email, password)
+          .then(user=>{
+            let userId=user.uid;
+            this.events.publish('user:created', user);
+            this.events.publish('userId', user.uid);
+            this.getUserInfo(user.uid,"customers");
+            resolve('');
+          })  .catch((err)=>reject(err));
+      }).catch((err)=>reject(err));
     });
+
+    return promise;
+
   }
+
   //signIn annonimously beforelogin
   AnonymousSignIn(){
     return this.fireAuth.signInAnonymously().catch(function(error) {
@@ -92,9 +104,9 @@ this.getUserInfo(user.uid,"customers");
 
 
   getUserInfo(userId:any ,userType :any){
-let infoRef=firebase.database().ref(userType+"/"+userId);
-let self=this;
-infoRef.once("value")
+  let infoRef=firebase.database().ref(userType+"/"+userId);
+  let self=this;
+  infoRef.once("value")
   .then(function(snapshot) {
     return snapshot.val();
 
@@ -116,22 +128,12 @@ console.log("Error upgrading anonymous account", error);
 
 
   return this.fireAuth.createUserWithEmailAndPassword(email, password);
-//     .then((newUser) => {
-//     this.userData.child(newUser.uid).set({email: email});
-// let      user = firebase.auth().currentUser;
-// this.submitUserInfo(name,phoneNo,user.uid,email);
-//       user.sendEmailVerification().then(function() {
-//        // Email sent.
-//       }).catch(function(error) {
-// this.events.publish('vrification error', error);
-//       });
-//     }).catch(function(error) {
-//       this.events.publish('registretion error', error);
-//     });
+
   }
 
   //send customer info to database when authentication succses
   submitUserInfo(name:any ,phoneNo :any,userId :any,email:any){
+
     let rootRef = firebase.database().ref("customers/"+userId);
      rootRef.child("name").set(name);
      rootRef.child("email").set(email);
@@ -166,52 +168,48 @@ doLogout(): any {
 
 
 //get current user profile and delet it
-userDelet(){
+userDelet():any{
 
   //get current user
   let user = firebase.auth().currentUser;
 
-  user.delete().then(function() {
-    // User deleted.
-  }).catch(function(error) {
-    console.log("user delet error msg",error);
-    // An error happened.
-  });
+return  user.delete();
 }
 ////////////////////////////////////////////////////////////update user informations///////////////////////////////////////////////////
-editCustomerName(name :string){
-  let user = firebase.auth().currentUser;
-let userNameRef=firebase.database().ref("customers/"+user.uid);
-userNameRef.child("name").set(name);
-}
-
-
-editCustomerPhoneNo(phoneNo :any,newPhoneNo :any){
-
-  let user = firebase.auth().currentUser;
-let userPhoneRef=firebase.database().ref("customers/"+user.uid);
-
-userPhoneRef.once("value")
-  .then(function(snapshot) {
-
-    let phoneNoVal = snapshot.child("phoneNo").val();
-    console.log("phone value",phoneNoVal);
-
-    let ref=firebase.database().ref();
-    var child = ref.child(phoneNoVal);
-    child.once('value', function(snapshot) {
-
-      ref.child(newPhoneNo+"/email").set(snapshot.val());
-
-      if(  ref.child(newPhoneNo+"/email").key !=  ref.child(phoneNoVal).key)
-      {
-        child.remove();
-
-      }
-
-    });
-    userPhoneRef.child("phoneNo").set(newPhoneNo);
+editCustomerName(name :string) : Promise<boolean>{
+  let promise = new Promise((resolve, reject) => {
+    let user = firebase.auth().currentUser.uid;
+    let userNameRef=firebase.database().ref("customers/"+user);
+    userNameRef.child("name").set(name).then(()=>{
+      resolve(true);
+    }).catch((err)=>reject(err));
   });
+  return promise ;
 
 }
+oldPhoneNo :any;
+
+editCustomerPhoneNo(newPhoneNo :any,user:any) : Promise<boolean>{
+  let promise = new Promise((resolve, reject) => {
+    let userPhoneRef=firebase.database().ref("customers/"+user);
+    userPhoneRef.once("value")
+      .then((snapshot)=>{
+        let phoneNoVal = snapshot.child("phoneNo").val();
+        console.log("phone value",phoneNoVal);
+        let ref=firebase.database().ref();
+        let child = ref.child(phoneNoVal);
+        child.once('value').then((oldPhonesnapshot)=>{
+          ref.child(newPhoneNo).set(oldPhonesnapshot.val()).then(()=>{
+            if(  ref.child(newPhoneNo+"/email").key !=  ref.child(phoneNoVal).key)
+              child.remove().then(()=>{
+                userPhoneRef.child("phoneNo").set(newPhoneNo).then(()=>{
+                  resolve(true);
+                }).catch((err)=>reject(err));
+              }).catch((err)=>reject(err));
+          }).catch((err)=>reject(err));
+        }).catch((err)=>reject(err))
+      }).catch((err)=>reject(err))
+  });
+  return promise ;
+ }
 }

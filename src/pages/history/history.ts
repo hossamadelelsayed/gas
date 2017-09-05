@@ -1,6 +1,6 @@
 import { DetailsrequestPage } from './../detailsrequest/detailsrequest';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HistoryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController ) {
   }
 
   ionViewDidLoad() {
@@ -17,5 +17,9 @@ export class HistoryPage {
   }
 gotodetailsrequest(){
   this.navCtrl.push(DetailsrequestPage);
+}
+toggleMenu()
+{
+  this.menuCtrl.toggle();
 }
 }

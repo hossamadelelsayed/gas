@@ -1,9 +1,13 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar> <ion-buttons right>
+      <button ion-button navPop icon-only>
+          <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
     <ion-title >
       <ion-row>
         <ion-col text-center  col-1>
-       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+       <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
        <ion-col class="titlename" col-10>
          {{'Profile'|translate}}
@@ -17,8 +21,8 @@
 </ion-header>
 <ion-content padding>
   <img class="imgd" src="assets/imgs/agent_pin.png">
-  <h4>اسم العميل</h4>
-<ion-list >
+  <h4 style="margin-top: 2px;">اسم العميل</h4>
+<ion-list style="margin-top: 40px;" >
 
   <ion-row >
     <ion-col col-1><img src="assets/imgs/profile_edit_profile.png"></ion-col>
@@ -44,7 +48,7 @@
 </ion-col>
   </ion-row>
       <hr>
-       <ion-row>
+       <ion-row (click)="exit()">
     <ion-col col-1><img src="assets/imgs/profile_logout.png"></ion-col>
     <ion-col col-10> <h5>{{'Log Out'|translate}}</h5></ion-col>
        <ion-col col-1>     <ion-icon class="arrow" name="arrow-back"></ion-icon>

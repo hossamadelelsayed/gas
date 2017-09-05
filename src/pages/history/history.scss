@@ -5,10 +5,11 @@ page-history {
     }
   .titlename{
       color: gray;
- 
       text-align: center;
   }
-
+.agen{
+    color: gray;
+}
   
 .logo{
      width: 20%;
@@ -40,17 +41,12 @@ page-history {
     margin-right: 0px;
 }
 
-.reqno{
-     text-align: center;
-   
-       direction: ltr;
-    
 
-}
 .row{
        background-color: white;
     border-radius: 12px;
-    margin-top: -7px;
+    margin-top: 12px;
+    margin-left: 9px;
 }
 .linder{
      width: 8%;
@@ -64,6 +60,9 @@ page-history {
    margin: auto;
     display: block; 
    
+}
+.ordernumber{
+    margin-top: 10px;
 }
 .pending{
    width: 8%;

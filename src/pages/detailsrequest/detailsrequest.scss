@@ -60,7 +60,7 @@ color: $color-primary;
     font-size: 2rem;
 }
  .back-button-md.show-back-button {
-    display: none;
+    color: gray;
 }
 .back-button-text-ios {
  
@@ -68,5 +68,8 @@ color: $color-primary;
 }
 .back-button-ios.show-back-button{
     color: gray;
+}
+.row{
+    height: 47px;
 }
 }

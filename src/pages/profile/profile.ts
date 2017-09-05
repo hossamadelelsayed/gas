@@ -4,7 +4,7 @@ import { FollowrequestPage } from './../followrequest/followrequest';
 import { PaywayPage } from './../payway/payway';
 import { AddcardPage } from './../addcard/addcard';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController,Platform} from 'ionic-angular';
 
 @Component({
   selector: 'page-profile',
@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public platform: Platform) {
   }
 
   ionViewDidLoad() {
@@ -32,5 +32,13 @@ gotosettings(){
 }
 addaddresses(){
   this.navCtrl.push(AddressPage);
+}
+toggleMenu()
+{
+  this.menuCtrl.toggle();
+}
+exit(){
+  this.platform.exitApp();
+  console.log('exit');
 }
 }

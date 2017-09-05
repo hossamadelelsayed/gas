@@ -1,13 +1,17 @@
 <ion-header>
   <ion-navbar>
-
+    <ion-buttons right>
+        <button ion-button navPop icon-only>
+            <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
     <ion-title >
       <ion-row>
         <ion-col text-center  col-1>
-       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+       <ion-icon ios="ios-menu" md="md-menu" (click)="toggleMenu()"></ion-icon>
        </ion-col>
        <ion-col class="titlename"  col-10>
-      {{current}}
+      {{'Gas Ksa'|translate}} 
        </ion-col>
        <ion-col text-center col-1>
  <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
@@ -15,14 +19,13 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content  fill>
-  <div #map id="map"></div>
-
-  <ion-footer>
+<ion-content  padding>
+  <ion-footer style="margin-bottom: 10px">
     <div class="buttons">
       <button class="reqnow" ion-button round (click)="gotocreatorder()" >{{'Order now'|translate}}</button>
-
-
+ <button class="reqlater" ion-button round><ion-datetime style="width: 0;" displayFormat="DDD/MMM/h/mm/A" [(ngModel)]="myDate"></ion-datetime>{{'Order later'|translate}}</button>
+  
+  
   </div>
   </ion-footer>
 </ion-content>

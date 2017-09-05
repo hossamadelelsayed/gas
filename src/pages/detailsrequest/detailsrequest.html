@@ -1,14 +1,18 @@
 
 <ion-header>
-  <ion-navbar>
+  <ion-navbar> <ion-buttons right>
+      <button ion-button navPop icon-only>
+          <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
     <ion-title class="titlename">{{'Order Details'|translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 <ion-content padding>
   <ion-list>
-    <ion-row>
-<img src="assets/imgs/agent_pin.png">
+    <ion-row style="height: 75px !important;">
+<img style="height: 90px;width: 90px;" src="assets/imgs/agent_pin.png">
 
 <div class="dstar">
   <h5 style="font-family: cairo; color: gray">{{'agent name'|translate}}</h5>

@@ -1,10 +1,15 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title  style="font-family: cairo" >
-      <ion-row>
+      <ion-buttons right>
+          <button ion-button navPop icon-only>
+              <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+          </button>
+      </ion-buttons>
+    <ion-title>
+      <ion-row style="padding-top:9px;">
         <ion-col text-center col-1>
-      <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+      <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
        <ion-col class="titlename" col-10>
       {{'Settings'|translate}}
@@ -26,24 +31,35 @@
       <img src="assets/imgs/profile_edit_profile.png">
     </ion-col>
     <ion-col col-10>
-   {{'Notification'|translate}}
+   {{'Notifications'|translate}}
     </ion-col>
     <ion-col col-1>
      <ion-icon class="arrow" name="arrow-back"></ion-icon>
     </ion-col>
   </ion-row>
   <hr>
-  <ion-row (click)="chlang()">
+  <ion-row *ngIf="MainService.lang == 'en'"> 
     <ion-col col-1>
       <img src="assets/imgs/profile_edit_profile.png">
     </ion-col>
-    <ion-col col-10>
+    <ion-col col-9>
       {{'Language'|translate}}
     </ion-col>
-    <ion-col col-1>
-      <ion-icon class="arrow" name="arrow-back"></ion-icon>
+    <ion-col col-2>
+      <ion-toggle [(ngModel)]="toggleStatus"  checked="true" (ionChange)="Change_Toggle('ar');"></ion-toggle>
     </ion-col>
   </ion-row>
+  <ion-row *ngIf="MainService.lang == 'ar'"> 
+      <ion-col col-1>
+        <img src="assets/imgs/profile_edit_profile.png">
+      </ion-col>
+      <ion-col col-9>
+        {{'Language'|translate}}
+      </ion-col>
+      <ion-col col-2>
+        <ion-toggle [(ngModel)]="toggleStatus"  checked="true" (ionChange)="Change_Toggle('en');"></ion-toggle>
+      </ion-col>
+    </ion-row>
   <hr>
   <ion-row (click)="gototermsandprivacy()">
     <ion-col col-1>

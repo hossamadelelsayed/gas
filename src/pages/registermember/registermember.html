@@ -11,7 +11,7 @@
 <ion-content padding >
    <img src="assets/imgs/login_logo.png"> 
  <form #f="ngForm" >
-   <ion-list no-lines class="li" >
+   <ion-list no-lines>
    <ion-row>
      <ion-col col-1>
    <ion-icon ios="ios-person" md="ios-person-outline"></ion-icon>
@@ -36,16 +36,12 @@
      <ion-col col-1>
    <ion-icon ios="ios-call" md="ios-call-outline"></ion-icon>
      </ion-col>
-     <ion-col col-7>
+     <ion-col col-11>
        <ion-item>
     <ion-input   type="number" placeholder="{{'Phone Number'| translate}}" pattern="[0-9]*" maxlength="14"></ion-input>
        </ion-item>
      </ion-col >
-      <ion-col col-4>
-         <ion-item>
-    <ion-input   type="number" placeholder="+966" ></ion-input>
-       </ion-item> 
-      </ion-col>
+    
    </ion-row>
    <ion-row>
      <ion-col col-1>
@@ -57,7 +53,7 @@
        </ion-item>
      </ion-col>  
    </ion-row> 
-    <button class="enter" ion-button block round (click)="gotoconfirm()" > {{'Signup'| translate}}</button>
+    <button class="enter" ion-button block round  > {{'Signup'| translate}}</button>
 
     <ion-row class="new">
     <p> {{'Already have an Account?'| translate}}<span

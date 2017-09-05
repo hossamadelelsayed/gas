@@ -1,12 +1,16 @@
 
 <ion-header style="
     background-color: white;">
-    <ion-navbar>
+    <ion-navbar> <ion-buttons right>
+        <button ion-button navPop icon-only>
+            <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
  <ion-title >
    
       <ion-row>
         <ion-col text-center  col-1>
-           <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+           <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
        <ion-col class="titlename" col-10>
        {{'History'|translate}}
@@ -34,10 +38,17 @@
   <ion-card-header class="head" >
   </ion-card-header>
   <ion-card-content (click)="gotodetailsrequest()">
-   <p class="reqno">  1454545 {{'Order Number'|translate}} </p><br>
-     <img  class="logo" src="assets/imgs/agent_pin.png"><br>
-   <p class="mo">{{'agent name'|translate}}: احمد السعد</p><br>
-   <p class="time">14 jan 2017 -10:45AM</p>
+   <ion-row>
+     <ion-col col-3 style="height: 80px;">
+            <img style="height: 70px;
+            width: 70px;" src="assets/imgs/agent_pin.png"><br>
+     </ion-col>
+     <ion-col col-9>
+          <p class="ordernumber">  {{'Order Number'|translate}} 1454545 </p>
+   <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
+     </ion-col>
+      <p class="time">14 jan 2017 -10:45AM</p>
+   </ion-row>
   </ion-card-content>
 </ion-card>
 <ion-row class="row">
@@ -50,11 +61,18 @@
   <ion-card-header class="head" >
   
   </ion-card-header>
-  <ion-card-content  (click)="gotodetailsrequest()" >
-   <p class="reqno">  1454545 {{'Order Number'|translate}} </p><br>
-     <img  class="logo" src="assets/imgs/agent_pin.png"><br>
-   <p class="mo">{{'agent name'|translate}}: احمد السعد</p><br>
-   <p class="time">14 jan 2017 -10:45AM</p>
+ <ion-card-content (click)="gotodetailsrequest()">
+   <ion-row>
+     <ion-col col-3 style="height: 80px;">
+            <img style="height: 70px;
+            width: 70px;" src="assets/imgs/agent_pin.png"><br>
+     </ion-col>
+     <ion-col col-9>
+          <p class="ordernumber"> {{'Order Number'|translate}}  1454545 </p>
+   <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
+     </ion-col>
+      <p class="time">14 jan 2017 -10:45AM</p>
+   </ion-row>
   </ion-card-content>
 </ion-card>
 <ion-row class="row">

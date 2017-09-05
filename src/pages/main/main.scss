@@ -3,26 +3,20 @@ page-main {
     display: none;
 }
 .back-button-text-ios {
-
+ 
     display: none;
 }
 .back-button-ios.show-back-button{
     color:$color-primary;
 }
-
-      #map {
-        width: 100%;
-        height: 100%;
-      }
- 
 .content{
-  // background: url("../assets/imgs/map.png");
+  background: url("../assets/imgs/map.png");
 
 }
 .titlename{
     text-align: center;
     color: gray;
-
+        
 }
 
 .reqnow{
@@ -30,14 +24,14 @@ page-main {
     height: 59px;
     width: 40%;
     font-size: 2rem;
-
+   
 }
 .reqlater{
         background-color: #333333;
     height: 59px;
     width: 40%;
     font-size: 2rem;
-
+       
 }
 
 .footer-md::before{
@@ -49,5 +43,5 @@ page-main {
     .buttons{
        text-align: center;
     }
-
+    
 }
