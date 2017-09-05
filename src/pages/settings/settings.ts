@@ -6,7 +6,7 @@ import{AboutaprogramPage}from "../aboutaprogram/aboutaprogram";
 import {TermsandprivacyPage} from "../termsandprivacy/termsandprivacy";
 import {TranslateService} from "@ngx-translate/core";
 import {MainService} from "../../providers/main-service";
-import { NativeStorage } from '@ionic-native/native-storage';
+
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html',
@@ -18,8 +18,7 @@ export class SettingsPage {
      public navParams: NavParams,
      public platform: Platform,
      private translate: TranslateService,
-     public menuCtrl: MenuController,
-     private nativeStorage: NativeStorage  ) {
+     public menuCtrl: MenuController  ) {
 
   }
 

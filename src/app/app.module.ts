@@ -47,7 +47,7 @@ import { Events } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { DistributorProvider } from '../providers/distributor/distributor';
 import {MainService} from "../providers/main-service";
-import { NativeStorage } from '@ionic-native/native-storage';
+
 
 const firebaseConfig = {
 
@@ -131,7 +131,7 @@ firebase.initializeApp(firebaseConfig);
     StatusBar,
     SplashScreen,
     MainService,
-    NativeStorage,
+  
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
