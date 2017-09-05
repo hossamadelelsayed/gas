@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<!--
+  Generated template for the TeamregisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
 <ion-header>
   <meta charset="utf-8">
   <ion-navbar>
@@ -9,7 +14,10 @@
 </ion-header>
 
 <ion-content padding >
-   <img src="assets/imgs/login_logo.png"> 
+   <div style="text-align: center;">
+     <img src="assets/imgs/login_logo.png">
+     <!--<button  class="upload"ion-button clear class="upload" (click)="openCamera()">{{'Upload profile image'|translate}}</button> -->
+  </div>
  <form #f="ngForm" >
    <ion-list no-lines>
    <ion-row>
@@ -21,7 +29,7 @@
     <ion-input [(ngModel)]="name" id="name" name="name" type="text" placeholder="{{'Full Name'| translate}}" ></ion-input>
      <p style="color:orange;font-size:15px" *ngIf="name ==''">{{'Please enter Your Full Name'|translate}}</p>
        </ion-item>
-     </ion-col> 
+     </ion-col>
    </ion-row>
     <ion-row>
      <ion-col col-1>
@@ -31,7 +39,7 @@
        <ion-item>
     <ion-input [(ngModel)]="email" id="email"name="email" type="email" placeholder="{{'Email'|translate}}" ></ion-input>
        </ion-item>
-     </ion-col> 
+     </ion-col>
    </ion-row>
      <ion-row>
      <ion-col col-1>
@@ -51,10 +59,10 @@
        <ion-item>
     <ion-input  [(ngModel)]="password" id="password" name="password" type="password" placeholder="{{'Password'| translate}}" ></ion-input>
        </ion-item>
-     </ion-col>  
-   </ion-row> 
+     </ion-col>
+   </ion-row>
+    <!--<button ion-button clear (click)="openCamera()" style="width:100%;color:orange"> {{'Upload ID Photos'| translate}}</button>    -->
     <button class="enter" [disabled]="!name|| !email|| !password|| !phone" ion-button block round (click)="gotoconfirm()" > {{'Signup'| translate}}</button>
-
     <ion-row class="new">
     <p> {{'Already have an Account?'| translate}}<span
       class="reg"(click)="gotohome()" >{{'Login'| translate}} </span></p>

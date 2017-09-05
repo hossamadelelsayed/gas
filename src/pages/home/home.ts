@@ -16,46 +16,19 @@ export class HomePage {
 public mobile:any;
 public password:any;
   constructor(public navCtrl: NavController,private auth:AuthServiceProvider,private events:Events,
-  private toastCtrl: ToastController,   public translateService : TranslateService) {
-
+  private toastCtrl: ToastController,   public translateService : TranslateService ) {
+    this.auth.AnonymousSignIn();
   }
 
-gotocreateorder(){
-
-  let self=this;
-// this.auth.phoneLogin(this.mobile,this.password);
-this.auth.phoneLogin('01000','123456');
-this.events.subscribe('email status', (user) => {
-  self.auth.userDelet();
-    // user and time are the same arguments passed in `events.publish(user, time)`
-    console.log("llll",user);
-    if(user.email){
-     self.translateAndToast('Login Done sucessfully');
-     self.navCtrl.push(MainPage);
-    }
-    else if(user.email==null){
-        self.translateAndToast('you must register');
-        self.navCtrl.push(RegistermemberPage);
-    }
-     self.auth.doLogin(""+user.email,self.password);
+gotocreateorder()
+{
+  this.auth.doLogin(this.mobile,this.password).then(()=>{
+    console.log("done");
+    this.navCtrl.push(MainPage);
+  }).catch((err)=>{
+    console.log(err.message);
+    this.translateAndToast(err.message);
   });
-  
-//   let self=this;
-// this.auth.phoneLogin('01000','123456');
-// this.events.subscribe('email status', (user) => {
-//    self.auth.userDelet();
-//     // user and time are the same arguments passed in `events.publish(user, time)`
-//     console.log("llll",user);
-//     if(user.uid){
-//      self.translateAndToast('Login Done sucessfully');
-//      self.navCtrl.push(MainPage);
-//     }
-//     else if(user.email==null){
-//         self.translateAndToast('you must register');
-//         self.navCtrl.push(RegistermemberPage);
-//     }
-//      self.auth.doLogin(""+user.email,self.password);
-//   });
 }
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
@@ -77,7 +50,6 @@ toast.present();
       value => {
         // value is our translated string
         this.presentToast(value);
-
       }
     );
   }
