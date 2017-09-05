@@ -77,7 +77,9 @@
   "Order rejected by distributor Number ":"تم رفض طلبك من قبل الموزع برقم ",
   "A cylinder successfully delivered Number ":"تم توصيل الانبوبة بنجاح برقم ",
   "Register":"تسجيل",
-  "Join Our Team":"الانضمام لفريق العمل"
-  
+  "Join Our Team":"الانضمام لفريق العمل",
+  "The email address is badly formatted.":"البريد الالكتروني غير صحيح",
+  "The email address is already in use by another account.":"برجاء تغيير الحساب",
+  "Password should be at least 6 characters":"يجب ادخال الرقم السري اكثر من ٦ حروف"
 
 }

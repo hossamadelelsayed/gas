@@ -42,14 +42,20 @@ gotoconfirm(){
         this.navCtrl.push(MainPage);
       })
 
-      .catch(function(error) {
-        console.log(error);
-        this.translateAndToast(error);
-        if(error.code == 'auth/argument-error'){
-          this.translateAndToast("The email address is badly formatted.");
-        }
+      // .catch(function(error) {
+      //   console.log(error);
+      //   this.translateAndToast(error);
+      //   if(error.code === "auth/invalid-email"){
+      //     console.log("err",error.code);
+          
+      //     this.translateAndToast(error.message);
+      //   }
+      // });
+      .catch((err)=>{
+        console.log(err.message);
+        console.log(err);
+        this.translateAndToast(err.message);
       });
-
 
 }
 
@@ -74,6 +80,7 @@ translateAndToast(word : string)
 {
   this.translateService.get(word).subscribe(
     value => {
+      // value is our translated string
       this.presentToast(value);
     }
   );
