@@ -32,6 +32,7 @@ import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {HistoryPage} from "../pages/history/history";
 import{TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
 import{OrderlaterPage} from "../pages/orderlater/orderlater";
+
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -41,13 +42,14 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
+import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from "firebase";
+import * as GeoFire from "geofire";
+
 import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebase-database';
 import { Events } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { DistributorProvider } from '../providers/distributor/distributor';
-import {MainService} from "../providers/main-service";
-
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -129,7 +131,7 @@ firebase.initializeApp(firebaseConfig);
   providers: [
     StatusBar,
     SplashScreen,
-    MainService,
+Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
