@@ -1,6 +1,6 @@
 {
   "name": "gas",
-  "app_id": "6fc6b5ad",
+  "app_id": "c807de2f",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

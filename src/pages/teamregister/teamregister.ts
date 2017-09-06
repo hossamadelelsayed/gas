@@ -20,6 +20,7 @@ export class TeamregisterPage {
   public backimage:Image=null;
   public frontimage:Image=null;
   public phone ;
+  
   constructor(public translateService : TranslateService,public alertCtrl: AlertController,
     private toastCtrl:ToastController,private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
               private auth : AuthServiceProvider) {
@@ -28,15 +29,15 @@ export class TeamregisterPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamregisterPage');
   }
-createImage(Type:number,image:string){
+createImage(Type:number,image:string,ImgSRC:string){
 if(Type==Image.Profile){
-this.profileimage=new Image(Type,image)
+this.profileimage=new Image(Type,image,ImgSRC)
 }
  else if (Type==Image.Front){
-  this.frontimage=new Image(Type,image)
+  this.frontimage=new Image(Type,image,ImgSRC)
 }
 else{
-  this.backimage=new Image(Type,image)
+  this.backimage=new Image(Type,image,ImgSRC)
 }
 }
 
@@ -52,7 +53,8 @@ else{
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
      let base64Image = 'data:image/jpeg;base64,' + imageData;
-     this.createImage(TypeName,base64Image);
+    
+     this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
      
     }, (err) => {
       console.log(err);
@@ -67,8 +69,7 @@ else{
       targetWidth: 1000 ,
       targetHeight: 1000
     }).then((imageData) => {
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.createImage(TypeName,base64Image);
+      this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
       
     }, (err) => {
       console.log(err);
@@ -99,12 +100,24 @@ else{
   {
     this.auth.register("distributors",this.email,this.password,this.name,this.phone)
     .then(()=>{
+      console.log("img str",this.profileimage.Image);
+      this.auth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile).then((sta)=>{
+        this.presentToast(sta.state);
+      }).catch( (err)=>{console.log(err);
+        this.translateAndToast(err.message+"err");
+      });
+      this.auth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front).then((sta)=>{
+        this.presentToast(sta.state+"err");
+      });
+      this.auth.joinTeamImgUpload(this.backimage.Image,this.Image.Back).then((sta)=>{
+        this.presentToast(sta.state+"err");
+      });
       this.translateAndToast("Registration done");
         this.navCtrl.push(MainPage);
     })
     .catch(
       (err)=>{console.log(err);
-        this.translateAndToast(err.message);
+        this.translateAndToast(err.message+"err");
       }
   );
     
