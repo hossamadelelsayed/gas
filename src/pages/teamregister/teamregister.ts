@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {HomePage} from "../home/home";
 import {MainPage} from "../main/main";
+import {Image} from "../../models/image";
 
 @Component({
   selector: 'page-teamregister',
@@ -13,9 +14,10 @@ export class TeamregisterPage {
   public  email ;
   public password ;
   public name ;
+  public images : Image[] = [];
   public phone ;
   constructor(private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
-              private auth : AuthServiceProvider) {
+              private auth : AuthServiceProvider,public alertCtrl : AlertController) {
   }
 
   ionViewDidLoad() {
@@ -23,7 +25,7 @@ export class TeamregisterPage {
   }
 
 
-  openCamera(){
+  openCamera(TypeName:any){
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -35,9 +37,48 @@ export class TeamregisterPage {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
      let base64Image = 'data:image/jpeg;base64,' + imageData;
+     this.images.push({ Image: "data:image/jpeg;base64," + imageData, Type: TypeName });
+     
     }, (err) => {
-
+      console.log(err);
     });
+  }
+  pickPicture(TypeName:any) {
+    //noinspection TypeScriptUnresolvedVariable
+    this.camera.getPicture({
+      destinationType: this.camera.DestinationType.DATA_URL ,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY ,
+      allowEdit: true ,
+      targetWidth: 1000 ,
+      targetHeight: 1000
+    }).then((imageData) => {
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.images.push({ Image: "data:image/jpeg;base64," + imageData, Type: TypeName });
+      
+    }, (err) => {
+      console.log(err);
+    });
+  }
+  galleryOrCamera(Type:string) {
+    let confirm = this.alertCtrl.create({
+      title:  'Choose method',
+      message: 'Choose picture from gallery or camera ?',
+      buttons: [
+        {
+          text: 'Gallery',
+          handler: () => {
+            this.pickPicture(Type);
+          }
+        },
+        {
+          text: 'Camera',
+          handler: () => {
+            this.openCamera(Type);
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
   gotoconfirm()
   {

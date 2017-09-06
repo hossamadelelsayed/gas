@@ -53,6 +53,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { DistributorProvider } from '../providers/distributor/distributor';
 import {MainService} from "../providers/main-service";
 
+
 import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -94,6 +95,7 @@ firebase.initializeApp(firebaseConfig);
     OrderlaterPage,
     EditaccountPage,
     TeamregisterPage
+    
   ],
   imports: [
     BrowserModule,
@@ -135,7 +137,7 @@ firebase.initializeApp(firebaseConfig);
     OrderlaterPage,
     EditaccountPage,
     TeamregisterPage
-
+    
   ],
   providers: [
     StatusBar,
