@@ -5,7 +5,7 @@ import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angul
 import{MainPage} from "../main/main";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import {TranslateService} from "@ngx-translate/core";
-
+import {TeamregisterPage} from "../teamregister/teamregister";
 /**
  * Generated class for the RegistermemberPage page.
  *
@@ -61,6 +61,9 @@ gotoconfirm(){
 
 gotohome(){
  this.navCtrl.push(HomePage);
+}
+gojoin(){
+  this.navCtrl.push(TeamregisterPage);
 }
 gotocreateorder(){
  this.navCtrl.push(MainPage);
