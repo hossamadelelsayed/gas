@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,AlertController } from 'ionic-angular';
+import { NavController, NavParams,ToastController,AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {HomePage} from "../home/home";
+import {TranslateService} from "@ngx-translate/core";
 import {MainPage} from "../main/main";
 import {Image} from "../../models/image";
 
@@ -11,13 +12,14 @@ import {Image} from "../../models/image";
   templateUrl: 'teamregister.html',
 })
 export class TeamregisterPage {
-  public  email ;
+  alertCtrl: AlertController;
+  public email;
   public password ;
   public name ;
   public images : Image[] = [];
   public phone ;
-  constructor(private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
-              private auth : AuthServiceProvider,public alertCtrl : AlertController) {
+  constructor(public translateService : TranslateService,private toastCtrl:ToastController,private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
+              private auth : AuthServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -82,8 +84,36 @@ export class TeamregisterPage {
   }
   gotoconfirm()
   {
-    this.auth.register("distributors",this.email,this.password,this.name,this.phone).then(()=>{
+    this.auth.register("distributors",this.email,this.password,this.name,this.phone)
+    .then(()=>{
+      this.translateAndToast("Registration done");
         this.navCtrl.push(MainPage);
-    }).catch((err)=>console.log(err));
+    })
+    .catch(
+      (err)=>{console.log(err);
+        this.translateAndToast(err.message);
+      }
+  );
+    
   }
+
+  presentToast(txt:any) {
+    
+      let toast = this.toastCtrl.create({
+        message: txt,
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    
+    translateAndToast(word : string)
+    {
+      this.translateService.get(word).subscribe(
+        value => {
+          // value is our translated string
+          this.presentToast(value);
+        }
+      );
+    }
 }

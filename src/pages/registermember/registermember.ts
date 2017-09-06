@@ -33,7 +33,7 @@ gotoconfirm(){
       console.log(user);
       //user.message;
         // this.authService.submitUserInfo()
-       // this.translateAndToast("Registration done");
+        this.translateAndToast("Registration done");
         this.navCtrl.push(MainPage);
       })
 
