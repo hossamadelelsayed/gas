@@ -12,22 +12,35 @@ import {Image} from "../../models/image";
   templateUrl: 'teamregister.html',
 })
 export class TeamregisterPage {
-  alertCtrl: AlertController;
   public email;
   public password ;
   public name ;
-  public images : Image[] = [];
+  public Image=Image;
+  public profileimage:Image=null;
+  public backimage:Image=null;
+  public frontimage:Image=null;
   public phone ;
-  constructor(public translateService : TranslateService,private toastCtrl:ToastController,private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
+  constructor(public translateService : TranslateService,public alertCtrl: AlertController,
+    private toastCtrl:ToastController,private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
               private auth : AuthServiceProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamregisterPage');
   }
+createImage(Type:number,image:string){
+if(Type==Image.Profile){
+this.profileimage=new Image(Type,image)
+}
+ else if (Type==Image.Front){
+  this.frontimage=new Image(Type,image)
+}
+else{
+  this.backimage=new Image(Type,image)
+}
+}
 
-
-  openCamera(TypeName:any){
+  openCamera(TypeName:number){
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -39,7 +52,7 @@ export class TeamregisterPage {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
      let base64Image = 'data:image/jpeg;base64,' + imageData;
-     this.images.push({ Image: "data:image/jpeg;base64," + imageData, Type: TypeName });
+     this.createImage(TypeName,base64Image);
      
     }, (err) => {
       console.log(err);
@@ -55,13 +68,13 @@ export class TeamregisterPage {
       targetHeight: 1000
     }).then((imageData) => {
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.images.push({ Image: "data:image/jpeg;base64," + imageData, Type: TypeName });
+      this.createImage(TypeName,base64Image);
       
     }, (err) => {
       console.log(err);
     });
   }
-  galleryOrCamera(Type:string) {
+  galleryOrCamera(Type:number) {
     let confirm = this.alertCtrl.create({
       title:  'Choose method',
       message: 'Choose picture from gallery or camera ?',
