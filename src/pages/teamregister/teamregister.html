@@ -21,7 +21,7 @@
 <ion-content padding >
    <div style="text-align: center;">
      <img src="assets/imgs/login_logo.png">
-     <!--<button  class="upload"ion-button clear class="upload" (click)="openCamera()">{{'Upload profile image'|translate}}</button> -->
+     <button  class="upload"ion-button clear class="upload" (click)="openCamera()">{{'Upload profile image'|translate}}</button>
   </div>
  <form #f="ngForm" >
    <ion-list no-lines>
@@ -66,7 +66,7 @@
        </ion-item>
      </ion-col>
    </ion-row>
-    <!--<button ion-button clear (click)="openCamera()" style="width:100%;color:orange"> {{'Upload ID Photos'| translate}}</button>    -->
+    <button ion-button clear (click)="openCamera()" style="width:100%;color:orange"> {{'Upload ID Photos'| translate}}</button>   
     <button class="enter" [disabled]="!name|| !email|| !password|| !phone" ion-button block round (click)="gotoconfirm()" > {{'Signup'| translate}}</button>
     <ion-row class="new">
     <p> {{'Already have an Account?'| translate}}<span
