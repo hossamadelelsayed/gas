@@ -6,8 +6,11 @@ export class Location {
     public lat : number ,
     public lng : number ,
     public label : string ,
-    public address : string = null
+    private _locationID : string = null
   ){
 
+  }
+  get locationID():string {
+    return this._locationID;
   }
 }

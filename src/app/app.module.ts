@@ -58,6 +58,8 @@ import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {OrderProvider} from "../providers/order/order";
+import {CustomerLocationProvider} from "../providers/customer/customerLocation";
+
 import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 const firebaseConfig = {
 
@@ -134,7 +136,7 @@ firebase.initializeApp(firebaseConfig);
     SettingsPage,
     AddvaluationPage,
     AddressPage,
-     AboutaprogramPage,
+    AboutaprogramPage,
     CallusPage,
     NotificationsPage,
     SelectagentPage,
@@ -153,11 +155,12 @@ firebase.initializeApp(firebaseConfig);
     MainService,
     Geolocation,
     OrderProvider,
+    CustomerLocationProvider,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
-  IonicStorageModule,NativeStorage,
+    IonicStorageModule,NativeStorage,
     DistributorProvider ]
 })
 export class AppModule {}

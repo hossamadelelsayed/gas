@@ -4,6 +4,7 @@ import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import {Location} from "../../models/location";
 import {User} from "../../models/user";
+import {CustomerLocationProvider} from "../../providers/customer/customerLocation";
 
 /**
  * Generated class for the HossamtestPage page.
@@ -18,7 +19,7 @@ import {User} from "../../models/user";
 export class HossamtestPage {
   public orderTest : Order = null ;
   constructor(public navCtrl: NavController, public navParams: NavParams ,
-              public orderProvider : OrderProvider) {
+              public orderProvider : OrderProvider , public customerService : CustomerLocationProvider) {
   }
 
   ionViewDidLoad() {

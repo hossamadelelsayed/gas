@@ -46,23 +46,22 @@
        <h4 style="color: black">{{'Choose pay way'|translate}}</h4>
 
    <ion-label class="lab"><span>{{'Cash'|translate}}</span></ion-label>
-  <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
+  <ion-radio name="select" color="orangee"  checked="true"></ion-radio><br>
   
    <ion-label class="lab2" >Visa 455656*****</ion-label>
-  <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
+  <ion-radio name="select" color="orangee"  checked="fales" disabled></ion-radio><br>
   
   <button class="addpay" ion-button clear> <ion-icon class="plusicon" name="ios-add"></ion-icon>
   <span (click)="gotoaddcard()">{{'Add pay way'|translate}}</span></button>
 </form>
   </ion-row> <hr>
-
 <ion-item  class="check">
   <ion-label>{{'Choose the same time and date'|translate}}</ion-label>
-  <ion-checkbox color="orangee" checked="fales"></ion-checkbox>
+  <ion-checkbox color="orangee" name="sameDate" (ionChange)="sameChange()"></ion-checkbox>
 </ion-item>
   <hr>
   <div class="d">
-    <button class="reqnow" ion-button round (click)="gotohistory()" >{{'Order now'|translate}} </button>
+    <button class="reqnow" ion-button round (click)="createOrderNow()" >{{'Order now'|translate}} </button>
     <button class="reqlater" ion-button round (click)="gotoorderlater()">{{'Order later'|translate}}</button>
   </div>
   </ion-list>
