@@ -12,20 +12,27 @@ export class Order{
     private _pipesNo : number ,
     private _location : Location ,
     private _paymentType : string ,
+    private  _deliveryDate : Date = null ,
     private _status ?: string ,
     private _date ?: Date ,
     private _distributerID ?: string ,
     private _orderID ?: string
-  ){
+  ) {
 
   }
-
 
   get customerID():string {
     return this._customerID;
   }
   set customerID(val : string) {
     this._customerID = val;
+  }
+
+  get deliveryDate(): Date {
+    return this._deliveryDate;
+  }
+  set deliveryDate(val : Date) {
+    this._deliveryDate = val;
   }
 
   get pipesNo():number {
@@ -45,6 +52,7 @@ export class Order{
   get paymentType():string {
     return this._paymentType;
   }
+
   set paymentType(val : string) {
     this._paymentType = val;
   }

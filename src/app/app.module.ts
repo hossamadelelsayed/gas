@@ -55,6 +55,8 @@ import {MainService} from "../providers/main-service";
 
 import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
+import {HosstestPage} from "../pages/hosstest/hosstest";
+import {OrderProvider} from "../providers/order/order";
 
 const firebaseConfig = {
 
@@ -93,7 +95,8 @@ firebase.initializeApp(firebaseConfig);
     TermsandprivacyPage,
     OrderlaterPage,
     EditaccountPage,
-    TeamregisterPage
+    TeamregisterPage,
+    HosstestPage
   ],
   imports: [
     BrowserModule,
@@ -134,15 +137,16 @@ firebase.initializeApp(firebaseConfig);
     TermsandprivacyPage,
     OrderlaterPage,
     EditaccountPage,
-    TeamregisterPage
-
+    TeamregisterPage,
+    HosstestPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     MainService,
     Geolocation,
- Camera,
+    OrderProvider,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
