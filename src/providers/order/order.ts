@@ -17,7 +17,8 @@ export class OrderProvider {
   public fireAuth : any;
   constructor(public http: Http) {
     console.log('Hello OrderProvider Provider');
-
+    this.fireAuth = firebase.auth();
+    this.fireDatabase = firebase.database();
   }
   login(): Promise<any>
   {

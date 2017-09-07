@@ -81,7 +81,7 @@ let userdata={uEmail:email,uType:type};
   doLogin(phoneNo: string, password: string): Promise <string>{
     let promise = new Promise((resolve, reject )=>{
       this.phoneLogin(phoneNo,password).then(userdata=>{
-        resolve(userdata.uType);
+        resolve(userdata);
         this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;
@@ -263,6 +263,10 @@ userDelet():any{
 
 return  user.delete();
 }
+getUserId(){
+  let user = firebase.auth().currentUser.uid;
+  return user;
+}
 ////////////////////////////////////////////////////////////update user informations///////////////////////////////////////////////////
 editCustomerName(name :string) : Promise<boolean>{
   let promise = new Promise((resolve, reject) => {
@@ -350,6 +354,36 @@ let user = firebase.auth().currentUser.uid;
           resolve(name);
         }else{reject("user")}
 
+      });
+    });
+    return promise;
+  }
+  editPassword(newPassword:any):Promise<any>{
+let promise=new Promise((resolve,reject)=>{
+  let user = firebase.auth().currentUser;
+
+  user.updatePassword(newPassword).then(msg=> {
+    // Update successful.
+    resolve(msg);
+  }).catch(function(error) {
+    // An error happened.
+    reject(error);
+  });
+});
+  return promise;
+}
+
+  editEmail(newEmail:any):Promise<any>{
+    let promise=new Promise((resolve,reject)=>{
+      let user = firebase.auth().currentUser;
+
+
+      user.updateEmail(newEmail).then(msg=> {
+        // Update successful.
+        resolve(msg);
+      }).catch(function(error) {
+        // An error happened.
+        reject(error);
       });
     });
     return promise;

@@ -1,11 +1,12 @@
 import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
-
+import {OrderlaterPage} from "../orderlater/orderlater";
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from "firebase";
 import * as GeoFire from "geofire";
+import {DistributorProvider} from'../../providers/distributor/distributor';
 
 import {Observable} from "rxjs/Observable";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
@@ -34,11 +35,18 @@ export class MainPage {
   myLatLng:any;
   hits = new BehaviorSubject([])
   constructor(public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams,
-              public menuCtrl: MenuController ) {
+              public menuCtrl: MenuController ,public distributor :DistributorProvider,) {
 /// Reference database location for GeoFire
 
 
   }
+
+
+  gotoorderlater(){
+    this.navCtrl.push(OrderlaterPage);
+    }
+
+
   ionViewDidLoad(){
     let self=this;
 
@@ -59,7 +67,8 @@ export class MainPage {
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
-
+this.distributor.sendMyLoc();
+this.distributor.getCurrentIpLocation();
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
         self. marker = new google.maps.Marker({
         position:latLng,
@@ -69,29 +78,30 @@ export class MainPage {
     }).catch((error) => {
       console.log('Error getting location', error);
     });
-///////////////////////////////get firebase distributors locs
-    this.markerRef.on("value"
-      , (snapshot)=> {
-        this.geoFire.get("some_key").then((location)=> {
 
-          if (location === null) {
-            console.log("Provided key is not in GeoFire");
-          }
-          else {
-            try{
-self.myLatLng ={lat:location[0],lng:location[1]};
-              let latlng = new google.maps.LatLng(location[0],location[1]);
-              self. marker.setPosition(latlng);
-              console.log("location changed to : ",location);
-
-            }catch (E){ console.log("Provided key has a location of " ,E);}
-          }
-        }, (error)=> {
-          console.log("Error: " + error);
-        });
-      });
-/////////////
-    console.log("location of " +  self.myLatLng);
+// ///////////////////////////////get firebase distributors locs
+//     this.markerRef.on("value"
+//       , (snapshot)=> {
+//         this.geoFire.get("some_key").then((location)=> {
+//
+//           if (location === null) {
+//             console.log("Provided key is not in GeoFire");
+//           }
+//           else {
+//             try{
+// self.myLatLng ={lat:location[0],lng:location[1]};
+//               let latlng = new google.maps.LatLng(location[0],location[1]);
+//               self. marker.setPosition(latlng);
+//               console.log("location changed to : ",location);
+//
+//             }catch (E){ console.log("Provided key has a location of " ,E);}
+//           }
+//         }, (error)=> {
+//           console.log("Error: " + error);
+//         });
+//       });
+// /////////////
+//     console.log("location of " +  self.myLatLng);
 
 //////////////////////////////////////////// listen to the current location and sends it to firebase
 //     let watch = this.geolocation.watchPosition();
@@ -130,4 +140,6 @@ toggleMenu()
   {
     this.menuCtrl.toggle();
   }
+
+  
 }

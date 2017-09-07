@@ -79,10 +79,13 @@
   "Register":"تسجيل",
   "Join Our Team":"الانضمام لفريق العمل",
   "The email address is badly formatted.":"البريد الالكتروني غير صحيح",
-  "The email address is already in use by another account.":"برجاء تغيير الحساب",
+  "The email address is already in use by another account.":"هذا البريد الالكترونى مسجل لدينا بالفعل ",
   "Password should be at least 6 characters":"يجب ادخال الرقم السري اكثر من ٦ حروف",
   "Upload profile image":"ادخال صوره الحساب",
   "Upload ID Photos":"ادخال صور بطاقه الهاويه",
-  "Registration done":"تم التسجيل بنجاح"
+  "Registration done":"تم التسجيل بنجاح",
+  "Order Done":"تم ارسال الطلب ",
+  "Save Order" :"حفظ الطلب",
+  "Reset Password":"تغيير كلمة المرور"
 
 }

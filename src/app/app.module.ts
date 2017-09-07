@@ -60,6 +60,7 @@ import {HosstestPage} from "../pages/hosstest/hosstest";
 import {OrderProvider} from "../providers/order/order";
 import {CustomerLocationProvider} from "../providers/customer/customerLocation";
 
+import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -100,7 +101,8 @@ firebase.initializeApp(firebaseConfig);
     TeamregisterPage,
     HosstestPage ,
     CustomerMapPage,
-    HossamtestPage
+    HossamtestPage,
+    EditaccountdisPage
   ],
   imports: [
     BrowserModule,
@@ -134,7 +136,7 @@ firebase.initializeApp(firebaseConfig);
     SettingsPage,
     AddvaluationPage,
     AddressPage,
-     AboutaprogramPage,
+    AboutaprogramPage,
     CallusPage,
     NotificationsPage,
     SelectagentPage,
@@ -144,7 +146,8 @@ firebase.initializeApp(firebaseConfig);
     TeamregisterPage,
     HosstestPage,
     CustomerMapPage,
-    HossamtestPage
+    HossamtestPage,
+    EditaccountdisPage
   ],
   providers: [
     StatusBar,
@@ -157,7 +160,7 @@ firebase.initializeApp(firebaseConfig);
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
-  IonicStorageModule,NativeStorage,
+    IonicStorageModule,NativeStorage,
     DistributorProvider ]
 })
 export class AppModule {}

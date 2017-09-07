@@ -142,4 +142,7 @@ else{
         }
       );
     }
+    gotohome(){
+      this.navCtrl.push(HomePage);
+    }
 }
