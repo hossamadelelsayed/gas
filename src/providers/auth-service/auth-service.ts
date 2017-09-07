@@ -41,7 +41,7 @@ export class AuthServiceProvider {
       });
 
   }
-  phoneLogin(phoneNo:any,password :any): Promise <string>{
+  phoneLogin(phoneNo:any,password :any): Promise <any>{
 
     let self=this;
 
@@ -53,12 +53,18 @@ export class AuthServiceProvider {
           let type = snapshot.child("type").val();
 
           let email : string = snapshot.child("email").val();
-          if(email!=null){  resolve(email);}
+          console.log("snapshot",snapshot);
+
+          if(email!=null){
+let userdata={uEmail:email,uType:type};
+            resolve(userdata);
+
+          }
           else
             reject({message:"Invalid Phone Number"});
           console.log("ee",email);
-          self.events.publish('email status', email);
-          self.events.publish('type', type);
+          // self.events.publish('email status', email);
+          // self.events.publish('type', type);
 
         });
 
@@ -74,15 +80,17 @@ export class AuthServiceProvider {
   //login and returns err msg if err occare
   doLogin(phoneNo: string, password: string): Promise <string>{
     let promise = new Promise((resolve, reject )=>{
-      this.phoneLogin(phoneNo,password).then(email=>{
-        this.fireAuth.signInWithEmailAndPassword(email, password)
+      this.phoneLogin(phoneNo,password).then(userdata=>{
+        resolve(userdata.uType);
+        this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;
+
             console.log("loged in id",userId);
-            this.events.publish('user:created', user);
-            this.events.publish('userId', user.uid);
+            // this.events.publish('user:created', user);
+            // this.events.publish('userId', user.uid);
             this.getUserInfo(user.uid,"customers");
-            resolve('');
+            resolve('logedIn');
           })  .catch((err)=>reject(err));
       }).catch((err)=>reject(err));
     });
