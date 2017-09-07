@@ -6,12 +6,7 @@ import{MainPage} from "../main/main";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import {TranslateService} from "@ngx-translate/core";
 import {TeamregisterPage} from "../teamregister/teamregister";
-/**
- * Generated class for the RegistermemberPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 
 @Component({
   selector: 'page-registermember',
@@ -38,7 +33,7 @@ gotoconfirm(){
       console.log(user);
       //user.message;
         // this.authService.submitUserInfo()
-       // this.translateAndToast("Registration done");
+        this.translateAndToast("Registration done");
         this.navCtrl.push(MainPage);
       })
 

@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import {User} from "firebase/app";
 
 // import {NavController} from 'ionic-angular';
 
@@ -103,29 +104,64 @@ export class AuthServiceProvider {
 
 
 
+////////////////////////////////////////////////////////////
+  getUserInfo(userId:any ,userType :any){//
+    let infoRef=firebase.database().ref(userType+"/"+userId);//
+    let self=this;//
+    infoRef.once("value")//
+  .then(function(snapshot) {//
+    return snapshot.val();//
 
-  getUserInfo(userId:any ,userType :any){
-    let infoRef=firebase.database().ref(userType+"/"+userId);
-    let self=this;
-    infoRef.once("value")
-  .then(function(snapshot) {
-    return snapshot.val();
+});//
+  }//
+  ///////////////////////////////////////////////////////////
 
-});
-
- // self.events. unsubscribe('user');
-
-  }
 //register a user and transfere him from anonymous user to a user using email and passwo
-userTransfere(email :any ,password:any){
-  let credential = firebase.auth.EmailAuthProvider.credential(email, password);
-  this.fireAuth.currentUser.link(credential).then(function(user) {
-console.log("Anonymous account successfully upgraded", user);
-}, function(error) {
-console.log("Error upgrading anonymous account", error);
-});
-}
+userTransfere(email :any ,password:any){//
+  let credential = firebase.auth.EmailAuthProvider.credential(email, password);//
+  this.fireAuth.currentUser.link(credential).then(function(user) {//
+console.log("Anonymous account successfully upgraded", user);//
+}, function(error) {//
+console.log("Error upgrading anonymous account", error);//
+});//
+}//
+  ///////////////////////////////////////////////////////////////////////
+//tacking img type and base64 img string type
+joinTeamImgUpload(imgStr:any,imgType:any):Promise<any>{
+  let user = firebase.auth().currentUser.uid;
+    let promise = new Promise((resolve, reject )=>{
+let  imgRef = firebase.database().ref("distributors/"+user);
+      let storageRef = firebase.storage().ref(user+"/"+imgType);
+      let message=imgStr;
+      storageRef.putString(message, 'base64').then(function (snapshot) {
+        console.log('Uploaded a base64 string!',storageRef.bucket);
+        // Create a reference to the file we want to download
+        console.log('ref', storageRef.bucket);
 
+        imgRef.child("imgType/"+imgType).set(user+"/"+imgType);
+        resolve(snapshot);
+      }).catch((err)=>{reject(err)});
+
+
+    });
+  return promise;
+}
+//////////////////////////////////////download img
+  joinTeamImgDownload(imgType:any):Promise<any>{
+
+    let user = firebase.auth().currentUser.uid;
+
+    let promise = new Promise((resolve, reject )=>{
+      let  imgRef = firebase.database().ref("distributors/"+user);
+      let storageRef = firebase.storage().ref(user+"/"+imgType);
+    storageRef.getDownloadURL().then((url)=> {
+      // Insert url into an <img> tag to "download"
+      resolve(url);
+      console.log("img downloaded url",url);
+
+    }).catch((error)=> {reject(error)});
+    });
+  return promise;}
 
   register(type:any,email: string, password: string,name :string,phoneNo:any): Promise<any> {
     let promise = new Promise((resolve, reject )=>{
@@ -231,6 +267,18 @@ editCustomerName(name :string) : Promise<boolean>{
   return promise;
 
 }
+  editdistributorName(name :string) : Promise<boolean>{
+    let promise = new Promise((resolve, reject) => {
+      let user = firebase.auth().currentUser.uid;
+      let userNameRef=firebase.database().ref("distributors/"+user);
+      userNameRef.child("name").set(name).then(()=>{
+        resolve(true);
+      }).catch((err)=>reject(err));
+    });
+    return promise;
+
+  }
+  ////////////////
 oldPhoneNo :any;
 
 editCustomerPhoneNo(newPhoneNo :any) : Promise<boolean>{
@@ -258,6 +306,31 @@ let user = firebase.auth().currentUser.uid;
   });
   return promise ;
  }
+  editDistributorsPhoneNo(newPhoneNo :any) : Promise<boolean>{
+    let user = firebase.auth().currentUser.uid;
+    console.log(user);
+    let promise = new Promise((resolve, reject) => {
+      let userPhoneRef=firebase.database().ref("customers/"+user);
+      userPhoneRef.once("value")
+        .then((snapshot)=>{
+          let phoneNoVal = snapshot.child("phoneNo").val();
+          console.log("phone value",phoneNoVal);
+          let ref=firebase.database().ref();
+          let child = ref.child(phoneNoVal);
+          child.once('value').then((oldPhonesnapshot)=>{
+            ref.child(newPhoneNo).set(oldPhonesnapshot.val()).then(()=>{
+              if(  ref.child(newPhoneNo+"/email").key !=  ref.child(phoneNoVal).key)
+                child.remove().then(()=>{
+                  userPhoneRef.child("phoneNo").set(newPhoneNo).then(()=>{
+                    resolve(true);
+                  }).catch((err)=>reject(err));
+                }).catch((err)=>reject(err));
+            }).catch((err)=>reject(err));
+          }).catch((err)=>reject(err))
+        }).catch((err)=>reject(err))
+    });
+    return promise ;
+  }
   getUserName(type: any):Promise<string>{
     let promise = new Promise((resolve, reject) => {
       let name="";

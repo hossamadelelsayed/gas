@@ -1,19 +1,21 @@
-// http://ionicframework.com/docs/v2/theming/
+// http://ionicframework.com/docs/v2/the
+.button{
+    text-transform: none;
+}
 
 .menu{
     text-align: center;
     font-family: cairo;
     color: gray;
     font-size: 1.7rem;
-  
-    
-}
+} 
+
 .header-md::after{
     background-image: none !important;
 
 }
 .logo{
-        display: block;
+    display: block;
     margin: 0 auto;
     height: 22%;
 }

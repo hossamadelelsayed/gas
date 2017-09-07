@@ -52,7 +52,8 @@ import { Events } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { DistributorProvider } from '../providers/distributor/distributor';
 import {MainService} from "../providers/main-service";
-
+import{CustomerMapPage} from "../pages/customer-map/customer-map";
+import{HossamtestPage} from "../pages/hossamtest/hossamtest";
 import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
 import {HosstestPage} from "../pages/hosstest/hosstest";
@@ -96,7 +97,9 @@ firebase.initializeApp(firebaseConfig);
     OrderlaterPage,
     EditaccountPage,
     TeamregisterPage,
-    HosstestPage
+    HosstestPage ,
+    CustomerMapPage,
+    HossamtestPage
   ],
   imports: [
     BrowserModule,
@@ -138,7 +141,9 @@ firebase.initializeApp(firebaseConfig);
     OrderlaterPage,
     EditaccountPage,
     TeamregisterPage,
-    HosstestPage
+    HosstestPage,
+    CustomerMapPage,
+    HossamtestPage
   ],
   providers: [
     StatusBar,
