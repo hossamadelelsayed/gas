@@ -359,4 +359,34 @@ let user = firebase.auth().currentUser.uid;
     });
     return promise;
   }
+  editPassword(newPassword:any):Promise<any>{
+let promise=new Promise((resolve,reject)=>{
+  let user = firebase.auth().currentUser;
+
+  user.updatePassword(newPassword).then(msg=> {
+    // Update successful.
+    resolve(msg);
+  }).catch(function(error) {
+    // An error happened.
+    reject(error);
+  });
+});
+  return promise;
+}
+
+  editEmail(newEmail:any):Promise<any>{
+    let promise=new Promise((resolve,reject)=>{
+      let user = firebase.auth().currentUser;
+
+
+      user.updateEmail(newEmail).then(msg=> {
+        // Update successful.
+        resolve(msg);
+      }).catch(function(error) {
+        // An error happened.
+        reject(error);
+      });
+    });
+    return promise;
+  }
 }
