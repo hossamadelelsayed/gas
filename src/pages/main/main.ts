@@ -1,6 +1,6 @@
 import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
-
+import {OrderlaterPage} from "../orderlater/orderlater";
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -39,6 +39,13 @@ export class MainPage {
 
 
   }
+
+
+  gotoorderlater(){
+    this.navCtrl.push(OrderlaterPage);
+    }
+
+
   ionViewDidLoad(){
     let self=this;
 
@@ -130,4 +137,6 @@ toggleMenu()
   {
     this.menuCtrl.toggle();
   }
+
+  
 }

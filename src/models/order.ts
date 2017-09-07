@@ -12,11 +12,11 @@ export class Order{
     private _pipesNo : number ,
     private _location : Location ,
     private _paymentType : string ,
-    private  _deliveryDate : Date = null ,
-    private  _monthly : boolean = false ,
+    private _deliveryDate : Date = null ,
+    private _monthly : boolean = false ,
     private _status ?: string ,
     private _date ?: Date ,
-    private _distributerID ?: string ,
+    private _distributerID ?: string,
     private _orderID ?: string
   ) {
 
