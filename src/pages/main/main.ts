@@ -61,9 +61,9 @@ export class MainPage {
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      self. marker = new google.maps.Marker({
+        self. marker = new google.maps.Marker({
         position:latLng,
-      map: self.map,
+        map: self.map,
         title: 'Hello World!'
     });
     }).catch((error) => {
@@ -130,5 +130,4 @@ toggleMenu()
   {
     this.menuCtrl.toggle();
   }
-
 }

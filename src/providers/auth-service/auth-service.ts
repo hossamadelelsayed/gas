@@ -263,6 +263,11 @@ userDelet():any{
 
 return  user.delete();
 }
+getUserId(){
+  let user = firebase.auth().currentUser.uid;
+
+  return user;
+}
 ////////////////////////////////////////////////////////////update user informations///////////////////////////////////////////////////
 editCustomerName(name :string) : Promise<boolean>{
   let promise = new Promise((resolve, reject) => {
