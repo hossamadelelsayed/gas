@@ -99,8 +99,20 @@ export class EditaccountdisPage {
         confirm.present();
       }
 
-      gotoconfirm() {}
-      ResetPassword() {}
+      gotoconfirm() {
+        this.fireAuth.editdistributorName(name).then((user) => {
+          console.log('name');
+            this.translateAndToast("Edit done");
+           })
+          .catch((err)=>{
+            console.log(err.message);
+            console.log(err);
+            this.translateAndToast(err.message);
+          });
+          
+    
+      }
+      
       presentToast(txt:any) {
         
           let toast = this.toastCtrl.create({
