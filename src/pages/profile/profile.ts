@@ -6,6 +6,7 @@ import { AddcardPage } from './../addcard/addcard';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController,Platform} from 'ionic-angular';
 import {EditaccountPage} from "./../editaccount/editaccount";
+import {EditaccountdisPage} from "./../editaccountdis/editaccountdis";
 
 @Component({
   selector: 'page-profile',
@@ -40,6 +41,9 @@ toggleMenu()
 }
 gotoeditaccount(){
 this.navCtrl.push(EditaccountPage);
+}
+gotoeditaccountdis(){
+  this.navCtrl.push(EditaccountdisPage);
 }
 exit(){
   this.platform.exitApp();

@@ -22,8 +22,11 @@ public password:any;
 
 gotocreateorder()
 {
-  this.auth.doLogin(this.mobile,this.password).then(()=>{
-    console.log("done");
+  this.auth.doLogin(this.mobile,this.password).then((user)=>{
+  
+    console.log(user['uEmail']);
+    console.log(user['uType']);
+    
     this.navCtrl.push(MainPage);
   }).catch((err)=>{
     console.log(err.message);

@@ -3,6 +3,9 @@ import * as firebase from "firebase";
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Events } from 'ionic-angular';
+import * as GeoFire from "geofire";
+import { Geolocation } from '@ionic-native/geolocation';
+import {Observable} from "rxjs/Observable";
 
 /*
   Generated class for the DistributorProvider provider.
@@ -12,9 +15,52 @@ import { Events } from 'ionic-angular';
 */
 @Injectable()
 export class DistributorProvider {
-
-  constructor(public http: Http) {
+  geoFire: any;
+  firebaseRef: any;
+id:any;
+  constructor(private _http: Http,public geolocation: Geolocation) {
     console.log('Hello DistributorProvider Provider');
+
   }
 
+  sendMyLoc(){
+    ////////////////////////////////////////// listen to the current location and sends it to firebase
+
+    this. firebaseRef = firebase.database().ref('/valid/city/area');
+
+    this. geoFire = new GeoFire(this.firebaseRef);
+    let geo = this.geolocation.getCurrentPosition();
+
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+      console.log('location', data.coords.latitude);
+      // this.setLocation("some_key", [ data.coords.latitude,  data.coords.longitude]);
+      this.id = firebase.auth().currentUser.uid;
+
+      this.geoFire.set(this.id, [ data.coords.latitude,  data.coords.longitude]).then(()=> {
+
+        console.log("Provided key has been added to GeoFire");
+      }, (error)=> {
+        console.log("Error: " + error);
+      });
+      // data can be a set of coordinates, or an error (if an error occurred).
+      // data.coords.latitude
+      // data.coords.longitude
+    });
+    ///////////////////////////////////
+  }
+
+  getCurrentIpLocation(): Promise<any> {
+
+
+    let promise = new Promise((resolve, reject )=>{
+    this._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
+      .map(response => response.json()
+      ).subscribe(data=>{
+      console.log("geolocation",data['formatted_address']);
+resolve(data);
+    });
+    });
+    return promise;
+  }
 }
