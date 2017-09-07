@@ -5,7 +5,7 @@ import { HistoryPage } from './../pages/history/history';
 import { WelcomePage } from './../pages/welcome/welcome';
 import { ProfilePage } from './../pages/profile/profile';
 import { RegistermemberPage } from './../pages/registermember/registermember';
-
+import {CreateorderPage} from './../pages/createorder/createorder';
 import {TeamregisterPage} from "./../pages/teamregister/teamregister";
 import { Component,ViewChild } from '@angular/core';
 import {Platform} from 'ionic-angular';
@@ -24,7 +24,7 @@ import {HosstestPage} from "../pages/hosstest/hosstest";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage= HosstestPage ;  //WelcomePage;
+  welcomePage = CreateorderPage;  //WelcomePage;
   settingsPage=SettingsPage;
   profilePage=ProfilePage;
   historyPage=HistoryPage;

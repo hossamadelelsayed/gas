@@ -133,7 +133,7 @@ firebase.initializeApp(firebaseConfig);
     SettingsPage,
     AddvaluationPage,
     AddressPage,
-     AboutaprogramPage,
+    AboutaprogramPage,
     CallusPage,
     NotificationsPage,
     SelectagentPage,
@@ -155,7 +155,7 @@ firebase.initializeApp(firebaseConfig);
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
-  IonicStorageModule,NativeStorage,
+    IonicStorageModule,NativeStorage,
     DistributorProvider ]
 })
 export class AppModule {}

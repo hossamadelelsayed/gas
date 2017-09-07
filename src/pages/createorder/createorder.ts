@@ -8,11 +8,12 @@ import{AddcardPage} from "../addcard/addcard";
   templateUrl: 'createorder.html',
 })
 export class CreateorderPage {
-counter:number=1;
+ counter:number=1;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController ) {
   }
   add(){
-this.counter++;
+    this.counter++;
   }
   minus(){
     this.counter--; 
@@ -30,6 +31,10 @@ gotoaddcard(){this.navCtrl.push(AddcardPage);}
 toggleMenu()
 {
   this.menuCtrl.toggle();
+}
+
+createOrderNow(){
+  
 }
 
 }
