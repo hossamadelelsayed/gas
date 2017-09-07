@@ -56,6 +56,8 @@ import{CustomerMapPage} from "../pages/customer-map/customer-map";
 import{HossamtestPage} from "../pages/hossamtest/hossamtest";
 import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
+import {HosstestPage} from "../pages/hosstest/hosstest";
+import {OrderProvider} from "../providers/order/order";
 
 const firebaseConfig = {
 
@@ -95,6 +97,7 @@ firebase.initializeApp(firebaseConfig);
     OrderlaterPage,
     EditaccountPage,
     TeamregisterPage,
+    HosstestPage ,
     CustomerMapPage,
     HossamtestPage
   ],
@@ -138,6 +141,7 @@ firebase.initializeApp(firebaseConfig);
     OrderlaterPage,
     EditaccountPage,
     TeamregisterPage,
+    HosstestPage,
     CustomerMapPage,
     HossamtestPage
   ],
@@ -146,7 +150,8 @@ firebase.initializeApp(firebaseConfig);
     SplashScreen,
     MainService,
     Geolocation,
- Camera,
+    OrderProvider,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,

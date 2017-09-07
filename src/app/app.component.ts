@@ -17,13 +17,14 @@ import {MenuController} from 'ionic-angular';
 import {MainService} from "../providers/main-service";
 
 import {SettingsPage} from "../pages/settings/settings";
+import {HosstestPage} from "../pages/hosstest/hosstest";
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage=WelcomePage;
+  welcomePage= HosstestPage ;  //WelcomePage;
   settingsPage=SettingsPage;
   profilePage=ProfilePage;
   historyPage=HistoryPage;

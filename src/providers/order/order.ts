@@ -17,13 +17,14 @@ export class OrderProvider {
   public fireAuth : any;
   constructor(public http: Http) {
     console.log('Hello OrderProvider Provider');
+
+  }
+  login(): Promise<any>
+  {
     this.fireAuth = firebase.auth();
     this.fireDatabase = firebase.database();
-    this.fireAuth.signInWithEmailAndPassword("hossamadelelsayed@gmail.com","Hossam521992").then((res)=>{
-      console.log(res);
-    });
+    return this.fireAuth.signInWithEmailAndPassword("hossamadelelsayed@gmail.com","Hossam521992");
   }
-
   createOrder(order : Order) : Promise<Order>
   {
     let promise = new Promise((resolve, reject) => {
@@ -33,6 +34,7 @@ export class OrderProvider {
         pipesNo: order.pipesNo,
         location: order.location,
         paymentType: order.paymentType,
+        deliveryDate : order.deliveryDate,
         date: firebase.database.ServerValue.TIMESTAMP,
         status: Order.NoResponseStatus
       }).then((orderSnapshot:any)=>{
@@ -114,7 +116,6 @@ export class OrderProvider {
     });
     return promise ;
   }
-
   getOrdersByCustomer(customerID : string , statusType : string) : Promise<Order[]>
   {
     let orders : Order[] = [] ;
@@ -134,8 +135,7 @@ export class OrderProvider {
     });
     return promise ;
   }
-
-  assignDistributer(orderID : string , distributerID : string) : Promise<boolean>
+  assignDistributer(orderID : string , distributerID : string) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject) => {
       let orderRef = this.fireDatabase.ref('/history/'+orderID);
@@ -168,7 +168,7 @@ export class OrderProvider {
     });
     return promise ;
   }
-  moveCustomerOrderToPending(order : Order) : Promise<boolean>
+  moveCustomerOrderToPending(order : Order) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject ) => {
       let customerPendingOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+Order.PendingStatus + '/' + order.orderID) ;
