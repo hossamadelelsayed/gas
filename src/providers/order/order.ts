@@ -128,8 +128,7 @@ export class OrderProvider {
             let orderHistoryRef = this.fireDatabase.ref('/history/'+childSnapshot.key);
             orderHistoryRef.once('value').then((orderSnapshot)=>{
               orders.push(<Order>orderSnapshot.val())
-              })
-              .catch((err)=>reject(err));
+              }).catch((err)=>reject(err));
           });
         resolve(orders);
         }).catch((err)=>reject(err));
