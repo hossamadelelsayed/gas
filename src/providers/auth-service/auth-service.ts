@@ -281,7 +281,9 @@ editCustomerName(name :string) : Promise<boolean>{
 }
   editdistributorName(name :string) : Promise<boolean>{
     let promise = new Promise((resolve, reject) => {
+
       let user = firebase.auth().currentUser.uid;
+
       let userNameRef=firebase.database().ref("distributors/"+user);
       userNameRef.child("name").set(name).then(()=>{
         resolve(true);

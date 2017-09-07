@@ -98,9 +98,30 @@ export class EditaccountdisPage {
         });
         confirm.present();
       }
-
-      gotoconfirm() {}
-      ResetPassword() {}
+      changeName(){
+        this.fireAuth.editdistributorName(this.name).then((res) => {
+          console.log(res);
+          console.log(this.name);
+            this.translateAndToast("Edit Name done");
+            
+            
+           })
+          .catch((err)=>{
+            console.log(err.message);
+            console.log(err);
+            this.translateAndToast(err.message);
+          });
+      }
+      changePhone(){
+        this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
+          console.log(res)
+          console.log(this.phone);
+          this.translateAndToast("Edit Phone done");
+          
+        }) 
+      }
+      changeEmail(){}  
+      gotoconfirm() {}  
       presentToast(txt:any) {
         
           let toast = this.toastCtrl.create({
@@ -111,13 +132,14 @@ export class EditaccountdisPage {
           toast.present();
         }
         
-        translateAndToast(word : string)
+      translateAndToast(word : string)
         {
-          this.translateService.get(word).subscribe(
+            this.translateService.get(word).subscribe(
             value => {
               // value is our translated string
               this.presentToast(value);
             }
           );
         }
+
 }

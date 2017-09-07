@@ -7,9 +7,12 @@
 <ion-header>
   <ion-header>
     <meta charset="utf-8">
-    <ion-navbar>
+    <ion-navbar> <ion-buttons right>
+      <button ion-button navPop icon-only>
+          <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
       <ion-title style="background-color: white">
-       <button ion-button clear class="Skip"  (click)="gotocreateorder()">{{'Skip'| translate}}</button>
       </ion-title>
     </ion-navbar>
   </ion-header>

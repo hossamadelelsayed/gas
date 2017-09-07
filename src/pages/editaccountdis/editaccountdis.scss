@@ -41,18 +41,13 @@ page-editaccountdis {
         margin: 0 auto;
         display: block;
         }
-       .back-button-md.show-back-button {
-        display: none;
-    }
-    .back-button-text-ios {
-     
-        display: none;
-    }
-    .back-button-ios.show-back-button{
-        color: $color-primary;
-    }
+    
     .upload{
         text-transform: none;
         color:$color-primary;
     }
+    .Change{
+    text-align: center;
+    color: orange;
+}
 }
