@@ -84,11 +84,8 @@
   "Upload profile image":"ادخال صوره الحساب",
   "Upload ID Photos":"ادخال صور بطاقه الهاويه",
   "Registration done":"تم التسجيل بنجاح",
-<<<<<<< HEAD
   "Order Done":"تم ارسال الطلب ",
-  "Save Order" :"حفظ الطلب"
-=======
+  "Save Order" :"حفظ الطلب",
   "Reset Password":"تغيير كلمة المرور"
->>>>>>> b4a9e23507dc8f9e0225a670562a24595052a439
 
 }
