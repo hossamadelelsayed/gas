@@ -25,7 +25,7 @@
   <ion-footer>
     <div class="buttons">
       <button class="reqnow" ion-button round (click)="gotocreatorder()" >{{'Order now'|translate}}</button>
- <button class="reqlater" ion-button round><ion-datetime style="width: 0;" displayFormat="DDD/MMM/h/mm/A" [(ngModel)]="myDate"></ion-datetime>{{'Order later'|translate}}</button>
+ <button class="reqlater" (click)="gotoorderlater()" ion-button round>{{'Order later'|translate}}</button>
 
 
   </div>

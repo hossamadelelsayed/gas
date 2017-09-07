@@ -27,10 +27,10 @@
 <h4>{{'Number of cylinders'|translate}}</h4>
 <ion-row style="height:47px;">
   <ion-col col-4 >
-  <button class="plus" ion-button round icon-only>
+  <button class="plus" ion-button round icon-only (click)="add()">
 <ion-icon  name="ios-add"></ion-icon></button></ion-col>
- <ion-col col-4> <p class="no">3</p></ion-col>
-<ion-col col-4><button class="minus" ion-button round icon-only>
+ <ion-col col-4> <p class="no">{{counter}}</p></ion-col>
+<ion-col col-4><button class="minus" ion-button round icon-only (click)="minus()">
   <ion-icon  name="remove"></ion-icon></button>
   </ion-col>
 </ion-row>
@@ -42,10 +42,13 @@
     </ion-row><ion-row> <h4 style="color: gray;">شارع الملك سليمان حي العرب</h4></ion-row> 
   <hr>
   <ion-row style="height:34px;">
-<ion-col><h4 >{{'Date'|translate}}</h4></ion-col>
-<ion-col><button class="btchange" ion-button round>{{'Change'|translate}}
+<ion-col><h4 style="padding-top:5px" >{{'Date'|translate}}</h4></ion-col>
+<ion-col><button style="margin-top: -7px;" class="btchange" ion-button round>
+  <ion-datetime  displayFormat="YYYY-MMM-DD-h:mm:A" [(ngModel)]="deliveryDate">
+  </ion-datetime>
   </button></ion-col>
-    </ion-row><ion-row> <h4 style="color: gray;">20/5/2017</h4></ion-row> 
+    </ion-row>
+    <ion-row> <h4 style="color: gray;">{{deliveryDate}}</h4></ion-row> 
   <hr>
   <ion-row>
     <form radio-group style="font-size: 2.2rem; color: gray;" action="">
@@ -53,10 +56,10 @@
        <h4 style="color: black">{{'Choose pay way'|translate}}</h4>
 
    <ion-label class="lab"><span>{{'Cash'|translate}}</span></ion-label>
-  <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
+  <ion-radio name="select" color="orangee"  checked="true"></ion-radio><br>
   
    <ion-label class="lab" >Visa 455656*****</ion-label>
-  <ion-radio name="select" color="orangee"  checked="fales"></ion-radio><br>
+  <ion-radio name="select" color="orangee"  checked="fales" disabled></ion-radio><br>
   
   <button class="addpay" ion-button clear> <ion-icon class="plusicon" name="ios-add"></ion-icon>
   <span (click)="gotoaddcard()">{{'Add pay way'|translate}}</span></button>
@@ -65,12 +68,11 @@
 
 <ion-item  class="check">
   <ion-label>{{'Choose the same time and date'|translate}}</ion-label>
-  <ion-checkbox color="orangee" checked="fales"></ion-checkbox>
+  <ion-checkbox color="orangee" name="sameDate" (ionChange)="sameChange()"></ion-checkbox>
 </ion-item>
   <hr>
   <div class="d">
-
-    <button class="reqlater" ion-button round (click)="gotoorderlater()">{{'Order now'|translate}} </button>
+    <button class="reqlater" ion-button round (click)="saveOrderLater()">{{'Save Order'|translate}} </button>
   </div>
   </ion-list>
 </ion-grid>

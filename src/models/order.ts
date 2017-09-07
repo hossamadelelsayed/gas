@@ -8,18 +8,17 @@ export class Order{
   public static readonly RejectedStatus : string = 'rejected' ;
   public static readonly DeliveredStatus : string = 'delivered' ;
   constructor(
-    private _customerID : string ,
-    private _pipesNo : number ,
-    private _location : Location ,
-    private _paymentType : string ,
+    private  _customerID : string ,
+    private  _pipesNo : number ,
+    private  _location : Location ,
+    private  _paymentType : string ,
     private  _deliveryDate : Date = null ,
     private  _monthly : boolean = false ,
-    private _status ?: string ,
-    private _date ?: Date ,
-    private _distributerID ?: string ,
-    private _orderID ?: string
+    private  _status ?: string ,
+    private  _date ?: Date ,
+    private  _distributerID ?: string ,
+    private  _orderID ?: string
   ) {
-
   }
 
   get monthly():boolean {

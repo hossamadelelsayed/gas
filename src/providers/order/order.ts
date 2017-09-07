@@ -17,7 +17,8 @@ export class OrderProvider {
   public fireAuth : any;
   constructor(public http: Http) {
     console.log('Hello OrderProvider Provider');
-
+    this.fireAuth = firebase.auth();
+    this.fireDatabase = firebase.database();
   }
   login(): Promise<any>
   {
@@ -128,8 +129,7 @@ export class OrderProvider {
             let orderHistoryRef = this.fireDatabase.ref('/history/'+childSnapshot.key);
             orderHistoryRef.once('value').then((orderSnapshot)=>{
               orders.push(<Order>orderSnapshot.val())
-              })
-              .catch((err)=>reject(err));
+              }).catch((err)=>reject(err));
           });
         resolve(orders);
         }).catch((err)=>reject(err));
