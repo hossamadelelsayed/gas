@@ -58,7 +58,7 @@ import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {OrderProvider} from "../providers/order/order";
-
+import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -99,7 +99,8 @@ firebase.initializeApp(firebaseConfig);
     TeamregisterPage,
     HosstestPage ,
     CustomerMapPage,
-    HossamtestPage
+    HossamtestPage,
+    EditaccountdisPage
   ],
   imports: [
     BrowserModule,
@@ -143,7 +144,8 @@ firebase.initializeApp(firebaseConfig);
     TeamregisterPage,
     HosstestPage,
     CustomerMapPage,
-    HossamtestPage
+    HossamtestPage,
+    EditaccountdisPage
   ],
   providers: [
     StatusBar,

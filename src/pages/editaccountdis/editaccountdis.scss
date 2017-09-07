@@ -1,7 +1,4 @@
-page-editaccount {
-    .scroll-content{
-        position: fixed !important;
-    }
+page-editaccountdis {
     .header-md::after{
         background-image: none !important;
     
@@ -24,7 +21,6 @@ page-editaccount {
     }
     
     .enter{
-        margin-top: 30px;
         background-color:$color-primary;
         font-size: 1.8rem;
         height: 47px;
@@ -37,6 +33,9 @@ page-editaccount {
     }
     .reg{
         color: $color-primary;
+    }
+    .reset{
+        background-color: $color-primary;
     }
     .new{
         margin: 0 auto;
@@ -52,5 +51,8 @@ page-editaccount {
     .back-button-ios.show-back-button{
         color: $color-primary;
     }
-    
+    .upload{
+        text-transform: none;
+        color:$color-primary;
+    }
 }

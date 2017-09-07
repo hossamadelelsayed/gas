@@ -83,6 +83,7 @@
   "Password should be at least 6 characters":"يجب ادخال الرقم السري اكثر من ٦ حروف",
   "Upload profile image":"ادخال صوره الحساب",
   "Upload ID Photos":"ادخال صور بطاقه الهاويه",
-  "Registration done":"تم التسجيل بنجاح"
+  "Registration done":"تم التسجيل بنجاح",
+  "Reset Password":"تغيير كلمة المرور"
 
 }

@@ -81,7 +81,7 @@ let userdata={uEmail:email,uType:type};
   doLogin(phoneNo: string, password: string): Promise <string>{
     let promise = new Promise((resolve, reject )=>{
       this.phoneLogin(phoneNo,password).then(userdata=>{
-        resolve(userdata.uType);
+        resolve(userdata);
         this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;
