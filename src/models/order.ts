@@ -13,12 +13,20 @@ export class Order{
     private _location : Location ,
     private _paymentType : string ,
     private  _deliveryDate : Date = null ,
+    private  _monthly : boolean = false ,
     private _status ?: string ,
     private _date ?: Date ,
     private _distributerID ?: string ,
     private _orderID ?: string
   ) {
 
+  }
+
+  get monthly():boolean {
+    return this._monthly;
+  }
+  set monthly(val : boolean) {
+    this._monthly = val;
   }
 
   get customerID():string {
