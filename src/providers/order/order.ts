@@ -35,6 +35,7 @@ export class OrderProvider {
         location: order.location,
         paymentType: order.paymentType,
         deliveryDate : order.deliveryDate,
+        monthly : order.monthly,
         date: firebase.database.ServerValue.TIMESTAMP,
         status: Order.NoResponseStatus
       }).then((orderSnapshot:any)=>{
