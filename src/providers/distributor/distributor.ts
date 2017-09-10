@@ -23,10 +23,10 @@ id:any;
 
   }
 
-  sendMyLoc(){
-    ////////////////////////////////////////// listen to the current location and sends it to firebase
-
-    this. firebaseRef = firebase.database().ref('/valid/city/area');
+  sendMyLoc(lat:any,lng:any){
+  ////////////////////////////////////////// listen to the current location and sends it to firebase
+   this.getCurrentIpLocation(lat,lng).then((city)=>{
+    this. firebaseRef = firebase.database().ref('/valid/'+city);
 
     this. geoFire = new GeoFire(this.firebaseRef);
     let geo = this.geolocation.getCurrentPosition();
@@ -48,17 +48,24 @@ id:any;
       // data.coords.longitude
     });
     ///////////////////////////////////
+   });
   }
+x:string;
+  getCurrentIpLocation(lat:any,lng:any): Promise<any> {
 
-  getCurrentIpLocation(): Promise<any> {
-
+    console.log("latlng",lat,lng);
 
     let promise = new Promise((resolve, reject )=>{
-    this._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
+    this._http.get
+    ('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','
+      +lng+'&location_type=RANGE_INTERPOLATED&result_type=street_address&'
+      +
+      'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
       .map(response => response.json()
       ).subscribe(data=>{
-      console.log("geolocation",data['formatted_address']);
-resolve(data);
+      console.log("geolocation",data.results[0]. address_components[4].long_name);
+
+      resolve(data);
     });
     });
     return promise;
