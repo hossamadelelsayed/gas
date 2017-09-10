@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {Order} from "../../models/order";
 import {User} from "../../models/user";
 import * as firebase from "firebase";
+import {Events} from "ionic-angular";
 
 /*
   Generated class for the OrderProvider provider.
@@ -15,7 +16,7 @@ import * as firebase from "firebase";
 export class OrderProvider {
   public fireDatabase : any;
   public fireAuth : any;
-  constructor(public http: Http) {
+  constructor(public http: Http,public events: Events) {
     console.log('Hello OrderProvider Provider');
     this.fireAuth = firebase.auth();
     this.fireDatabase = firebase.database();
@@ -44,6 +45,7 @@ export class OrderProvider {
         let OrderInstanceRef = this.fireDatabase.ref('/history/'+orderSnapshot.key);
         OrderInstanceRef.child('orderID').set(orderSnapshot.key).then(()=>{
           let customerOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+Order.NoResponseStatus+'/'+orderSnapshot.key) ;
+          this.publishOrderToAllDist('Alexandria Governorate',orderSnapshot.key);
           customerOrderRef.child('orderID').set(orderSnapshot.key).then(()=>{
             OrderInstanceRef.once('value').then((snapshot)=>{
               resolve(<Order>snapshot.val());
@@ -136,6 +138,10 @@ export class OrderProvider {
     });
     return promise ;
   }
+  accept(orderID : string , distributerID : string)
+  {
+
+  }
   assignDistributer(orderID : string , distributerID : string) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject) => {
@@ -183,5 +189,32 @@ export class OrderProvider {
         }).catch((err)=>reject(err));
     });
     return promise ;
+  }
+  publishOrderToAllDist(city : string , orderID : string) : Promise <boolean>
+  {
+    let promise = new Promise((resolve, reject ) => {
+      let AllDistCityRef = this.fireDatabase.ref('/ordersToAllDist/'+city +'/' +orderID) ;
+      AllDistCityRef.child('orderID').set(orderID).then(()=>{
+        resolve(true);
+      }).catch((err) => reject(err));
+    });
+    return promise ;
+  }
+  ordersToAllDistCreated(city : string)
+  {
+    let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
+    ordersRef.on('child_added', (data) => {
+      let historyRef = firebase.database().ref('history/' + data.key);
+      historyRef.once('value').then((orderSnapShot)=>{
+        this.events.publish('ordersToAllDist:created',<Order>orderSnapShot.val());
+      });
+    });
+  }
+  ordersToAllDistRemoved(city : string)
+  {
+    let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
+    ordersRef.on('child_removed', (data) => {
+      this.events.publish('ordersToAllDist:removed',data.key);
+    });
   }
 }
