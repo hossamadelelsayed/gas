@@ -26,7 +26,7 @@ import {MainPage} from "../pages/main/main";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage =MainPage;  //WelcomePage;
+  welcomePage =HosstestPage;  //WelcomePage;
   settingsPage=SettingsPage;
   profilePage=ProfilePage;
   historyPage=HistoryPage;

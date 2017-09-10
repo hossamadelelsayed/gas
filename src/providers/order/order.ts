@@ -143,34 +143,43 @@ export class OrderProvider {
   }
   distOrderAccept(orderID : string , distributerID : string) : Promise <boolean>
   {
-    let promises : Promise<any>[] = [] ;
+    let promises : Promise<boolean>[] = [] ;
     let promise = new Promise((resolve, reject) => {
       let orderRef = this.fireDatabase.ref('/history/'+orderID);
-      let order : Order ;
-      promises.push(orderRef.child('distributerID').set(distributerID).then(()=>{
-        resolve(true)
-        console.log('true 1');
-      }).catch((err)=>reject(err)));
-      promises.push(orderRef.child('status').set(Order.PendingStatus).then(()=>{
-        resolve(true)
-        console.log('true 2');
-      }).catch((err)=>reject(err)));
-      orderRef.once('value').then((orderSnapShot)=>{
-        order = orderSnapShot.val();
-        let customerOrderRef = this.fireDatabase.ref('customers/'+order.customerID+'/history/'+orderID);
-        let distOrderRef = this.fireDatabase.ref('distributors/'+order.distributerID+'/history/'+orderID);
-        customerOrderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err));
-        distOrderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err));
-        distOrderRef.child('orderID').set(orderID).catch((err)=>reject(err));
-      }).catch((err)=>reject(err));
-      this.removeOrderFromAllDist("Alexandria Governorate",orderID);
+      promises.push(orderRef.child('distributerID').set(distributerID).catch((err)=>reject(err)));
+      promises.push(orderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err)));
+      promises.push(this.distAndCustToPendingOrder(orderRef).catch((err)=>reject(err)));
+      promises.push(this.removeOrderFromAllDist("Alexandria Governorate",orderID).catch((err)=>reject(err)));
       Promise.all(promises).then(()=>{
-        resolve(true)
-        console.log('final true');
+        resolve(true);
       }).catch((err)=>reject(err));
     });
     return promise ;
   }
+
+  private distAndCustToPendingOrder(orderRef :  firebase.database.Reference)  : Promise <boolean>
+  {
+    let promises : Promise<boolean>[] = [] ;
+    let order : Order ;
+    let promise = new Promise((resolve, reject) => {
+      orderRef.once('value').then((orderSnapShot)=>{
+        order = orderSnapShot.val();
+        let customerOrderRef = this.fireDatabase.ref('customers/'+order.customerID+'/history/'+order.orderID);
+        let distOrderRef = this.fireDatabase.ref('distributors/'+order.distributerID+'/history/'+order.orderID);
+        promises.push(customerOrderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err)));
+        promises.push(distOrderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err)));
+        promises.push(distOrderRef.child('orderID').set(order.orderID).catch((err)=>reject(err)));
+        Promise.all(promises).then(()=>{
+          resolve(true);
+        }).catch((err)=>reject(err));
+      }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+
+
+
+
   distOrderReject(orderID : string , distributerID : string)
   {
 
@@ -186,13 +195,19 @@ export class OrderProvider {
     });
     return promise ;
   }
-  publishOrderToAllDist(city : string , orderID : string) : Promise <boolean>
+  private publishOrderToAllDist(city : string , orderID : string) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject ) => {
       let AllDistCityRef = this.fireDatabase.ref('/ordersToAllDist/'+city +'/' +orderID) ;
       AllDistCityRef.child('orderID').set(orderID).then(()=>{
         resolve(true);
       }).catch((err) => reject(err));
+    });
+    return promise ;
+  }
+  private publishOrderToSpecificDist(city : string , orderID : string , distributerID : string) : Promise <boolean>
+  {
+    let promise = new Promise((resolve, reject ) => {
     });
     return promise ;
   }
