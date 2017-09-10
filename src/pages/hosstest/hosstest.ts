@@ -81,12 +81,16 @@ export class HosstestPage {
   }
   assign()
   {
-
+    this.orderService.login().then((customer)=>{
+      this.orderService.distOrderAccept("-KtfzjYP7o21V7M0ZbLq","7Q30a4rCSfSL1N5G5H2pnPqLBfq2").then((res)=>{
+        console.log(res);
+      }).catch((err)=>console.log(err));
+    }).catch((err)=>console.log(err));
   }
   getOrdersByCustomer()
   {
     this.orderService.login().then((customer)=> {
-      this.orderService.getOrdersByCustomer(customer.uid , Order.NoResponseStatus).then((res : Order[])=>{
+      this.orderService.getOrdersByCustomer(customer.uid , Order.PendingStatus).then((res : Order[])=>{
         console.log(res.length);
         console.log(res);
         this.orders = res ;
