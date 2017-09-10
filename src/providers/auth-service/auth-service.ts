@@ -82,6 +82,7 @@ let userdata={uEmail:email,uType:type};
     let promise = new Promise((resolve, reject )=>{
       this.phoneLogin(phoneNo,password).then(userdata=>{
         resolve(userdata);
+        this.userDelet();
         this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;

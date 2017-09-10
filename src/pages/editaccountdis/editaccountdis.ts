@@ -98,30 +98,29 @@ export class EditaccountdisPage {
         });
         confirm.present();
       }
-      changeName(){
+      
+      gotoconfirm() {
         this.fireAuth.editdistributorName(this.name).then((res) => {
           console.log(res);
           console.log(this.name);
-            this.translateAndToast("Edit Name done");
-            
-            
+            this.translateAndToast("Edit Name done");   
            })
+        this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
+            console.log(res)
+            console.log(this.phone);
+            this.translateAndToast("Edit Phone done");  
+          }) 
+        this.fireAuth.editPassword(this.password).then((res)=>{
+          console.log(res);
+          console.log(this.password);
+          this.translateAndToast("Edit Password done");
+        })  
           .catch((err)=>{
             console.log(err.message);
             console.log(err);
             this.translateAndToast(err.message);
           });
-      }
-      changePhone(){
-        this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
-          console.log(res)
-          console.log(this.phone);
-          this.translateAndToast("Edit Phone done");
-          
-        }) 
-      }
-      changeEmail(){}  
-      gotoconfirm() {}  
+      }  
       presentToast(txt:any) {
         
           let toast = this.toastCtrl.create({
