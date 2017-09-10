@@ -7,18 +7,36 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController,Platform} from 'ionic-angular';
 import {EditaccountPage} from "./../editaccount/editaccount";
 import {EditaccountdisPage} from "./../editaccountdis/editaccountdis";
+import { NativeStorage } from '@ionic-native/native-storage';
+import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public platform: Platform) {
+  public Data:any;
+  constructor(public navCtrl: NavController,
+      public navParams: NavParams,
+      public menuCtrl: MenuController,
+      public platform: Platform,
+      private fireAuth : AuthServiceProvider,
+      private nativeStorage: NativeStorage) {  
   }
+  
+  // users(){
+  //    this.Data = this.nativeStorage.getItem('typedis')
+  //   .then(
+  //     data => console.log(data),
+  //     error => console.error(error)
+  //   );
+  //   console.log(this.Data);
+  // }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+    
   }
 goaddcard(){
   this.navCtrl.push(AddcardPage);
@@ -46,6 +64,7 @@ gotoeditaccountdis(){
   this.navCtrl.push(EditaccountdisPage);
 }
 exit(){
+  this.fireAuth.doLogout();
   this.platform.exitApp();
   console.log('exit');
 }
