@@ -14,10 +14,13 @@ export class EditaccountdisPage {
   public password ;
   public name;
   public Image=Image;
-  public profileimage:Image=null;
-  public backimage:Image=null;
-  public frontimage:Image=null;
+  public profileimage:Image;
+  public backimage:Image;
+  public frontimage:Image;
   public phone ;
+  public sta;
+  public sta2;
+  public sta3;
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      private camera: Camera,
@@ -25,6 +28,7 @@ export class EditaccountdisPage {
      private toastCtrl:ToastController,
      public translateService : TranslateService,
      private fireAuth : AuthServiceProvider) {
+      this.downloadImage();
   }
 
   ionViewDidLoad() {
@@ -98,23 +102,59 @@ export class EditaccountdisPage {
         });
         confirm.present();
       }
-      
+      //dowinload image
+     downloadImage(){
+      this.fireAuth.joinTeamImgDownload(this.Image.Profile).then((sta)=>{
+        this.presentToast(sta.state);
+        this.sta=sta;
+      }).catch( (err)=>{console.log(err);
+        this.translateAndToast(err.message+"err");
+      });
+      this.fireAuth.joinTeamImgDownload(this.Image.Front).then((sta2)=>{
+        this.presentToast(sta2.state);
+        this.sta2=sta2;
+      }).catch( (err)=>{console.log(err);
+        this.translateAndToast(err.message+"err");
+      });
+      this.fireAuth.joinTeamImgDownload(this.Image.Back).then((sta3)=>{
+        this.presentToast(sta3.state);
+        this.sta3=sta3;
+      }).catch( (err)=>{console.log(err);
+        this.translateAndToast(err.message+"err");
+      });
+     }
       gotoconfirm() {
+        //Editname
         this.fireAuth.editdistributorName(this.name).then((res) => {
           console.log(res);
           console.log(this.name);
             this.translateAndToast("Edit Name done");   
            })
+           //edit phone
         this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
             console.log(res)
             console.log(this.phone);
             this.translateAndToast("Edit Phone done");  
           }) 
+          //edit password
         this.fireAuth.editPassword(this.password).then((res)=>{
           console.log(res);
           console.log(this.password);
           this.translateAndToast("Edit Password done");
-        })  
+        })
+        //upload profile image
+        this.fireAuth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile).then((sta)=>{
+          this.presentToast(sta.state);
+        }) 
+        //upload front image
+        this.fireAuth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front).then((sta)=>{
+          this.presentToast(sta.state);
+        }) 
+        //upload back image
+        this.fireAuth.joinTeamImgUpload(this.backimage.Image,this.Image.Back).then((sta)=>{
+          this.presentToast(sta.state);
+        }) 
+
           .catch((err)=>{
             console.log(err.message);
             console.log(err);

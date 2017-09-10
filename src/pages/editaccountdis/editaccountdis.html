@@ -13,8 +13,8 @@
 </ion-header>
 <ion-content padding >
    <div  style="text-align: center;">
-     <img *ngIf="profileimage==null" src="assets/imgs/login_logo.png">
-     <img *ngIf="profileimage!=null" [src]="profileimage.ImgSRC">
+     <!-- <img *ngIf="profileimage==null" src="assets/imgs/login_logo.png"> -->
+     <img [src]="sta">
      <button  class="upload"ion-button clear class="upload" (click)="galleryOrCamera(Image.Profile)">{{'Upload profile image'|translate}}</button>
   </div>
  <form #f="ngForm" >
@@ -63,11 +63,11 @@
    <ion-row>
      <ion-col col-6>
       <button ion-button clear (click)="galleryOrCamera(Image.Front)" style="width:100%;color:orange"> {{'Upload ID front'| translate}}</button>   
-      <img  [src]="frontimage?.ImgSRC">  
+      <img [src]="sta2">
      </ion-col>
      <ion-col col-6>
       <button ion-button clear (click)="galleryOrCamera(Image.Back)" style="width:100%;color:orange"> {{'Upload ID back'| translate}}</button>   
-      <img [src]="backimage?.ImgSRC">
+      <img [src]="sta3">
      </ion-col>
    </ion-row>
     <!-- <button class="enter" [disabled]="!name|| !email || !password|| !phone" ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button> -->

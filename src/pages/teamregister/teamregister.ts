@@ -21,9 +21,15 @@ export class TeamregisterPage {
   public frontimage:Image=null;
   public phone ;
   
-  constructor(public translateService : TranslateService,public alertCtrl: AlertController,
-    private toastCtrl:ToastController,private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
+  constructor(public translateService : TranslateService,
+              public alertCtrl: AlertController,
+              private toastCtrl:ToastController,
+              private camera: Camera,
+              public navCtrl: NavController,
+              public navParams: NavParams ,
               private auth : AuthServiceProvider) {
+
+              
   }
 
   ionViewDidLoad() {
@@ -96,6 +102,7 @@ else{
     });
     confirm.present();
   }
+  DownloadImage(){}
   gotoconfirm()
   {
     this.auth.register("distributors",this.email,this.password,this.name,this.phone)
