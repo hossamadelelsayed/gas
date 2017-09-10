@@ -23,10 +23,10 @@ id:any;
 
   }
 
-  sendMyLoc(){
-    ////////////////////////////////////////// listen to the current location and sends it to firebase
-
-    this. firebaseRef = firebase.database().ref('/valid/city/area');
+  sendMyLoc(lat:any,lng:any){
+  ////////////////////////////////////////// listen to the current location and sends it to firebase
+   this.getCurrentIpLocation(lat,lng).then((city)=>{
+    this. firebaseRef = firebase.database().ref('/valid/'+city);
 
     this. geoFire = new GeoFire(this.firebaseRef);
     let geo = this.geolocation.getCurrentPosition();
@@ -48,6 +48,7 @@ id:any;
       // data.coords.longitude
     });
     ///////////////////////////////////
+   });
   }
 x:string;
   getCurrentIpLocation(lat:any,lng:any): Promise<any> {
@@ -60,16 +61,9 @@ x:string;
       +lng+'&location_type=RANGE_INTERPOLATED&result_type=street_address&'
       +
       'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
-      // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
       .map(response => response.json()
       ).subscribe(data=>{
-      console.log("geolocation",data.results[0]. address_components[4]);
-       this.x=data.results[0]. formatted_address;
- let country={};
-      console.log("geolocation street",country);
-      console.log("geolocation city",data.results[0].types['country']);
-
-      console.log("geolocation country",data.results[0]. formatted_address[2]);
+      console.log("geolocation",data.results[0]. address_components[4].long_name);
 
       resolve(data);
     });

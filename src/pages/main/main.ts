@@ -67,8 +67,8 @@ export class MainPage {
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
-this.distributor.sendMyLoc();
-this.distributor.getCurrentIpLocation();
+this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+// this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude);
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
         self. marker = new google.maps.Marker({
         position:latLng,
@@ -141,5 +141,5 @@ toggleMenu()
     this.menuCtrl.toggle();
   }
 
-  
+
 }
