@@ -125,15 +125,15 @@ let userdata={uEmail:email,uType:type};
   }//
   ///////////////////////////////////////////////////////////
 
-//register a user and transfere him from anonymous user to a user using email and passwo
-userTransfere(email :any ,password:any){//
-  let credential = firebase.auth.EmailAuthProvider.credential(email, password);//
-  this.fireAuth.currentUser.link(credential).then(function(user) {//
-console.log("Anonymous account successfully upgraded", user);//
-}, function(error) {//
-console.log("Error upgrading anonymous account", error);//
-});//
-}//
+// //register a user and transfere him from anonymous user to a user using email and passwo
+// userTransfere(email :any ,password:any){//
+//   let credential = firebase.auth.EmailAuthProvider.credential(email, password);//
+//   this.fireAuth.currentUser.link(credential).then(function(user) {//
+// console.log("Anonymous account successfully upgraded", user);//
+// }, function(error) {//
+// console.log("Error upgrading anonymous account", error);//
+// });//
+// }//
   ///////////////////////////////////////////////////////////////////////
 //tacking img type and base64 img string type
 joinTeamImgUpload(imgStr:any,imgType:any):Promise<any>{
@@ -325,7 +325,7 @@ let user = firebase.auth().currentUser.uid;
     let user = firebase.auth().currentUser.uid;
     console.log(user);
     let promise = new Promise((resolve, reject) => {
-      let userPhoneRef=firebase.database().ref("customers/"+user);
+      let userPhoneRef=firebase.database().ref("distributors/"+user);
       userPhoneRef.once("value")
         .then((snapshot)=>{
           let phoneNoVal = snapshot.child("phoneNo").val();
