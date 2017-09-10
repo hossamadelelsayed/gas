@@ -19,13 +19,14 @@ import {MainService} from "../providers/main-service";
 
 import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
+import {MainPage} from "../pages/main/main";
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage =HomePage;  //WelcomePage;
+  welcomePage =MainPage;  //WelcomePage;
   settingsPage=SettingsPage;
   profilePage=ProfilePage;
   historyPage=HistoryPage;
