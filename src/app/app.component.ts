@@ -25,7 +25,7 @@ import {HosstestPage} from "../pages/hosstest/hosstest";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage =HomePage;  //WelcomePage;
+  welcomePage =HosstestPage;  //WelcomePage;
   settingsPage=SettingsPage;
   profilePage=ProfilePage;
   historyPage=HistoryPage;
