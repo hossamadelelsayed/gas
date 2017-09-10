@@ -4,7 +4,7 @@ import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import { Location} from "../../models/location";
 import {CustomerLocationProvider} from "../../providers/customer/customerLocation";
-import { Events } from 'ionic-angular';
+
 /**
  * Generated class for the HosstestPage page.
  *
@@ -19,18 +19,7 @@ export class HosstestPage {
  public orders : Order[] ;
   public locations : Location[] ;
   constructor(public navCtrl: NavController, public navParams: NavParams ,
-              public orderService : OrderProvider , public customerService : CustomerLocationProvider ,
-              public events: Events) {
-    this.events.subscribe('ordersToAllDist:created', ( order : Order) => {
-      // user and time are the same arguments passed in `events.publish(user, time)`
-      console.log(order);
-    });
-    this.events.subscribe('ordersToAllDist:removed', ( order) => {
-      // user and time are the same arguments passed in `events.publish(user, time)`
-      console.log(order);
-    });
-    this.orderService.ordersToAllDistCreated('Alexandria Governorate');
-    this.orderService.ordersToAllDistRemoved('Alexandria Governorate');
+              public orderService : OrderProvider , public customerService : CustomerLocationProvider) {
   }
 
   ionViewDidLoad() {
@@ -81,12 +70,16 @@ export class HosstestPage {
   }
   assign()
   {
-
+    this.orderService.login().then((customer)=>{
+      this.orderService.distOrderAccept("-KtgGGTYPMTShck889cz","7Q30a4rCSfSL1N5G5H2pnPqLBfq2").then((res)=>{
+        console.log(res);
+      }).catch((err)=>console.log(err));
+    }).catch((err)=>console.log(err));
   }
   getOrdersByCustomer()
   {
     this.orderService.login().then((customer)=> {
-      this.orderService.getOrdersByCustomer(customer.uid , Order.NoResponseStatus).then((res : Order[])=>{
+      this.orderService.getOrdersByCustomer(customer.uid , Order.PendingStatus).then((res : Order[])=>{
         console.log(res.length);
         console.log(res);
         this.orders = res ;

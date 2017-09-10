@@ -20,6 +20,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 
 import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
+import {MainPage} from "../pages/main/main";
 
 
 @Component({

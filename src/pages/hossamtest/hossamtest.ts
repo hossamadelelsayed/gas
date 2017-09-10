@@ -66,9 +66,9 @@ export class HossamtestPage {
   }
   assign()
   {
-    this.orderProvider.assignDistributer("-KsdDc1Eu-wu36L8bcJ2","bhjbdhucndsbhu").then((res)=>{
-      if(res == true)
-      console.log('done');
-    }).catch((err)=>console.log(err));
+    // this.orderProvider.assignDistributer("-KsdDc1Eu-wu36L8bcJ2","bhjbdhucndsbhu").then((res)=>{
+    //   if(res == true)
+    //   console.log('done');
+    // }).catch((err)=>console.log(err));
   }
 }

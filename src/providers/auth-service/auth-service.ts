@@ -261,8 +261,11 @@ userDelet():any{
 
   //get current user
   let user = firebase.auth().currentUser;
+  if(user.isAnonymous){
+    return  user.delete();
 
-return  user.delete();
+  }
+
 }
 getUserId(){
   let user = firebase.auth().currentUser.uid;

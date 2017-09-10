@@ -7,6 +7,9 @@ export class Order{
   public static readonly PendingStatus : string = 'pending' ;
   public static readonly RejectedStatus : string = 'rejected' ;
   public static readonly DeliveredStatus : string = 'delivered' ;
+  public static readonly AssignAllDist : string = 'allDist' ;
+  public static readonly AssignSpecificDist : string = 'specificDist' ;
+
   constructor(
     private  _customerID : string ,
     private  _pipesNo : number ,
@@ -20,6 +23,7 @@ export class Order{
     private  _orderID ?: string
   ) {
   }
+
 
   get monthly():boolean {
     return this._monthly;
@@ -80,5 +84,6 @@ export class Order{
     return this._orderID;
   }
 
-
 }
+
+
