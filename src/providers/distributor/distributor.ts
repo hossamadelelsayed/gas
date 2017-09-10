@@ -109,4 +109,16 @@ x:string;
   getDistributors(){
 
   }
+  getDistributorsName(id:any):Promise<string>{
+    let promise=new Promise((resolve,reject)=>{
+      let firebaseRef = firebase.database().ref('distributors/'+id+"/name");
+      firebaseRef.once(('value'),(snapshot)=>{
+        snapshot.val();
+      resolve(snapshot.val());
+      });
+    });
+
+
+    return promise;
+  }
 }

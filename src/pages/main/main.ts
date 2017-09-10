@@ -26,8 +26,9 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
   templateUrl: 'main.html',
 })
 export class MainPage {
+  map: any;
+
   @ViewChild('map') mapElement: ElementRef;
-   map: any;
 
   firebaseRef: any;
   geoFire: any;
@@ -52,7 +53,7 @@ export class MainPage {
     let self=this;
     this.authService.AnonymousSignIn();
 
-    // this.authService.doLogin("3","123456").then(()=>{
+    this.authService.doLogin("5","123456").then(()=>{
     ////////
 // Create a GeoFire index
 
@@ -71,7 +72,7 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
 // this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude);
       self.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
         self. marker = new google.maps.Marker({
-        position:latLng,
+        // position:latLng,
         map: self.map,
         title: 'Hello World!'
     });
@@ -80,7 +81,11 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
     });
 // ///////////////////////////////get firebase distributors locs
     self.markerRef=firebase.database().ref('valid/Alexandria Governorate');
-
+    // let  marker = new google.maps.Marker({
+    //   // position:latlng,
+    //   map: self.map,
+    //   title: 'Hello World!',tag:'user'
+    // });
     self.markerRef.on('value', (snapshot)=> {
       console.log("kyes",snapshot.val());
 
@@ -93,20 +98,35 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
         this. geoFire = new GeoFire(this.firebaseRef);
 
         this.geoFire.get(key.key).then((location)=> {
+this.distributor.getDistributorsName(key.key).then((name)=>{
+  let latlng = new google.maps.LatLng(location[0],location[1]);
+  this.addMarker(latlng,name,key.key);
+  let  marker = new google.maps.Marker;
+  // console.log('tag',this.marker.tag);
+  console.log('tag name',name);
 
+  // if(  marker==null){
+
+
+    marker.metadata = {type: "point", id: key};
+
+    marker.setValues({type: "point", id: key});
+
+  // }else{
+    marker.setPosition(latlng);
+
+  // }
+
+
+});
           if (location === null) {
             console.log("Provided key is not in GeoFire");
           }
           else {
             try{
 self.myLatLng ={lat:location[0],lng:location[1]};
-              let latlng = new google.maps.LatLng(location[0],location[1]);
-             let  marker = new google.maps.Marker({
-                position:latlng,
-                map: self.map,
-                title: 'Hello World!'
-              });
-              marker.setPosition(latlng);
+              // let latlng = new google.maps.LatLng(location[0],location[1]);
+
               console.log("location changed to : ",location);
 
             }catch (E){ console.log("Provided key has a location of " ,E);}
@@ -119,7 +139,7 @@ self.myLatLng ={lat:location[0],lng:location[1]};
 
     });
 
-    // });
+    });
 // /////////////
 //     console.log("location of " +  self.myLatLng);
 
@@ -161,5 +181,15 @@ toggleMenu()
     this.menuCtrl.toggle();
   }
 
+addMarker(latlng:any,name:string,key:any){
+ let marker = new google.maps.Marker({
+    position:latlng,
+    map: this.map
+   ,lable:name
+   ,tag:key
+  });
+console.log('tag',marker);
+  console.log('marker tag',marker.tag);
 
+}
 }
