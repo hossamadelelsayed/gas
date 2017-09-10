@@ -17,12 +17,12 @@ export class WelcomePage {
   constructor(private events:Events,
     private storage:Storage ,
     private authService:AuthServiceProvider,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public menuCtrl: MenuController  ) {
 this.menuCtrl.swipeEnable(false);
 this.authService.AnonymousSignIn();
-  // this.authService.phoneLogin("0100","123456");
+  // this.authService.phoneLogin("000000","123456");
 //
 // let user = firebase.auth().currentUser;
 
