@@ -7,7 +7,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
-
+import { Storage } from '@ionic/storage';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -15,23 +15,32 @@ import {TranslateService} from "@ngx-translate/core";
 export class HomePage {
 public mobile:any;
 public password:any;
+
   constructor(public navCtrl: NavController,private auth:AuthServiceProvider,private events:Events,
-  private toastCtrl: ToastController,   public translateService : TranslateService ) {
+  private toastCtrl: ToastController,public translateService : TranslateService ,
+  private storage: Storage) {
     this.auth.AnonymousSignIn();
   }
 
 gotocreateorder()
 {
+  // var self = this;
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
-  
     console.log(user['uEmail']);
+    // this.auth.getUserId;
     console.log(user['uType']);
-    
+    this.storage.set('type',user['uType']);
+    // self.nativeStorage.setItem('typedis', {property: user['uType']})
+    // .then((res) => {
+    //   console.log(res);
+    //   self.translateAndToast(res);
+    // });
     this.navCtrl.push(MainPage);
   }).catch((err)=>{
     console.log(err.message);
     this.translateAndToast(err.message);
   });
+ 
 }
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
