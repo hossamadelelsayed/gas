@@ -15,7 +15,7 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  public Data:any;
+  public Data:string;
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -35,15 +35,25 @@ export class ProfilePage {
   // }
 
 
-  ionViewDidLoad() {
-
-    console.log('ionViewDidLoad ProfilePage');
-  this.storage.get('type').then((val) => {
-      console.log('type', val);
-    });
-  
+  ionViewWillEnter() {
+// let self=this;
+      console.log('ionViewDidLoad ProfilePage');
+      this.getUserType().then(val=>{
+        this.Data=val;
+      });
+  console.log(this.Data);
   }
-  
+  getUserType():Promise<string>{
+    let promise=new Promise((resolve,reject)=>{
+
+      this.storage.get('type').then((val) => {
+        console.log('type', val);
+        this.Data=val;
+        resolve(val);
+      });
+    });
+    return promise; 
+  }
 goaddcard(){
   this.navCtrl.push(AddcardPage);
 }
