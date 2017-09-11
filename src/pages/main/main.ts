@@ -53,9 +53,9 @@ export class MainPage {
 
   ionViewDidLoad(){
     let self=this;
-    this.authService.AnonymousSignIn();
+    // this.authService.AnonymousSignIn();
 
-    this.authService.doLogin("5","123456").then(()=>{
+    // this.authService.doLogin("5","123456").then(()=>{
     ////////
 // Create a GeoFire index
 
@@ -141,7 +141,7 @@ self.myLatLng ={lat:location[0],lng:location[1]};
 
     });
 
-    });
+    // });
 // /////////////
 //     console.log("location of " +  self.myLatLng);
 

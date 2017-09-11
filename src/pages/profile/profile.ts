@@ -11,6 +11,7 @@ import { Storage } from '@ionic/storage';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import { AlertController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @Component({
   selector: 'page-profile',
@@ -26,7 +27,8 @@ export class ProfilePage {
       private fireAuth : AuthServiceProvider,
       private storage: Storage,
       private alertCtrl: AlertController,
-      public translateService : TranslateService ) {  
+      public translateService : TranslateService,
+      public nativeStorage:NativeStorage ) {  
   }
   
   
@@ -93,6 +95,7 @@ presentConfirm() {
         handler: () => {
           console.log('logout clicked');
           this.fireAuth.doLogout();
+          this.nativeStorage.clear();
           this.platform.exitApp();
           console.log('exit');
         }
