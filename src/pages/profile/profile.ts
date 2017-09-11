@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController,Platform} from 'ionic-angular';
 import {EditaccountPage} from "./../editaccount/editaccount";
 import {EditaccountdisPage} from "./../editaccountdis/editaccountdis";
-import { NativeStorage } from '@ionic-native/native-storage';
+import { Storage } from '@ionic/storage';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 
 @Component({
@@ -16,12 +16,13 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 })
 export class ProfilePage {
   public Data:any;
+
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
       public menuCtrl: MenuController,
       public platform: Platform,
       private fireAuth : AuthServiceProvider,
-      private nativeStorage: NativeStorage) {  
+      private storage: Storage) {  
   }
   
   // users(){
@@ -35,9 +36,14 @@ export class ProfilePage {
 
 
   ionViewDidLoad() {
+
     console.log('ionViewDidLoad ProfilePage');
-    
+  this.storage.get('type').then((val) => {
+      console.log('type', val);
+    });
+  
   }
+  
 goaddcard(){
   this.navCtrl.push(AddcardPage);
 }

@@ -7,7 +7,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
-import { NativeStorage } from '@ionic-native/native-storage';
+import { Storage } from '@ionic/storage';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -18,17 +18,18 @@ public password:any;
 
   constructor(public navCtrl: NavController,private auth:AuthServiceProvider,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
-  private nativeStorage: NativeStorage) {
+  private storage: Storage) {
     this.auth.AnonymousSignIn();
   }
 
 gotocreateorder()
 {
-  var self = this;
+  // var self = this;
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
     console.log(user['uEmail']);
-    this.auth.getUserId;
-    console.log(user['uType'],  this.auth.getUserId);
+    // this.auth.getUserId;
+    console.log(user['uType']);
+    this.storage.set('type',user['uType']);
     // self.nativeStorage.setItem('typedis', {property: user['uType']})
     // .then((res) => {
     //   console.log(res);
