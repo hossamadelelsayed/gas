@@ -1,0 +1,23 @@
+<!--
+  Generated template for the OrderlocationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>orderlocation</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div #map id="map"></div>
+  <form class="forma">
+    <ion-input name="placelabel" [(ngModel)]="placelabel" class="placename" type="text"></ion-input>
+    <button [disabled]="!placelabel" ion-button block class="tobalagh" (click)="sendLocation()">{{'Save Address'|translate}}</button>
+  </form>
+  
+</ion-content>

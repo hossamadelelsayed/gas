@@ -37,9 +37,9 @@
   <hr>
 <ion-row style="height:34px;">
 <ion-col><h5>{{'Confirm your location'|translate}}</h5></ion-col>
-<ion-col><button class="btchange" ion-button round>{{'Change'|translate}}
+<ion-col><button class="btchange" ion-button round (click)="showUserLocations()">{{'Change'|translate}}
   </button></ion-col>
-    </ion-row><ion-row> <h4 style="color: gray;">شارع الملك سليمان حي العرب</h4></ion-row> 
+    </ion-row><ion-row> <h4 style="color: gray;">{{locname}}</h4></ion-row> 
   <hr>
   <ion-row style="height:34px;">
 <ion-col><h4 style="padding-top:5px" >{{'Date'|translate}}</h4></ion-col>
@@ -48,7 +48,7 @@
   </ion-datetime>
   </button></ion-col>
     </ion-row>
-    <ion-row> <h4 style="color: gray;">{{deliveryDate}}</h4></ion-row> 
+    <ion-row> <h4 style="color: gray;"></h4></ion-row> 
   <hr>
   <ion-row>
     <form radio-group style="font-size: 2.2rem; color: gray;" action="">

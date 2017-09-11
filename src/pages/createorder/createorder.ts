@@ -1,6 +1,6 @@
 import { HistoryPage } from './../history/history';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,MenuController,ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController,ToastController,ModalController} from 'ionic-angular';
 import {OrderlaterPage} from "../orderlater/orderlater";
 import {AddcardPage} from "../addcard/addcard";
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
@@ -9,6 +9,7 @@ import {Location} from '../../models/location';
 import {Order}from '../../models/order';
 import {TranslateService} from "@ngx-translate/core";
 import { DatePipe } from '@angular/common';
+import {AddressPage} from '../address/address';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class CreateorderPage {
  public userId : string;
  public deliveryDate : any = Date.now();
  public sameDate : boolean = false;
+ public location : Location;
+ public locname : string;
 constructor(
             public toastCtrl : ToastController,
             public translateService :TranslateService , 
@@ -27,7 +30,8 @@ constructor(
             public order: OrderProvider,
             public navCtrl: NavController, 
             public navParams: NavParams, 
-            public menuCtrl: MenuController) {
+            public menuCtrl: MenuController,
+            public modalCtrl :ModalController) {
 
    this.userId = this.auth.getUserId();
 }
@@ -45,6 +49,10 @@ sameChange()
 ionViewDidLoad() {
   console.log('ionViewDidLoad CreateorderPage');
 }
+
+changeLocation(){
+  this.navCtrl.push(AddressPage);
+}
 gotohistory(){
   this.navCtrl.push(HistoryPage);
 }
@@ -58,11 +66,20 @@ toggleMenu()
 {
   this.menuCtrl.toggle();
 }
-
+showUserLocations()
+{
+  let modal = this.modalCtrl.create(AddressPage);
+  modal.present();
+  modal.onDidDismiss((res)=>{
+   this.location = res;
+   console.log(this.location);
+   this.locname = this.location.label;
+  });
+}
 createOrderNow(){
   console.log(this.deliveryDate);
   this.order.createOrder(new Order
-    (this.userId,this.counter,new Location(31.03245632,29.2632238,'hello work'),"cash",this.deliveryDate,this.sameDate))
+    (this.userId,this.counter,this.location,"cash",this.deliveryDate,this.sameDate))
       .then((Order)=>{
         console.log(Order.deliveryDate);
         console.log(Order.customerID);

@@ -7,7 +7,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
-
+import {OrderlocationPage} from "../orderlocation/orderlocation"
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

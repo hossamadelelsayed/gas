@@ -48,8 +48,8 @@ export class MyApp {
     platform.setDir('rtl', true);
   }
   onLoad(page:any){
-this.nav.push(page);
-this.menuCtrl.close();
+      this.nav.push(page);
+      this.menuCtrl.close();
   }
 
 }

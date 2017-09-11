@@ -10,7 +10,7 @@ import {DistributorProvider} from'../../providers/distributor/distributor';
 
 import {Observable} from "rxjs/Observable";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-
+import {OrderlocationPage} from "../orderlocation/orderlocation"
 
 /**
  * Generated class for the MainPage page.
@@ -68,7 +68,7 @@ export class MainPage {
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 this.distributor.sendMyLoc();
-this.distributor.getCurrentIpLocation();
+//this.distributor.getCurrentIpLocation();
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
         self. marker = new google.maps.Marker({
         position:latLng,
@@ -78,7 +78,7 @@ this.distributor.getCurrentIpLocation();
     }).catch((error) => {
       console.log('Error getting location', error);
     });
-
+  }
 // ///////////////////////////////get firebase distributors locs
 //     this.markerRef.on("value"
 //       , (snapshot)=> {
@@ -120,7 +120,7 @@ this.distributor.getCurrentIpLocation();
 //       // data.coords.longitude
 //     });
     /////////////////////////////////////
-   }
+   
   /// Adds GeoFire data to database
   // setLocation(key:string, coords: Array<number>):Promise <any> {
   //   let promise=new Promise(resolve,reject)
@@ -139,7 +139,5 @@ current:any;
 toggleMenu()
   {
     this.menuCtrl.toggle();
-  }
-
-  
+  }  
 }
