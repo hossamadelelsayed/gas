@@ -41,7 +41,7 @@
             </ion-item>
         </ion-col>
       </ion-row>
-      <!-- <ion-row>
+      <ion-row>
         <ion-col col-1>
           <ion-icon class="icon" ios="ios-lock" md="ios-lock-outline"></ion-icon>
         </ion-col>
@@ -50,7 +50,7 @@
               <ion-input  [(ngModel)]="password" id="password" name="password" type="password" placeholder="{{'Password'| translate}}" ></ion-input>
           </ion-item>
         </ion-col>  
-      </ion-row> -->
+      </ion-row>
 
       <button class="enter" [disabled]="!custName||!custNumber" ion-button block round (click)="editAccount()"> {{'Update Account'| translate}}</button>
       </ion-list>

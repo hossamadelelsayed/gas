@@ -42,7 +42,9 @@ export class MainPage {
 
 
   }
-
+  gotoselrct(){
+    this.navCtrl.push(SelectagentPage);
+  }
 
   gotoorderlater(){
     this.navCtrl.push(OrderlaterPage);

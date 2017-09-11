@@ -52,7 +52,8 @@ export class EditaccountdisPage {
           quality: 100,
           destinationType: this.camera.DestinationType.DATA_URL,
           encodingType: this.camera.EncodingType.JPEG,
-          mediaType: this.camera.MediaType.PICTURE
+          mediaType: this.camera.MediaType.PICTURE,
+          correctOrientation:true
         };
     
         this.camera.getPicture(options).then((imageData) => {
@@ -128,19 +129,19 @@ export class EditaccountdisPage {
         this.fireAuth.editdistributorName(this.name).then((res) => {
           console.log(res);
           console.log(this.name);
-            this.translateAndToast("Edit Name done");   
+            this.translateAndToast('Name updated');   
            })
            //edit phone
         this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
             console.log(res)
             console.log(this.phone);
-            this.translateAndToast("Edit Phone done");  
+            this.translateAndToast('Phone updated'); 
           }) 
           //edit password
         this.fireAuth.editPassword(this.password).then((res)=>{
           console.log(res);
           console.log(this.password);
-          this.translateAndToast("Edit Password done");
+          this.translateAndToast("Password updated");
         })
         //upload profile image
         this.fireAuth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile).then((sta)=>{

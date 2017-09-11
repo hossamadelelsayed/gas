@@ -9,6 +9,8 @@ import {EditaccountPage} from "./../editaccount/editaccount";
 import {EditaccountdisPage} from "./../editaccountdis/editaccountdis";
 import { Storage } from '@ionic/storage';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import { AlertController } from 'ionic-angular';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'page-profile',
@@ -22,18 +24,12 @@ export class ProfilePage {
       public menuCtrl: MenuController,
       public platform: Platform,
       private fireAuth : AuthServiceProvider,
-      private storage: Storage) {  
+      private storage: Storage,
+      private alertCtrl: AlertController,
+      public translateService : TranslateService ) {  
   }
   
-  // users(){
-  //    this.Data = this.nativeStorage.getItem('typedis')
-  //   .then(
-  //     data => console.log(data),
-  //     error => console.error(error)
-  //   );
-  //   console.log(this.Data);
-  // }
-
+  
 
   ionViewWillEnter() {
 // let self=this;
@@ -79,9 +75,43 @@ this.navCtrl.push(EditaccountPage);
 gotoeditaccountdis(){
   this.navCtrl.push(EditaccountdisPage);
 }
-exit(){
-  this.fireAuth.doLogout();
-  this.platform.exitApp();
-  console.log('exit');
+presentConfirm() {
+  let alert = this.alertCtrl.create({
+    title: "Logout",
+    message: 'Do you want to Logout ?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+      
+          console.log('Cancel clicked');
+        }
+      },
+      {
+        text: 'Logout',
+        handler: () => {
+          console.log('logout clicked');
+          this.fireAuth.doLogout();
+          this.platform.exitApp();
+          console.log('exit');
+        }
+      }
+    ]
+  });
+  alert.present();
 }
+translate(word : string)
+{
+  this.translateService.get(word).subscribe(
+    value => {
+      // value is our translated string
+    }
+  );
+}
+// exit(){
+//   this.fireAuth.doLogout();
+//   this.platform.exitApp();
+//   console.log('exit');
+// }
 }
