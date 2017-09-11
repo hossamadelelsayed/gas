@@ -9,7 +9,7 @@ export class Order{
   public static readonly DeliveredStatus : string = 'delivered' ;
   public static readonly AssignAllDist : string = 'allDist' ;
   public static readonly AssignSpecificDist : string = 'specificDist' ;
-
+  private _assignDistType : string ;
   constructor(
     private  _customerID : string ,
     private  _pipesNo : number ,
@@ -24,6 +24,12 @@ export class Order{
   ) {
   }
 
+  get assignDistType():string {
+    return this._assignDistType;
+  }
+  set assignDistType(val : string) {
+    this._assignDistType = val;
+  }
 
   get monthly():boolean {
     return this._monthly;
