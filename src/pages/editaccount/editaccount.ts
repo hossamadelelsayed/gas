@@ -11,8 +11,13 @@ export class EditaccountPage {
    public custName : any;
    public custNumber : any;
    public password:any;
+   public userid:any;
+   public myname:string;
+   public myphone:number;
   constructor(public translateService : TranslateService ,private toastCtrl:ToastController,
     private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
+      this.userid=this.authService.getUserId();
+      this.userInfo();
   }
 
   ionViewDidLoad() {
@@ -65,5 +70,13 @@ export class EditaccountPage {
       );
     }
 
-   
+    userInfo(){
+      this.authService.getUserInfo(this.userid,'customers').then((res)=>{
+        this.myname=res.name;
+        this.myphone=res.phoneNo;
+        console.log(res);
+      }).catch((err)=>{
+        console.log('err',err);
+      });
+    }
 }

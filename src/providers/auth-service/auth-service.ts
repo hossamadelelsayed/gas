@@ -114,14 +114,19 @@ let userdata={uEmail:email,uType:type};
 
 
 ////////////////////////////////////////////////////////////
-  getUserInfo(userId:any ,userType :any){//
+    getUserInfo(userId:any ,userType :any):Promise<any>{
+    let promise=new Promise((resolve,reject)=>{//
     let infoRef=firebase.database().ref(userType+"/"+userId);//
     let self=this;//
     infoRef.once("value")//
-  .then(function(snapshot) {//
-    return snapshot.val();//
-
+  .then((snapshot)=> {//
+    if(snapshot.val()!=null){
+resolve(snapshot.val())}else {
+      reject('user not found');
+    }
 });//
+    });//
+    return promise;
   }//
   ///////////////////////////////////////////////////////////
 

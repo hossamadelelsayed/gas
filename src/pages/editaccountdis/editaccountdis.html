@@ -25,7 +25,7 @@
      </ion-col>
      <ion-col col-11>
        <ion-item>
-    <ion-input [(ngModel)]="name" id="name" name="name" type="text" placeholder="{{'Full Name'| translate}}" ></ion-input>
+    <ion-input [(ngModel)]="name" id="name" name="name" type="text" placeholder="{{myname}}" ></ion-input>
      <p style="color:orange;font-size:15px" *ngIf="name ==''">{{'Please enter Your Full Name'|translate}}</p>
        </ion-item>
      </ion-col>
@@ -46,7 +46,7 @@
      </ion-col>
      <ion-col col-11>
        <ion-item>
-    <ion-input [(ngModel)]="phone" id="phone" name="phone" type="number" placeholder="{{'Phone Number'| translate}}" pattern="[0-9]*" maxlength="14"></ion-input>
+    <ion-input [(ngModel)]="phone" id="phone" name="phone" type="number" placeholder="{{myphone}}" pattern="[0-9]*" maxlength="14"></ion-input>
        </ion-item>
      </ion-col >  
    </ion-row>
@@ -70,8 +70,8 @@
       <img [src]="sta3">
      </ion-col>
    </ion-row>
-    <!-- <button class="enter" [disabled]="!name|| !email || !password|| !phone" ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button> -->
-    <button class="enter"  ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button>
+    <button class="enter" [disabled]="!name|| !password|| !phone" ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button>
+    <!-- <button class="enter"  [disabled]="!password"  ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button> -->
     </ion-list>
  </form>
 </ion-content>
