@@ -7,6 +7,9 @@ export class Order{
   public static readonly PendingStatus : string = 'pending' ;
   public static readonly RejectedStatus : string = 'rejected' ;
   public static readonly DeliveredStatus : string = 'delivered' ;
+  public static readonly AssignAllDist : string = 'allDist' ;
+  public static readonly AssignSpecificDist : string = 'specificDist' ;
+  private _assignDistType : string ;
   constructor(
     private  _customerID : string ,
     private  _pipesNo : number ,
@@ -19,6 +22,13 @@ export class Order{
     private  _distributerID ?: string ,
     private  _orderID ?: string
   ) {
+  }
+
+  get assignDistType():string {
+    return this._assignDistType;
+  }
+  set assignDistType(val : string) {
+    this._assignDistType = val;
   }
 
   get monthly():boolean {
@@ -80,5 +90,6 @@ export class Order{
     return this._orderID;
   }
 
-
 }
+
+

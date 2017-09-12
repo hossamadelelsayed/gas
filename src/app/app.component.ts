@@ -16,16 +16,18 @@ import {TranslateService} from "@ngx-translate/core";
 import {NavController} from 'ionic-angular';
 import {MenuController} from 'ionic-angular';
 import {MainService} from "../providers/main-service";
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
+import {MainPage} from "../pages/main/main";
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage =HomePage;  //WelcomePage;
+  welcomePage =WelcomePage;  //WelcomePage;
   settingsPage=SettingsPage;
   profilePage=ProfilePage;
   historyPage=HistoryPage;
@@ -36,8 +38,12 @@ export class MyApp {
   registermemberPage=RegistermemberPage;
   @ViewChild('nav') nav:NavController;
    public  MainService = MainService;
-  constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public translate : TranslateService ,
-  private menuCtrl:MenuController) {
+  constructor( platform: Platform,
+              statusBar: StatusBar,
+              splashScreen: SplashScreen,
+               public translate : TranslateService ,
+              private menuCtrl:MenuController,
+              public nativeStorage:NativeStorage) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

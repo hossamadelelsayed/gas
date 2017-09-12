@@ -5,13 +5,16 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>orderlocation</ion-title>
-  </ion-navbar>
-
+<ion-navbar> <ion-buttons right>
+    <button ion-button navPop icon-only>
+        <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+    </button>
+</ion-buttons>
+<ion-title >
+   {{'orderlocation'|translate}}
+</ion-title>
+</ion-navbar>
 </ion-header>
-
 
 <ion-content>
   <div #map id="map"></div>
