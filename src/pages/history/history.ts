@@ -1,6 +1,6 @@
 import { DetailsrequestPage } from './../detailsrequest/detailsrequest';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
+import { NavController, NavParams,MenuController } from 'ionic-angular';
 
 
 @Component({

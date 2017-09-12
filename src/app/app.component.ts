@@ -21,13 +21,14 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {MainPage} from "../pages/main/main";
+import {DistHistoryPage} from "../pages/dist-history/dist-history";
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage =WelcomePage;  //WelcomePage;
+  welcomePage = DistHistoryPage;  //WelcomePage;
   settingsPage=SettingsPage;
   profilePage=ProfilePage;
   historyPage=HistoryPage;

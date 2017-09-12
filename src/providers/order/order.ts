@@ -8,7 +8,6 @@ import {Events} from "ionic-angular";
 
 /*
   Generated class for the OrderProvider provider.
-
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular DI.
 */
@@ -40,7 +39,8 @@ export class OrderProvider {
         monthly : order.monthly,
         date: firebase.database.ServerValue.TIMESTAMP,
         status: Order.NoResponseStatus ,
-        assignDistType : distributerID == null ? Order.AssignAllDist : Order.AssignSpecificDist
+        assignDistType : distributerID == null ? Order.AssignAllDist : Order.AssignSpecificDist ,
+        assignDistID : distributerID
       }).then((orderSnapshot:any)=>{
         console.log(orderSnapshot.key);
         let OrderInstanceRef = this.fireDatabase.ref('/history/'+orderSnapshot.key);
@@ -202,63 +202,87 @@ export class OrderProvider {
     });
     return promise ;
   }
-
-
-
-
-  deleteOrder(orderID : string , userID ?: string ,userType ?: string) : Promise<any>
+  private rejectOrderNoResponseCase(order : Order) : Promise <boolean>
+  {
+    let promises : Promise<any>[] = [] ;
+    let promise = new Promise((resolve, reject) => {
+      let orderRef = this.fireDatabase.ref('/history/'+order.orderID);
+      let customerOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+order.orderID);
+        promises.push(orderRef.remove().catch((err)=> reject(err)));
+        promises.push(customerOrderRef.remove().catch((err)=> reject(err)));
+        if(order.assignDistType == Order.AssignAllDist)
+          promises.push(this.removeOrderFromAllDist("Alexandria Governorate",order.orderID).catch((err)=>reject(err)));
+        else promises.push(this.removeOrderFromSpecificDist("Alexandria Governorate",order.orderID ,order.assignDistID).catch((err)=>reject(err)));
+        Promise.all(promises).then(()=>resolve(true)).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  private rejectOrderPendingByCustomer(order : Order , customerID :string): Promise <boolean>
+  {
+    let promises : Promise<any>[] = [] ;
+    let promise = new Promise((resolve, reject) => {
+      let customerOrderRef = this.fireDatabase.ref('customers/'+order.customerID+'/history/'+order.orderID);
+      let distOrderRef = this.fireDatabase.ref('distributors/'+order.distributerID+'/history/'+order.orderID);
+      let orderRef = this.fireDatabase.ref('/history/'+order.orderID);
+      promises.push(orderRef.child('rejectedBy').set(User.Customer).catch((err)=>reject(err)));
+      promises.push(orderRef.child('status').set(Order.RejectedStatus).catch((err)=>reject(err)));
+      promises.push(customerOrderRef.child('status').set(Order.RejectedStatus).catch((err)=>reject(err)));
+      promises.push(distOrderRef.child('status').set(Order.RejectedStatus).catch((err)=>reject(err)));
+      Promise.all(promises).then(()=>resolve(true)).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  private rejectOrderPendingByDist(order : Order , DistID :string): Promise <boolean>
+  {
+    let promises : Promise<any>[] = [] ;
+    let promise = new Promise((resolve, reject) => {
+      let customerOrderRef = this.fireDatabase.ref('customers/'+order.customerID+'/history/'+order.orderID);
+      let distOrderRef = this.fireDatabase.ref('distributors/'+order.distributerID+'/history/'+order.orderID);
+      let orderRef = this.fireDatabase.ref('/history/'+order.orderID);
+      promises.push(orderRef.child('rejectedBy').set(User.Distributor).catch((err)=>reject(err)));
+      promises.push(orderRef.child('status').set(Order.RejectedStatus).catch((err)=>reject(err)));
+      promises.push(customerOrderRef.child('status').set(Order.RejectedStatus).catch((err)=>reject(err)));
+      promises.push(distOrderRef.child('status').set(Order.RejectedStatus).catch((err)=>reject(err)));
+      Promise.all(promises).then(()=>resolve(true)).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  private rejectOrderPendingCase(order : Order , userID : string) : Promise <boolean>
+  {
+    let userType = null ;
+    if(order.customerID == userID)
+      userType = User.Customer ;
+    else if (order.distributerID == userID)
+      userType = User.Distributor ;
+    let promise = new Promise((resolve, reject) => {
+      switch (userType) {
+        case User.Customer :
+          console.log('customer');
+          this.rejectOrderPendingByCustomer(order , userID).then(()=>resolve(true)).catch((err)=>reject(err));
+          break ;
+        case User.Distributor :
+          console.log('dist');
+          this.rejectOrderPendingByDist(order , userID).then(()=>resolve(true)).catch((err)=>reject(err));
+          break ;
+      }
+    });
+    return promise ;
+  }
+  rejectOrder(orderID : string , userID ?: string ) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject) => {
       let order : Order ;
       let orderRef = this.fireDatabase.ref('/history/'+orderID);
-      orderRef.once('value').then((snapshot : any)=>{
-        order = <Order>snapshot.val() ;
+      orderRef.once('value').then((snapshot : any)=> {
+        order = <Order>snapshot.val();
         if(order.status == Order.NoResponseStatus)
-        {
-          let customerOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+order.status+'/'+orderID);
-          orderRef.remove().then(()=>{
-            customerOrderRef.remove().then(()=>{
-              resolve(true);
-            }).catch((err)=> reject(err));
-          }).catch((err)=> reject(err));
-        }
-        else {
-          switch (userType) {
-            case User.Customer : {
-              orderRef.child('rejectedBy').set(User.Customer)
-                .then(()=>{
-                  orderRef.child('status').set(Order.RejectedStatus);
-                  // moveing to
-                  let customerRejectedOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+Order.RejectedStatus + '/' + order.orderID) ;
-                  customerRejectedOrderRef.child("orderID").set(order.orderID)
-                    .then(()=>{
-                      let customerOriginOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+order.status + '/' + order.orderID) ;
-                      customerOriginOrderRef.remove()
-                        .then(()=>{
-                          resolve(true);
-                        }).catch((err)=>reject(err));
-                    }).catch((err)=>reject(err));
-                }).catch((err)=>reject(err));
-              break;
-            }
-            case User.Distributor : {
-              orderRef.child('rejectedBy').set(User.Distributor)
-                .then(()=>{
-                  //to be handled
-                }).catch((err)=>reject(err));
-              break;
-            }
-            default: {
-              reject("User Type Must Has Value");
-              break;
-            }
-          }
-        }
+          this.rejectOrderNoResponseCase(order).then(()=>resolve(true)).catch((err)=>console.log(err));
+        else this.rejectOrderPendingCase(order,userID).then(()=>resolve(true)).catch((err)=>console.log(err));
+        }).catch((err)=>reject(err));
       });
-    });
     return promise ;
   }
-  updateOrder(order : Order): Promise<Order>
+  updateOrder(order : Order): Promise <Order>
   {
     let promise = new Promise((resolve, reject) => {
       let orderRef = this.fireDatabase.ref('/history/'+order.orderID);
@@ -268,70 +292,4 @@ export class OrderProvider {
     });
     return promise ;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // may be look at it later
-  //assignDistributer(orderID : string , distributerID : string) : Promise <boolean>
-  // {
-  //   let promise = new Promise((resolve, reject) => {
-  //     let orderRef = this.fireDatabase.ref('/history/'+orderID);
-  //     let order : Order ;
-  //         orderRef.child('distributerID').set(distributerID)
-  //           .then(()=>{
-  //             orderRef.once("value")
-  //               .then((snapshot : any)=> {
-  //                 order = <Order>snapshot.val();
-  //             this.moveCustomerOrderToPending(order).then(()=>{
-  //               this.addPendingOrderToDistributer(order).then(()=>{
-  //                 orderRef.child('status').set(Order.PendingStatus)
-  //                   .then(()=>{
-  //                     resolve(true);
-  //                   }).catch((err)=>reject(err));
-  //           }).catch((err)=>reject(err));
-  //       }).catch((err)=>reject(err));
-  //     }).catch((err)=>reject(err));
-  //   }).catch((err)=>reject(err));
-  // });
-  //   return promise ;
-  // };
-  // addPendingOrderToDistributer(order : Order) : Promise<boolean>
-  // {
-  //   let promise = new Promise((resolve, reject) => {
-  //     let distPendingOrderRef = this.fireDatabase.ref('/distributors/'+order.distributerID+'/history/'+Order.PendingStatus + '/' + order.orderID) ;
-  //     distPendingOrderRef.child('orderID').set(order.orderID).then(()=>{
-  //       resolve(true);
-  //     }).catch((err)=>reject(err));
-  //   });
-  //   return promise ;
-  // }
-  // moveCustomerOrderToPending(order : Order) : Promise <boolean>
-  // {
-  //   let promise = new Promise((resolve, reject ) => {
-  //     let customerPendingOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+Order.PendingStatus + '/' + order.orderID) ;
-  //     customerPendingOrderRef.child("orderID").set(order.orderID)
-  //       .then(()=>{
-  //         let customerOriginOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+order.status + '/' + order.orderID) ;
-  //         customerOriginOrderRef.remove()
-  //           .then(()=>{
-  //             resolve(true);
-  //           }).catch((err)=>reject(err));
-  //       }).catch((err)=>reject(err));
-  //   });
-  //   return promise ;
-  // }
-
-
-
 }

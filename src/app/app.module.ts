@@ -62,6 +62,7 @@ import {CustomerLocationProvider} from "../providers/customer/customerLocation";
 
 
 import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
+import {DistHistoryPage} from "../pages/dist-history/dist-history";
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -103,7 +104,8 @@ firebase.initializeApp(firebaseConfig);
     HosstestPage ,
     CustomerMapPage,
     HossamtestPage,
-    EditaccountdisPage
+    EditaccountdisPage ,
+    DistHistoryPage
   ],
   imports: [
     BrowserModule,
@@ -148,7 +150,8 @@ firebase.initializeApp(firebaseConfig);
     HosstestPage,
     CustomerMapPage,
     HossamtestPage,
-    EditaccountdisPage
+    EditaccountdisPage,
+    DistHistoryPage
   ],
   providers: [
     StatusBar,
