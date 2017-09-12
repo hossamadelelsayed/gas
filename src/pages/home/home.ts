@@ -8,6 +8,8 @@ import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
 import { Storage } from '@ionic/storage';
+import {NativeStorage} from '@ionic-native/native-storage';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -16,7 +18,8 @@ export class HomePage {
 public mobile:any;
 public password:any;
 
-  constructor(public navCtrl: NavController,private auth:AuthServiceProvider,private events:Events,
+
+constructor(public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
   private storage: Storage) {
     this.auth.AnonymousSignIn();
@@ -30,6 +33,9 @@ gotocreateorder()
     // this.auth.getUserId;
     console.log(user['uType']);
     this.storage.set('type',user['uType']);
+    this.nativeStorage.setItem('phone',this.mobile);
+    this.nativeStorage.setItem('password',this.password);
+    console.log(this.mobile);
     // self.nativeStorage.setItem('typedis', {property: user['uType']})
     // .then((res) => {
     //   console.log(res);
@@ -65,4 +71,5 @@ toast.present();
       }
     );
   }
+  
 }

@@ -22,12 +22,43 @@
 <ion-content  fill>
   <div #map id="map"></div>
 
-  <ion-footer>
+  <!-- <ion-footer>
     <div class="buttons">
       <button class="reqnow" ion-button round (click)="gotocreatorder()" >{{'Order now'|translate}}</button>
  <button class="reqlater" (click)="gotoorderlater()" ion-button round>{{'Order later'|translate}}</button>
 
 
   </div>
-  </ion-footer>
+  </ion-footer> -->
+  <ion-footer>
+    <img class="m" src="assets/imgs/agent_pin.png">
+     <ion-row class="ro2">  
+      <ion-col class="km">km 3</ion-col>
+<ion-col text-center >
+    <h6 style="margin-top: 42px; color:gray;">اسم الموزع</h6><br>
+    <div style="margin-top: -37px;
+   font-size: 1.8rem;">
+       <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
+       <ion-icon ios="ios-star" md="md-star"></ion-icon>
+       <ion-icon ios="ios-star" md="md-star"></ion-icon>
+       <ion-icon ios="ios-star" md="md-star"></ion-icon>
+       <ion-icon ios="ios-star" md="md-star"></ion-icon>
+    </div>
+</ion-col>   
+  </ion-row>
+<ion-row  class="ro">
+ <ion-col >
+ <button class="btn" ion-button round>اطلبة</button>
+ </ion-col>
+ <ion-col >
+ <button ion-button clear (click)="gotoaddvaluation()"><img class="im" src="assets/imgs/whatsapp.png"></button> 
+ </ion-col>
+ <ion-col>
+ <button ion-button clear><img class="im" src="assets/imgs/message.png"></button>
+ </ion-col>
+ <ion-col>
+ <button ion-button clear><img class="im" src="assets/imgs/call.png"></button>
+ </ion-col>
+</ion-row>
+</ion-footer>
 </ion-content>
