@@ -22,7 +22,9 @@
 <ion-content padding>
   <img class="imgd" src="assets/imgs/agent_pin.png">
   <h4 style="margin-top: 2px;">اسم العميل</h4>
+ 
 <ion-list style="margin-top: 40px;" >
+    <hr>
     <div *ngIf="Data =='customers'">
   <ion-row (click)="gotoeditaccount()">
     <ion-col col-1><img src="assets/imgs/profile_edit_profile.png"></ion-col>
@@ -32,7 +34,7 @@
           </ion-col>
   </ion-row>
     </div>
-      <hr>
+      
       <div *ngIf="Data =='distributors'">
       <ion-row  (click)="gotoeditaccountdis()">
         <ion-col col-1><img src="assets/imgs/profile_edit_profile.png"></ion-col>

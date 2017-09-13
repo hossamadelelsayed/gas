@@ -81,16 +81,16 @@ let userdata={uEmail:email,uType:type};
   doLogin(phoneNo: string, password: string): Promise <string>{
     let promise = new Promise((resolve, reject )=>{
       this.phoneLogin(phoneNo,password).then(userdata=>{
-        resolve(userdata);
         this.userDelet();
         this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;
-
+            resolve(userdata);
+            
             console.log("loged in id",userId);
             // this.events.publish('user:created', user);
             // this.events.publish('userId', user.uid);
-            this.getUserInfo(user.uid,"customers");
+            // this.getUserInfo(user.uid,"customers");
             resolve('logedIn');
           })  .catch((err)=>reject(err));
       }).catch((err)=>reject(err));
@@ -114,14 +114,19 @@ let userdata={uEmail:email,uType:type};
 
 
 ////////////////////////////////////////////////////////////
-  getUserInfo(userId:any ,userType :any){//
+    getUserInfo(userId:any ,userType :any):Promise<any>{
+    let promise=new Promise((resolve,reject)=>{//
     let infoRef=firebase.database().ref(userType+"/"+userId);//
     let self=this;//
     infoRef.once("value")//
-  .then(function(snapshot) {//
-    return snapshot.val();//
-
+  .then((snapshot)=> {//
+    if(snapshot.val()!=null){
+resolve(snapshot.val())}else {
+      reject('user not found');
+    }
 });//
+    });//
+    return promise;
   }//
   ///////////////////////////////////////////////////////////
 
@@ -324,31 +329,31 @@ let user = firebase.auth().currentUser.uid;
   });
   return promise ;
  }
-  editDistributorsPhoneNo(newPhoneNo :any) : Promise<boolean>{
-    let user = firebase.auth().currentUser.uid;
-    console.log(user);
-    let promise = new Promise((resolve, reject) => {
-      let userPhoneRef=firebase.database().ref("distributors/"+user);
-      userPhoneRef.once("value")
-        .then((snapshot)=>{
-          let phoneNoVal = snapshot.child("phoneNo").val();
-          console.log("phone value",phoneNoVal);
-          let ref=firebase.database().ref();
-          let child = ref.child(phoneNoVal);
-          child.once('value').then((oldPhonesnapshot)=>{
-            ref.child(newPhoneNo).set(oldPhonesnapshot.val()).then(()=>{
-              if(  ref.child(newPhoneNo+"/email").key !=  ref.child(phoneNoVal).key)
-                child.remove().then(()=>{
-                  userPhoneRef.child("phoneNo").set(newPhoneNo).then(()=>{
-                    resolve(true);
-                  }).catch((err)=>reject(err));
+ editDistributorsPhoneNo(type:any,newPhoneNo :any) : Promise<boolean>{
+  let user = firebase.auth().currentUser.uid;
+  console.log(user);
+  let promise = new Promise((resolve, reject) => {
+    let userPhoneRef=firebase.database().ref(type+"/"+user);
+    userPhoneRef.once("value")
+      .then((snapshot)=>{
+        let phoneNoVal = snapshot.child("phoneNo").val();
+        console.log("phone value",phoneNoVal);
+        let ref=firebase.database().ref();
+        let child = ref.child(phoneNoVal);
+        child.once('value').then((oldPhonesnapshot)=>{
+          ref.child(newPhoneNo).set(oldPhonesnapshot.val()).then(()=>{
+            if(  ref.child(newPhoneNo+"/email").key !=  ref.child(phoneNoVal).key)
+              child.remove().then(()=>{
+                userPhoneRef.child("phoneNo").set(newPhoneNo).then(()=>{
+                  resolve(true);
                 }).catch((err)=>reject(err));
-            }).catch((err)=>reject(err));
-          }).catch((err)=>reject(err))
+              }).catch((err)=>reject(err));
+          }).catch((err)=>reject(err));
         }).catch((err)=>reject(err))
-    });
-    return promise ;
-  }
+      }).catch((err)=>reject(err))
+  });
+  return promise ;
+}
   getUserName(type: any):Promise<string>{
     let promise = new Promise((resolve, reject) => {
       let name="";
@@ -379,19 +384,44 @@ let promise=new Promise((resolve,reject)=>{
   return promise;
 }
 
-  editEmail(newEmail:any):Promise<any>{
-    let promise=new Promise((resolve,reject)=>{
-      let user = firebase.auth().currentUser;
+editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
+  let promise=new Promise((resolve,reject)=>{
+    this.editDistributorsPhoneNo(type,phoneNo).then(()=>{
+    let user = firebase.auth().currentUser;
+    console.log('oldEmail',user.email);
+    // this.fireAuth.signInWithEmailAndPassword(user.email,password )
+    //   .then(user=>{
+        user.updateEmail(newEmail).then(msg=> {
+          // Update successful.
+
+          let userId=user.uid;
 
 
-      user.updateEmail(newEmail).then(msg=> {
-        // Update successful.
-        resolve(msg);
-      }).catch(function(error) {
-        // An error happened.
-        reject(error);
-      });
-    });
-    return promise;
-  }
+
+          /////////
+          let ref=firebase.database().ref();
+
+          ref.once('value',(snapshot)=>{
+            ref.child(phoneNo+"/email").set(newEmail);
+            ref.child(phoneNo+"/type").set(type);
+
+          });
+          let ref2=firebase.database().ref(type+"/"+uId+"/email");
+
+          ref2.once('value',(snapshot)=>{
+            ref2.set(newEmail);
+
+          });
+
+        })  .then((msg)=>{
+          resolve(msg);
+
+        }).catch((err)=>reject(err));
+    //   }).catch(function(error) {
+    //   // An error happened.
+    //   reject(error);
+    // });
+  });});
+  return promise;
+}
 }
