@@ -22,22 +22,16 @@ import { ToastController } from 'ionic-angular';
 import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {MainPage} from "../pages/main/main";
-<<<<<<< HEAD
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
 
-=======
 import { Storage } from '@ionic/storage';
->>>>>>> c48ad26a87d588897714b68e3f8f6b0b391086a4
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-<<<<<<< HEAD
-  welcomePage = DistHistoryPage;  //WelcomePage;
-=======
+
   welcomePage = null;  //WelcomePage;
->>>>>>> c48ad26a87d588897714b68e3f8f6b0b391086a4
   settingsPage=SettingsPage;
   mainpage=MainPage;
   profilePage=ProfilePage;
