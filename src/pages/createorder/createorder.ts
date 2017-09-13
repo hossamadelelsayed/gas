@@ -23,6 +23,7 @@ export class CreateorderPage {
  public sameDate : boolean = false;
  public location : Location;
  public locname : string;
+ public distId:any;
 constructor(
             public toastCtrl : ToastController,
             public translateService :TranslateService , 
@@ -32,8 +33,9 @@ constructor(
             public navParams: NavParams, 
             public menuCtrl: MenuController,
             public modalCtrl :ModalController) {
-
-   this.userId = this.auth.getUserId();
+              this.distId = this.navParams.data.disId;
+              console.log(this.navParams.data.disId);
+              this.userId = this.auth.getUserId();
 }
 add(){
   this.counter++;

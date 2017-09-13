@@ -14,6 +14,8 @@ import { OrderlocationPage} from './../pages/orderlocation/orderlocation';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { SMS } from '@ionic-native/sms';
+import { CallNumber } from '@ionic-native/call-number';
 
 import { RegistermemberPage } from './../pages/registermember/registermember';
 import { MainPage } from './../pages/main/main';
@@ -163,6 +165,8 @@ firebase.initializeApp(firebaseConfig);
     OrderProvider,
     CustomerLocationProvider,
     Camera,
+    SMS,
+    CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,

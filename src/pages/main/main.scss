@@ -49,5 +49,43 @@ page-main {
     .buttons{
        text-align: center;
     }
+    .im{
+        height: 37px;
+      }
+      .ro{
+            background-color: white;
+          border-radius: 91px;  
+          margin-left: 10px;
+          margin-right: 10px;
+      }
+      .ro2{
+          background-color: white;
+          border-radius: 90px;
+              margin-bottom: 10px;
+              height: 100px;
+              margin-left: 10px;
+          margin-right: 10px;
+        }
+            .footer-md::before{
+              background-image: none;
+          }
+      .m{
+              height: 92px;
+          display: block;
+          margin: 0 auto;
+          margin-bottom: -55px;
+      }
+      .btn{
+          background-color: $color-primary;
+          font-family: cairo;
+          font-size: 2rem;
+              padding: 21px 30px 24px 30px;
+      }
+      .km{
+              position: absolute;
+          margin-top: 23px;
+          color: gray;
+      }
+      
 
 }

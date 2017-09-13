@@ -7,6 +7,7 @@ import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
 import {Observable} from "rxjs/Observable";
 // import {google} from "../../pages/main/main";
+// import {google} from "../../pages/main/main";
 
 /*
   Generated class for the DistributorProvider provider.
@@ -27,9 +28,9 @@ id:any;
 
   sendMyLoc(lat:any,lng:any){
   ////////////////////////////////////////// listen to the current location and sends it to firebase
-    this.getCurrentIpLocation(lat,lng).then((city)=>{
+   this.getCurrentIpLocation(lat,lng).then((city)=>{
     this. firebaseRef = firebase.database().ref('/valid/'+city);
-    this.city=city;
+this.city=city;
     this. geoFire = new GeoFire(this.firebaseRef);
     let geo = this.geolocation.getCurrentPosition();
 
@@ -38,7 +39,7 @@ id:any;
       console.log('location', data.coords.latitude);
       // this.setLocation("some_key", [ data.coords.latitude,  data.coords.longitude]);
       this.id = firebase.auth().currentUser.uid;
-      console.log("geo id",firebase.auth().currentUser);
+      console.log("geo id",this.id);
 
       this.geoFire.set(this.id, [ data.coords.latitude,  data.coords.longitude]).then(()=> {
 
@@ -66,15 +67,19 @@ x:string;
       'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
       .map(response => response.json()
       ).subscribe(data=>{
-      //console.log("geolocation",data.results[0]. address_components[4].short_name);
-      //resolve(data.results[0]. address_components[4].short_name);
+      // console.log("geolocation",data.results[0]. address_components[4].short_name);
+      console.log("geolocation result",data);
+if(data.status!= "ZERO_RESULTS"){
+      resolve(data.results[0]. address_components[4].short_name);
+}
+resolve('Alexandria Governorate');
     });
     });
     return promise;
   }
-//   getDistributors(this:any){
+//   getDistributors(myLatLng:any,markerRef:any,marker){
 //     ///////////////////////////////get firebase distributors locs
-//     this.markerRef.on("value"
+//     markerRef.on("value"
 //       , (snapshot)=> {
 //         this.geoFire.get("some_key").then((location)=> {
 //
@@ -83,9 +88,9 @@ x:string;
 //           }
 //           else {
 //             try{
-// self.myLatLng ={lat:location[0],lng:location[1]};
+// myLatLng ={lat:location[0],lng:location[1]};
 //               let latlng = new google.maps.LatLng(location[0],location[1]);
-//               self. marker.setPosition(latlng);
+//               marker.setPosition(latlng);
 //               console.log("location changed to : ",location);
 //
 //             }catch (E){ console.log("Provided key has a location of " ,E);}
@@ -95,7 +100,6 @@ x:string;
 //         });
 //       });
 // /////////////
-//     console.log("location of " +  self.myLatLng);
 //   }
   onDistributorDisconnect(){
     this.id = firebase.auth().currentUser.uid;
@@ -105,9 +109,7 @@ x:string;
    });
 
   }
-  getDistributors(){
 
-  }
   getDistributorsName(id:any):Promise<string>{
     let promise=new Promise((resolve,reject)=>{
       let firebaseRef = firebase.database().ref('distributors/'+id+"/name");
@@ -119,5 +121,47 @@ x:string;
 
 
     return promise;
+  }
+  getDistributorsPhone(id:any):Promise<string>{
+    let promise=new Promise((resolve,reject)=>{
+      let firebaseRef = firebase.database().ref('distributors/'+id+"/phoneNo");
+      firebaseRef.once(('value'),(snapshot)=>{
+        snapshot.val();
+        resolve(snapshot.val());
+      });
+    });
+
+
+    return promise;
+  }
+  getDistributorPhone(key:any):Promise<any>{
+    let promise=new Promise((resolve,reject)=>{
+
+
+    this.getDistributorsPhone(key).then((phone)=>{
+    //   this.distPhone=name;
+      console.log('phone',phone);
+      resolve(phone);
+      
+              });
+
+    });
+    return promise;
+    }
+    getDistributorName(key:any):Promise<any>{
+      let promise=new Promise((resolve,reject)=>{
+
+
+    
+      this.getDistributorsName(key).then((name)=>{
+          // this.distName=name;
+          console.log('name',name);
+resolve(name);
+
+      });
+
+
+  });
+  return promise ;
   }
 }
