@@ -136,49 +136,10 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
                         console.log('new marker',key.key);
                    
 
-<<<<<<< HEAD
                 }, (error)=> {
                     console.log("Error: " + error);
                 });
             });
-=======
-    });
-
-    // });
-// /////////////
-//     console.log("location of " +  self.myLatLng);
-
-//////////////////////////////////////////// listen to the current location and sends it to firebase
-//     let watch = this.geolocation.watchPosition();
-//     watch.subscribe((data) => {
-//       console.log('location', data.coords.latitude);
-//       this.current= data.coords.latitude;
-//       // this.setLocation("some_key", [ data.coords.latitude,  data.coords.longitude]);
-//       this.geoFire.set("some_key", [ data.coords.latitude,  data.coords.longitude]).then(()=> {
-//
-//         console.log("Provided key has been added to GeoFire");
-//       }, (error)=> {
-//         console.log("Error: " + error);
-//       });
-//       // data can be a set of coordinates, or an error (if an error occurred).
-//       // data.coords.latitude
-//       // data.coords.longitude
-//     });
-    /////////////////////////////////////
-   }
-  /// Adds GeoFire data to database
-  // setLocation(key:string, coords: Array<number>):Promise <any> {
-  //   let promise=new Promise(resolve,reject)
-  //   this.geoFire.set(key, coords)
-  //     .then(_ => console.log('location updated'))
-  //     .catch(err => console.log(err))
-  //   return promise;
-  // }
-
-gotocreatorder(){
-// Create a Firebase reference where GeoFire will store its information
-this.navCtrl.push(CreateorderPage);
->>>>>>> 4c54ed1f38950ac94f3a313a97ef06b7dc04f0d0
 
 
         });
