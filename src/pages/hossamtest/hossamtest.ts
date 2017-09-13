@@ -51,12 +51,12 @@ export class HossamtestPage {
   }
   delete()
   {
-   // console.log(this.orderTest.orderID);
-    this.orderProvider.deleteOrder("-KsdDc1Eu-wu36L8bcJ2","D1mgEvVGy5WmSVDgcyobS7OexCo2",User.Customer).then((res)=>{
-    //  console.log(res);
-      if(res == true)
-        console.log('done');
-    }).catch((err)=>console.log(err));
+   // // console.log(this.orderTest.orderID);
+   //  this.orderProvider.deleteOrder("-KsdDc1Eu-wu36L8bcJ2","D1mgEvVGy5WmSVDgcyobS7OexCo2",User.Customer).then((res)=>{
+   //  //  console.log(res);
+   //    if(res == true)
+   //      console.log('done');
+   //  }).catch((err)=>console.log(err));
   }
   get()
   {

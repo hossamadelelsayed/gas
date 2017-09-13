@@ -87,7 +87,13 @@
   "Order Done":"تم ارسال الطلب ",
   "Save Order" :"حفظ الطلب",
   "Reset Password":"تغيير كلمة المرور",
+<<<<<<< HEAD
   "Logout":"تسجيل خروج",
   "updatePassword failed: First argument 'password' must be a valid string.":"برجاء ادخال كلمة مرور صحيحة",
   "Please wait...":"برجاء الانتظار٫٫٫"
+=======
+  "Save Address":"حفظ العنوان",
+  "Logout":"تسجيل خروج"
+
+>>>>>>> 0fd27b7b4bff76f12a851a8cc5eac6b517b7bcf6
 }

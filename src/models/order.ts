@@ -9,8 +9,10 @@ export class Order{
   public static readonly DeliveredStatus : string = 'delivered' ;
   public static readonly AssignAllDist : string = 'allDist' ;
   public static readonly AssignSpecificDist : string = 'specificDist' ;
+
   private _assignDistType : string ;
-  constructor(
+  private _assignDistID : string ;
+   constructor(
     private  _customerID : string ,
     private  _pipesNo : number ,
     private  _location : Location ,
@@ -24,6 +26,13 @@ export class Order{
   ) {
   }
 
+
+  get assignDistID():string {
+    return this._assignDistID;
+  }
+  set assignDistID(val : string) {
+    this._assignDistID = val;
+  }
   get assignDistType():string {
     return this._assignDistType;
   }

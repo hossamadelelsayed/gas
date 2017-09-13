@@ -22,12 +22,15 @@ import { ToastController } from 'ionic-angular';
 import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {MainPage} from "../pages/main/main";
+import {DistHistoryPage} from "../pages/dist-history/dist-history";
+
 import { Storage } from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+
   welcomePage = null;  //WelcomePage;
   settingsPage=SettingsPage;
   mainpage=MainPage;
@@ -81,8 +84,8 @@ export class MyApp {
     platform.setDir('rtl', true);
   }
   onLoad(page:any){
-this.nav.push(page);
-this.menuCtrl.close();
+      this.nav.push(page);
+      this.menuCtrl.close();
   }
   presentToast(txt:any) {
     
