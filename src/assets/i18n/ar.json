@@ -88,6 +88,8 @@
   "Save Order" :"حفظ الطلب",
   "Reset Password":"تغيير كلمة المرور",
   "Save Address":"حفظ العنوان",
-  "Logout":"تسجيل خروج"
+  "Logout":"تسجيل خروج",
+  "You can not order later because you choose distributer":"لا يمكن الطلب لاحقا لانه قد تم تحديد الموزع",
+  "Choose Order Location":"اختار مكان الطلب"
 
 }
