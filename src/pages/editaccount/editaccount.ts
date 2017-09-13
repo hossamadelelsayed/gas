@@ -10,6 +10,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class EditaccountPage {
    public custName : any;
    public custNumber : any;
+   public password:any;
   constructor(public translateService : TranslateService ,private toastCtrl:ToastController,
     private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -34,6 +35,12 @@ export class EditaccountPage {
           self.translateAndToast('Phone updated');
           self.navCtrl.pop();
        })
+       this.authService.editPassword(this.password)
+       .then((res)=>{
+        console.log(res);
+        console.log(this.password);
+        this.translateAndToast("Password updated");
+      })
         .catch(function(error) {
          console.log(error);
          self.translateAndToast(error.message);

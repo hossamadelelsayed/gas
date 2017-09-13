@@ -79,7 +79,7 @@ export class HosstestPage {
   assign()
   {
     this.orderService.login().then((customer)=>{
-      this.orderService.distOrderAccept("-KtjwqMutVEoqcs2X4hc","e86LZ5EnLHNjuhXLAVAk3GbdsUB3").then((res)=>{
+      this.orderService.distOrderAccept("-KtkurHMZNKVRyzdcET0","h4U61WivZedrQjX01e05C1w63B93").then((res)=>{
         console.log(res);
       }).catch((err)=>console.log(err));
     }).catch((err)=>console.log(err));
@@ -91,6 +91,13 @@ export class HosstestPage {
         console.log(res.length);
         console.log(res);
         this.orders = res ;
+      }).catch((err)=>console.log(err))
+    }).catch((err)=>console.log(err));
+  }
+  delOrder(){
+    this.orderService.login().then((customer)=> {
+      this.orderService.rejectOrder("-KtkurHMZNKVRyzdcET0" , customer.uid).then((res )=>{
+        console.log(res);
       }).catch((err)=>console.log(err))
     }).catch((err)=>console.log(err));
   }
