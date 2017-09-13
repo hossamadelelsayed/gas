@@ -13,7 +13,10 @@ export class EditaccountPage {
    public password:any;
    public userid:any;
    public myname:string;
+   public phone:number;
+   public email:string;
    public myphone:number;
+   public myemail:string;
   constructor(public translateService : TranslateService ,private toastCtrl:ToastController,
     private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
       this.userid=this.authService.getUserId();
@@ -46,6 +49,12 @@ export class EditaccountPage {
         console.log(this.password);
         this.translateAndToast("Password updated");
       })
+      this.authService.editEmail('customers',this.userid,this.email,this.phone,this.password)
+      .then((res)=>{
+        console.log(res);
+        console.log(this.email)
+        this.translateAndToast("Email updated");
+      })
         .catch(function(error) {
          console.log(error);
          self.translateAndToast(error.message);
@@ -74,6 +83,7 @@ export class EditaccountPage {
       this.authService.getUserInfo(this.userid,'customers').then((res)=>{
         this.myname=res.name;
         this.myphone=res.phoneNo;
+        this.myemail=res.email;
         console.log(res);
       }).catch((err)=>{
         console.log('err',err);

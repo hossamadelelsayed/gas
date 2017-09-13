@@ -14,7 +14,9 @@
 <ion-content padding >
    <div  style="text-align: center;">
      <!-- <img *ngIf="profileimage==null" src="assets/imgs/login_logo.png"> -->
-     <img style="border-radius: 70px;" [src]="sta">
+     <img  style="border-radius: 80px;
+     width: 120px;
+     height: 130px;" [src]="sta">
      <button  class="upload"ion-button clear class="upload" (click)="galleryOrCamera(Image.Profile)">{{'Upload profile image'|translate}}</button>
   </div>
  <form #f="ngForm" >
@@ -30,16 +32,16 @@
        </ion-item>
      </ion-col>
    </ion-row>
-   <!-- <ion-row>
+   <ion-row>
     <ion-col col-1>
  <ion-icon class="icon" ios="ios-mail" md="ios-mail-outline"></ion-icon>
     </ion-col>
     <ion-col col-11>
       <ion-item>
-   <ion-input [(ngModel)]="email" id="email"name="email" type="email" placeholder="{{'Email'|translate}}" ></ion-input>
+   <ion-input [(ngModel)]="email" id="email"name="email" type="email" placeholder="{{myemail}}" ></ion-input>
       </ion-item>
     </ion-col>
-  </ion-row> -->
+  </ion-row>
      <ion-row>
      <ion-col col-1>
    <ion-icon ios="ios-call" md="ios-call-outline"></ion-icon>
@@ -70,7 +72,7 @@
       <img [src]="sta3">
      </ion-col>
    </ion-row>
-    <button class="enter" [disabled]="!name|| !password|| !phone" ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button>
+    <button class="enter" [disabled]="!name|| !password|| !phone|| !email" ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button>
     <!-- <button class="enter"  [disabled]="!password"  ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button> -->
     </ion-list>
  </form>

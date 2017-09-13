@@ -69,7 +69,7 @@ export class MainPage {
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
-this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+// this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
 //       this.distributor.onDistributorDisconnect();
 // this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude);
       self.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);

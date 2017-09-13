@@ -9,7 +9,7 @@ import { ToastController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
 import { Storage } from '@ionic/storage';
 import {NativeStorage} from '@ionic-native/native-storage';
-
+import {HistoryPage} from "../history/history";
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -32,22 +32,23 @@ gotocreateorder()
     console.log(user['uEmail']);
     // this.auth.getUserId;
     console.log(user['uType']);
+    if(user['uType']=='distributors'){
+      this.navCtrl.push(HistoryPage)
+    }
+    else{
+      this.navCtrl.push(MainPage);
+    }
     this.storage.set('type',user['uType']);
     this.nativeStorage.setItem('phone',this.mobile);
     this.nativeStorage.setItem('password',this.password);
     console.log(this.mobile);
-    // self.nativeStorage.setItem('typedis', {property: user['uType']})
-    // .then((res) => {
-    //   console.log(res);
-    //   self.translateAndToast(res);
-    // });
-    this.navCtrl.push(MainPage);
   }).catch((err)=>{
     console.log(err.message);
     this.translateAndToast(err.message);
   });
  
 }
+
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
 }

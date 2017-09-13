@@ -81,16 +81,16 @@ let userdata={uEmail:email,uType:type};
   doLogin(phoneNo: string, password: string): Promise <string>{
     let promise = new Promise((resolve, reject )=>{
       this.phoneLogin(phoneNo,password).then(userdata=>{
-        resolve(userdata);
         this.userDelet();
         this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;
-
+            resolve(userdata);
+            
             console.log("loged in id",userId);
             // this.events.publish('user:created', user);
             // this.events.publish('userId', user.uid);
-            this.getUserInfo(user.uid,"customers");
+            // this.getUserInfo(user.uid,"customers");
             resolve('logedIn');
           })  .catch((err)=>reject(err));
       }).catch((err)=>reject(err));
@@ -384,19 +384,42 @@ let promise=new Promise((resolve,reject)=>{
   return promise;
 }
 
-  editEmail(newEmail:any):Promise<any>{
-    let promise=new Promise((resolve,reject)=>{
-      let user = firebase.auth().currentUser;
-
-
-      user.updateEmail(newEmail).then(msg=> {
-        // Update successful.
-        resolve(msg);
-      }).catch(function(error) {
-        // An error happened.
-        reject(error);
-      });
-    });
-    return promise;
-  }
+editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
+  console.log('newEmail 1',newEmail);
+     let promise=new Promise((resolve,reject)=>{
+       let user = firebase.auth().currentUser;
+       this.fireAuth.signInWithEmailAndPassword(newEmail,password )
+         .then(user=>{
+          console.log('newEmail 1',newEmail);
+          
+       user.updateEmail(newEmail).then(msg=> {
+         // Update successful.
+       
+             let userId=user.uid;
+             resolve('new email loged in');
+  
+             console.log("id for new email",userId);
+         /////////
+         let ref=firebase.database().ref(phoneNo);
+  
+         ref.once('value',(snapshot)=>{
+           ref.set(newEmail);
+  
+         });
+         let ref2=firebase.database().ref(type+"/"+uId+"/email");
+  
+         ref2.once('value',(snapshot)=>{
+           ref.set(newEmail);
+  
+         });
+         resolve(msg);
+       
+       })  .catch((err)=>reject(err));
+       }).catch(function(error) {
+         // An error happened.
+         reject(error);
+       });
+     });
+     return promise;
+   }
 }

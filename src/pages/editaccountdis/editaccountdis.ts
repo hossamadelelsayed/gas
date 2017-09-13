@@ -22,8 +22,10 @@ export class EditaccountdisPage {
   public sta2;
   public sta3;
   public userid:any;
+  public email:string;
   public myname:string;
   public myphone:number;
+  public myemail:string;
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      private camera: Camera,
@@ -34,7 +36,9 @@ export class EditaccountdisPage {
      public loadingCtrl: LoadingController) {
       this.downloadImage();
       this.userid=this.fireAuth.getUserId();
+      console.log(this.userid);
       this.userInfo();
+
   }
 
   ionViewDidLoad() {
@@ -86,8 +90,8 @@ export class EditaccountdisPage {
           destinationType: this.camera.DestinationType.DATA_URL ,
           sourceType: this.camera.PictureSourceType.PHOTOLIBRARY ,
           allowEdit: true ,
-          // targetWidth: 1000 ,
-          // targetHeight: 1000
+          targetWidth: 1000 ,
+          targetHeight: 1000
         }).then((imageData) => {
           this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
           // this.sta='data:image/jpeg;base64,'+imageData;
@@ -155,7 +159,14 @@ export class EditaccountdisPage {
           console.log(res);
           console.log(this.password);
           this.translateAndToast("Password updated");
-        }).catch((err)=>{
+        })
+        //edit email
+        this.fireAuth.editEmail('distributors',this.userid,this.email,this.phone,this.password).then((res)=>{
+          console.log(res);
+          console.log(this.email);
+          this.translateAndToast("Email updated");
+        })
+        .catch((err)=>{
             console.log(err.message);
             console.log(err);
             loading.dismiss();
@@ -195,10 +206,12 @@ export class EditaccountdisPage {
             }
           );
         }
+      
 userInfo(){
   this.fireAuth.getUserInfo(this.userid,'distributors').then((res)=>{
     this.myname=res.name;
     this.myphone=res.phoneNo;
+    this.myemail=res.email;
     console.log(res);
   }).catch((err)=>{
     console.log('err',err);

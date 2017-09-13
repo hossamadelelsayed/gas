@@ -78,8 +78,8 @@ else{
       destinationType: this.camera.DestinationType.DATA_URL ,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY ,
       allowEdit: true ,
-      // targetWidth: 1000,
-      // targetHeight: 1000
+      targetWidth: 1000,
+      targetHeight: 1000
     }).then((imageData) => {
       this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
       
