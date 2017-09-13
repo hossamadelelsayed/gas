@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import{MainPage} from "../main/main";
-import{ForgotpasswordPage} from "../forgotpassword/forgotpassword";
+import {MainPage} from "../main/main";
+import {ForgotpasswordPage} from "../forgotpassword/forgotpassword";
 import {RegistermemberPage} from "../registermember/registermember";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Events } from 'ionic-angular';

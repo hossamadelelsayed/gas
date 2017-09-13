@@ -13,7 +13,6 @@ export class EditaccountPage {
    public password:any;
    public userid:any;
    public myname:string;
-   public phone:number;
    public email:string;
    public myphone:number;
    public myemail:string;
@@ -29,7 +28,13 @@ export class EditaccountPage {
  
    editAccount(){
     let self = this;
-        this.authService.editCustomerName(this.custName)
+    this.authService.editEmail('customers',this.userid,this.email,this.custNumber,this.password)
+    .then((res)=>{
+      console.log(res);
+      console.log(this.email)
+      /////
+      self.translateAndToast("Email updated");
+    self.authService.editCustomerName(self.custName)
         .then((user)=>{
            self.translateAndToast('Name updated');
            
@@ -38,22 +43,18 @@ export class EditaccountPage {
           console.log(error);
           self.translateAndToast(error.message);
         });
-        this.authService.editCustomerPhoneNo(this.custNumber)
-        .then((user)=>{
-          self.translateAndToast('Phone updated');
-          self.navCtrl.pop();
-       })
-       this.authService.editPassword(this.password)
+      //   self.authService.editCustomerPhoneNo(self.custNumber)
+      //   .then((user)=>{
+      //     self.translateAndToast('Phone updated');
+      //     self.navCtrl.pop();
+      //  })
+      self.authService.editPassword(self.password)
        .then((res)=>{
         console.log(res);
-        console.log(this.password);
-        this.translateAndToast("Password updated");
+        console.log(self.password);
+        self.translateAndToast("Password updated");
       })
-      this.authService.editEmail('customers',this.userid,this.email,this.phone,this.password)
-      .then((res)=>{
-        console.log(res);
-        console.log(this.email)
-        this.translateAndToast("Email updated");
+     
       })
         .catch(function(error) {
          console.log(error);

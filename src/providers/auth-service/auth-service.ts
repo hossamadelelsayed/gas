@@ -329,31 +329,31 @@ let user = firebase.auth().currentUser.uid;
   });
   return promise ;
  }
-  editDistributorsPhoneNo(newPhoneNo :any) : Promise<boolean>{
-    let user = firebase.auth().currentUser.uid;
-    console.log(user);
-    let promise = new Promise((resolve, reject) => {
-      let userPhoneRef=firebase.database().ref("distributors/"+user);
-      userPhoneRef.once("value")
-        .then((snapshot)=>{
-          let phoneNoVal = snapshot.child("phoneNo").val();
-          console.log("phone value",phoneNoVal);
-          let ref=firebase.database().ref();
-          let child = ref.child(phoneNoVal);
-          child.once('value').then((oldPhonesnapshot)=>{
-            ref.child(newPhoneNo).set(oldPhonesnapshot.val()).then(()=>{
-              if(  ref.child(newPhoneNo+"/email").key !=  ref.child(phoneNoVal).key)
-                child.remove().then(()=>{
-                  userPhoneRef.child("phoneNo").set(newPhoneNo).then(()=>{
-                    resolve(true);
-                  }).catch((err)=>reject(err));
+ editDistributorsPhoneNo(type:any,newPhoneNo :any) : Promise<boolean>{
+  let user = firebase.auth().currentUser.uid;
+  console.log(user);
+  let promise = new Promise((resolve, reject) => {
+    let userPhoneRef=firebase.database().ref(type+"/"+user);
+    userPhoneRef.once("value")
+      .then((snapshot)=>{
+        let phoneNoVal = snapshot.child("phoneNo").val();
+        console.log("phone value",phoneNoVal);
+        let ref=firebase.database().ref();
+        let child = ref.child(phoneNoVal);
+        child.once('value').then((oldPhonesnapshot)=>{
+          ref.child(newPhoneNo).set(oldPhonesnapshot.val()).then(()=>{
+            if(  ref.child(newPhoneNo+"/email").key !=  ref.child(phoneNoVal).key)
+              child.remove().then(()=>{
+                userPhoneRef.child("phoneNo").set(newPhoneNo).then(()=>{
+                  resolve(true);
                 }).catch((err)=>reject(err));
-            }).catch((err)=>reject(err));
-          }).catch((err)=>reject(err))
+              }).catch((err)=>reject(err));
+          }).catch((err)=>reject(err));
         }).catch((err)=>reject(err))
-    });
-    return promise ;
-  }
+      }).catch((err)=>reject(err))
+  });
+  return promise ;
+}
   getUserName(type: any):Promise<string>{
     let promise = new Promise((resolve, reject) => {
       let name="";
@@ -385,41 +385,43 @@ let promise=new Promise((resolve,reject)=>{
 }
 
 editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
-  console.log('newEmail 1',newEmail);
-     let promise=new Promise((resolve,reject)=>{
-       let user = firebase.auth().currentUser;
-       this.fireAuth.signInWithEmailAndPassword(newEmail,password )
-         .then(user=>{
-          console.log('newEmail 1',newEmail);
-          
-       user.updateEmail(newEmail).then(msg=> {
-         // Update successful.
-       
-             let userId=user.uid;
-             resolve('new email loged in');
-  
-             console.log("id for new email",userId);
-         /////////
-         let ref=firebase.database().ref(phoneNo);
-  
-         ref.once('value',(snapshot)=>{
-           ref.set(newEmail);
-  
-         });
-         let ref2=firebase.database().ref(type+"/"+uId+"/email");
-  
-         ref2.once('value',(snapshot)=>{
-           ref.set(newEmail);
-  
-         });
-         resolve(msg);
-       
-       })  .catch((err)=>reject(err));
-       }).catch(function(error) {
-         // An error happened.
-         reject(error);
-       });
-     });
-     return promise;
-   }
+  let promise=new Promise((resolve,reject)=>{
+    this.editDistributorsPhoneNo(type,phoneNo).then(()=>{
+    let user = firebase.auth().currentUser;
+    console.log('oldEmail',user.email);
+    // this.fireAuth.signInWithEmailAndPassword(user.email,password )
+    //   .then(user=>{
+        user.updateEmail(newEmail).then(msg=> {
+          // Update successful.
+
+          let userId=user.uid;
+
+
+
+          /////////
+          let ref=firebase.database().ref();
+
+          ref.once('value',(snapshot)=>{
+            ref.child(phoneNo+"/email").set(newEmail);
+            ref.child(phoneNo+"/type").set(type);
+
+          });
+          let ref2=firebase.database().ref(type+"/"+uId+"/email");
+
+          ref2.once('value',(snapshot)=>{
+            ref2.set(newEmail);
+
+          });
+
+        })  .then((msg)=>{
+          resolve(msg);
+
+        }).catch((err)=>reject(err));
+    //   }).catch(function(error) {
+    //   // An error happened.
+    //   reject(error);
+    // });
+  });});
+  return promise;
+}
 }

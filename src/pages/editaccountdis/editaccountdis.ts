@@ -149,11 +149,11 @@ export class EditaccountdisPage {
             this.translateAndToast('Name updated');   
            })
            //edit phone
-        this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
-            console.log(res)
-            console.log(this.phone);
-            this.translateAndToast('Phone updated'); 
-          }) 
+        // this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
+        //     console.log(res)
+        //     console.log(this.phone);
+        //     this.translateAndToast('Phone updated'); 
+        //   }) 
           //edit password
         this.fireAuth.editPassword(this.password).then((res)=>{
           console.log(res);

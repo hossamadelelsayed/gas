@@ -118,87 +118,10 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
       ///////////////////////////firebase markers ref
         self.markerRef=firebase.database().ref('valid/'+city);
 
-<<<<<<< HEAD
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        disableDefaultUI: true,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-// this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
-//       this.distributor.onDistributorDisconnect();
-// this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude);
-      self.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        self. marker = new google.maps.Marker({
-        // position:latLng,
-        map: self.map,
-        title: 'Hello World!'
-    });
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
-// ///////////////////////////////get firebase distributors locs
-    self.markerRef=firebase.database().ref('valid/Alexandria Governorate');
-    // let  marker = new google.maps.Marker({
-    //   // position:latlng,
-    //   map: self.map,
-    //   title: 'Hello World!',tag:'user'
-    // });
-    self.markerRef.on('value', (snapshot)=> {
-      console.log("kyes",snapshot.val());
-
-      snapshot.forEach(key => {
-          console.log("kyes",key.valueAsString);
-        console.log("kyes 1 ",key.key);
-
-        this. firebaseRef = firebase.database().ref('valid/Alexandria Governorate');
-
-        this. geoFire = new GeoFire(this.firebaseRef);
-
-        this.geoFire.get(key.key).then((location)=> {
-this.distributor.getDistributorsName(key.key).then((name)=>{
-  let latlng = new google.maps.LatLng(location[0],location[1]);
-  this.addMarker(latlng,name,key.key);
-  let  marker = new google.maps.Marker;
-  // console.log('tag',this.marker.tag);
-  console.log('tag name',name);
-
-  // if(  marker==null){
-
-
-    marker.metadata = {type: "point", id: key};
-
-    marker.setValues({type: "point", id: key});
-
-  // }else{
-    marker.setPosition(latlng);
-
-  // }
-
-
-});
-          if (location === null) {
-            console.log("Provided key is not in GeoFire");
-          }
-          else {
-            try{
-self.myLatLng ={lat:location[0],lng:location[1]};
-              // let latlng = new google.maps.LatLng(location[0],location[1]);
-
-              console.log("location changed to : ",location);
-
-            }catch (E){ console.log("Provided key has a location of " ,E);}
-          }
-        }, (error)=> {
-          console.log("Error: " + error);
-        });
-        });
-=======
         //getting all keys (distribuotors IDs)
         self.markerRef.on('value', (snapshot)=> {
           // self.markers=[];
           //   console.log('changed loc','once');
->>>>>>> 0fd27b7b4bff76f12a851a8cc5eac6b517b7bcf6
 
             //getting latlng for evry valid distributor
             snapshot.forEach(key => {
