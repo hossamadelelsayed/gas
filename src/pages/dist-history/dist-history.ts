@@ -4,7 +4,7 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import {HosstestPage} from "../hosstest/hosstest";
-import {CommonServiceProvider} from "../../providers/common-service/common-service";
+// import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 /**
  * Generated class for the DistHistoryPage page.
@@ -23,8 +23,9 @@ export class DistHistoryPage {
    public distUID : string = 'GxzLyO0RIDNamRR8EGGygMuf93m2' ;
    public currentOrder : Order[] = [] ;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public orderService : OrderProvider  , public commonService : CommonServiceProvider ,
-               public zone: NgZone , public events : Events) {
+              public orderService : OrderProvider  , 
+              // public commonService : CommonServiceProvider ,
+              public zone: NgZone , public events : Events) {
 
 
   }
@@ -79,12 +80,12 @@ export class DistHistoryPage {
   }
   acceptOrder(orderID : string){
     this.orderService.distOrderAccept(orderID,this.distUID).then(()=>{
-      this.commonService.successToast();
+      // this.commonService.successToast();
     }).catch((err)=>console.log(err));
   }
   rejectOrder(orderID : string){
     this.orderService.rejectOrder(orderID,this.distUID).then(()=>{
-      this.commonService.successToast();
+      // this.commonService.successToast();
       this.delOrder(orderID);
     }).catch((err)=>console.log(err));
   }

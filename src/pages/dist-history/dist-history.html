@@ -1,4 +1,3 @@
-
 <ion-header style="
     background-color: white;">
   <ion-navbar> <ion-buttons right>
@@ -48,8 +47,8 @@
                 <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
               </ion-col>
               <ion-col col-3>
-                <button *ngIf="order.status == Order.NoResponseStatus" ion-button full (click)="acceptOrder(order.orderID)" >  قبول </button>
-                <button *ngIf="order.status == Order.PendingStatus" ion-button outline (click)="rejectOrder(order.orderID)" > الغاء </button>
+                <!-- <button *ngIf="order.status == Order.NoResponseStatus" ion-button full (click)="acceptOrder(order.orderID)" >  قبول </button>
+                <button *ngIf="order.status == Order.PendingStatus" ion-button outline (click)="rejectOrder(order.orderID)" > الغاء </button> -->
               </ion-col>
               <p class="time">14 jan 2017 -10:45AM</p>
             </ion-row>

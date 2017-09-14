@@ -64,7 +64,7 @@
 </ion-item>
   <hr>
   <div class="d">
-    <button class="reqnow" ion-button round (click)="createOrderNow()" >{{'Order now'|translate}} </button>
+    <button class="reqnow" [disabled]="!locname" ion-button round (click)="createOrderNow()" >{{'Order now'|translate}} </button>
     <button class="reqlater" ion-button round  (click)="gotoorderlater()">{{'Order later'|translate}}</button>
   </div>
   </ion-list>

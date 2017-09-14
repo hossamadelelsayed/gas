@@ -31,8 +31,8 @@ import {Order} from "../models/order";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage = HosstestPage ; //DistHistoryPage ; //HosstestPage; // ;
-  //welcomePage = null;  //WelcomePage;
+  // welcomePage = HosstestPage ; //DistHistoryPage ; //HosstestPage; // ;
+  welcomePage = null;  //WelcomePage;
   settingsPage=SettingsPage;
   mainpage=MainPage;
   profilePage=ProfilePage;
@@ -67,27 +67,27 @@ export class MyApp {
         this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
       }).catch((err)=>console.log(err));
 
-      // this.nativeStorage.getItem('phone').then((res)=>{
-      //   this.presentToast(res);
-      //  this.phone=res;
-      // }).then(()=>{
-      //   this.nativeStorage.getItem('password').then((res)=>{
-      //     this.presentToast(res);
-      //     this.password=res;
-      //   }).then(()=>{
-      //     this.storage.get('type').then((res)=>{
-      //       this.presentToast(res);
-      //       if(res=='distributors'){
-      //         this.welcomePage=DistHistoryPage;
-      //       }
-      //       else{
-      //         this.welcomePage=MainPage;
-      //       }
-      //     })
-      //   })
-      // }).catch(()=>{
-      //   this.welcomePage=WelcomePage;
-      // });
+      this.nativeStorage.getItem('phone').then((res)=>{
+        this.presentToast(res);
+       this.phone=res;
+      }).then(()=>{
+        this.nativeStorage.getItem('password').then((res)=>{
+          this.presentToast(res);
+          this.password=res;
+        }).then(()=>{
+          this.storage.get('type').then((res)=>{
+            this.presentToast(res);
+            if(res=='distributors'){
+              this.welcomePage=DistHistoryPage;
+            }
+            else{
+              this.welcomePage=MainPage;
+            }
+          })
+        })
+      }).catch(()=>{
+        this.welcomePage=WelcomePage;
+      });
     });
     this.translate.setDefaultLang('ar');
     platform.setDir('rtl', true);

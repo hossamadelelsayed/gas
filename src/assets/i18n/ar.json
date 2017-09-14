@@ -91,6 +91,7 @@
   "Logout":"تسجيل خروج",
   "You can not order later because you choose distributer":"لا يمكن الطلب لاحقا لانه قد تم تحديد الموزع",
   "Choose Order Location":"اختار مكان الطلب",
-  "Success" : "تم بنجاح"
-
+  "Success" : "تم بنجاح",
+  "cash":"عند الاستلام",
+  "noResponse":"قيد الانتظار"
 }
