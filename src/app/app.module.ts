@@ -64,9 +64,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {OrderProvider} from "../providers/order/order";
 import {CustomerLocationProvider} from "../providers/customer/customerLocation";
-
 import { EmailComposer } from '@ionic-native/email-composer';
-
 import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
 const firebaseConfig = {
