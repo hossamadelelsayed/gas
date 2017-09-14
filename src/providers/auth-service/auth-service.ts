@@ -23,6 +23,7 @@ export class AuthServiceProvider {
     this.fireAuth = firebase.auth();
      this.userData = firebase.database().ref('customers');
   }
+  
   //login by phone and password
 //friest getting email using phone no
 
