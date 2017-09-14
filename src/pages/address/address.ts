@@ -19,11 +19,14 @@ export class AddressPage {
   public customerid : string;
   public locations : any;
   constructor(public viewCtrl : ViewController , public customerLocation:CustomerLocationProvider,public auth:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
-           this.listLocations();
+          
    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddressPage');
+  }
+  ionViewWillEnter(){
+    this.listLocations();
   }
   toggleMenu()
   {

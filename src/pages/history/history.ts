@@ -9,8 +9,20 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
   templateUrl: 'history.html',
 })
 export class HistoryPage {
+  public custId:string;
+  public noOrders : any;
+  public pendingOrders : any;
+  public deliveredOrders : any;
+
 
   constructor(public auth:AuthServiceProvider,public order:OrderProvider,public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController ) {
+   this.custId = this.auth.getUserId();
+   this.listOrdersNow();
+  console.log("NO Response Orders"+this.noOrders);
+  console.log("Pending Orders"+this.pendingOrders);
+   this.listOrderDone();
+  console.log("Delivered Orders"+this.deliveredOrders);
+    
   }
 
   ionViewDidLoad() {
@@ -24,8 +36,19 @@ toggleMenu()
   this.menuCtrl.toggle();
 }
 
-listOrders(){
-  //this.order.getOrdersByCustomer()
+listOrdersNow(){
+  this.order.getOrdersByCustomer(this.custId,"noResponse").then((res)=>{
+    this.noOrders = res;
+  });
+  this.order.getOrdersByCustomer(this.custId,"pending").then((res)=>{
+    this.pendingOrders = res;
+  });
+}
+
+listOrderDone(){
+  this.order.getOrdersByCustomer(this.custId,"delivered").then((res)=>{
+    this.deliveredOrders = res;
+  });
 }
 
 }
