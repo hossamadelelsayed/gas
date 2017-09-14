@@ -87,6 +87,7 @@
   "Order Done":"تم ارسال الطلب ",
   "Save Order" :"حفظ الطلب",
   "Reset Password":"تغيير كلمة المرور",
-  "Logout":"تسجيل خروج"
+  "Logout":"تسجيل خروج" ,
+  "Success" : "تم بنجاح"
 
 }
