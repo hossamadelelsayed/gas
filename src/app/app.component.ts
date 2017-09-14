@@ -89,7 +89,10 @@ export class MyApp {
       else{
         this.translate.setDefaultLang('en');
         platform.setDir('ltr', true);
+<<<<<<< HEAD
         console.log(res);
+=======
+>>>>>>> e22c44ca155175ce0bd7a2bef0e4366bf32adde6
       }
     });
 
