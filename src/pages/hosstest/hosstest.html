@@ -23,7 +23,6 @@
   <button ion-button full block (click)="getLocations()" >get Locations</button>
   <button ion-button full block (click)="getOrdersByCustomer()" >Orders By Customer</button>
   <button ion-button full block (click)="assign()" >Assign</button>
-  <button ion-button full block (click)="goToDist()" >Go To Dist History</button>
   <ion-item *ngFor="let x of orders">
     {{x.customerID}}  {{x.assignDistType}}
   </ion-item>

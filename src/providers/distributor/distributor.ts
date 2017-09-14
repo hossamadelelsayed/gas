@@ -118,6 +118,8 @@ resolve('Alexandria Governorate');
       resolve(snapshot.val());
       });
     });
+
+
     return promise;
   }
   getDistributorsPhone(id:any):Promise<string>{
@@ -134,11 +136,14 @@ resolve('Alexandria Governorate');
   }
   getDistributorPhone(key:any):Promise<any>{
     let promise=new Promise((resolve,reject)=>{
+
+
     this.getDistributorsPhone(key).then((phone)=>{
     //   this.distPhone=name;
       console.log('phone',phone);
       resolve(phone);
-      });
+      
+              });
 
     });
     return promise;
@@ -154,6 +159,8 @@ resolve('Alexandria Governorate');
 resolve(name);
 
       });
+
+
   });
   return promise ;
   }

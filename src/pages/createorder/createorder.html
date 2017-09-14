@@ -39,9 +39,7 @@
 <ion-col col-7><h4 >{{'Confirm your location'|translate}}</h4></ion-col>
 <ion-col col-5>
   <button class="btchange" ion-button round (click)="showUserLocations()">{{'Change'|translate}}</button></ion-col>
-    </ion-row><ion-row> <h4 style="color: gray;">{{locname}}</h4>
-      <h4 *ngIf="locname == null" style="color: gray;">{{'Choose Order Location'|translate}}</h4>
-    </ion-row>
+    </ion-row><ion-row> <h4 style="color: gray;">{{locname}}</h4></ion-row>
   <hr>
   <ion-row>
     <form radio-group style="font-size: 2.2rem; color: gray;" action="">
@@ -65,7 +63,7 @@
   <hr>
   <div class="d">
     <button class="reqnow" ion-button round (click)="createOrderNow()" >{{'Order now'|translate}} </button>
-    <button class="reqlater" ion-button round  (click)="gotoorderlater()">{{'Order later'|translate}}</button>
+    <button class="reqlater" ion-button round (click)="gotoorderlater()">{{'Order later'|translate}}</button>
   </div>
   </ion-list>
 </ion-grid>
