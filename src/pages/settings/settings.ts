@@ -39,11 +39,13 @@ gototermsandprivacy(){this.navCtrl.push(TermsandprivacyPage);}
 Change_Toggle(type) {
   this.translate.setDefaultLang(type);
  this.storage.set('lang',type);
+ 
   MainService.lang = type;
   if(type == 'en')
     this.platform.setDir('ltr', true);
   else
     this.platform.setDir('rtl', true);
+  
 }
 toggleMenu()
 {

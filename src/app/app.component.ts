@@ -80,20 +80,21 @@ export class MyApp {
         this.welcomePage=WelcomePage;
       });
     });
-    // this.storage.get('lang').then((res)=>{
-    //   if(res =='ar'){
-    //     this.translate.setDefaultLang('ar');
-    //     platform.setDir('rtl', true);
-    //     console.log(res);
-    //   }
-    //   else{
-    //     this.translate.setDefaultLang('en');
-    //     platform.setDir('ltr', true);
-    //   }
-    // });
+    this.storage.get('lang').then((res)=>{
+      if(res =='ar'){
+        this.translate.setDefaultLang('ar');
+        platform.setDir('rtl', true);
+        console.log(res);
+      }
+      else{
+        this.translate.setDefaultLang('en');
+        platform.setDir('ltr', true);
+        console.log(res);
+      }
+    });
 
-    this.translate.setDefaultLang('ar');
-    platform.setDir('rtl', true);
+    // this.translate.setDefaultLang('ar');
+    // platform.setDir('rtl', true);
   }
   onLoad(page:any){
       this.nav.push(page);
