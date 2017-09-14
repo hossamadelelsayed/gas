@@ -89,18 +89,15 @@
   "Reset Password":"تغيير كلمة المرور",
   "Save Address":"حفظ العنوان",
   "Logout":"تسجيل خروج",
-<<<<<<< HEAD
   "Cheak your email":"تم الارسال الي البريد الالكتروني",
   "The email address is badly formatted":"البريد الالكتروني غير صحيح",
   "There is no user record corresponding to this identifier. The user may have been deleted.":"هذا البريد الالكتروني غير موجود",
-  "phone taken":"برجاء ادخال رقم هاتف اخر"
-=======
+  "phone taken":"برجاء ادخال رقم هاتف اخر",
   "You can not order later because you choose distributer":"لا يمكن الطلب لاحقا لانه قد تم تحديد الموزع",
   "Choose Order Location":"اختار مكان الطلب",
   "Success" : "تم بنجاح",
   "cash":"عند الاستلام",
-  "noResponse":"قيد الانتظار",
-  "Cheak your email":"تم الارسال الي البريد الالكتروني"
->>>>>>> e22c44ca155175ce0bd7a2bef0e4366bf32adde6
+  "noResponse":"قيد الانتظار"
+
 
 }
