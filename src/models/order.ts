@@ -9,7 +9,10 @@ export class Order{
   public static readonly DeliveredStatus : string = 'delivered' ;
   public static readonly AssignAllDist : string = 'allDist' ;
   public static readonly AssignSpecificDist : string = 'specificDist' ;
-
+  public static readonly ordersToAllDistCreatedEvent : string = 'ordersToAllDist:created';
+  public static readonly ordersToAllDistRemovedEvent : string = 'ordersToAllDist:removed';
+  public static readonly ordersToSpecificDistCreatedEvent : string = 'ordersToSpecificDist:created';
+  public static readonly ordersToSpecificDistRemovedEvent : string = 'ordersToSpecificDist:removed';
   private _assignDistType : string ;
   private _assignDistID : string ;
    constructor(
@@ -85,6 +88,9 @@ export class Order{
 
   get status():string {
     return this._status;
+  }
+  set status(val : string) {
+    this._status = val;
   }
 
   get date(): Date {

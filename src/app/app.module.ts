@@ -68,6 +68,7 @@ import {CustomerLocationProvider} from "../providers/customer/customerLocation";
 
 import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
+import { CommonServiceProvider } from '../providers/common-service/common-service';
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -175,6 +176,7 @@ firebase.initializeApp(firebaseConfig);
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
     IonicStorageModule,NativeStorage,
-    DistributorProvider ]
+    DistributorProvider,
+    CommonServiceProvider ]
 })
 export class AppModule {}

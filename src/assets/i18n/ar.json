@@ -90,6 +90,7 @@
   "Save Address":"حفظ العنوان",
   "Logout":"تسجيل خروج",
   "You can not order later because you choose distributer":"لا يمكن الطلب لاحقا لانه قد تم تحديد الموزع",
-  "Choose Order Location":"اختار مكان الطلب"
+  "Choose Order Location":"اختار مكان الطلب",
+  "Success" : "تم بنجاح"
 
 }

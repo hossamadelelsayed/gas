@@ -14,6 +14,7 @@ import {User} from "firebase/app";
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular DI.
 */
+
 @Injectable()
 export class AuthServiceProvider {
   public fireAuth: any;
@@ -86,7 +87,7 @@ let userdata={uEmail:email,uType:type};
           .then(user=>{
             let userId=user.uid;
             resolve(userdata);
-            
+
             console.log("loged in id",userId);
             // this.events.publish('user:created', user);
             // this.events.publish('userId', user.uid);
