@@ -80,6 +80,17 @@ export class MyApp {
         this.welcomePage=WelcomePage;
       });
     });
+    // this.storage.get('lang').then((res)=>{
+    //   if(res){
+    //     this.translate.setDefaultLang(res);
+    //     console.log(res);
+    //   }
+    //   else{
+    //     this.translate.setDefaultLang('ar');
+    //     console.log('arabic');
+    //   }
+    // });
+
     this.translate.setDefaultLang('ar');
     platform.setDir('rtl', true);
   }
