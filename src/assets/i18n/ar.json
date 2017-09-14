@@ -97,7 +97,8 @@
   "Choose Order Location":"اختار مكان الطلب",
   "Success" : "تم بنجاح",
   "cash":"عند الاستلام",
-  "noResponse":"قيد الانتظار"
+  "noResponse":"قيد الانتظار",
+  "Map":"خريطة"
 
 
 }
