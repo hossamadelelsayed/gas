@@ -30,7 +30,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  // welcomePage = HosstestPage ; //DistHistoryPage ; //HosstestPage; // ;
+
   welcomePage = null;  //WelcomePage;
   settingsPage=SettingsPage;
   mainpage=MainPage;
@@ -58,12 +58,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      //  this.orderService.login().then((dist)=>{
-      //   console.log('login');
-      //   this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
-      //   this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
-      // }).catch((err)=>console.log(err));
-
       this.nativeStorage.getItem('phone').then((res)=>{
         this.presentToast(res);
        this.phone=res;
@@ -75,31 +69,31 @@ export class MyApp {
           this.storage.get('type').then((res)=>{
             this.presentToast(res);
             if(res=='distributors'){
-              this.welcomePage=DistHistoryPage;
+              this.welcomePage=HistoryPage;
             }
             else{
               this.welcomePage=MainPage;
             }
           })
-        })
+        }) 
       }).catch(()=>{
         this.welcomePage=WelcomePage;
       });
     });
-    // this.storage.get('lang').then((res)=>{
-    //   if(res =='ar'){
-    //     this.translate.setDefaultLang('ar');
-    //     platform.setDir('rtl', true);
-    //     console.log(res);
-    //   }
-    //   else{
-    //     this.translate.setDefaultLang('en');
-    //     platform.setDir('ltr', true);
-    //   }
-    // });
+    this.storage.get('lang').then((res)=>{
+      if(res =='ar'){
+        this.translate.setDefaultLang('ar');
+        platform.setDir('rtl', true);
+        console.log(res);
+      }
+      else{
+        this.translate.setDefaultLang('en');
+        platform.setDir('ltr', true);
+      }
+    });
 
-    this.translate.setDefaultLang('ar');
-    platform.setDir('rtl', true);
+    // this.translate.setDefaultLang('ar');
+    // platform.setDir('rtl', true);
   }
   onLoad(page:any){
       this.nav.push(page);
