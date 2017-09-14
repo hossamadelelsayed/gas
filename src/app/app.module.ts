@@ -9,8 +9,13 @@ import { FollowrequestPage } from './../pages/followrequest/followrequest';
 import { PaywayPage } from './../pages/payway/payway';
 import { AddcardPage } from './../pages/addcard/addcard';
 import { ProfilePage } from './../pages/profile/profile';
+import { OrderlocationPage} from './../pages/orderlocation/orderlocation';
+
+
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { SMS } from '@ionic-native/sms';
+import { CallNumber } from '@ionic-native/call-number';
 
 import { RegistermemberPage } from './../pages/registermember/registermember';
 import { MainPage } from './../pages/main/main';
@@ -35,8 +40,8 @@ import { HomePage } from '../pages/home/home';
 import {CreateorderPage} from"../pages/createorder/createorder";
 import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {HistoryPage} from "../pages/history/history";
-import{TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
-import{OrderlaterPage} from "../pages/orderlater/orderlater";
+import {TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
+import {OrderlaterPage} from "../pages/orderlater/orderlater";
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -52,8 +57,8 @@ import { Events } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { DistributorProvider } from '../providers/distributor/distributor';
 import {MainService} from "../providers/main-service";
-import{CustomerMapPage} from "../pages/customer-map/customer-map";
-import{HossamtestPage} from "../pages/hossamtest/hossamtest";
+import {CustomerMapPage} from "../pages/customer-map/customer-map";
+import {HossamtestPage} from "../pages/hossamtest/hossamtest";
 import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
 import {HosstestPage} from "../pages/hosstest/hosstest";
@@ -105,6 +110,8 @@ firebase.initializeApp(firebaseConfig);
     HosstestPage ,
     CustomerMapPage,
     HossamtestPage,
+    EditaccountdisPage,
+    OrderlocationPage,
     EditaccountdisPage ,
     DistHistoryPage
   ],
@@ -152,6 +159,7 @@ firebase.initializeApp(firebaseConfig);
     CustomerMapPage,
     HossamtestPage,
     EditaccountdisPage,
+    OrderlocationPage,
     DistHistoryPage
   ],
   providers: [
@@ -162,6 +170,8 @@ firebase.initializeApp(firebaseConfig);
     OrderProvider,
     CustomerLocationProvider,
     Camera,
+    SMS,
+    CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,

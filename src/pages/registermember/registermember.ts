@@ -27,6 +27,7 @@ export class RegistermemberPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegistermemberPage');
   }
+  
 gotoconfirm(){
   let self = this;
     this.authService.register("customers",this.email,this.password,this.name,this.phone)
@@ -37,7 +38,7 @@ gotoconfirm(){
         // this.authService.submitUserInfo()
         this.translateAndToast("Registration done");
         this.navCtrl.push(MainPage);
-        // this.storage.set('type',user['uType']);
+         this.storage.set('type','customers');
         this.nativeStorage.setItem('phone',this.phone);
         this.nativeStorage.setItem('password',this.password);
       })
