@@ -95,6 +95,7 @@ presentConfirm() {
         handler: () => {
           console.log('logout clicked');
           this.fireAuth.doLogout();
+          this.storage.clear();
           this.nativeStorage.clear();
           // this.platform.exitApp();
           this.navCtrl.push(MainPage);
