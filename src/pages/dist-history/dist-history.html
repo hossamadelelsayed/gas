@@ -31,37 +31,39 @@
 </ion-header>
 <ion-content padding>
   <div [ngSwitch]="showing">
-    <ion-list *ngSwitchDefault>
-      <div *ngFor="let order of currentOrder">
-        <ion-card class="card" >
-          <ion-card-header class="head" >
-          </ion-card-header>
-          <ion-card-content>
-            <ion-row>
-              <ion-col col-3 style="height: 80px;">
-                <img style="height: 70px;
+    <div *ngSwitchDefault >
+      <ion-list >
+        <div>
+          <ion-card class="card" >
+            <ion-card-header class="head" >
+            </ion-card-header>
+            <ion-card-content (click)="gotodetailsrequest()">
+              <ion-row>
+                <ion-col col-3 style="height: 80px;">
+                  <img style="height: 70px;
               width: 70px;" src="assets/imgs/agent_pin.png"><br>
-              </ion-col>
-              <ion-col col-6>
-                <p class="ordernumber">  {{'Order Number'|translate}} &nbsp; {{order.orderID}} </p>
-                <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
-              </ion-col>
-              <ion-col col-3>
-                <!-- <button *ngIf="order.status == Order.NoResponseStatus" ion-button full (click)="acceptOrder(order.orderID)" >  قبول </button>
-                <button *ngIf="order.status == Order.PendingStatus" ion-button outline (click)="rejectOrder(order.orderID)" > الغاء </button> -->
-              </ion-col>
-              <p class="time">14 jan 2017 -10:45AM</p>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
-        <ion-row class="row">
-          <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 {{'Cylinder'|translate}}</p>
-          <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
-          <img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
-        </ion-row>
-      </div>
-    </ion-list>
-      <ion-list *ngSwitchCase="'last'" >
+                </ion-col>
+                <ion-col col-6>
+                  <p class="ordernumber">  {{'Order Number'|translate}} 1454545 </p>
+                  <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
+                </ion-col>
+                <ion-col col-3>
+                  <button ion-button full> قبول </button>
+                </ion-col>
+                <p class="time">14 jan 2017 -10:45AM</p>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+          <ion-row class="row">
+            <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 {{'Cylinder'|translate}}</p>
+            <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
+            <img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
+          </ion-row>
+        </div>
+      </ion-list>
+    </div>
+    <div *ngSwitchCase="'last'" >
+      <ion-list >
         <div>
           <ion-card class="card" >
 
@@ -92,7 +94,9 @@
           </ion-row>
         </div>
       </ion-list>
+    </div>
   </div>
+
 </ion-content>
 
 
