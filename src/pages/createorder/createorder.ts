@@ -1,6 +1,6 @@
 import { HistoryPage } from './../history/history';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,MenuController,ToastController,ModalController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController,ToastController,ModalController } from 'ionic-angular';
 import {OrderlaterPage} from "../orderlater/orderlater";
 import {AddcardPage} from "../addcard/addcard";
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
@@ -33,8 +33,8 @@ constructor(
             public navParams: NavParams, 
             public menuCtrl: MenuController,
             public modalCtrl :ModalController) {
-              this.distId = this.navParams.data.disId;
-              console.log(this.navParams.data.disId);
+              this.distId = this.navParams.get('distId');
+              console.log(this.distId);
               this.userId = this.auth.getUserId();
 }
 add(){
@@ -59,7 +59,12 @@ gotohistory(){
   this.navCtrl.push(HistoryPage);
 }
 gotoorderlater(){
-this.navCtrl.push(OrderlaterPage);
+  if(this.distId == null){
+    this.navCtrl.push(OrderlaterPage);    
+  }
+  else{
+    this.translateAndToast('You can not order later because you choose distributer');
+  }
 }
 gotoaddcard(){
   this.navCtrl.push(AddcardPage);
@@ -81,11 +86,12 @@ showUserLocations()
 createOrderNow(){
   console.log(this.deliveryDate);
   this.order.createOrder(new Order
-    (this.userId,this.counter,this.location,"cash",this.deliveryDate,this.sameDate))
+    (this.userId,this.counter,this.location,"cash",this.deliveryDate,this.sameDate),this.distId)
       .then((Order)=>{
         console.log(Order.deliveryDate);
         console.log(Order.customerID);
         console.log(Order.monthly);
+        console.log(Order.assignDistID);
         this.translateAndToast('Order Done');})
       .catch((err)=>{
         console.log(err.message);
@@ -109,4 +115,5 @@ presentToast(txt:any) {
       }
     );
   }
+
 }

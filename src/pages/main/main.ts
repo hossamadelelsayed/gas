@@ -2,7 +2,7 @@ import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
 import {OrderlaterPage} from "../orderlater/orderlater";
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,MenuController,AlertController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from "firebase";
 import * as GeoFire from "geofire";
@@ -43,7 +43,7 @@ export class MainPage {
     smsMessage:any;
     disId:string;
     hits = new BehaviorSubject([])
-    constructor(private callNumber: CallNumber,private sms: SMS,public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams,
+    constructor(public alertCtrl: AlertController,private callNumber: CallNumber,private sms: SMS,public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams,
                 public menuCtrl: MenuController ,public distributor :DistributorProvider,    private authService:AuthServiceProvider) {
 /// Reference database location for GeoFire
 
@@ -56,8 +56,8 @@ export class MainPage {
     gotoorderlater(){
         this.navCtrl.push(OrderlaterPage);
     }
-    sendSms(){
-        this.sms.send(this.distPhone,'Hello');
+    sendSms(number,message){
+        this.sms.send(number,message);
     }
     call(){
         this.callNumber.callNumber(this.distPhone, true)
@@ -81,7 +81,7 @@ export class MainPage {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
             //listn to current location and send it as a distributor valid
-            this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+            // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
             //       this.distributor.onDistributorDisconnect();
             //creat map
             this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
@@ -99,7 +99,7 @@ export class MainPage {
       this.geolocation.getCurrentPosition().then((resp) => {
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
-this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+// this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
         self.setMarkers(city);
 
       }).catch(err=>{
@@ -188,4 +188,35 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
 //////////////////////////////////////
     flag=true;
     maprefresh(){}
+
+
+    showPrompt() {
+        let prompt = this.alertCtrl.create({
+          title: 'Send Message',
+          message: "Enter your sms message to send it to distributer",
+          inputs: [
+            {
+              name: 'message',
+              placeholder: 'write Your message'
+            },
+          ],
+          buttons: [
+            {
+              text: 'Cancel',
+              handler: data => {
+                console.log('Cancel clicked');
+              }
+            },
+            {
+              text: 'send',
+              handler: data => {
+               this.sendSms(this.distPhone,data.message);
+
+              }
+            }
+          ]
+        });
+        prompt.present();
+      }
+    
 }

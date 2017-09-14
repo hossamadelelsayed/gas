@@ -8,7 +8,7 @@ import { HomePage } from './../pages/home/home';
 import { RegistermemberPage } from './../pages/registermember/registermember';
 import {CreateorderPage} from './../pages/createorder/createorder';
 import {TeamregisterPage} from "./../pages/teamregister/teamregister";
-import { Component,ViewChild } from '@angular/core';
+import {Component, ViewChild, NgZone} from '@angular/core';
 import {Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,15 +23,16 @@ import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {MainPage} from "../pages/main/main";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
-
 import { Storage } from '@ionic/storage';
+import {OrderProvider} from "../providers/order/order";
+import {Order} from "../models/order";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-
-  welcomePage = null;  //WelcomePage;
+  welcomePage = HosstestPage ; //DistHistoryPage ; //HosstestPage; // ;
+  //welcomePage = null;  //WelcomePage;
   settingsPage=SettingsPage;
   mainpage=MainPage;
   profilePage=ProfilePage;
@@ -48,37 +49,45 @@ export class MyApp {
   constructor( platform: Platform,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
-               public translate : TranslateService ,
+              public translate : TranslateService ,
               private menuCtrl:MenuController,
               public nativeStorage:NativeStorage,
               private toastCtrl: ToastController,
-              private storage: Storage) {
+              private storage: Storage ,
+              public orderService : OrderProvider  ,
+              public zone: NgZone) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      this.nativeStorage.getItem('phone').then((res)=>{
-        this.presentToast(res);
-       this.phone=res;
-      }).then(()=>{
-        this.nativeStorage.getItem('password').then((res)=>{
-          this.presentToast(res);
-          this.password=res;
-        }).then(()=>{
-          this.storage.get('type').then((res)=>{
-            this.presentToast(res);
-            if(res=='distributors'){
-              this.welcomePage=HistoryPage;
-            }
-            else{
-              this.welcomePage=MainPage;
-            }
-          })
-        }) 
-      }).catch(()=>{
-        this.welcomePage=WelcomePage;
-      });
+      this.orderService.login().then((dist)=>{
+        console.log('login');
+        this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
+        this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
+      }).catch((err)=>console.log(err));
+
+      // this.nativeStorage.getItem('phone').then((res)=>{
+      //   this.presentToast(res);
+      //  this.phone=res;
+      // }).then(()=>{
+      //   this.nativeStorage.getItem('password').then((res)=>{
+      //     this.presentToast(res);
+      //     this.password=res;
+      //   }).then(()=>{
+      //     this.storage.get('type').then((res)=>{
+      //       this.presentToast(res);
+      //       if(res=='distributors'){
+      //         this.welcomePage=DistHistoryPage;
+      //       }
+      //       else{
+      //         this.welcomePage=MainPage;
+      //       }
+      //     })
+      //   })
+      // }).catch(()=>{
+      //   this.welcomePage=WelcomePage;
+      // });
     });
     // this.storage.get('lang').then((res)=>{
     //   if(res){
@@ -95,11 +104,11 @@ export class MyApp {
     platform.setDir('rtl', true);
   }
   onLoad(page:any){
-      this.nav.push(page);
-      this.menuCtrl.close();
+this.nav.push(page);
+this.menuCtrl.close();
   }
   presentToast(txt:any) {
-    
+
       let toast = this.toastCtrl.create({
         message: txt,
         duration: 3000,
