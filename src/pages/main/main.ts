@@ -106,8 +106,8 @@ export class MainPage {
       this.geolocation.getCurrentPosition().then((resp) => {
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
-this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
-        self.setMarkers(city);
+      this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+      self.setMarkers(city);
 
       }).catch(err=>{
         self.setMarkers(err);

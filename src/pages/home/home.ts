@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,Platform } from 'ionic-angular';
 import {MainPage} from "../main/main";
 import {ForgotpasswordPage} from "../forgotpassword/forgotpassword";
 import {RegistermemberPage} from "../registermember/registermember";
@@ -23,7 +23,7 @@ public mobile:any;
 public password:any;
 
 
-constructor(public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
+constructor( public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
   private storage: Storage) {
     this.auth.AnonymousSignIn();
@@ -37,10 +37,12 @@ gotocreateorder()
     // this.auth.getUserId;
     console.log(user['uType']);
     if(user['uType']=='distributors'){
-      this.navCtrl.push(DistHistoryPage)
+      this.navCtrl.push(DistHistoryPage);
+      this.navCtrl.setRoot(DistHistoryPage);
     }
     else{
       this.navCtrl.push(MainPage);
+      this.navCtrl.setRoot(MainPage);
     }
     this.storage.set('type',user['uType']);
     this.nativeStorage.setItem('phone',this.mobile);

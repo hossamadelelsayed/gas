@@ -27,26 +27,26 @@ export class SettingsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
   }
-gotonotifications(){
-  this.navCtrl.push(NotificationsPage);
-}
-gotocallus(){this.navCtrl.push(CallusPage);}
-gotoaboutprogram(){this.navCtrl.push(AboutaprogramPage);}
-gototermsandprivacy(){this.navCtrl.push(TermsandprivacyPage);}
+  gotonotifications(){
+    this.navCtrl.push(NotificationsPage);
+  }
+  gotocallus(){this.navCtrl.push(CallusPage);}
+  gotoaboutprogram(){this.navCtrl.push(AboutaprogramPage);}
+  gototermsandprivacy(){this.navCtrl.push(TermsandprivacyPage);}
 
-Change_Toggle(type) {
-  this.translate.setDefaultLang(type);
- this.storage.set('lang',type);
- 
-  MainService.lang = type;
-  if(type == 'en')
-    this.platform.setDir('ltr', true);
-  else
-    this.platform.setDir('rtl', true);
+  Change_Toggle(type) {
+    this.translate.setDefaultLang(type);
+  this.storage.set('lang',type);
   
-}
-toggleMenu()
-{
-  this.menuCtrl.toggle();
-}
+    MainService.lang = type;
+    if(type == 'ar')
+      this.platform.setDir('rtl', true);
+    else
+      this.platform.setDir('ltr', true);
+    
+  }
+  toggleMenu()
+  {
+    this.menuCtrl.toggle();
+  }
 }

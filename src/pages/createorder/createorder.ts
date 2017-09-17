@@ -17,7 +17,7 @@ import {AddressPage} from '../address/address';
   templateUrl: 'createorder.html',
 })
 export class CreateorderPage {
- counter:number=1;
+ public counter:number=1;
  public userId : string;
  public deliveryDate : any = Date.now();
  public sameDate : boolean = false;
@@ -41,7 +41,7 @@ add(){
   this.counter++;
 }
 minus(){
-  this.counter--; 
+  this.counter--;
 }
 
 sameChange()
