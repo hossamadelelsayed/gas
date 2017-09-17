@@ -89,7 +89,7 @@
   "Reset Password":"تغيير كلمة المرور",
   "Save Address":"حفظ العنوان",
   "Logout":"تسجيل خروج",
-  "Check your email":"تم الارسال الي البريد الالكتروني",
+  "Cheak your email":"تم الارسال الي البريد الالكتروني" ,
   "The email address is badly formatted":"البريد الالكتروني غير صحيح",
   "There is no user record corresponding to this identifier. The user may have been deleted.":"هذا البريد الالكتروني غير موجود",
   "phone taken":"برجاء ادخال رقم هاتف اخر",
@@ -104,6 +104,4 @@
   "Your message has been sent.":"تم الارسال بنجاح",
   "Complaint":"مشكلة",
   "Suggestion":"اقتراح"
-
-
 }

@@ -8,8 +8,8 @@ import { HomePage } from './../pages/home/home';
 import { RegistermemberPage } from './../pages/registermember/registermember';
 import {CreateorderPage} from './../pages/createorder/createorder';
 import {TeamregisterPage} from "./../pages/teamregister/teamregister";
-import { Component,ViewChild } from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Component, ViewChild, NgZone} from '@angular/core';
+import {Platform, AlertController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {TranslateService} from "@ngx-translate/core";
@@ -25,6 +25,8 @@ import {MainPage} from "../pages/main/main";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
 
 import { Storage } from '@ionic/storage';
+import {OrderProvider} from "../providers/order/order";
+import {Order} from "../models/order";
 
 @Component({
   templateUrl: 'app.html'
@@ -52,12 +54,51 @@ export class MyApp {
               private menuCtrl:MenuController,
               public nativeStorage:NativeStorage,
               private toastCtrl: ToastController,
+              public orderService : OrderProvider  ,
+               public alertCtrl : AlertController ,
               private storage: Storage) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      this.orderService.login().then((dist)=>{
+        console.log('login');
+        this.orderService.subscribeToDistOrder((order : Order)=> {
+          let view = this.nav.getActive();
+          if(view.component.name != 'DistHistoryPage')
+            this.newOrderAlert(order);
+        });
+        this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
+        this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
+        this.orderService.listenToDistHistoryChange(dist.uid);
+        this.orderService.listenToCustomerHistoryChange("");
+      }).catch((err)=>console.log(err));
+
+      // this.nativeStorage.getItem('phone').then((res)=>{
+      //   this.presentToast(res);
+      //  this.phone=res;
+      // }).then(()=>{
+      //   this.nativeStorage.getItem('password').then((res)=>{
+      //     this.presentToast(res);
+      //     this.password=res;
+      //   }).then(()=>{
+      //     this.storage.get('type').then((res)=>{
+      //       this.presentToast(res);
+      //       if(res=='distributors'){
+      //         this.welcomePage=DistHistoryPage;
+      //       }
+      //       else{
+      //         this.welcomePage=MainPage;
+      //       }
+      //     })
+      //   })
+      // }).catch(()=>{
+      //   this.welcomePage=WelcomePage;
+      // });
+    });
+    this.translate.setDefaultLang('ar');
+    platform.setDir('rtl', true);
       this.nativeStorage.getItem('phone').then((res)=>{
         this.presentToast(res);
         this.phone=res;
@@ -75,11 +116,11 @@ export class MyApp {
               this.welcomePage=MainPage;
             }
           })
-        }) 
+        })
       }).catch(()=>{
         this.welcomePage=WelcomePage;
       });
-    });
+
     this.storage.get('lang').then((res)=>{
       if(res =='ar'){
         this.translate.setDefaultLang('ar');
@@ -101,7 +142,7 @@ export class MyApp {
       this.menuCtrl.close();
   }
   presentToast(txt:any) {
-    
+
       let toast = this.toastCtrl.create({
         message: txt,
         duration: 3000,
@@ -109,4 +150,26 @@ export class MyApp {
       });
       toast.present();
     }
+  newOrderAlert(order : Order) {
+    let alert = this.alertCtrl.create({
+      title: 'Order No : '+order.orderID,
+      message: 'Do you want to go to orders?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.nav.push(DistHistoryPage);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 }
