@@ -162,6 +162,14 @@ padding: 24px 4px 11px 4px;}
         text-align: center;
        padding-left: 40px;
 }
+ion-menu[side=right] > .menu-inner {
+    right: 0;
+    left: auto;
+}
+ion-menu[side=left] > .menu-inner {
+    right:auto !important;
+    left:0 !important;
+}
 .alert-md .alert-radio-icon {
     visibility:hidden;
 }
