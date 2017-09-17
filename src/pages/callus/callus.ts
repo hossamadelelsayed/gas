@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
 import { EmailComposer } from '@ionic-native/email-composer';
-
-/**
- * Generated class for the CallusPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
+import {TranslateService} from "@ngx-translate/core";
+import { ToastController } from 'ionic-angular';
 @Component({
   selector: 'page-callus',
   templateUrl: 'callus.html',
 })
 export class CallusPage {
 
-  constructor(private emailComposer: EmailComposer,public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
+  constructor(private emailComposer: EmailComposer,
+              public navCtrl: NavController,
+              public navParams: NavParams,
+              public menuCtrl: MenuController,
+              private toastCtrl: ToastController,
+              public translateService : TranslateService) {
   }
+public onclick:boolean = true;
 currentEmail:string;
   adminEmail:string='gasforksa@gmail.com';
   msgBody:string;
@@ -53,6 +53,24 @@ currentEmail:string;
 
       }
     });
-
+    this.onclick = false;
+    this.translateAndToast("Your message has been sent.");
   }
+  presentToast(text:any) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'bottom'
+    });
+  toast.present();
+  }
+   translateAndToast(word : string)
+    {
+      this.translateService.get(word).subscribe(
+        value => {
+          // value is our translated string
+          this.presentToast(value);
+        }
+      );
+    }
 }

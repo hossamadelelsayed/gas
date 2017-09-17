@@ -43,8 +43,13 @@ export class MainPage {
     smsMessage:any;
     disId:string;
     hits = new BehaviorSubject([])
-    constructor(private callNumber: CallNumber,private sms: SMS,public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams,
-                public menuCtrl: MenuController ,public distributor :DistributorProvider,    private authService:AuthServiceProvider) {
+    constructor(private callNumber: CallNumber,private sms: SMS
+                ,public geolocation: Geolocation,
+                public navCtrl: NavController,
+                public navParams: NavParams,
+                public menuCtrl: MenuController ,
+                public distributor :DistributorProvider,
+                private authService:AuthServiceProvider) {
 /// Reference database location for GeoFire
 
 
@@ -90,7 +95,7 @@ export class MainPage {
             // console.log('Error getting location', error);
         });
     }
-    
+
     ionViewDidLoad(){
         let self=this;
         this.sendCurrentLoc();
@@ -104,7 +109,7 @@ export class MainPage {
 
       }).catch(err=>{
         self.setMarkers(err);
-        
+
       });     });
       // });
     }
@@ -120,8 +125,11 @@ export class MainPage {
 
         //getting all keys (distribuotors IDs)
         self.markerRef.on('value', (snapshot)=> {
-          // self.markers=[];
-          //   console.log('changed loc','once');
+       //empty our
+          for (var i = 0; i < this.markers.length; i++) {
+            this.markers[i].setMap(null);
+          }
+          self.markers=new Array();
 
             //getting latlng for evry valid distributor
             snapshot.forEach(key => {
@@ -131,10 +139,10 @@ export class MainPage {
 //getting latlng using geofire
                 this.geoFire.get(key.key).then(function (location) {
                     let latlng = new google.maps.LatLng(location[0],location[1]);
-                  
+
                         self.addMarker(latlng,key.key);
                         console.log('new marker',key.key);
-                   
+
 
                 }, (error)=> {
                     console.log("Error: " + error);
@@ -148,7 +156,7 @@ export class MainPage {
         // Create a Firebase reference where GeoFire will store its information
                 this.navCtrl.push(CreateorderPage);
             }
-   
+
     current:any;
     toggleMenu()
     {
@@ -158,18 +166,24 @@ export class MainPage {
     }
 
     addMarker(latlng:any,key:any){
+
       var marker = new google.maps.Marker({
             title:'oo'
             ,tag:key
       });
 
-        marker.setMap(this.map);
+        // marker.setMap(this.map);
         this.markers.push(marker);
-        for(let i=0;i<=this.markers.length;i++){
+        for(let i=0;i<this.markers.length;i++){
+
         if(this.markers[i].tag==key){
+        //   this.markers[i].setMap(null);
+
             this.markers[i].setPosition(latlng);
-            console.log('am in the if loop');
-            break;
+          this.markers[i].setMap(this.map);
+
+          console.log('am in the if loop',this.markers);
+            // break;
   }
 }
       google.maps.event.addListener(marker, 'click', () => {
