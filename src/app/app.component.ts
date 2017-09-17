@@ -60,7 +60,7 @@ export class MyApp {
       splashScreen.hide();
       this.nativeStorage.getItem('phone').then((res)=>{
         this.presentToast(res);
-       this.phone=res;
+        this.phone=res;
       }).then(()=>{
         this.nativeStorage.getItem('password').then((res)=>{
           this.presentToast(res);

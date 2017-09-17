@@ -77,9 +77,10 @@ export class OrderlocationPage {
    console.log(this.location.lat,this.location.lng,this.location.label);
  
    this.customerid = this.authService.getUserId();
-  this.cutomerLocation.createLocation(this.customerid,this.location).then((res)=>{
+   this.cutomerLocation.createLocation(this.customerid,this.location).then((res)=>{
     console.log(res);
-  }).catch((err)=>{
+    this.navCtrl.pop();
+   }).catch((err)=>{
      console.log("error in saving");
   });
   }

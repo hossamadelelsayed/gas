@@ -1,10 +1,10 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons right>
+    <!-- <ion-buttons right>
       <button ion-button navPop icon-only>
         <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title >
       <ion-row>
         <ion-col text-center  col-1>
@@ -51,8 +51,7 @@
         <ion-col class="km">km 3</ion-col>
         <ion-col text-center >
           <h6 style="margin-top: 42px; color:gray;">{{distName}}</h6><br>
-          <div style="margin-top: -37px;
-   font-size: 1.8rem;">
+          <div style="margin-top: -34px;position: static;font-size: 1.8rem;">
             <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
             <ion-icon ios="ios-star" md="md-star"></ion-icon>
             <ion-icon ios="ios-star" md="md-star"></ion-icon>
@@ -63,11 +62,11 @@
       </ion-row>
       <ion-row  class="ro">
         <ion-col >
-          <button class="btn" ion-button round (click)="creatdisorder()">اطلبة</button>
+          <button class="btn" ion-button round (click)="creatdisorder()">{{'Order' |translate}}</button>
         </ion-col>
-        <ion-col >
+        <!-- <ion-col >
           <button ion-button clear><img class="im" src="assets/imgs/whatsapp.png"></button>
-        </ion-col>
+        </ion-col> -->
         <ion-col>
           <button ion-button clear (click)="sendSms()"><img class="im" src="assets/imgs/message.png"></button>
         </ion-col>

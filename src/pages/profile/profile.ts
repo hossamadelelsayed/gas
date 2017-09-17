@@ -97,8 +97,8 @@ presentConfirm() {
           this.fireAuth.doLogout();
           this.storage.clear();
           this.nativeStorage.clear();
-          // this.platform.exitApp();
-          this.navCtrl.push(MainPage);
+          this.platform.exitApp();
+          // this.navCtrl.push(MainPage);
           console.log('exit');
         }
       }
