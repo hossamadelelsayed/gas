@@ -89,12 +89,8 @@
   "Reset Password":"تغيير كلمة المرور",
   "Save Address":"حفظ العنوان",
   "Logout":"تسجيل خروج",
-<<<<<<< HEAD
-  "Cheak your email":"تم الارسال الي البريد الالكتروني"
-=======
+  "Cheak your email":"تم الارسال الي البريد الالكتروني" ,
   "You can not order later because you choose distributer":"لا يمكن الطلب لاحقا لانه قد تم تحديد الموزع",
   "Choose Order Location":"اختار مكان الطلب",
   "Success" : "تم بنجاح"
->>>>>>> 82ecb00a7e070a5f45794da440fbc93ddfd5d90b
-
 }

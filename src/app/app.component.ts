@@ -9,7 +9,7 @@ import { RegistermemberPage } from './../pages/registermember/registermember';
 import {CreateorderPage} from './../pages/createorder/createorder';
 import {TeamregisterPage} from "./../pages/teamregister/teamregister";
 import {Component, ViewChild, NgZone} from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Platform, AlertController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {TranslateService} from "@ngx-translate/core";
@@ -55,7 +55,7 @@ export class MyApp {
               private toastCtrl: ToastController,
               private storage: Storage ,
               public orderService : OrderProvider  ,
-              public zone: NgZone) {
+               public alertCtrl : AlertController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -63,8 +63,15 @@ export class MyApp {
       splashScreen.hide();
       this.orderService.login().then((dist)=>{
         console.log('login');
+        this.orderService.subscribeToDistOrder((order : Order)=> {
+          let view = this.nav.getActive();
+          if(view.component.name != 'DistHistoryPage')
+            this.newOrderAlert(order);
+        });
         this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
         this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
+        this.orderService.listenToDistHistoryChange(dist.uid);
+        this.orderService.listenToCustomerHistoryChange("");
       }).catch((err)=>console.log(err));
 
       // this.nativeStorage.getItem('phone').then((res)=>{
@@ -89,17 +96,6 @@ export class MyApp {
       //   this.welcomePage=WelcomePage;
       // });
     });
-    // this.storage.get('lang').then((res)=>{
-    //   if(res){
-    //     this.translate.setDefaultLang(res);
-    //     console.log(res);
-    //   }
-    //   else{
-    //     this.translate.setDefaultLang('ar');
-    //     console.log('arabic');
-    //   }
-    // });
-
     this.translate.setDefaultLang('ar');
     platform.setDir('rtl', true);
   }
@@ -116,4 +112,26 @@ this.menuCtrl.close();
       });
       toast.present();
     }
+  newOrderAlert(order : Order) {
+    let alert = this.alertCtrl.create({
+      title: 'Order No : '+order.orderID,
+      message: 'Do you want to go to orders?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.nav.push(DistHistoryPage);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 }

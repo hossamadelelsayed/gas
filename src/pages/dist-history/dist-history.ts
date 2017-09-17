@@ -22,6 +22,7 @@ export class DistHistoryPage {
    public showing : string = 'current' ;
    public distUID : string = 'GxzLyO0RIDNamRR8EGGygMuf93m2' ;
    public currentOrder : Order[] = [] ;
+  public lastOrder : Order[] = [] ;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public orderService : OrderProvider  , public commonService : CommonServiceProvider ,
                public zone: NgZone , public events : Events) {
@@ -41,17 +42,27 @@ export class DistHistoryPage {
   {
     this.events.unsubscribe(Order.ordersToAllDistRemovedEvent);
     this.events.unsubscribe(Order.ordersToSpecificDistRemovedEvent);
-    this.events.unsubscribe(Order.ordersToAllDistCreatedEvent);
-    this.events.unsubscribe(Order.ordersToSpecificDistCreatedEvent);
+    this.events.unsubscribe(Order.distHistoryChangeEvent);
+
   }
   initSubscriptions()
   {
     // you have to get geolocation then reverse via geocoder
 
-    this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=>this.currentOrder.push(order)));
+    this.orderService.subscribeToDistHistory((order : Order)=> this.zone.run(()=>{
+      if(order.status == Order.PendingStatus)
+        this.currentOrder.push(order);
+    }));
+    this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=> this.currentOrder.push(order)));
     this.orderService.subscribeToDistOrderRemoved((orderID : string)=> this.zone.run(()=>this.delOrder(orderID)));
     this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
-      .then((orders : Order[])=>{console.log(orders);this.pushToOrder(orders)}).catch((err)=>console.log(err));
+      .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
+    this.orderService.getOrdersByDist(this.distUID,Order.DeliveredStatus)
+      .then((orders : Order[])=>{console.log(orders);this.pushToLastOrder(orders)}).catch((err)=>console.log(err));
+    this.orderService.getOrderAssignToAllDist("Alexandria Governorate")
+      .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
+    this.orderService.getOrderAssignToSpecificDist("Alexandria Governorate","GxzLyO0RIDNamRR8EGGygMuf93m2")
+      .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
   }
 
 
@@ -72,7 +83,12 @@ export class DistHistoryPage {
     // this.currentOrder = order
 
   }
-  pushToOrder(orders : Order[]){
+  pushToLastOrder(orders : Order[]){
+    orders.forEach((order  : Order)=>{
+      this.lastOrder.push(order);
+    })
+  }
+  pushToCurrentOrder(orders : Order[]){
     orders.forEach((order  : Order)=>{
       this.currentOrder.push(order);
     })
@@ -88,5 +104,7 @@ export class DistHistoryPage {
       this.delOrder(orderID);
     }).catch((err)=>console.log(err));
   }
-
+  convertDate(timestamp : Date) : Date {
+    return this.commonService.convertTimestampToDate(timestamp);
+  }
 }
