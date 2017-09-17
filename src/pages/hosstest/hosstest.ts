@@ -4,7 +4,6 @@ import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import { Location} from "../../models/location";
 import {CustomerLocationProvider} from "../../providers/customer/customerLocation";
-import {DistHistoryPage} from "../dist-history/dist-history";
 
 /**
  * Generated class for the HosstestPage page.
@@ -28,22 +27,28 @@ export class HosstestPage {
   }
   createLocation()
   {
-      this.customerService.createLocation("D1mgEvVGy5WmSVDgcyobS7OexCo2",new Location(565414.54,561412.48,'my home'))
+    this.orderService.login().then((customer)=>{
+      this.customerService.createLocation(customer.uid,new Location(565414.54,561412.48,'my home'))
         .then((res : Location)=>{
          console.log(res);
         }).catch((err)=>console.log(err));
+    }).catch((err)=>console.log(err));
    }
   createOrder()
   {
-         this.orderService.createOrder(new Order("D1mgEvVGy5WmSVDgcyobS7OexCo2" ,5,new Location(565414.54,561412.48,'my home'),'cash') ).then((res)=>{
+    this.orderService.login().then((customer)=>{
+         this.orderService.createOrder(new Order(customer.uid ,5,new Location(565414.54,561412.48,'my home'),'cash') ).then((res)=>{
         console.log(res);
       }).catch((err)=>console.log(err));
+    }).catch((err)=>console.log(err));
   }
   createOrderToDist()
   {
-      this.orderService.createOrder(new Order("D1mgEvVGy5WmSVDgcyobS7OexCo2" ,5,new Location(565414.54,561412.48,'my home'),'cash') , 'GxzLyO0RIDNamRR8EGGygMuf93m2').then((res)=>{
+    this.orderService.login().then((customer)=>{
+      this.orderService.createOrder(new Order(customer.uid ,5,new Location(565414.54,561412.48,'my home'),'cash') , 'e86LZ5EnLHNjuhXLAVAk3GbdsUB3').then((res)=>{
         console.log(res);
       }).catch((err)=>console.log(err));
+    }).catch((err)=>console.log(err));
   }
   updateLocation()
   {
@@ -74,7 +79,7 @@ export class HosstestPage {
   assign()
   {
     this.orderService.login().then((customer)=>{
-      this.orderService.distOrderAccept("-Ktq8tkH711bU775zDvh","GxzLyO0RIDNamRR8EGGygMuf93m2").then((res)=>{
+      this.orderService.distOrderAccept("-KtkurHMZNKVRyzdcET0","h4U61WivZedrQjX01e05C1w63B93").then((res)=>{
         console.log(res);
       }).catch((err)=>console.log(err));
     }).catch((err)=>console.log(err));
@@ -95,8 +100,5 @@ export class HosstestPage {
         console.log(res);
       }).catch((err)=>console.log(err))
     }).catch((err)=>console.log(err));
-  }
-  goToDist(){
-    this.navCtrl.push(DistHistoryPage);
   }
 }

@@ -2,7 +2,7 @@ import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
 import {OrderlaterPage} from "../orderlater/orderlater";
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams ,MenuController,AlertController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from "firebase";
 import * as GeoFire from "geofire";
@@ -43,8 +43,13 @@ export class MainPage {
     smsMessage:any;
     disId:string;
     hits = new BehaviorSubject([])
-    constructor(public alertCtrl: AlertController,private callNumber: CallNumber,private sms: SMS,public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams,
-                public menuCtrl: MenuController ,public distributor :DistributorProvider,    private authService:AuthServiceProvider) {
+    constructor(private callNumber: CallNumber,private sms: SMS
+                ,public geolocation: Geolocation,
+                public navCtrl: NavController,
+                public navParams: NavParams,
+                public menuCtrl: MenuController ,
+                public distributor :DistributorProvider,
+                private authService:AuthServiceProvider) {
 /// Reference database location for GeoFire
 
 
@@ -56,8 +61,8 @@ export class MainPage {
     gotoorderlater(){
         this.navCtrl.push(OrderlaterPage);
     }
-    sendSms(number,message){
-        this.sms.send(number,message);
+    sendSms(){
+        this.sms.send(this.distPhone,'Hello');
     }
     call(){
         this.callNumber.callNumber(this.distPhone, true)
@@ -85,12 +90,14 @@ export class MainPage {
             //       this.distributor.onDistributorDisconnect();
             //creat map
             this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
+          google.maps.event.addListener(this.map, 'click', () => {
+            this.flag=true;
+          });
         }).catch((error) => {
             // console.log('Error getting location', error);
         });
     }
-    
+
     ionViewDidLoad(){
         let self=this;
         this.sendCurrentLoc();
@@ -99,12 +106,12 @@ export class MainPage {
       this.geolocation.getCurrentPosition().then((resp) => {
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
-// this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
         self.setMarkers(city);
 
       }).catch(err=>{
         self.setMarkers(err);
-        
+
       });     });
       // });
     }
@@ -120,8 +127,11 @@ export class MainPage {
 
         //getting all keys (distribuotors IDs)
         self.markerRef.on('value', (snapshot)=> {
-          // self.markers=[];
-          //   console.log('changed loc','once');
+       //empty our
+          for (var i = 0; i < this.markers.length; i++) {
+            this.markers[i].setMap(null);
+          }
+          self.markers=new Array();
 
             //getting latlng for evry valid distributor
             snapshot.forEach(key => {
@@ -131,10 +141,10 @@ export class MainPage {
 //getting latlng using geofire
                 this.geoFire.get(key.key).then(function (location) {
                     let latlng = new google.maps.LatLng(location[0],location[1]);
-                  
+
                         self.addMarker(latlng,key.key);
                         console.log('new marker',key.key);
-                   
+
 
                 }, (error)=> {
                     console.log("Error: " + error);
@@ -148,7 +158,7 @@ export class MainPage {
         // Create a Firebase reference where GeoFire will store its information
                 this.navCtrl.push(CreateorderPage);
             }
-   
+
     current:any;
     toggleMenu()
     {
@@ -158,24 +168,31 @@ export class MainPage {
     }
 
     addMarker(latlng:any,key:any){
+
       var marker = new google.maps.Marker({
-            title:'oo'
-            ,tag:key
+
+        tag:key
       });
 
-        marker.setMap(this.map);
+        // marker.setMap(this.map);
         this.markers.push(marker);
-        for(let i=0;i<=this.markers.length;i++){
+        for(let i=0;i<this.markers.length;i++){
+
         if(this.markers[i].tag==key){
+        //   this.markers[i].setMap(null);
+
             this.markers[i].setPosition(latlng);
-            console.log('am in the if loop');
-            break;
+          this.markers[i].setMap(this.map);
+
+          console.log('am in the if loop',this.markers);
+            // break;
   }
 }
       google.maps.event.addListener(marker, 'click', () => {
             this.flag=false;
             this.distributor.getDistributorName(marker.tag).then((res)=>{
                 this.distName = res;
+                marker.setTitle(res);
             });
             this.distributor.getDistributorPhone(marker.tag).then((res)=>{
                 this.distPhone = res;
@@ -187,36 +204,4 @@ export class MainPage {
     }
 //////////////////////////////////////
     flag=true;
-    maprefresh(){}
-
-
-    showPrompt() {
-        let prompt = this.alertCtrl.create({
-          title: 'Send Message',
-          message: "Enter your sms message to send it to distributer",
-          inputs: [
-            {
-              name: 'message',
-              placeholder: 'write Your message'
-            },
-          ],
-          buttons: [
-            {
-              text: 'Cancel',
-              handler: data => {
-                console.log('Cancel clicked');
-              }
-            },
-            {
-              text: 'send',
-              handler: data => {
-               this.sendSms(this.distPhone,data.message);
-
-              }
-            }
-          ]
-        });
-        prompt.present();
-      }
-    
 }

@@ -1,10 +1,10 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-buttons right>
+    <ion-buttons right>
       <button ion-button navPop icon-only>
         <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
       </button>
-    </ion-buttons> -->
+    </ion-buttons>
     <ion-title >
       <ion-row>
         <ion-col text-center  col-1>
@@ -14,7 +14,7 @@
           {{'Gas Ksa'|translate}}
         </ion-col>
         <ion-col text-center col-1>
-          <ion-icon ios="ios-search" md="md-search"></ion-icon>
+          <ion-icon (click)="gotoselrct()"ios="ios-search" md="md-search"></ion-icon>
         </ion-col></ion-row>
     </ion-title>
   </ion-navbar>
@@ -65,11 +65,11 @@
         <ion-col >
           <button class="btn" ion-button round (click)="creatdisorder()">اطلبة</button>
         </ion-col>
-        <!-- <ion-col >
+        <ion-col >
           <button ion-button clear><img class="im" src="assets/imgs/whatsapp.png"></button>
-        </ion-col> -->
+        </ion-col>
         <ion-col>
-          <button ion-button clear (click)="showPrompt()"><img class="im" src="assets/imgs/message.png"></button>
+          <button ion-button clear (click)="sendSms()"><img class="im" src="assets/imgs/message.png"></button>
         </ion-col>
         <ion-col>
           <button ion-button clear (click)="call()"><img class="im" src="assets/imgs/call.png"></button>

@@ -5,6 +5,7 @@ import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import {HosstestPage} from "../hosstest/hosstest";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
+// import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 /**
  * Generated class for the DistHistoryPage page.
@@ -18,19 +19,19 @@ import {CommonServiceProvider} from "../../providers/common-service/common-servi
   templateUrl: 'dist-history.html',
 })
 export class DistHistoryPage {
-   public Order  = Order ;
    public showing : string = 'current' ;
    public distUID : string = 'GxzLyO0RIDNamRR8EGGygMuf93m2' ;
    public currentOrder : Order[] = [] ;
   public lastOrder : Order[] = [] ;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public orderService : OrderProvider  , public commonService : CommonServiceProvider ,
-               public zone: NgZone , public events : Events) {
+              public orderService : OrderProvider  ,
+               public commonService : CommonServiceProvider ,
+              public zone: NgZone , public events : Events) {
 
 
   }
 
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     console.log('ionViewDidLoad DistHistoryPage');
     this.orderService.login().then((dist)=>{
       this.distUID = dist.uid ;

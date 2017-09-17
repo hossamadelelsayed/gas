@@ -23,6 +23,7 @@ import {SettingsPage} from "../pages/settings/settings";
 import {HosstestPage} from "../pages/hosstest/hosstest";
 import {MainPage} from "../pages/main/main";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
+
 import { Storage } from '@ionic/storage';
 import {OrderProvider} from "../providers/order/order";
 import {Order} from "../models/order";
@@ -31,8 +32,8 @@ import {Order} from "../models/order";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  welcomePage = HosstestPage ; //DistHistoryPage ; //HosstestPage; // ;
-  //welcomePage = null;  //WelcomePage;
+
+  welcomePage = null;  //WelcomePage;
   settingsPage=SettingsPage;
   mainpage=MainPage;
   profilePage=ProfilePage;
@@ -49,13 +50,13 @@ export class MyApp {
   constructor( platform: Platform,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
-              public translate : TranslateService ,
+               public translate : TranslateService ,
               private menuCtrl:MenuController,
               public nativeStorage:NativeStorage,
               private toastCtrl: ToastController,
-              private storage: Storage ,
               public orderService : OrderProvider  ,
-               public alertCtrl : AlertController) {
+               public alertCtrl : AlertController ,
+              private storage: Storage) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -98,10 +99,47 @@ export class MyApp {
     });
     this.translate.setDefaultLang('ar');
     platform.setDir('rtl', true);
+      this.nativeStorage.getItem('phone').then((res)=>{
+        this.presentToast(res);
+       this.phone=res;
+      }).then(()=>{
+        this.nativeStorage.getItem('password').then((res)=>{
+          this.presentToast(res);
+          this.password=res;
+        }).then(()=>{
+          this.storage.get('type').then((res)=>{
+            this.presentToast(res);
+            if(res=='distributors'){
+              this.welcomePage=HistoryPage;
+            }
+            else{
+              this.welcomePage=MainPage;
+            }
+          })
+        })
+      }).catch(()=>{
+        this.welcomePage=WelcomePage;
+      });
+
+    this.storage.get('lang').then((res)=>{
+      if(res =='ar'){
+        this.translate.setDefaultLang('ar');
+        platform.setDir('rtl', true);
+        console.log(res);
+      }
+      else{
+        this.translate.setDefaultLang('en');
+        platform.setDir('ltr', true);
+        console.log(res);
+      }
+    });
+
+    // this.translate.setDefaultLang('ar');
+    // platform.setDir('rtl', true);
   }
   onLoad(page:any){
-this.nav.push(page);
-this.menuCtrl.close();
+      this.nav.push(page);
+      this.menuCtrl.close();
   }
   presentToast(txt:any) {
 

@@ -12,6 +12,7 @@ import { ToastController } from 'ionic-angular';
 })
 export class ForgotpasswordPage {
 public email:string;
+public onclick:boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider,
     private toastCtrl: ToastController,
     public translateService : TranslateService) {
@@ -19,11 +20,15 @@ public email:string;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ForgotpasswordPage');
+    
   }
+  
   recover(){
     this.auth.resetPassword(this.email);
-    this.translateAndToast("Cheak your email");
+    this.translateAndToast("Check your email");
+    this.onclick = false;
   }
+  
   presentToast(text:any) {
     let toast = this.toastCtrl.create({
       message: text,

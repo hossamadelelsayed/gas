@@ -12,7 +12,7 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import { AlertController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
 import { NativeStorage } from '@ionic-native/native-storage';
-
+import {MainPage} from "../main/main";
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -95,8 +95,10 @@ presentConfirm() {
         handler: () => {
           console.log('logout clicked');
           this.fireAuth.doLogout();
+          this.storage.clear();
           this.nativeStorage.clear();
-          this.platform.exitApp();
+          // this.platform.exitApp();
+          this.navCtrl.push(MainPage);
           console.log('exit');
         }
       }

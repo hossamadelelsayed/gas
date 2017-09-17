@@ -65,10 +65,11 @@ import {HosstestPage} from "../pages/hosstest/hosstest";
 import {OrderProvider} from "../providers/order/order";
 import {CustomerLocationProvider} from "../providers/customer/customerLocation";
 
+import { EmailComposer } from '@ionic-native/email-composer';
 
 import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
-import { CommonServiceProvider } from '../providers/common-service/common-service';
+import { AboutusProvider } from '../providers/aboutus/aboutus';
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -171,12 +172,12 @@ firebase.initializeApp(firebaseConfig);
     CustomerLocationProvider,
     Camera,
     SMS,
-    CallNumber,
+    CallNumber,EmailComposer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
     IonicStorageModule,NativeStorage,
     DistributorProvider,
-    CommonServiceProvider ]
+    AboutusProvider ]
 })
 export class AppModule {}

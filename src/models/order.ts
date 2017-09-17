@@ -91,9 +91,6 @@ export class Order{
   get status():string {
     return this._status;
   }
-  // set status(val : string) {
-  //   this._status = val;
-  // }
 
   get date(): Date {
     return this._date;
