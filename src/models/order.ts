@@ -9,7 +9,12 @@ export class Order{
   public static readonly DeliveredStatus : string = 'delivered' ;
   public static readonly AssignAllDist : string = 'allDist' ;
   public static readonly AssignSpecificDist : string = 'specificDist' ;
-
+  public static readonly ordersToAllDistCreatedEvent : string = 'ordersToAllDist:created';
+  public static readonly ordersToAllDistRemovedEvent : string = 'ordersToAllDist:removed';
+  public static readonly ordersToSpecificDistCreatedEvent : string = 'ordersToSpecificDist:created';
+  public static readonly ordersToSpecificDistRemovedEvent : string = 'ordersToSpecificDist:removed';
+  public static readonly distHistoryChangeEvent : string = 'distHistory:change' ;
+  public static readonly customerHistoryChangeEvent : string = 'customerHistory:change' ;
   private _assignDistType : string ;
   private _assignDistID : string ;
    constructor(

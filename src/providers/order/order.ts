@@ -24,7 +24,7 @@ export class OrderProvider {
   {
     this.fireAuth = firebase.auth();
     this.fireDatabase = firebase.database();
-    return this.fireAuth.signInWithEmailAndPassword("hossamadelelsayed@gmail.com","Hossam521992");
+    return this.fireAuth.signInWithEmailAndPassword("mohamedd@m.com","123456");
   }
   createOrder(order : Order,  distributerID : string = null) : Promise<Order>
   {
@@ -79,6 +79,33 @@ export class OrderProvider {
           });
         resolve(orders);
         }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  getOrdersByDist(distID : string , statusType : string) : Promise<Order[]>
+  {
+    let ordersPromises : Promise<Order>[] = [] ;
+    let customerOrderRef = this.fireDatabase.ref('/distributors/'+distID+'/history');
+    let promise = new Promise((resolve, reject) => {
+      customerOrderRef.orderByChild('status').equalTo(statusType).once("value")
+        .then((snapshot)=>{
+          snapshot.forEach((childSnapshot) => {
+            let orderHistoryRef = this.fireDatabase.ref('/history/'+childSnapshot.key);
+            ordersPromises.push(this.getOrderData(orderHistoryRef));
+          });
+          Promise.all(ordersPromises).then((res)=>{
+            resolve(<Order[]>res);
+          }).catch((err)=>reject(err));
+        }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  getOrderData (orderRef :  firebase.database.Reference) : Promise<Order>
+  {
+    let promise = new Promise((resolve, reject) => {
+      orderRef.once('value').then((orderSnapshot)=>{
+        resolve(<Order>orderSnapshot.val());
+      }).catch((err)=>reject(err));
     });
     return promise ;
   }
@@ -143,23 +170,76 @@ export class OrderProvider {
       this.listenToOrderAssignToAllDist(city) ;
       this.listenToOrderAssignToSpecificDist(city , distributerID);
   }
+  subscribeToDistOrder(callBack : (order: Order) => void){
+    this.subscribeToOrderAssignToAllDist(callBack);
+    this.subscribeToOrderAssignToSpecificDist(callBack);
+  }
+  subscribeToOrderAssignToSpecificDist(callBack : (order: Order) => void)
+  {
+    this.events.subscribe(Order.ordersToSpecificDistCreatedEvent,callBack);
+  }
+  subscribeToOrderAssignToAllDist(callBack : (order: Order) => void)
+  {
+    this.events.subscribe(Order.ordersToAllDistCreatedEvent,callBack);
+  }
+
+  subscribeToDistOrderRemoved(callBack : (orderID : string) => void){
+    this.subscribeToOrderToAllDistRemoved(callBack);
+    this.subscribeToOrderToSpecificDistRemoved(callBack);
+  }
+  subscribeToOrderToSpecificDistRemoved(callBack : (orderID: string) => void)
+  {
+    this.events.subscribe(Order.ordersToSpecificDistRemovedEvent,callBack);
+  }
+  subscribeToOrderToAllDistRemoved(callBack : (orderID: string) => void)
+  {
+    this.events.subscribe(Order.ordersToAllDistRemovedEvent,callBack);
+  }
+  subscribeToDistHistory(callBack : (order: Order) => void){
+    this.events.subscribe(Order.distHistoryChangeEvent,callBack);
+  }
+  subscribeToCustomerHistory(callBack : (order: Order) => void){
+    this.events.subscribe(Order.customerHistoryChangeEvent,callBack);
+  }
   listenToOrderAssignToAllDist(city : string)
   {
     let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
-    ordersRef.on('child_added', (data) => {
+    ordersRef.limitToLast(1).on('child_added', (data) => {
+      console.log('key order',data.key);
       let historyRef = firebase.database().ref('history/' + data.key);
       historyRef.once('value').then((orderSnapShot)=>{
-        this.events.publish('ordersToAllDist:created',<Order>orderSnapShot.val());
+        this.events.publish(Order.ordersToAllDistCreatedEvent,<Order>orderSnapShot.val());
       });
     });
   }
+  listenToDistHistoryChange( distributerID : string)
+  {
+    let historyRef = this.fireDatabase.ref('distributors/' + distributerID + '/history') ;
+    historyRef.on('child_changed', (data) => {
+      let historyRef = firebase.database().ref('history/' + data.key);
+      historyRef.once('value').then((orderSnapShot)=>{
+        this.events.publish(Order.distHistoryChangeEvent,<Order>orderSnapShot.val());
+      });
+    });
+  }
+  listenToCustomerHistoryChange( customerID : string)
+  {
+    let historyRef = this.fireDatabase.ref('customers/' + customerID + '/history') ;
+    historyRef.on('child_changed', (data) => {
+      let historyRef = firebase.database().ref('history/' + data.key);
+      historyRef.once('value').then((orderSnapShot)=>{
+        this.events.publish(Order.customerHistoryChangeEvent,<Order>orderSnapShot.val());
+      });
+    });
+  }
+
   listenToOrderAssignToSpecificDist(city : string , distributerID : string)
   {
     let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
-    orderNotificationDistRef.on('child_added', (data) => {
+    orderNotificationDistRef.limitToLast(1).on('child_added', (data) => {
       let historyRef = firebase.database().ref('history/' + data.key);
       historyRef.once('value').then((orderSnapShot)=>{
-        this.events.publish('ordersToSpecificDist:created',<Order>orderSnapShot.val());
+        this.events.publish(Order.ordersToSpecificDistCreatedEvent,<Order>orderSnapShot.val());
       });
     });
   }
@@ -172,14 +252,14 @@ export class OrderProvider {
   {
     let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
     ordersRef.on('child_removed', (data) => {
-      this.events.publish('ordersToAllDist:removed',data.key);
+        this.events.publish(Order.ordersToAllDistRemovedEvent,data.key);
     });
   }
   listenToSpecificDistOrderRemoved(city : string , distributerID : string)
   {
     let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
     orderNotificationDistRef.on('child_removed', (data) => {
-      this.events.publish('ordersToSpecificDist:removed',data.key);
+        this.events.publish(Order.ordersToSpecificDistRemovedEvent,data.key);
     });
   }
   private removeOrderFromAllDist(city : string , orderID : string) : Promise <boolean>
@@ -289,6 +369,43 @@ export class OrderProvider {
       orderRef.update(order).then(()=>{
         resolve(order);
       }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+
+  getOrderAssignToAllDist(city : string ) : Promise<Order[]>
+  {
+    let ordersPromises : Promise<Order>[] = [] ;
+    let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
+    let promise = new Promise((resolve, reject) => {
+      ordersRef.once("value")
+        .then((snapshot)=>{
+          snapshot.forEach((childSnapshot) => {
+            let orderHistoryRef = this.fireDatabase.ref('/history/'+childSnapshot.key);
+            ordersPromises.push(this.getOrderData(orderHistoryRef));
+          });
+          Promise.all(ordersPromises).then((res)=>{
+            resolve(<Order[]>res);
+          }).catch((err)=>reject(err));
+        }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  getOrderAssignToSpecificDist(city : string , distributerID : string): Promise<Order[]>
+  {
+    let ordersPromises : Promise<Order>[] = [] ;
+    let ordersRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
+    let promise = new Promise((resolve, reject) => {
+      ordersRef.once("value")
+        .then((snapshot)=>{
+          snapshot.forEach((childSnapshot) => {
+            let orderHistoryRef = this.fireDatabase.ref('/history/'+childSnapshot.key);
+            ordersPromises.push(this.getOrderData(orderHistoryRef));
+          });
+          Promise.all(ordersPromises).then((res)=>{
+            resolve(<Order[]>res);
+          }).catch((err)=>reject(err));
+        }).catch((err)=>reject(err));
     });
     return promise ;
   }

@@ -86,11 +86,13 @@ export class MainPage {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
             //listn to current location and send it as a distributor valid
-            this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+            // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
             //       this.distributor.onDistributorDisconnect();
             //creat map
             this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
+          google.maps.event.addListener(this.map, 'click', () => {
+            this.flag=true;
+          });
         }).catch((error) => {
             // console.log('Error getting location', error);
         });
@@ -168,8 +170,8 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
     addMarker(latlng:any,key:any){
 
       var marker = new google.maps.Marker({
-            title:'oo'
-            ,tag:key
+
+        tag:key
       });
 
         // marker.setMap(this.map);
@@ -190,6 +192,7 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
             this.flag=false;
             this.distributor.getDistributorName(marker.tag).then((res)=>{
                 this.distName = res;
+                marker.setTitle(res);
             });
             this.distributor.getDistributorPhone(marker.tag).then((res)=>{
                 this.distPhone = res;
@@ -201,5 +204,4 @@ this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
     }
 //////////////////////////////////////
     flag=true;
-    maprefresh(){}
 }
