@@ -49,12 +49,12 @@ currentEmail:string;
     this.emailComposer.isAvailable().then((available: boolean) =>{
       if(available) {
         //Now we know we can send
-        self.emailComposer.open(email);
-
+        self.emailComposer.open(email); 
       }
+      this.translateAndToast("Your message has been sent.");
     });
     this.onclick = false;
-    this.translateAndToast("Your message has been sent.");
+   
   }
   presentToast(text:any) {
     let toast = this.toastCtrl.create({
