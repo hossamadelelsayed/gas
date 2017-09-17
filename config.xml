@@ -91,9 +91,6 @@
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
-<<<<<<< HEAD
-=======
     <engine name="android" spec="~6.2.3" />
     <plugin name="cordova-plugin-email-composer" spec="^0.8.9" />
->>>>>>> 6a4c7f41de04d1b27f74bed052b0b64051a8a0c3
 </widget>
