@@ -11,6 +11,9 @@ import {OrderlocationPage} from "../orderlocation/orderlocation"
 import { Storage } from '@ionic/storage';
 import {NativeStorage} from '@ionic-native/native-storage';
 import {HistoryPage} from "../history/history";
+import {DistHistoryPage} from "../dist-history/dist-history";
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -34,7 +37,7 @@ gotocreateorder()
     // this.auth.getUserId;
     console.log(user['uType']);
     if(user['uType']=='distributors'){
-      this.navCtrl.push(HistoryPage)
+      this.navCtrl.push(DistHistoryPage)
     }
     else{
       this.navCtrl.push(MainPage);

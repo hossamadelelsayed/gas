@@ -9,6 +9,8 @@ import {Image} from "../../models/image";
 import { Storage } from '@ionic/storage';
 import {NativeStorage} from '@ionic-native/native-storage';
 import{HistoryPage} from "../history/history";
+import {DistHistoryPage} from "../dist-history/dist-history";
+
 @Component({
   selector: 'page-teamregister',
   templateUrl: 'teamregister.html',
@@ -147,7 +149,7 @@ else{
       //   this.presentToast(sta.state+"err");
       // });
       this.translateAndToast("Registration done");
-         this.navCtrl.push(HistoryPage);
+         this.navCtrl.push(DistHistoryPage);
       
       })
     .catch(
