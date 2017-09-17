@@ -19,6 +19,7 @@ import {CommonServiceProvider} from "../../providers/common-service/common-servi
   templateUrl: 'dist-history.html',
 })
 export class DistHistoryPage {
+  public Order = Order ;
    public showing : string = 'current' ;
    public distUID : string = 'GxzLyO0RIDNamRR8EGGygMuf93m2' ;
    public currentOrder : Order[] = [] ;
@@ -28,6 +29,7 @@ export class DistHistoryPage {
                public commonService : CommonServiceProvider ,
               public zone: NgZone , public events : Events) {
 
+    this.events.publish('flag', true);
 
   }
 
@@ -44,13 +46,13 @@ export class DistHistoryPage {
     this.events.unsubscribe(Order.ordersToAllDistRemovedEvent);
     this.events.unsubscribe(Order.ordersToSpecificDistRemovedEvent);
     this.events.unsubscribe(Order.distHistoryChangeEvent);
-
   }
   initSubscriptions()
   {
     // you have to get geolocation then reverse via geocoder
 
     this.orderService.subscribeToDistHistory((order : Order)=> this.zone.run(()=>{
+      console.log(order);
       if(order.status == Order.PendingStatus)
         this.currentOrder.push(order);
     }));
