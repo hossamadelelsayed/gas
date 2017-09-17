@@ -67,9 +67,9 @@ about.child('paragraph').set(paragraph);
     let promise=new Promise((resolve, reject )=>{
       let about=this.firebaseRef.ref("ar_about");
 about.once(('value'),snapshot=>{
-  console.log(snapshot)
+  console.log(snapshot.val())
 
-  resolve(snapshot)
+  resolve(snapshot.val())
 })
     });
   return promise;
@@ -78,9 +78,9 @@ about.once(('value'),snapshot=>{
     let promise=new Promise((resolve, reject )=>{
       let about=this.firebaseRef.ref("ar_terms");
       about.once(('value'),snapshot=>{
-        console.log(snapshot)
+        console.log(snapshot.val())
 
-        resolve(snapshot)
+        resolve(snapshot.val())
       })
     });
     return promise;
@@ -88,9 +88,9 @@ about.once(('value'),snapshot=>{
     let promise=new Promise((resolve, reject )=>{
       let about=this.firebaseRef.ref("en_about");
 about.once(('value'),snapshot=>{
-  console.log(snapshot)
+  console.log(snapshot.val())
 
-  resolve(snapshot)
+  resolve(snapshot.val())
 })
     });
   return promise;
@@ -99,8 +99,8 @@ about.once(('value'),snapshot=>{
     let promise=new Promise((resolve, reject )=>{
       let about=this.firebaseRef.ref("en_terms");
       about.once(('value'),snapshot=>{
-        console.log(snapshot)
-        resolve(snapshot)
+        console.log(snapshot.val())
+        resolve(snapshot.val())
 
       })
     });
