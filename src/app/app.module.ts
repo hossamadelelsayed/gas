@@ -69,6 +69,7 @@ import { EmailComposer } from '@ionic-native/email-composer';
 
 import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
+import { AboutusProvider } from '../providers/aboutus/aboutus';
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -176,6 +177,7 @@ firebase.initializeApp(firebaseConfig);
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
     IonicStorageModule,NativeStorage,
-    DistributorProvider ]
+    DistributorProvider,
+    AboutusProvider ]
 })
 export class AppModule {}
