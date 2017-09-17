@@ -25,7 +25,7 @@ public onclick:boolean = true;
   
   recover(){
     this.auth.resetPassword(this.email);
-    this.translateAndToast("Cheak your email");
+    this.translateAndToast("Check your email");
     this.onclick = false;
   }
   

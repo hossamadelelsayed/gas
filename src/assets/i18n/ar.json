@@ -98,7 +98,10 @@
   "Success" : "تم بنجاح",
   "cash":"عند الاستلام",
   "noResponse":"قيد الانتظار",
-  "Map":"خريطة"
+  "Map":"خريطة",
+  "Your message has been sent.":"تم الارسال بنجاح",
+  "Complaint":"مشكلة",
+  "Suggestion":"اقتراح"
 
 
 }

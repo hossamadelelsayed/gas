@@ -162,7 +162,9 @@ padding: 24px 4px 11px 4px;}
         text-align: center;
        padding-left: 40px;
 }
-
+.alert-md .alert-radio-icon {
+    visibility:hidden;
+}
 $color-primary :#ff8d15;
 $color-background:#f5f7f9;
 // App Global Sass
