@@ -131,15 +131,15 @@ export class MyApp {
 
     this.storage.get('lang').then((res)=>{
       if(res =='ar'){
-        MainService.lang = res;
         this.translate.setDefaultLang('ar');
+        MainService.lang = res;
         platform.setDir('rtl', true);
         console.log(res);
       }
       else{
         this.translate.setDefaultLang('en');
-        MainService.lang = res;
         platform.setDir('ltr', true);
+        MainService.lang = res;
         console.log(res);
       }
     });
