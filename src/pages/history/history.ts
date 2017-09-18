@@ -39,16 +39,16 @@ toggleMenu()
 listOrdersNow(){
   this.orderProv.getOrdersByCustomer(this.custId,Order.NoResponseStatus).then((res)=>{
     // this.noOrders = res;
-    console.log("NoResponse"+res);
+    console.log(res);
     this.noOrders = res;
     console.log(this.noOrders);
   });
   this.orderProv.getOrdersByCustomer(this.custId,Order.PendingStatus).then((res)=>{
-    console.log("Pending"+res);
+    console.log(res);
     this.pendingOrders = res;
   });
   this.orderProv.getOrdersByCustomer(this.custId,Order.RejectedStatus).then((res)=>{
-    console.log("Rejected"+res);
+    console.log(res);
     this.rejectedOrders = res;
   })
 }
@@ -61,6 +61,7 @@ listOrderDone(){
 }
 
 subscribeOrders(){
+  console.log("DONE");
   this.orderProv.subscribeToCustomerHistory((order : Order)=> this.zone.run(()=>{
     console.log(order);
   }));
