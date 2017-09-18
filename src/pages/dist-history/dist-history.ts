@@ -5,6 +5,7 @@ import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import {HosstestPage} from "../hosstest/hosstest";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
+import {DetailsrequestPage} from "../detailsrequest/detailsrequest";
 // import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 /**
@@ -19,7 +20,11 @@ import {CommonServiceProvider} from "../../providers/common-service/common-servi
   templateUrl: 'dist-history.html',
 })
 export class DistHistoryPage {
+<<<<<<< HEAD
+  public Order  = Order ;
+=======
   public Order = Order ;
+>>>>>>> c147f92fdc975d3d2bad8bef821297ef9ea6e5b2
    public showing : string = 'current' ;
    public distUID : string = 'GxzLyO0RIDNamRR8EGGygMuf93m2' ;
    public currentOrder : Order[] = [] ;
@@ -109,5 +114,8 @@ export class DistHistoryPage {
   }
   convertDate(timestamp : Date) : Date {
     return this.commonService.convertTimestampToDate(timestamp);
+  }
+  goToDetails(){
+    this.navCtrl.push(DetailsrequestPage);
   }
 }
