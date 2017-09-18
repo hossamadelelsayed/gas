@@ -30,16 +30,11 @@ page-history {
 
 .time{
     color: gray;
-
-    direction: ltr;
-    margin-left: 144px;
-    float: right;
 }
 .card{
     border-radius: 10px;
     width: 100%;
-    margin-right: 0px;
-    margin-bottom: 4px;
+    margin:0 0 5px !important;
 }
 
 
@@ -66,9 +61,9 @@ page-history {
     margin-top: 10px;
 }
 .pending{
-   width: 8%;
+    width: 8%;
     height: 0%;
-margin: auto;
+    margin: auto;
     display: block;
 }
 .pra,.pend,.nores{
@@ -85,7 +80,7 @@ margin: auto;
 .segment-md .segment-button.activated{
     border-color: $color-primary;
     color: gray;
-    font-size: 1.8rem;
+    text-transform: none;
 }
 .toolbar-ios .segment-button {
     max-width: none;

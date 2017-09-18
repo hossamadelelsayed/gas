@@ -21,7 +21,7 @@
   <ion-toolbar >
     <ion-segment style="background-color: white;" [(ngModel)]="requests" >
       
-      <ion-segment-button value="current" style="text-transform: none;" class="segment-button activated" pressed="true;" > {{'Current Orders'|translate}}</ion-segment-button>
+      <ion-segment-button value="current" style="font-size: 1.8rem;text-transform: none;" pressed="true;" > {{'Current Orders'|translate}}</ion-segment-button>
       <ion-segment-button value="last" style="font-size: 1.8rem;color: gray;text-align: center;text-transform: none;">{{'Orders History'|translate}}</ion-segment-button>
     </ion-segment>
   
@@ -44,8 +44,9 @@
                 <ion-col col-9>
                       <p class="ordernumber">{{'Order Number'|translate}} <br> {{noorder.orderID}} </p>
                       <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
+                      <p class="time">{{noorder.deliveryDate}}</p>
                 </ion-col>
-                  <p class="time">{{noorder.deliveryDate}}</p>
+                
               </ion-row>
             </ion-card-content>
         </ion-card>
@@ -66,17 +67,18 @@
                         width: 70px;" src="assets/imgs/agent_pin.png"><br>
                 </ion-col>
                 <ion-col col-9>
-                      <p class="ordernumber">{{'Order Number'|translate}} {{penorder.orderID}} </p>
+                      <p class="ordernumber">{{'Order Number'|translate}} <br> {{penorder.orderID}} </p>
                       <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
+                      <p class="time">{{penorder.deliveryDate}}</p>
                 </ion-col>
-                  <p class="time">{{penorder.deliveryDate}}</p>
+                 
               </ion-row>
             </ion-card-content>
         </ion-card>
         <ion-row class="row">
         <img class="linder" src="assets/imgs/cylinder.png"><p class="pra">{{penorder.pipesNo}}{{'Cylinder'|translate}}</p>
-        <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{'penorder.paymentType'|translate}}</p>
-        <img class="pending" src="assets/imgs/pending.png"><p class="pend">{{'penorder.status'|translate}}</p>
+        <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{penorder.paymentType}}</p>
+        <img class="pending" src="assets/imgs/pending.png"><p class="pend">{{penorder.status}}</p>
         </ion-row>
       </div>
     </ion-list>
@@ -92,10 +94,11 @@
                             width: 70px;" src="assets/imgs/agent_pin.png"><br>
                     </ion-col>
                     <ion-col col-9>
-                          <p class="ordernumber">{{'Order Number'|translate}} {{delorder.orderID}} </p>
+                          <p class="ordernumber">{{'Order Number'|translate}} <br> {{delorder.orderID}} </p>
                           <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
+                          <p class="time">{{delorder.deliveryDate}}</p>
                     </ion-col>
-                      <p class="time">{{delorder.deliveryDate}}</p>
+                    
                   </ion-row>
                 </ion-card-content>
             </ion-card>

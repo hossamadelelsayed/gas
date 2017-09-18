@@ -20,11 +20,7 @@ import {DetailsrequestPage} from "../detailsrequest/detailsrequest";
   templateUrl: 'dist-history.html',
 })
 export class DistHistoryPage {
-<<<<<<< HEAD
-  public Order  = Order ;
-=======
   public Order = Order ;
->>>>>>> c147f92fdc975d3d2bad8bef821297ef9ea6e5b2
    public showing : string = 'current' ;
    public distUID : string = 'GxzLyO0RIDNamRR8EGGygMuf93m2' ;
    public currentOrder : Order[] = [] ;
