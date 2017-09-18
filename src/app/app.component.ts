@@ -131,12 +131,14 @@ export class MyApp {
 
     this.storage.get('lang').then((res)=>{
       if(res =='ar'){
+        MainService.lang = res;
         this.translate.setDefaultLang('ar');
         platform.setDir('rtl', true);
         console.log(res);
       }
       else{
         this.translate.setDefaultLang('en');
+        MainService.lang = res;
         platform.setDir('ltr', true);
         console.log(res);
       }
