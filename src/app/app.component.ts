@@ -27,13 +27,16 @@ import {DistHistoryPage} from "../pages/dist-history/dist-history";
 import { Storage } from '@ionic/storage';
 import {OrderProvider} from "../providers/order/order";
 import {Order} from "../models/order";
+import {AuthServiceProvider} from "../providers/auth-service/auth-service";
+import { Events } from 'ionic-angular';
+import * as firebase from "firebase";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
 
-  welcomePage = HosstestPage;  //WelcomePage;
+  welcomePage = null;  //WelcomePage;
   settingsPage=SettingsPage;
   mainpage=MainPage;
   profilePage=ProfilePage;
@@ -47,6 +50,8 @@ export class MyApp {
    public  MainService = MainService;
    public phone:string;
    public password:string;
+  appFlag:false;
+
   constructor( platform: Platform,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
@@ -55,8 +60,8 @@ export class MyApp {
               public nativeStorage:NativeStorage,
               private toastCtrl: ToastController,
               public orderService : OrderProvider  ,
-               public alertCtrl : AlertController ,
-              private storage: Storage) {
+               public alertCtrl : AlertController ,public auth:AuthServiceProvider,
+              private storage: Storage,public events:Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -64,15 +69,15 @@ export class MyApp {
       splashScreen.hide();
       this.orderService.login().then((dist)=>{
         console.log('login');
-        this.orderService.subscribeToDistOrder((order : Order)=> {
-          let view = this.nav.getActive();
-          if(view.component.name != 'DistHistoryPage')
-            this.newOrderAlert(order);
-        });
-        this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
-        this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
-        this.orderService.listenToDistHistoryChange(dist.uid);
-        this.orderService.listenToCustomerHistoryChange("");
+        // this.orderService.subscribeToDistOrder((order : Order)=> {
+        //   let view = this.nav.getActive();
+        //   if(view.component.name != 'DistHistoryPage')
+        //     this.newOrderAlert(order);
+        // });
+        // this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
+        // this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
+        // this.orderService.listenToDistHistoryChange(dist.uid);
+        // this.orderService.listenToCustomerHistoryChange("");
       }).catch((err)=>console.log(err));
 
       // this.nativeStorage.getItem('phone').then((res)=>{
@@ -97,29 +102,32 @@ export class MyApp {
       //   this.welcomePage=WelcomePage;
       // });
     });
-    this.translate.setDefaultLang('ar');
-    platform.setDir('rtl', true);
-      // this.nativeStorage.getItem('phone').then((res)=>{
-      //   this.presentToast(res);
-      //  this.phone=res;
-      // }).then(()=>{
-      //   this.nativeStorage.getItem('password').then((res)=>{
-      //     this.presentToast(res);
-      //     this.password=res;
-      //   }).then(()=>{
-      //     this.storage.get('type').then((res)=>{
-      //       this.presentToast(res);
-      //       if(res=='distributors'){
-      //         this.welcomePage=HistoryPage;
-      //       }
-      //       else{
-      //         this.welcomePage=MainPage;
-      //       }
-      //     })
-      //   })
-      // }).catch(()=>{
-      //   this.welcomePage=WelcomePage;
-      // });
+    this.translate.setDefaultLang('en');
+    platform.setDir('ltr', true);
+      this.nativeStorage.getItem('phone').then((res)=>{
+        this.presentToast(res);
+        this.phone=res;
+      }).then(()=>{
+        this.nativeStorage.getItem('password').then((res)=>{
+          this.presentToast(res);
+          this.password=res;
+        }).then(()=>{
+          this.storage.get('type').then((res)=>{
+
+
+            this.presentToast(res);
+            if(res=='distributors'){
+              this.welcomePage=HistoryPage;
+
+            }
+            else{
+              this.welcomePage=MainPage;
+            }
+          })
+        })
+      }).catch(()=>{
+        this.welcomePage=WelcomePage;
+      });
 
     this.storage.get('lang').then((res)=>{
       if(res =='ar'){
@@ -136,6 +144,21 @@ export class MyApp {
 
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
+    this.events.subscribe('flag', (user) => {
+      let currentUser=firebase.auth().currentUser.uid;
+      if(user) {
+        this.orderService.subscribeToDistOrder((order: Order) => {
+          let view = this.nav.getActive();
+          if (view.component.name != 'DistHistoryPage')
+            this.newOrderAlert(order);
+        });
+        this.orderService.listenToDistOrder('Alexandria Governorate',currentUser);
+        this.orderService.listenToDistOrderRemoved('Alexandria Governorate',currentUser);
+        this.orderService.listenToDistHistoryChange(currentUser);
+        this.orderService.listenToCustomerHistoryChange("");
+      }
+      });
+
   }
   onLoad(page:any){
       this.nav.push(page);

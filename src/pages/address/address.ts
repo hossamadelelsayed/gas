@@ -19,7 +19,7 @@ export class AddressPage {
   public customerid : string;
   public locations : any;
   constructor(public viewCtrl : ViewController , public customerLocation:CustomerLocationProvider,public auth:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
-           this.listLocations();
+          
    }
 
   ionViewDidLoad() {
@@ -29,7 +29,9 @@ export class AddressPage {
   {
     this.menuCtrl.toggle();
   }
-
+  ionViewWillEnter(){
+    this.listLocations();
+  }
   showMap(){
     this.navCtrl.push(OrderlocationPage);
   }
@@ -45,7 +47,17 @@ export class AddressPage {
       console.log("Errrorr");
     });
   }
-
+  
+  delPlace(locationId){
+    this.customerid=this.auth.getUserId();
+    this.customerLocation.delLocation(this.customerid,locationId).then((res)=>{
+      console.log(res);
+      this.ionViewWillEnter();
+    }).catch((err)=>{
+     console.log(err);
+    });
+  }
+   
   selectLocation(location : Location)
   {  
       this.viewCtrl.dismiss(location);

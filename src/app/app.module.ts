@@ -179,7 +179,7 @@ firebase.initializeApp(firebaseConfig);
     FirebaseDatabaseProvider,
     IonicStorageModule,NativeStorage,
     DistributorProvider,
-    CommonServiceProvider ,
+    CommonServiceProvider,
     AboutusProvider ]
 })
 export class AppModule {}

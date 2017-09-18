@@ -14,7 +14,7 @@
     {{'Addresses'|translate}}
        </ion-col>
        <ion-col col-2>
-           <P class="edite">{{'Edit'|translate}}</P>
+           <!-- <P class="edite">{{'Edit'|translate}}</P> -->
  </ion-col></ion-row>
     </ion-title>
   </ion-navbar>
@@ -22,11 +22,15 @@
 </ion-header>
 <ion-content padding >
 <ion-list radio-group >
-      <ion-item class="locitem" *ngFor="let location of locations" >
-        <ion-label>{{location.label}}</ion-label>
-        <ion-radio (click)="selectLocation(location)"></ion-radio>
+  <div *ngFor="let location of locations">
+      <ion-item class="locitem">
+          <ion-label>{{location.label}}</ion-label>
+          <ion-radio (click)="selectLocation(location)"></ion-radio>
       </ion-item>
-    
+      <ion-icon name="trash" class="delicon" (click)="delPlace(location.locationID)"></ion-icon>
+  </div>
+     
+      
     <!-- <ion-row *ngFor="let location of locations">
        <ion-label>{{location.label}}</ion-label>
        <ion-radio ></ion-radio>

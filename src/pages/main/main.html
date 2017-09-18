@@ -1,21 +1,19 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons right>
+    <!-- <ion-buttons right>
       <button ion-button navPop icon-only>
         <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title >
       <ion-row>
         <ion-col text-center  col-1>
           <ion-icon ios="ios-menu" md="md-menu" (click)="toggleMenu()"></ion-icon>
         </ion-col>
-        <ion-col class="titlename"  col-10>
+        <ion-col class="titlename"  col-11>
           {{'Gas Ksa'|translate}}
         </ion-col>
-        <ion-col text-center col-1>
-          <ion-icon (click)="gotoselrct()"ios="ios-search" md="md-search"></ion-icon>
-        </ion-col></ion-row>
+        </ion-row>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -51,8 +49,7 @@
         <ion-col class="km">km 3</ion-col>
         <ion-col text-center >
           <h6 style="margin-top: 42px; color:gray;">{{distName}}</h6><br>
-          <div style="margin-top: -37px;
-   font-size: 1.8rem;">
+          <div style="margin-top: -20px;position: relative;font-size: 1.8rem;">
             <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
             <ion-icon ios="ios-star" md="md-star"></ion-icon>
             <ion-icon ios="ios-star" md="md-star"></ion-icon>
@@ -63,11 +60,11 @@
       </ion-row>
       <ion-row  class="ro">
         <ion-col >
-          <button class="btn" ion-button round (click)="creatdisorder()">اطلبة</button>
+          <button class="btn" ion-button round (click)="creatdisorder()">{{'Order' |translate}}</button>
         </ion-col>
-        <ion-col >
+        <!-- <ion-col >
           <button ion-button clear><img class="im" src="assets/imgs/whatsapp.png"></button>
-        </ion-col>
+        </ion-col> -->
         <ion-col>
           <button ion-button clear (click)="sendSms()"><img class="im" src="assets/imgs/message.png"></button>
         </ion-col>
