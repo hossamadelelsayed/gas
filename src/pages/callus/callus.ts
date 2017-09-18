@@ -15,7 +15,13 @@ export class CallusPage {
               public menuCtrl: MenuController,
               private toastCtrl: ToastController,
               public translateService : TranslateService) {
-  }
+                this.emailComposer.isAvailable().then((available: boolean) =>{
+                  if(available) {
+                    //Now we know we can send
+                    
+                  }
+                });
+              }
 public onclick:boolean = true;
 currentEmail:string;
   adminEmail:string='gasforksa@gmail.com';
@@ -46,13 +52,10 @@ currentEmail:string;
       body: this.msgBody,
       isHtml: true
     };
-    this.emailComposer.isAvailable().then((available: boolean) =>{
-      if(available) {
-        //Now we know we can send
-        self.emailComposer.open(email); 
-      }
-      this.translateAndToast("Your message has been sent.");
-    });
+    
+    self.emailComposer.open(email); 
+    this.translateAndToast("Your message has been sent.");
+    
     this.onclick = false;
    
   }

@@ -97,8 +97,8 @@ export class MyApp {
       //   this.welcomePage=WelcomePage;
       // });
     });
-    this.translate.setDefaultLang('ar');
-    platform.setDir('rtl', true);
+    // this.translate.setDefaultLang('en');
+    // platform.setDir('ltr', true);
       this.nativeStorage.getItem('phone').then((res)=>{
         this.presentToast(res);
         this.phone=res;

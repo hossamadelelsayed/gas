@@ -80,7 +80,8 @@ padding: 24px 4px 11px 4px;}
 }
 [dir="ltr"] :not(ion-icon) {
   font-family: 'Cairo-Regular' !important;
-  text-transform: none;
+  text-transform: none !important;
+
 }
 [dir="rtl"] .has-title-only .tab-button-text {
   

@@ -11,8 +11,9 @@ page-addcard {
 .addcards{
     text-align: center;
     color: gray;
-
+    text-transform: lowercase;
 }
+
 .btn{
         background-color: $color-primary;
     font-size: 1.8rem;
