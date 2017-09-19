@@ -74,6 +74,7 @@ import {DistHistoryPage} from "../pages/dist-history/dist-history";
 import { AboutusProvider } from '../providers/aboutus/aboutus';
 import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {TrackingMapPage} from "../pages/tracking-map/tracking-map";
+import {LaunchNavigator} from "@ionic-native/launch-navigator";
 
 const firebaseConfig = {
 
@@ -119,7 +120,8 @@ firebase.initializeApp(firebaseConfig);
     EditaccountdisPage,
     OrderlocationPage,
     EditaccountdisPage ,
-    DistHistoryPage,TrackingMapPage
+    DistHistoryPage,
+    TrackingMapPage
   ],
   imports: [
     BrowserModule,
@@ -166,7 +168,8 @@ firebase.initializeApp(firebaseConfig);
     HossamtestPage,
     EditaccountdisPage,
     OrderlocationPage,
-    DistHistoryPage,TrackingMapPage
+    DistHistoryPage,
+    TrackingMapPage
   ],
   providers: [
     StatusBar,
@@ -184,6 +187,7 @@ firebase.initializeApp(firebaseConfig);
     IonicStorageModule,NativeStorage,
     DistributorProvider,
     CommonServiceProvider,
+    LaunchNavigator,
     AboutusProvider ]
 })
 export class AppModule {}

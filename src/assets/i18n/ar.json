@@ -43,6 +43,8 @@
   "Time Order":"موعد الطلب",
   "Order status":"حالة الطلب",
   "agent name":"اسم الموزع",
+  "Customer Name" :"اسم العميل" ,
+  "Distributor Name" :"اسم الموزع" ,
   "Current Orders":"طلبات حالية",
   "Track":"تتبع الطلب",
   "Rate":"اضف تقييمك",

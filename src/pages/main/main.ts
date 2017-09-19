@@ -35,7 +35,7 @@ export class MainPage {
     markersTags : any[] = [];
     distName:any;
     distPhone:any;
-  private sub: Subscription;
+  // private sub: Subscription;
 
   @ViewChild('map') mapElement: ElementRef;
 
@@ -210,8 +210,8 @@ icon:'assets/imgs/map_cylinder.png',
     }
 //////////////////////////////////////
     flag=true;
-  ionViewWillLeave()
-  {
-    this.sub.unsubscribe();
-  }
+  // ionViewWillLeave()
+  // {
+  //   this.sub.unsubscribe();
+  // }
 }
