@@ -32,6 +32,7 @@ import { Events } from 'ionic-angular';
 import * as firebase from "firebase";
 import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
+import {User} from "../models/user";
 
 @Component({
   templateUrl: 'app.html'
@@ -76,7 +77,7 @@ export class MyApp {
         let view = this.nav.getActive();
         console.log(view.component);
         if(view.component != DistHistoryPage)
-          this.newOrderAlert(order);
+          this.newDistOrderAlert(order);
       });
       this.orderService.subscribeToCustomerHistory((order : Order)=> {
         switch(order.status)
@@ -179,7 +180,7 @@ export class MyApp {
       });
       toast.present();
     }
-  newOrderAlert(order : Order) {
+    newDistOrderAlert(order : Order) {
     let alert = this.alertCtrl.create({
       title: 'Order No : '+order.orderID,
       message: 'Do you want to go to orders?',
@@ -194,14 +195,17 @@ export class MyApp {
         {
           text: 'Confirm',
           handler: () => {
-            this.nav.push(DistHistoryPage);
+            this.nav.push(DetailsrequestPage,{
+              order : order ,
+              user : User.Distributor
+            });
           }
         }
       ]
     });
     alert.present();
   }
-  alertCustomerOrder( order : Order ){
+    alertCustomerOrder( order : Order ){
     this.translateService.get(order.status).subscribe(
       value => {
         // value is our translated string
@@ -220,7 +224,10 @@ export class MyApp {
               text: 'Confirm',
               handler: () => {
                 console.log('Cancel clicked');
-                this.nav.push(DetailsrequestPage);
+                this.nav.push(DetailsrequestPage,{
+                  order : order ,
+                  user : User.Customer
+                });
               }
             }
           ]
