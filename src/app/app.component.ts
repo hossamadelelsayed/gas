@@ -8,8 +8,8 @@ import { HomePage } from './../pages/home/home';
 import { RegistermemberPage } from './../pages/registermember/registermember';
 import {CreateorderPage} from './../pages/createorder/createorder';
 import {TeamregisterPage} from "./../pages/teamregister/teamregister";
-import {Component, ViewChild, NgZone} from '@angular/core';
-import {Platform, AlertController} from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import {Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {TranslateService} from "@ngx-translate/core";
@@ -25,11 +25,6 @@ import {MainPage} from "../pages/main/main";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
 
 import { Storage } from '@ionic/storage';
-import {OrderProvider} from "../providers/order/order";
-import {Order} from "../models/order";
-import {AuthServiceProvider} from "../providers/auth-service/auth-service";
-import { Events } from 'ionic-angular';
-import * as firebase from "firebase";
 
 @Component({
   templateUrl: 'app.html'
@@ -50,8 +45,6 @@ export class MyApp {
    public  MainService = MainService;
    public phone:string;
    public password:string;
-  appFlag:false;
-
   constructor( platform: Platform,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
@@ -59,115 +52,70 @@ export class MyApp {
               private menuCtrl:MenuController,
               public nativeStorage:NativeStorage,
               private toastCtrl: ToastController,
-              public orderService : OrderProvider  ,
-               public alertCtrl : AlertController ,public auth:AuthServiceProvider,
-              private storage: Storage,public events:Events) {
+              private storage: Storage) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      this.orderService.login().then((dist)=>{
-        console.log('login');
-        // this.orderService.subscribeToDistOrder((order : Order)=> {
-        //   let view = this.nav.getActive();
-        //   if(view.component.name != 'DistHistoryPage')
-        //     this.newOrderAlert(order);
-        // });
-        // this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistHistoryChange(dist.uid);
-        // this.orderService.listenToCustomerHistoryChange("");
-      }).catch((err)=>console.log(err));
-
-      // this.nativeStorage.getItem('phone').then((res)=>{
-      //   this.presentToast(res);
-      //  this.phone=res;
-      // }).then(()=>{
-      //   this.nativeStorage.getItem('password').then((res)=>{
-      //     this.presentToast(res);
-      //     this.password=res;
-      //   }).then(()=>{
-      //     this.storage.get('type').then((res)=>{
-      //       this.presentToast(res);
-      //       if(res=='distributors'){
-      //         this.welcomePage=DistHistoryPage;
-      //       }
-      //       else{
-      //         this.welcomePage=MainPage;
-      //       }
-      //     })
-      //   })
-      // }).catch(()=>{
-      //   this.welcomePage=WelcomePage;
-      // });
-    });
-    // this.translate.setDefaultLang('en');
-    // platform.setDir('ltr', true);
       this.nativeStorage.getItem('phone').then((res)=>{
         this.presentToast(res);
-        this.phone=res;
+       this.phone=res;
       }).then(()=>{
         this.nativeStorage.getItem('password').then((res)=>{
           this.presentToast(res);
           this.password=res;
         }).then(()=>{
           this.storage.get('type').then((res)=>{
-
-
             this.presentToast(res);
             if(res=='distributors'){
               this.welcomePage=HistoryPage;
-
             }
             else{
               this.welcomePage=MainPage;
             }
           })
-        })
+        }) 
       }).catch(()=>{
         this.welcomePage=WelcomePage;
       });
+    });
 
-    this.storage.get('lang').then((res)=>{
+    this.storage.get('lang').then((res)=>{ 
+      console.log(res);
       if(res =='ar'){
+        MainService.lang='ar';
         this.translate.setDefaultLang('ar');
-        MainService.lang = res;
+        platform.setDir('rtl', true);
+        console.log(res);
+      }
+      else if(res=='en')
+      {
+        MainService.lang='en';
+        this.translate.setDefaultLang('en');
+        platform.setDir('ltr', true);
+        console.log(res);
+      }
+      else if(!res){
+        MainService.lang='ar';
+        this.translate.setDefaultLang('ar');
         platform.setDir('rtl', true);
         console.log(res);
       }
       else{
-        this.translate.setDefaultLang('en');
-        platform.setDir('ltr', true);
-        MainService.lang = res;
         console.log(res);
       }
     });
 
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
-    this.events.subscribe('flag', (user) => {
-      let currentUser=firebase.auth().currentUser.uid;
-      if(user) {
-        this.orderService.subscribeToDistOrder((order: Order) => {
-          let view = this.nav.getActive();
-          if (view.component.name != 'DistHistoryPage')
-            this.newOrderAlert(order);
-        });
-        this.orderService.listenToDistOrder('Alexandria Governorate',currentUser);
-        this.orderService.listenToDistOrderRemoved('Alexandria Governorate',currentUser);
-        this.orderService.listenToDistHistoryChange(currentUser);
-        this.orderService.listenToCustomerHistoryChange("");
-      }
-      });
-
   }
   onLoad(page:any){
       this.nav.push(page);
       this.menuCtrl.close();
   }
   presentToast(txt:any) {
-
+    
       let toast = this.toastCtrl.create({
         message: txt,
         duration: 3000,
@@ -175,26 +123,4 @@ export class MyApp {
       });
       toast.present();
     }
-  newOrderAlert(order : Order) {
-    let alert = this.alertCtrl.create({
-      title: 'Order No : '+order.orderID,
-      message: 'Do you want to go to orders?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Confirm',
-          handler: () => {
-            this.nav.push(DistHistoryPage);
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
 }
