@@ -33,7 +33,6 @@ import * as firebase from "firebase";
 import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {User} from "../models/user";
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -63,10 +62,7 @@ export class MyApp {
               public nativeStorage:NativeStorage,
               private toastCtrl: ToastController,
               public orderService : OrderProvider  ,
-               public commonService : CommonServiceProvider ,
-               public alertCtrl : AlertController ,
-               public auth:AuthServiceProvider,
-               public translateService : TranslateService ,
+               public alertCtrl : AlertController ,public auth:AuthServiceProvider,
               private storage: Storage,public events:Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -96,9 +92,18 @@ export class MyApp {
           }
         }
       });
-
-
-
+      this.orderService.login().then((dist)=>{
+        console.log('login');
+        // this.orderService.subscribeToDistOrder((order : Order)=> {
+        //   let view = this.nav.getActive();
+        //   if(view.component.name != 'DistHistoryPage')
+        //     this.newOrderAlert(order);
+        // });
+        // this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
+        // this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
+        // this.orderService.listenToDistHistoryChange(dist.uid);
+        // this.orderService.listenToCustomerHistoryChange("");
+      }).catch((err)=>console.log(err));
 
       // this.nativeStorage.getItem('phone').then((res)=>{
       //   this.presentToast(res);
@@ -122,8 +127,8 @@ export class MyApp {
       //   this.welcomePage=WelcomePage;
       // });
     });
-    // this.translate.setDefaultLang('en');
-    // platform.setDir('ltr', true);
+    this.translate.setDefaultLang('ar');
+    platform.setDir('rtl', true);
       this.nativeStorage.getItem('phone').then((res)=>{
         this.presentToast(res);
         this.phone=res;
@@ -138,6 +143,7 @@ export class MyApp {
             this.presentToast(res);
             if(res=='distributors'){
               this.welcomePage=HistoryPage;
+
             }
             else{
               this.welcomePage=MainPage;
@@ -151,14 +157,12 @@ export class MyApp {
     this.storage.get('lang').then((res)=>{
       if(res =='ar'){
         this.translate.setDefaultLang('ar');
-        MainService.lang = res;
         platform.setDir('rtl', true);
         console.log(res);
       }
       else{
         this.translate.setDefaultLang('en');
         platform.setDir('ltr', true);
-        MainService.lang = res;
         console.log(res);
       }
     });
@@ -206,7 +210,7 @@ export class MyApp {
     alert.present();
   }
     alertCustomerOrder( order : Order ){
-    this.translateService.get(order.status).subscribe(
+    this.translate.get(order.status).subscribe(
       value => {
         // value is our translated string
         let alert = this.alertCtrl.create({

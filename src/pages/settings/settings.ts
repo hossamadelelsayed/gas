@@ -37,7 +37,6 @@ export class SettingsPage {
   Change_Toggle(type) {
     this.translate.setDefaultLang(type);
   this.storage.set('lang',type);
-  
     MainService.lang = type;
     if(type == 'ar'){
       this.platform.setDir('rtl', true);
