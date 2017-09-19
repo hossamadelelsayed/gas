@@ -1,11 +1,10 @@
 import {Component, NgZone} from '@angular/core';
 import {NavController, NavParams, Events} from 'ionic-angular';
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
-import {HosstestPage} from "../hosstest/hosstest";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
-// import {CommonServiceProvider} from "../../providers/common-service/common-service";
+import {DetailsrequestPage} from "../detailsrequest/detailsrequest";
+import * as firebase from "firebase";
 
 /**
  * Generated class for the DistHistoryPage page.
@@ -19,41 +18,35 @@ import {CommonServiceProvider} from "../../providers/common-service/common-servi
   templateUrl: 'dist-history.html',
 })
 export class DistHistoryPage {
-  public Order = Order ;
+  public Order  = Order ;
    public showing : string = 'current' ;
-   public distUID : string = 'GxzLyO0RIDNamRR8EGGygMuf93m2' ;
    public currentOrder : Order[] = [] ;
   public lastOrder : Order[] = [] ;
+  public distUID : string ;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public orderService : OrderProvider  ,
                public commonService : CommonServiceProvider ,
               public zone: NgZone , public events : Events) {
-
-    this.events.publish('flag', true);
-
+      this.distUID = firebase.auth().currentUser.uid;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DistHistoryPage');
-    this.orderService.login().then((dist)=>{
-      this.distUID = dist.uid ;
       this.initSubscriptions();
-    }).catch((err)=>console.log(err));
     // you have to get geolocation then reverse via geocoder
   }
   ionViewWillLeave()
   {
-    this.events.unsubscribe(Order.ordersToAllDistRemovedEvent);
-    this.events.unsubscribe(Order.ordersToSpecificDistRemovedEvent);
-    this.events.unsubscribe(Order.distHistoryChangeEvent);
-  }
+  //   this.events.unsubscribe(Order.ordersToAllDistRemovedEvent);
+  //   this.events.unsubscribe(Order.ordersToSpecificDistRemovedEvent);
+  //   this.events.unsubscribe(Order.distHistoryChangeEvent);
+   }
   initSubscriptions()
   {
     // you have to get geolocation then reverse via geocoder
 
     this.orderService.subscribeToDistHistory((order : Order)=> this.zone.run(()=>{
-      console.log(order);
-      if(order.status == Order.PendingStatus)
+     if(order.status == Order.PendingStatus)
         this.currentOrder.push(order);
     }));
     this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=> this.currentOrder.push(order)));
@@ -64,7 +57,7 @@ export class DistHistoryPage {
       .then((orders : Order[])=>{console.log(orders);this.pushToLastOrder(orders)}).catch((err)=>console.log(err));
     this.orderService.getOrderAssignToAllDist("Alexandria Governorate")
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
-    this.orderService.getOrderAssignToSpecificDist("Alexandria Governorate","GxzLyO0RIDNamRR8EGGygMuf93m2")
+    this.orderService.getOrderAssignToSpecificDist("Alexandria Governorate",this.distUID)
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
   }
 
@@ -76,14 +69,13 @@ export class DistHistoryPage {
       if(this.currentOrder[i].orderID == orderID ) {
         this.currentOrder.splice(i, 1);
         console.log('after',this.currentOrder.length);
-        return;
       }
     }
     // let orderFilter :Order[]  ;
     // orderFilter = this.currentOrder.filter((order : Order) => {
     //   return (order.orderID != orderID);
     // });
-    // this.currentOrder = order
+    // this.currentOrder = orderFilter;
 
   }
   pushToLastOrder(orders : Order[]){
@@ -109,5 +101,8 @@ export class DistHistoryPage {
   }
   convertDate(timestamp : Date) : Date {
     return this.commonService.convertTimestampToDate(timestamp);
+  }
+  goToDetails(){
+    this.navCtrl.push(DetailsrequestPage);
   }
 }

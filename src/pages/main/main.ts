@@ -176,7 +176,7 @@ export class MainPage {
     addMarker(latlng:any,key:any){
 
       var marker = new google.maps.Marker({
-
+icon:'assets/imgs/map_cylinder.png',
         tag:key
       });
 

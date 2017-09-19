@@ -4,6 +4,7 @@ import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import { Location} from "../../models/location";
 import {CustomerLocationProvider} from "../../providers/customer/customerLocation";
+import {DistHistoryPage} from "../dist-history/dist-history";
 
 /**
  * Generated class for the HosstestPage page.
@@ -100,5 +101,8 @@ export class HosstestPage {
         console.log(res);
       }).catch((err)=>console.log(err))
     }).catch((err)=>console.log(err));
+  }
+  gotodist(){
+    this.navCtrl.push(DistHistoryPage);
   }
 }

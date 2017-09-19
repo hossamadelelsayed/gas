@@ -11,12 +11,10 @@
         <ion-col text-center col-1>
        <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-10>
+       <ion-col class="titlename" col-11>
 {{'New Order'|translate}}
        </ion-col>
-       <ion-col text-center col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+       </ion-row>
     </ion-title>
   </ion-navbar>
  
@@ -36,10 +34,12 @@
 </ion-row>
   <hr>
 <ion-row>
-<ion-col col-7><h4 >{{'Confirm your location'|translate}}</h4></ion-col>
-<ion-col col-5>
-  <button class="btchange" ion-button round (click)="showUserLocations()">{{'Identify'|translate}}</button></ion-col>
-    </ion-row><ion-row> <h4 style="color: gray;">{{locname}}</h4></ion-row>
+  <ion-col col-7><h4 >{{'Confirm your location'|translate}}</h4></ion-col>
+  <ion-col col-5>
+    <button class="btchange" ion-button round (click)="showUserLocations()">{{'Identify'|translate}}</button>
+  </ion-col>
+</ion-row>
+<ion-row> <h4 style="color: gray;">{{locname}}</h4></ion-row>
   <hr>
   <ion-row>
     <form radio-group style="font-size: 2.2rem; color: gray;" action="">

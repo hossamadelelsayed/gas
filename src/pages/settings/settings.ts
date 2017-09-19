@@ -37,13 +37,18 @@ export class SettingsPage {
   Change_Toggle(type) {
     this.translate.setDefaultLang(type);
   this.storage.set('lang',type);
-  
     MainService.lang = type;
-    if(type == 'ar')
+    if(type == 'ar'){
       this.platform.setDir('rtl', true);
+    console.log(type);
+    console.log("arabic");
+    }
     else
+    {
       this.platform.setDir('ltr', true);
-    
+      console.log(type);
+      console.log("English");
+    }
   }
   toggleMenu()
   {
