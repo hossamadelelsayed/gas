@@ -1,13 +1,13 @@
 
 <ion-header style="background-color: white;">
-    <ion-navbar> 
+    <ion-navbar>
       <ion-buttons right>
         <button ion-button navPop icon-only>
             <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
         </button>
       </ion-buttons>
  <ion-title >
-   
+
       <ion-row>
         <ion-col text-center  col-1>
            <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
@@ -20,22 +20,22 @@
     </ion-navbar>
   <ion-toolbar >
     <ion-segment style="background-color: white;" [(ngModel)]="requests" >
-      
+
       <ion-segment-button value="current" style="font-size: 1.8rem;text-transform: none;" pressed="true;" > {{'Current Orders'|translate}}</ion-segment-button>
       <ion-segment-button value="last" style="font-size: 1.8rem;color: gray;text-align: center;text-transform: none;">{{'Orders History'|translate}}</ion-segment-button>
     </ion-segment>
-  
+
   </ion-toolbar>
-  
+
 </ion-header>
 <ion-content padding>
 <div [ngSwitch]="requests">
     <ion-list *ngSwitchDefault>
       <div *ngFor="let noorder of noOrders" style="margin-bottom: 17px;">
-        <ion-card class="card" >    
+        <ion-card class="card" >
             <ion-card-header class="head" >
             </ion-card-header>
-            <ion-card-content (click)="gotodetailsrequest()">
+            <ion-card-content (click)="goToDetails(noorder)">
               <ion-row>
                 <ion-col col-3 style="height: 80px;">
                         <img style="height: 70px;
@@ -43,10 +43,9 @@
                 </ion-col>
                 <ion-col col-9>
                       <p class="ordernumber">{{'Order Number'|translate}} <br> {{noorder.orderID}} </p>
-                      <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
-                      <p class="time">{{noorder.deliveryDate}}</p>
+                      <p class="time">{{convertDate(noorder.deliveryDate)}}</p>
                 </ion-col>
-                
+
               </ion-row>
             </ion-card-content>
         </ion-card>
@@ -57,10 +56,10 @@
         </ion-row>
       </div>
       <div *ngFor="let penorder of pendingOrders" style="margin-bottom: 17px;">
-          <ion-card class="card" >    
+          <ion-card class="card" >
             <ion-card-header class="head" >
             </ion-card-header>
-            <ion-card-content (click)="gotodetailsrequest()">
+            <ion-card-content (click)="goToDetails(penorder)">
               <ion-row>
                 <ion-col col-3 style="height: 80px;">
                         <img style="height: 70px;
@@ -68,10 +67,9 @@
                 </ion-col>
                 <ion-col col-9>
                       <p class="ordernumber">{{'Order Number'|translate}} <br> {{penorder.orderID}} </p>
-                      <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
-                      <p class="time">{{penorder.deliveryDate}}</p>
+                      <p class="time">{{convertDate(penorder.deliveryDate)}}</p>
                 </ion-col>
-                 
+
               </ion-row>
             </ion-card-content>
         </ion-card>
@@ -81,8 +79,8 @@
         <img class="pending" src="assets/imgs/pending.png"><p class="pend">{{penorder.status}}</p>
         </ion-row>
       </div>
-     
-    
+
+
 
 
 
@@ -91,10 +89,10 @@
     </ion-list>
     <ion-list *ngSwitchCase="'last'" >
         <div *ngFor="let delorder of deliveredOrders">
-            <ion-card class="card" >    
+            <ion-card class="card" >
                 <ion-card-header class="head" >
                 </ion-card-header>
-                <ion-card-content (click)="gotodetailsrequest()">
+                <ion-card-content (click)="goToDetails(delorder)">
                   <ion-row>
                     <ion-col col-3 style="height: 80px;">
                             <img style="height: 70px;
@@ -102,10 +100,9 @@
                     </ion-col>
                     <ion-col col-9>
                           <p class="ordernumber">{{'Order Number'|translate}} <br> {{delorder.orderID}} </p>
-                          <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
-                          <p class="time">{{delorder.deliveryDate}}</p>
+                          <p class="time">{{convertDate(delorder.deliveryDate)}}</p>
                     </ion-col>
-                    
+
                   </ion-row>
                 </ion-card-content>
             </ion-card>
@@ -118,10 +115,10 @@
 
 
         <div *ngFor="let reject of rejectedOrders" style="margin-bottom: 17px;">
-          <ion-card class="card" >    
+          <ion-card class="card" >
             <ion-card-header class="head" >
             </ion-card-header>
-            <ion-card-content (click)="gotodetailsrequest()">
+            <ion-card-content (click)="goToDetails(reject)">
               <ion-row>
                 <ion-col col-3 style="height: 80px;">
                         <img style="height: 70px;
@@ -129,10 +126,9 @@
                 </ion-col>
                 <ion-col col-9>
                       <p class="ordernumber">{{'Order Number'|translate}} <br> {{reject.orderID}} </p>
-                      <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
-                      <p class="time">{{reject.deliveryDate}}</p>
+                      <p class="time">{{convertDate(reject.deliveryDate)}}</p>
                 </ion-col>
-                 
+
               </ion-row>
             </ion-card-content>
         </ion-card>
