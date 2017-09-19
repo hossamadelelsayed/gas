@@ -121,8 +121,8 @@ export class MyApp {
       //   this.welcomePage=WelcomePage;
       // });
     });
-    this.translate.setDefaultLang('en');
-    platform.setDir('ltr', true);
+    // this.translate.setDefaultLang('en');
+    // platform.setDir('ltr', true);
       this.nativeStorage.getItem('phone').then((res)=>{
         this.presentToast(res);
         this.phone=res;
@@ -150,12 +150,14 @@ export class MyApp {
     this.storage.get('lang').then((res)=>{
       if(res =='ar'){
         this.translate.setDefaultLang('ar');
+        MainService.lang = res;
         platform.setDir('rtl', true);
         console.log(res);
       }
       else{
         this.translate.setDefaultLang('en');
         platform.setDir('ltr', true);
+        MainService.lang = res;
         console.log(res);
       }
     });
