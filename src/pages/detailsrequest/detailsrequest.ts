@@ -7,6 +7,7 @@ import {CommonServiceProvider} from "../../providers/common-service/common-servi
 import {User} from "../../models/user";
 import {OrderProvider} from "../../providers/order/order";
 import {LaunchNavigator, LaunchNavigatorOptions} from "@ionic-native/launch-navigator";
+import {TrackingMapPage} from "../tracking-map/tracking-map";
 
 
 @Component({
@@ -58,8 +59,21 @@ export class DetailsrequestPage {
       );
   }
   navigate(){
-    if(this.mode == User.Distributor)
+    if(this.mode == User.Distributor) {
       this.distNavigate();
+    }
+    else{
+      console.log( this.order)
+      console.log( this.order.customerID)
+      console.log( this.order.distributerID)
+      console.log( this.order.location.lat)
+
+this.navCtrl.push(TrackingMapPage,{'order':this.order
+
+});
+    }
+  }
+  detailsrequest(){
 
   }
 }
