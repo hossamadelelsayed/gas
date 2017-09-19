@@ -13,6 +13,7 @@ import { AlertController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
 import { NativeStorage } from '@ionic-native/native-storage';
 import {MainPage} from "../main/main";
+import {OrderProvider} from "../../providers/order/order";
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -28,10 +29,11 @@ export class ProfilePage {
       private storage: Storage,
       private alertCtrl: AlertController,
       public translateService : TranslateService,
-      public nativeStorage:NativeStorage ) {  
+      public nativeStorage:NativeStorage ,
+      public orderService : OrderProvider) {
   }
-  
-  
+
+
 
   ionViewWillEnter() {
 // let self=this;
@@ -50,7 +52,7 @@ export class ProfilePage {
         resolve(val);
       });
     });
-    return promise; 
+    return promise;
   }
 goaddcard(){
   this.navCtrl.push(AddcardPage);
@@ -86,7 +88,7 @@ presentConfirm() {
         text: 'Cancel',
         role: 'cancel',
         handler: () => {
-      
+
           console.log('Cancel clicked');
         }
       },
@@ -98,6 +100,8 @@ presentConfirm() {
           this.storage.clear();
           this.nativeStorage.clear();
           this.platform.exitApp();
+          this.orderService.detachDistListeners();
+          this.orderService.detachCustomerListeners();
           // this.navCtrl.push(MainPage);
           console.log('exit');
         }

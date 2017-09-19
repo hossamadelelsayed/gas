@@ -12,6 +12,7 @@ import { Storage } from '@ionic/storage';
 import {NativeStorage} from '@ionic-native/native-storage';
 import {HistoryPage} from "../history/history";
 import {DistHistoryPage} from "../dist-history/dist-history";
+import {OrderProvider} from "../../providers/order/order";
 
 
 @Component({
@@ -25,7 +26,7 @@ public password:any;
 
 constructor( public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
-  private storage: Storage) {
+  private storage: Storage , public orderService : OrderProvider) {
     this.auth.AnonymousSignIn();
   }
 
@@ -39,10 +40,12 @@ gotocreateorder()
     if(user['uType']=='distributors'){
       this.navCtrl.push(DistHistoryPage);
       this.navCtrl.setRoot(DistHistoryPage);
+      this.orderService.attachDistListeners();
     }
     else{
       this.navCtrl.push(MainPage);
       this.navCtrl.setRoot(MainPage);
+      this.orderService.attachCustomerListeners();
     }
     this.storage.set('type',user['uType']);
     this.nativeStorage.setItem('phone',this.mobile);
@@ -52,7 +55,7 @@ gotocreateorder()
     console.log(err.message);
     this.translateAndToast(err.message);
   });
- 
+
 }
 
 gotoforgotpassword(){
@@ -78,5 +81,5 @@ toast.present();
       }
     );
   }
-  
+
 }
