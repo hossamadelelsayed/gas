@@ -14,6 +14,8 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {Marker} from "@ionic-native/google-maps";
 import { SMS } from '@ionic-native/sms';
 import { CallNumber } from '@ionic-native/call-number';
+import {Subscription} from "rxjs/Subscription";
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the MainPage page.
@@ -33,7 +35,9 @@ export class MainPage {
     markersTags : any[] = [];
     distName:any;
     distPhone:any;
-    @ViewChild('map') mapElement: ElementRef;
+  private sub: Subscription;
+
+  @ViewChild('map') mapElement: ElementRef;
 
     firebaseRef: any;
     geoFire: any;
@@ -49,7 +53,7 @@ export class MainPage {
                 public navParams: NavParams,
                 public menuCtrl: MenuController ,
                 public distributor :DistributorProvider,
-                private authService:AuthServiceProvider) {
+                private authService:AuthServiceProvider, private storage: Storage) {
 /// Reference database location for GeoFire
 
 
@@ -104,10 +108,12 @@ export class MainPage {
 
       let markerRef=firebase.database().ref('/valid/');
       this.geolocation.getCurrentPosition().then((resp) => {
+
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
       this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
       self.setMarkers(city);
+        this.storage.set('city',city);
 
       }).catch(err=>{
         self.setMarkers(err);
@@ -204,4 +210,8 @@ export class MainPage {
     }
 //////////////////////////////////////
     flag=true;
+  ionViewWillLeave()
+  {
+    this.sub.unsubscribe();
+  }
 }

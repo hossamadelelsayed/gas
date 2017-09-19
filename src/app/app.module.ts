@@ -42,6 +42,8 @@ import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {HistoryPage} from "../pages/history/history";
 import {TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
 import {OrderlaterPage} from "../pages/orderlater/orderlater";
+import{CustomerProvider} from "../providers/customer/customer";
+
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -71,6 +73,8 @@ import {EditaccountdisPage} from "../pages/editaccountdis/editaccountdis";
 import {DistHistoryPage} from "../pages/dist-history/dist-history";
 import { AboutusProvider } from '../providers/aboutus/aboutus';
 import {CommonServiceProvider} from "../providers/common-service/common-service";
+import {TrackingMapPage} from "../pages/tracking-map/tracking-map";
+
 const firebaseConfig = {
 
   apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
@@ -115,7 +119,7 @@ firebase.initializeApp(firebaseConfig);
     EditaccountdisPage,
     OrderlocationPage,
     EditaccountdisPage ,
-    DistHistoryPage
+    DistHistoryPage,TrackingMapPage
   ],
   imports: [
     BrowserModule,
@@ -162,7 +166,7 @@ firebase.initializeApp(firebaseConfig);
     HossamtestPage,
     EditaccountdisPage,
     OrderlocationPage,
-    DistHistoryPage
+    DistHistoryPage,TrackingMapPage
   ],
   providers: [
     StatusBar,
@@ -173,7 +177,7 @@ firebase.initializeApp(firebaseConfig);
     CustomerLocationProvider,
     Camera,
     SMS,
-    CallNumber,EmailComposer,
+    CallNumber,EmailComposer,CustomerProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
     FirebaseDatabaseProvider,
