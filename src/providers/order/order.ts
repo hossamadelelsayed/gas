@@ -170,6 +170,7 @@ export class OrderProvider {
       this.listenToOrderAssignToAllDist(city) ;
       this.listenToOrderAssignToSpecificDist(city , distributerID);
   }
+
   subscribeToDistOrder(callBack : (order: Order) => void){
     this.subscribeToOrderAssignToAllDist(callBack);
     this.subscribeToOrderAssignToSpecificDist(callBack);
@@ -201,10 +202,14 @@ export class OrderProvider {
   subscribeToCustomerHistory(callBack : (order: Order) => void){
     this.events.subscribe(Order.customerHistoryChangeEvent,callBack);
   }
+  detachOrderAssignToAllDist(city : string){
+    let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
+    ordersRef.off();
+  }
   listenToOrderAssignToAllDist(city : string)
   {
     let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
-    ordersRef.limitToLast(1).on('child_added', (data) => {
+    ordersRef.on('child_added', (data) => {
       console.log('key order',data.key);
       let historyRef = firebase.database().ref('history/' + data.key);
       historyRef.once('value').then((orderSnapShot)=>{
@@ -214,6 +219,7 @@ export class OrderProvider {
   }
   listenToDistHistoryChange( distributerID : string)
   {
+    console.log(distributerID);
     let historyRef = this.fireDatabase.ref('distributors/' + distributerID + '/history') ;
     historyRef.on('child_changed', (data) => {
       let historyRef = firebase.database().ref('history/' + data.key);
@@ -232,11 +238,19 @@ export class OrderProvider {
       });
     });
   }
-
+  detachDistOrder(city : string , distributerID : string)
+  {
+    this.detachOrderAssignToAllDist(city) ;
+    this.detachOrderAssignToSpecificDist(city , distributerID);
+  }
+  detachOrderAssignToSpecificDist(city : string , distributerID : string){
+    let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
+    orderNotificationDistRef.off();
+  }
   listenToOrderAssignToSpecificDist(city : string , distributerID : string)
   {
     let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
-    orderNotificationDistRef.limitToLast(1).on('child_added', (data) => {
+    orderNotificationDistRef.on('child_added', (data) => {
       let historyRef = firebase.database().ref('history/' + data.key);
       historyRef.once('value').then((orderSnapShot)=>{
         this.events.publish(Order.ordersToSpecificDistCreatedEvent,<Order>orderSnapShot.val());
@@ -409,4 +423,23 @@ export class OrderProvider {
     });
     return promise ;
   }
+  attachDistListeners(){
+    let currentUser=firebase.auth().currentUser.uid;
+    this.listenToDistOrder('Alexandria Governorate',currentUser);
+    this.listenToDistOrderRemoved('Alexandria Governorate',currentUser);
+    this.listenToDistHistoryChange(currentUser);
+  }
+  attachCustomerListeners(){
+    let currentUser=firebase.auth().currentUser.uid;
+    this.listenToCustomerHistoryChange(currentUser);
+  }
+  detachDistListeners(){
+    let currentUser=firebase.auth().currentUser.uid;
+    this.detachDistOrder('Alexandria Governorate',currentUser);
+  }
+  detachCustomerListeners(){
+
+  }
+
+
 }

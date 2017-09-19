@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {ToastController} from "ionic-angular";
+import {ToastController, AlertController, NavController} from "ionic-angular";
 import {TranslateService} from "@ngx-translate/core";
+import {Order} from "../../models/order";
+import {DetailsrequestPage} from "../../pages/detailsrequest/detailsrequest";
 
 /*
   Generated class for the CommonServiceProvider provider.
@@ -14,7 +16,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class CommonServiceProvider {
 
   constructor(public http: Http ,public toastCtrl : ToastController ,
-              public translateService : TranslateService ) {
+              public translateService : TranslateService , public alertCtrl : AlertController) {
     console.log('Hello CommonServiceProvider Provider');
   }
 
@@ -57,6 +59,7 @@ export class CommonServiceProvider {
       }
     );
   }
+
   convertTimestampToDate(timestamp : Date) : Date{
     return new Date(timestamp)
   }

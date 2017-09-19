@@ -103,5 +103,8 @@
   "Identify":"تحديد",
   "Your message has been sent.":"تم الارسال بنجاح",
   "Complaint":"مشكلة",
-  "Suggestion":"اقتراح"
+  "Suggestion":"اقتراح" ,
+  "pending" : "تم قبول الطلب رقم" ,
+  "rejected" : "تم رفض الطلب رقم" ,
+  "delivered" : "تم توصيل الطلب رقم"
 }
