@@ -62,7 +62,7 @@ x:string;
     let promise = new Promise((resolve, reject )=>{
     this._http.get
     ('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','
-      +lng+'&location_type=RANGE_INTERPOLATED&result_type=street_address&'
+      +lng+'&location_type=APPROXIMATE&result_type=street_address&'
       +
       'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
       .map(response => response.json()
@@ -142,7 +142,7 @@ resolve('Alexandria Governorate');
     //   this.distPhone=name;
       console.log('phone',phone);
       resolve(phone);
-      
+
               });
 
     });
@@ -152,7 +152,7 @@ resolve('Alexandria Governorate');
       let promise=new Promise((resolve,reject)=>{
 
 
-    
+
       this.getDistributorsName(key).then((name)=>{
           // this.distName=name;
           console.log('name',name);
