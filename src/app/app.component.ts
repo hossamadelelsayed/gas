@@ -30,7 +30,9 @@ import {Order} from "../models/order";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import { Events } from 'ionic-angular';
 import * as firebase from "firebase";
-
+import {CommonServiceProvider} from "../providers/common-service/common-service";
+import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
+import {User} from "../models/user";
 @Component({
   templateUrl: 'app.html'
 })
@@ -67,6 +69,29 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      this.orderService.subscribeToDistOrder((order : Order)=> {
+        let view = this.nav.getActive();
+        console.log(view.component);
+        if(view.component != DistHistoryPage)
+          this.newDistOrderAlert(order);
+      });
+      this.orderService.subscribeToCustomerHistory((order : Order)=> {
+        switch(order.status)
+        {
+          case Order.PendingStatus : {
+            this.alertCustomerOrder(order);
+            break;
+          }
+          case Order.RejectedStatus : {
+            this.alertCustomerOrder(order);
+            break;
+          }
+          case Order.DeliveredStatus : {
+            this.alertCustomerOrder(order);
+            break;
+          }
+        }
+      });
       this.orderService.login().then((dist)=>{
         console.log('login');
         // this.orderService.subscribeToDistOrder((order : Order)=> {
@@ -144,20 +169,6 @@ export class MyApp {
 
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
-    this.events.subscribe('flag', (user) => {
-      let currentUser=firebase.auth().currentUser.uid;
-      if(user) {
-        this.orderService.subscribeToDistOrder((order: Order) => {
-          let view = this.nav.getActive();
-          if (view.component.name != 'DistHistoryPage')
-            this.newOrderAlert(order);
-        });
-        this.orderService.listenToDistOrder('Alexandria Governorate',currentUser);
-        this.orderService.listenToDistOrderRemoved('Alexandria Governorate',currentUser);
-        this.orderService.listenToDistHistoryChange(currentUser);
-        this.orderService.listenToCustomerHistoryChange("");
-      }
-      });
 
   }
   onLoad(page:any){
@@ -173,7 +184,7 @@ export class MyApp {
       });
       toast.present();
     }
-  newOrderAlert(order : Order) {
+    newDistOrderAlert(order : Order) {
     let alert = this.alertCtrl.create({
       title: 'Order No : '+order.orderID,
       message: 'Do you want to go to orders?',
@@ -188,11 +199,45 @@ export class MyApp {
         {
           text: 'Confirm',
           handler: () => {
-            this.nav.push(DistHistoryPage);
+            this.nav.push(DetailsrequestPage,{
+              order : order ,
+              user : User.Distributor
+            });
           }
         }
       ]
     });
     alert.present();
+  }
+    alertCustomerOrder( order : Order ){
+    this.translate.get(order.status).subscribe(
+      value => {
+        // value is our translated string
+        let alert = this.alertCtrl.create({
+          title: value + order.orderID,
+          message: '',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            },
+            {
+              text: 'Confirm',
+              handler: () => {
+                console.log('Cancel clicked');
+                this.nav.push(DetailsrequestPage,{
+                  order : order ,
+                  user : User.Customer
+                });
+              }
+            }
+          ]
+        });
+        alert.present();
+      }
+    );
   }
 }

@@ -5,6 +5,7 @@ import {Order} from "../../models/order";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
 import {DetailsrequestPage} from "../detailsrequest/detailsrequest";
 import * as firebase from "firebase";
+import {User} from "../../models/user";
 
 /**
  * Generated class for the DistHistoryPage page.
@@ -102,7 +103,10 @@ export class DistHistoryPage {
   convertDate(timestamp : Date) : Date {
     return this.commonService.convertTimestampToDate(timestamp);
   }
-  goToDetails(){
-    this.navCtrl.push(DetailsrequestPage);
+  goToDetails(order : Order){
+    this.navCtrl.push(DetailsrequestPage,{
+      user : User.Distributor ,
+      order : order
+    });
   }
 }
