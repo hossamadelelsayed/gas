@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 // import {GlobalService} from "../../providers/global-service";
 import {Geolocation} from "@ionic-native/geolocation";
 import {Subscription, Observable} from "rxjs";
@@ -15,7 +15,6 @@ declare var google: any;
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-tracking-map',
   templateUrl: 'tracking-map.html',

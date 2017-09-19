@@ -82,6 +82,24 @@ export class OrderProvider {
     });
     return promise ;
   }
+  getCustomerData(customerID  : string): Promise<User>{
+    let promise = new Promise((resolve, reject) => {
+      let custRef = this.fireDatabase.ref('/customers/'+customerID);
+      custRef.once('value').then((snapshot)=>{
+        resolve(<User>snapshot.val());
+      }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  getDistData(distID  : string): Promise<User>{
+    let promise = new Promise((resolve, reject) => {
+      let distRef = this.fireDatabase.ref('/distributors/'+distID);
+      distRef.once('value').then((snapshot)=>{
+        resolve(<User>snapshot.val());
+      }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
   getOrdersByDist(distID : string , statusType : string) : Promise<Order[]>
   {
     let ordersPromises : Promise<Order>[] = [] ;

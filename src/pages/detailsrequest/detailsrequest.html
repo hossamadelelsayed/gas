@@ -15,8 +15,9 @@
 <img style="height: 90px;width: 90px;" src="assets/imgs/agent_pin.png">
 
 <div class="dstar">
-  <h5 *ngIf="mode == user.Customer" style="font-family: cairo; color: gray">{{'cust name'|translate}}</h5>
-  <h5 *ngIf="mode == user.Distributor" style="font-family: cairo; color: gray">{{'dist name'|translate}}</h5>
+  <h5 *ngIf="mode == userClass.Distributor" style="font-family: cairo; color: gray">{{'Customer Name'|translate}} : {{user?.name}}</h5>
+  <h5 *ngIf="mode == userClass.Customer" style="font-family: cairo; color: gray">{{'Distributor Name'|translate}} : {{user?.name}}</h5>
+
  <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
 <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
 <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
@@ -32,8 +33,8 @@
 <ion-row><h6> {{'your location'|translate}}</h6><p style="color:gray">{{order.location.label}}</p></ion-row><hr>
 <ion-row (click)="gotoflloerequest()"><h6>{{'Pay way'|translate}}</h6><p style="color:gray" >{{order.paymentType}}</p></ion-row>
 <div class="d">
-<button class="reqnow" ion-button round >{{'Edit Order'|translate}}</button>
-<button class="reqlater" ion-button round>{{'Cancel Order'|translate}}</button>
+<button class="reqnow" ion-button round (click)="navigate()" >{{'Navigate'|translate}}</button>
+<!--<button class="reqlater" ion-button round>{{'Cancel Order'|translate}}</button>-->
 </div>
 </ion-list>
 </ion-content>
