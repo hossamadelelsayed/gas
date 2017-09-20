@@ -5,6 +5,8 @@ import {Order} from "../../models/order";
 import { Location} from "../../models/location";
 import {CustomerLocationProvider} from "../../providers/customer/customerLocation";
 import {DistHistoryPage} from "../dist-history/dist-history";
+import {RateProvider} from "../../providers/rate/rate";
+import {Rate} from "../../models/rate";
 
 /**
  * Generated class for the HosstestPage page.
@@ -20,7 +22,8 @@ export class HosstestPage {
  public orders : Order[] ;
   public locations : Location[] ;
   constructor(public navCtrl: NavController, public navParams: NavParams ,
-              public orderService : OrderProvider , public customerService : CustomerLocationProvider) {
+              public orderService : OrderProvider , public customerService : CustomerLocationProvider ,
+              public rateService : RateProvider) {
   }
 
   ionViewDidLoad() {
@@ -104,5 +107,12 @@ export class HosstestPage {
   }
   gotodist(){
     this.navCtrl.push(DistHistoryPage);
+  }
+  testRating(){
+    this.orderService.login().then((customer)=>{
+      this.rateService.rate(new Rate('mXE2dIlvZJM1gzmxFycaM28QBEu2','WV2AuiV3Z0ftpLz7VuEOjIbJdWh1','orderid',5,'very good'), Rate.rateDistType).then(()=>{
+
+      }).catch((err)=>console.log(err));
+    }).catch((err)=>console.log(err));
   }
 }
