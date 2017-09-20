@@ -10,6 +10,7 @@ import {Order}from '../../models/order';
 import {TranslateService} from "@ngx-translate/core";
 import { DatePipe } from '@angular/common';
 import {AddressPage} from '../address/address';
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 
 @Component({
@@ -26,13 +27,14 @@ export class CreateorderPage {
  public distId:any;
 constructor(
             public toastCtrl : ToastController,
-            public translateService :TranslateService , 
+            public translateService :TranslateService ,
             public auth :AuthServiceProvider,
             public order: OrderProvider,
-            public navCtrl: NavController, 
-            public navParams: NavParams, 
+            public navCtrl: NavController,
+            public navParams: NavParams,
             public menuCtrl: MenuController,
-            public modalCtrl :ModalController) {
+            public modalCtrl :ModalController ,
+            public commonService : CommonServiceProvider) {
               this.distId = this.navParams.data.disId;
               console.log(this.navParams.data.disId);
               this.userId = this.auth.getUserId();
@@ -79,6 +81,7 @@ showUserLocations()
   });
 }
 createOrderNow(){
+  this.commonService.presentLoading('Please Wait...');
   console.log(this.deliveryDate);
   this.order.createOrder(new Order
     (this.userId,this.counter,this.location,"cash",this.deliveryDate,this.sameDate))
@@ -87,10 +90,12 @@ createOrderNow(){
         console.log(Order.customerID);
         console.log(Order.monthly);
         this.translateAndToast('Order Done');
-        this.navCtrl.push(HistoryPage);        
+        this.navCtrl.push(HistoryPage);
+        this.commonService.dismissLoading();
       })
       .catch((err)=>{
         console.log(err.message);
+        this.commonService.dismissLoading();
       });
 }
 presentToast(txt:any) {
@@ -101,7 +106,7 @@ presentToast(txt:any) {
     });
     toast.present();
   }
-  
+
   translateAndToast(word : string)
   {
     this.translateService.get(word).subscribe(

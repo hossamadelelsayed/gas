@@ -7,9 +7,11 @@ export class Rate{
   constructor(
     private _customerID : string ,
     private _distributorID : string ,
-    private _comment : string
+    private _rateVal : number ,
+    private _comment ?: string
   ){
   }
+
   get customerID():string {
     return this._customerID;
   }
@@ -18,6 +20,9 @@ export class Rate{
   }
   get rateID():string {
     return this._rateID;
+  }
+  get rateVal():number {
+    return this._rateVal;
   }
   get distributorID():string {
     return this._distributorID;

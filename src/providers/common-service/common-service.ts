@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {ToastController, AlertController, NavController} from "ionic-angular";
+import {ToastController, AlertController, NavController, LoadingController, Loading} from "ionic-angular";
 import {TranslateService} from "@ngx-translate/core";
 import {Order} from "../../models/order";
 import {DetailsrequestPage} from "../../pages/detailsrequest/detailsrequest";
@@ -15,16 +15,27 @@ import {DetailsrequestPage} from "../../pages/detailsrequest/detailsrequest";
 @Injectable()
 export class CommonServiceProvider {
 
+  public loader : Loading;
   constructor(public http: Http ,public toastCtrl : ToastController ,
-              public translateService : TranslateService , public alertCtrl : AlertController) {
+              public translateService : TranslateService , public alertCtrl : AlertController ,
+              public loadingCtrl : LoadingController) {
     console.log('Hello CommonServiceProvider Provider');
   }
 
+  presentLoading(txt:string) {
+    this.loader = this.loadingCtrl.create({
+      content: txt
+    });
+    this.loader.present();
+  }
+  dismissLoading(){
+    this.loader.dismiss();
+  };
   presentToast(txt:string) {
     let toast = this.toastCtrl.create({
       message: txt,
       duration: 1000,
-      position: 'middle'
+      position: 'bottom'
     });
     toast.present();
   }
