@@ -75,6 +75,7 @@ import { AboutusProvider } from '../providers/aboutus/aboutus';
 import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {TrackingMapPage} from "../pages/tracking-map/tracking-map";
 import {LaunchNavigator} from "@ionic-native/launch-navigator";
+import { RateProvider } from '../providers/rate/rate';
 
 const firebaseConfig = {
 
@@ -188,6 +189,7 @@ firebase.initializeApp(firebaseConfig);
     DistributorProvider,
     CommonServiceProvider,
     LaunchNavigator,
-    AboutusProvider ]
+    AboutusProvider,
+    RateProvider ]
 })
 export class AppModule {}

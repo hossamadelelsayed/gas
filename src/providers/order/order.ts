@@ -127,6 +127,37 @@ export class OrderProvider {
     });
     return promise ;
   }
+  orderDeliverConfirmation(orderID : string) : Promise <boolean>
+  {
+    let promises : Promise<boolean>[] = [] ;
+    let promise = new Promise((resolve, reject) => {
+      let orderRef = this.fireDatabase.ref('/history/'+orderID);
+      promises.push(orderRef.child('status').set(Order.DeliveredStatus).catch((err)=>reject(err)));
+      promises.push(this.distAndCustToDeliverOrder(orderRef).catch((err)=>reject(err)));
+      Promise.all(promises).then(()=>{
+        resolve(true);
+      }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  private distAndCustToDeliverOrder(orderRef :  firebase.database.Reference)  : Promise <boolean>
+  {
+    let promises : Promise<boolean>[] = [] ;
+    let order : Order ;
+    let promise = new Promise((resolve, reject) => {
+      orderRef.once('value').then((orderSnapShot)=>{
+        order = orderSnapShot.val();
+        let customerOrderRef = this.fireDatabase.ref('customers/'+order.customerID+'/history/'+order.orderID);
+        let distOrderRef = this.fireDatabase.ref('distributors/'+order.distributerID+'/history/'+order.orderID);
+        promises.push(customerOrderRef.child('status').set(Order.DeliveredStatus).catch((err)=>reject(err)));
+        promises.push(distOrderRef.child('status').set(Order.DeliveredStatus).catch((err)=>reject(err)));
+        Promise.all(promises).then(()=>{
+          resolve(true);
+        }).catch((err)=>reject(err));
+      }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
   distOrderAccept(orderID : string , distributerID : string) : Promise <boolean>
   {
     let promises : Promise<boolean>[] = [] ;
@@ -456,7 +487,6 @@ export class OrderProvider {
     this.detachDistOrder('Alexandria Governorate',currentUser);
   }
   detachCustomerListeners(){
-
   }
 
 

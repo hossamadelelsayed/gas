@@ -67,9 +67,7 @@ export class DetailsrequestPage {
       console.log( this.order.customerID)
       console.log( this.order.distributerID)
       console.log( this.order.location.lat)
-
-this.navCtrl.push(TrackingMapPage,{'order':this.order
-
+      this.navCtrl.push(TrackingMapPage,{'order':this.order
 });
     }
   }
