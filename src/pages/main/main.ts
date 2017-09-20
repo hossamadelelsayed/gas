@@ -42,7 +42,7 @@ export class MainPage {
     firebaseRef: any;
     geoFire: any;
     marker:any;
-    markerRef:any;
+    markerRef:any=firebase.database().ref();
     myLatLng:any;
     smsMessage:any;
     disId:string;
@@ -102,16 +102,15 @@ export class MainPage {
         });
     }
 
-    ionViewDidLoad(){
+    ionViewWillEnter(){
         let self=this;
         this.sendCurrentLoc();
 
-      let markerRef=firebase.database().ref('/valid/');
       this.geolocation.getCurrentPosition().then((resp) => {
 
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
-      this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+      // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
       self.setMarkers(city);
         this.storage.set('city',city);
 
@@ -214,4 +213,10 @@ icon:'assets/imgs/map_cylinder.png',
   // {
   //   this.sub.unsubscribe();
   // }
+  ionViewWillLeave()
+  {
+    // this.sub.unsubscribe();
+    this.markerRef.off();
+  // this.map.clear();
+  }
 }

@@ -57,7 +57,11 @@ private customer:CustomerProvider,
             console.log(error);
           }
         );});
+
+   this.key= this.navParams.get('order')
+    console.log('order d',this.key.distributerID)
   }
+  key:any;
   ionViewDidLoad(){
     // if(this.mode == TrackingMapPage.NavToUserMode)
     // {
@@ -74,7 +78,7 @@ private customer:CustomerProvider,
     let RefresherRef=firebase.database().ref("valid/Alexandria Governorate/9QUuOZmIe2gFLFAByrDf2Fo4BEL2");
     RefresherRef.on('value', (snapshot)=> {
 
-      this.customer.distTracker("Alexandria Governorate","9QUuOZmIe2gFLFAByrDf2Fo4BEL2")
+      this.customer.distTracker("Alexandria Governorate",this.key.distributerID)
         .then((loc)=>{
           this.getPositionAndUpdate(loc);
 
