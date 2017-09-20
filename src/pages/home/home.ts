@@ -27,7 +27,7 @@ public password:any;
 constructor( public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
   private storage: Storage , public orderService : OrderProvider) {
-    this.auth.AnonymousSignIn();
+    // this.auth.AnonymousSignIn();
   }
 
 gotocreateorder()
@@ -60,6 +60,7 @@ gotocreateorder()
 
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
+
 }
 gotoreg(){
 this.navCtrl.push(RegistermemberPage);

@@ -64,4 +64,30 @@ export class CommonServiceProvider {
     return new Date(timestamp)
   }
 
+
+  presentConfirm(msg:string,cancelTxt:string,confirmTxt:string, x :Promise<any>) {
+    let alert = this.alertCtrl.create({
+     // title: 'غاز السعودية',
+      message: msg,
+      buttons: [
+        {
+          text: cancelTxt,
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: confirmTxt,
+          handler: () => {
+            x.then(()=>{
+              console.log('confirmed');
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 }

@@ -77,14 +77,15 @@ export class MainPage {
                 console.log("IDDDDDDDDDDD"+this.disId);
                 this.navCtrl.push(CreateorderPage , {distId: this.disId});
             }
+            latLng:any;
     sendCurrentLoc(){
         // get current position
         this.geolocation.getCurrentPosition().then((resp) => {
             //current latlng
-            let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+            this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
             //initialize map
             let mapOptions = {
-                center: latLng,
+                center: this.latLng,
                 zoom: 16,
                 disableDefaultUI: true,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -195,6 +196,18 @@ icon:'assets/imgs/map_cylinder.png',
 }
       google.maps.event.addListener(marker, 'click', () => {
             this.flag=false;
+        this.geolocation.getCurrentPosition().then((resp) => {
+
+          //current latlng
+          let latlng={lat:resp.coords.latitude,lng: resp.coords.longitude}
+          console.log('marker',marker.getPosition().lng['[[Scopes]]'])
+          console.log('latlng',latlng.lat)
+          // this.getDistance(marker,latlng)
+
+        })
+
+        // this.getDistance(marker,this.latLng)
+
             this.distributor.getDistributorName(marker.tag).then((res)=>{
                 this.distName = res;
                 marker.setTitle(res);
@@ -218,5 +231,16 @@ icon:'assets/imgs/map_cylinder.png',
     // this.sub.unsubscribe();
     this.markerRef.off();
   // this.map.clear();
+  }
+  distance:any;
+  getDistance(currentLoc:any,distLoc:any){
+    var currentDistLoc = [currentLoc.position.lat,currentLoc.position.lng];
+    var customerLoc = [ distLoc.lat,distLoc.lng];
+    console.log('total distance',currentDistLoc, customerLoc)
+
+    this.distance= GeoFire.distance(customerLoc,currentDistLoc).toFixed(2);
+    if(this.distance<=5) {
+      // this.commonService.presentConfirm('wait till you get your pipe delevered','i didnet recive my order','i recived my order',this.orderIsDone());
+    }
   }
 }
