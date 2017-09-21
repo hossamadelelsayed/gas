@@ -70,6 +70,7 @@ x:string;
       // console.log("geolocation",data.results[0]. address_components[4].short_name);
       console.log("geolocation result",data);
 if(data.status!= "ZERO_RESULTS"){
+  console.log(data.results[0]. address_components[4].short_name);
       resolve(data.results[0]. address_components[4].short_name);
 }
 resolve('Alexandria Governorate');

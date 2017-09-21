@@ -28,7 +28,7 @@ export class DistHistoryPage {
               public orderService : OrderProvider  ,
                public commonService : CommonServiceProvider ,
               public zone: NgZone , public events : Events ,
-              public menuCtrl : MenuController) {
+              public menuCtrl : MenuController ) {
       this.distUID = firebase.auth().currentUser.uid;
   }
 
@@ -57,12 +57,11 @@ export class DistHistoryPage {
       .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
     this.orderService.getOrdersByDist(this.distUID,Order.DeliveredStatus)
       .then((orders : Order[])=>{console.log(orders);this.pushToLastOrder(orders)}).catch((err)=>console.log(err));
-    this.orderService.getOrderAssignToAllDist("Alexandria Governorate")
+    this.orderService.getOrderAssignToAllDist(this.orderService.city)
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
-    this.orderService.getOrderAssignToSpecificDist("Alexandria Governorate",this.distUID)
+    this.orderService.getOrderAssignToSpecificDist(this.orderService.city,this.distUID)
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
   }
-
 
   delOrder(orderID : string){
     console.log('delEnter');

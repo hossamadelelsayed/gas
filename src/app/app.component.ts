@@ -35,6 +35,8 @@ import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {User} from "../models/user";
 import {AddvaluationPage} from "../pages/addvaluation/addvaluation";
 import {Rate} from "../models/rate";
+import {Geolocation} from "@ionic-native/geolocation";
+import {DistributorProvider} from "../providers/distributor/distributor";
 @Component({
   templateUrl: 'app.html'
 })
@@ -47,14 +49,14 @@ export class MyApp {
   historyPage=HistoryPage;
   callusPage=CallusPage;
   notificationsPage=NotificationsPage;
-  aboutaprogramPage=AboutaprogramPage
+  aboutaprogramPage=AboutaprogramPage;
   teamregisterPage=TeamregisterPage;
   registermemberPage=RegistermemberPage;
   @ViewChild('nav') nav:NavController;
    public  MainService = MainService;
    public phone:string;
    public password:string;
-  appFlag:false;
+   appFlag:false;
 
   constructor( platform: Platform,
               statusBar: StatusBar,
@@ -65,12 +67,21 @@ export class MyApp {
               private toastCtrl: ToastController,
               public orderService : OrderProvider  ,
                public alertCtrl : AlertController ,public auth:AuthServiceProvider,
-              private storage: Storage,public events:Events) {
+              private storage: Storage,public events:Events,
+               public  geolocation: Geolocation ,
+               public distService : DistributorProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      this.geolocation.getCurrentPosition().then((resp) => {
+        this.distService.getCurrentIpLocation(resp.coords.latitude ,resp.coords.longitude).then((city : string)=>{
+          this.orderService.city = city ;
+        }).catch((err)=>console.log(err));
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
       this.orderService.subscribeToDistOrder((order : Order)=> {
         let view = this.nav.getActive();
         console.log(view.component);

@@ -92,6 +92,9 @@ export class CommonServiceProvider {
   }
 
 
+
+
+
   presentConfirm(msg:string,cancelTxt:string,confirmTxt:string, x :Promise<any>) {
     let alert = this.alertCtrl.create({
      // title: 'غاز السعودية',
