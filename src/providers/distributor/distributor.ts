@@ -29,8 +29,8 @@ id:any;
   sendMyLoc(lat:any,lng:any){
   ////////////////////////////////////////// listen to the current location and sends it to firebase
    this.getCurrentIpLocation(lat,lng).then((city)=>{
-    this. firebaseRef = firebase.database().ref('/valid/'+`${city}`);
-this.city=`${city}`;
+    this. firebaseRef = firebase.database().ref('/valid/'+city);
+this.city=city;
     this. geoFire = new GeoFire(this.firebaseRef);
     let geo = this.geolocation.getCurrentPosition();
 
@@ -60,22 +60,20 @@ x:string;
     console.log("latlng",lat,lng);
 
     let promise = new Promise((resolve, reject )=>{
-if(lat!=null) {
-  this._http.get
-  ('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ','
-    + lng + '&location_type=APPROXIMATE&result_type=locality&'
-    +
-    'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
-    .map(response => response.json()
-    ).subscribe(data => {
-    // console.log("geolocation",data.results[0]. address_components[4].short_name);
-    console.log("geolocation result", data);
-    if (data.status != "ZERO_RESULTS") {
-      resolve(data.results[0].formatted_address);
-    }
-    resolve('Alexandria Governorate');
-  });
+    this._http.get
+    ('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','
+      +lng+'&location_type=APPROXIMATE&result_type=street_address&'
+      +
+      'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
+      .map(response => response.json()
+      ).subscribe(data=>{
+      // console.log("geolocation",data.results[0]. address_components[4].short_name);
+      console.log("geolocation result",data);
+if(data.status!= "ZERO_RESULTS"){
+      resolve(data.results[0]. address_components[4].short_name);
 }
+resolve('Alexandria Governorate');
+    });
     });
     return promise;
   }
