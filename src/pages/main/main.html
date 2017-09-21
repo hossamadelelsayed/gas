@@ -46,15 +46,20 @@
     <div *ngIf="!flag" >
       <img  class="m" src="assets/imgs/agent_pin.png">
       <ion-row class="ro2">
+
+
         <ion-col class="km">{{distance}}</ion-col>
         <ion-col text-center >
           <h6 style="margin-top: 42px; color:gray;">{{distName}}</h6><br>
-          <div style="margin-top: -20px;position: relative;font-size: 1.8rem;">
-            <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
+          <div  style="margin-top: -20px;position: relative;font-size: 1.8rem;">
+
+            <ion-icon ios="ios-star"  md="ios-star-outline" style="color:orange"></ion-icon>
+            <ion-icon ios="ios-star" md="md-star"  style="color:orange" [name]="icon"></ion-icon>
+            <!--*ngFor="let icon of icons(user?.rateInfo?.rateSum / user?.rateInfo?.rateNo); let i = index;"-->
+
+            <!--<ion-icon ios="ios-star" md="md-star"></ion-icon>-->
+            <!--<ion-icon ios="ios-star" md="md-star"></ion-icon>-->
+            <!--<ion-icon ios="ios-star" md="md-star"></ion-icon>-->
           </div>
         </ion-col>
       </ion-row>
