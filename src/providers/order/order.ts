@@ -268,7 +268,6 @@ export class OrderProvider {
   }
   listenToDistHistoryChange( distributerID : string)
   {
-    console.log(distributerID);
     let historyRef = this.fireDatabase.ref('distributors/' + distributerID + '/history') ;
     historyRef.on('child_changed', (data) => {
       let historyRef = firebase.database().ref('history/' + data.key);

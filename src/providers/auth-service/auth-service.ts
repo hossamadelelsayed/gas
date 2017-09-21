@@ -97,7 +97,6 @@ let userdata={uEmail:email,uType:type};
                 let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
 
              this.distributorProvider . sendMyLoc(resp.coords.latitude, resp.coords.longitude)
-               console.warn("hi am a distributor")
                 });
             }
             console.log("loged in id",userId);
