@@ -21,7 +21,10 @@
 <ion-content padding >
    <div  style="text-align: center;">
      <img *ngIf="profileimage==null" src="assets/imgs/login_logo.png">
-     <img *ngIf="profileimage!=null" [src]="profileimage.ImgSRC">
+     <img *ngIf="profileimage!=null" style="
+     border-radius: 80px;
+     width: 120px;
+     height: 130px;" [src]="profileimage.ImgSRC">
      <button  class="upload"ion-button clear class="upload" (click)="galleryOrCamera(Image.Profile)">{{'Upload profile image'|translate}}</button>
   </div>
  <form #f="ngForm" >

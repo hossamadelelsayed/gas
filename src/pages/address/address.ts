@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams,MenuController,ViewController } from 'ionic-angular';
+import { OrderlocationPage} from '../orderlocation/orderlocation';
+import {CustomerLocationProvider} from "../../providers/customer/customerLocation"
+import {Location} from '../../models/location';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 /**
  * Generated class for the AddressPage page.
  *
@@ -13,9 +16,11 @@ import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angula
   templateUrl: 'address.html',
 })
 export class AddressPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
-  }
+  public customerid : string;
+  public locations : any;
+  constructor(public viewCtrl : ViewController , public customerLocation:CustomerLocationProvider,public auth:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
+          
+   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddressPage');
@@ -23,5 +28,40 @@ export class AddressPage {
   toggleMenu()
   {
     this.menuCtrl.toggle();
+  }
+  ionViewWillEnter(){
+    this.listLocations();
+  }
+  showMap(){
+    this.navCtrl.push(OrderlocationPage);
+  }
+
+  listLocations(){
+    let self = this;
+    this.customerid = this.auth.getUserId();
+    this.customerLocation.getLocations(this.customerid).then((res)=>{
+        this.locations = res;
+        console.log(res);
+        console.log(this.locations);
+    }).catch((err)=>{
+      console.log("Errrorr");
+    });
+  }
+  
+  delPlace(locationId){
+    this.customerid=this.auth.getUserId();
+    this.customerLocation.delLocation(this.customerid,locationId).then((res)=>{
+      console.log(res);
+      this.ionViewWillEnter();
+    }).catch((err)=>{
+     console.log(err);
+    });
+  }
+   
+  selectLocation(location : Location)
+  {  
+      this.viewCtrl.dismiss(location);
+      
+     
   }
 }

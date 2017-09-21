@@ -6,7 +6,8 @@ import{MainPage} from "../main/main";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import {TranslateService} from "@ngx-translate/core";
 import {TeamregisterPage} from "../teamregister/teamregister";
-
+import { Storage } from '@ionic/storage';
+import {NativeStorage} from '@ionic-native/native-storage';
 
 @Component({
   selector: 'page-registermember',
@@ -17,7 +18,8 @@ export class RegistermemberPage {
   private password :any;
   private name :any;
   private phone : any ;
-  constructor(public translateService : TranslateService ,private toastCtrl:ToastController,
+
+  constructor(private storage: Storage,public nativeStorage:NativeStorage,public translateService : TranslateService ,private toastCtrl:ToastController,
               private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
 
   }
@@ -25,6 +27,7 @@ export class RegistermemberPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegistermemberPage');
   }
+  
 gotoconfirm(){
   let self = this;
     this.authService.register("customers",this.email,this.password,this.name,this.phone)
@@ -35,6 +38,9 @@ gotoconfirm(){
         // this.authService.submitUserInfo()
         this.translateAndToast("Registration done");
         this.navCtrl.push(MainPage);
+         this.storage.set('type','customers');
+        this.nativeStorage.setItem('phone',this.phone);
+        this.nativeStorage.setItem('password',this.password);
       })
 
       // .catch(function(error) {

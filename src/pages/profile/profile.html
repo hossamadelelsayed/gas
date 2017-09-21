@@ -9,12 +9,10 @@
         <ion-col text-center  col-1>
        <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-10>
+       <ion-col class="titlename" col-11>
          {{'Profile'|translate}}
        </ion-col>
-       <ion-col text-center  col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+       </ion-row>
     </ion-title>
   </ion-navbar>
   
@@ -22,25 +20,28 @@
 <ion-content padding>
   <img class="imgd" src="assets/imgs/agent_pin.png">
   <h4 style="margin-top: 2px;">اسم العميل</h4>
+ 
 <ion-list style="margin-top: 40px;" >
-
+    <hr>
+    <div *ngIf="Data =='customers'">
   <ion-row (click)="gotoeditaccount()">
     <ion-col col-1><img src="assets/imgs/profile_edit_profile.png"></ion-col>
     <ion-col col-10> <h5>{{'Edit Profile'|translate}}</h5></ion-col>
-
         <ion-col col-1>
               <ion-icon class="arrow" name="arrow-back"></ion-icon>
           </ion-col>
   </ion-row>
-      <hr>
-      <ion-row (click)="gotoeditaccountdis()">
+    </div>
+      
+      <div *ngIf="Data =='distributors'">
+      <ion-row  (click)="gotoeditaccountdis()">
         <ion-col col-1><img src="assets/imgs/profile_edit_profile.png"></ion-col>
         <ion-col col-10> <h5>{{'Edit Profile'|translate}}</h5></ion-col>
-    
             <ion-col col-1>
                   <ion-icon class="arrow" name="arrow-back"></ion-icon>
               </ion-col>
       </ion-row>
+      </div>
           <hr>
        <ion-row (click)="gopayway()">
     <ion-col col-1><img src="assets/imgs/profile_payment.png"></ion-col>
@@ -56,7 +57,7 @@
 </ion-col>
   </ion-row>
       <hr>
-       <ion-row (click)="exit()">
+       <ion-row (click)="presentConfirm()">
     <ion-col col-1><img src="assets/imgs/profile_logout.png"></ion-col>
     <ion-col col-10> <h5>{{'Log Out'|translate}}</h5></ion-col>
        <ion-col col-1>     <ion-icon class="arrow" name="arrow-back"></ion-icon>

@@ -1,33 +1,78 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons right>
-        <button ion-button navPop icon-only>
-            <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
-        </button>
-    </ion-buttons>
+    <!-- <ion-buttons right>
+      <button ion-button navPop icon-only>
+        <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons> -->
     <ion-title >
       <ion-row>
         <ion-col text-center  col-1>
-       <ion-icon ios="ios-menu" md="md-menu" (click)="toggleMenu()"></ion-icon>
-       </ion-col>
-       <ion-col class="titlename"  col-10>
-      {{'Gas Ksa'|translate}}
-       </ion-col>
-       <ion-col text-center col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+          <ion-icon ios="ios-menu" md="md-menu" (click)="toggleMenu()"></ion-icon>
+        </ion-col>
+        <ion-col class="titlename"  col-11>
+          {{'Gas Ksa'|translate}}
+        </ion-col>
+        </ion-row>
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content  fill>
   <div #map id="map"></div>
+  <!--
+  <sebm-google-map-marker *ngFor="let location of markers"
+                          (markerClick)="updateDiv()" [latitude]="location.lat"
+                          [longitude]="location.lng">
 
-  <ion-footer>
+<<<<<<< HEAD
+  </sebm-google-map-marker>
+  -->
+
+  <!-- <ion-footer>
     <div class="buttons">
       <button class="reqnow" ion-button round (click)="gotocreatorder()" >{{'Order now'|translate}}</button>
  <button class="reqlater" (click)="gotoorderlater()" ion-button round>{{'Order later'|translate}}</button>
 
 
   </div>
+  </ion-footer> -->
+  <ion-footer>
+    <div *ngIf="flag" class="buttons">
+      <button class="reqnow" ion-button round (click)="gotocreatorder()" >{{'Order now'|translate}}</button>
+      <button class="reqlater" (click)="gotoorderlater()" ion-button round>{{'Order later'|translate}}</button>
+
+
+    </div>
+    <div *ngIf="!flag" >
+      <img  class="m" src="assets/imgs/agent_pin.png">
+      <ion-row class="ro2">
+        <ion-col class="km">{{distance}}</ion-col>
+        <ion-col text-center >
+          <h6 style="margin-top: 42px; color:gray;">{{distName}}</h6><br>
+          <div style="margin-top: -20px;position: relative;font-size: 1.8rem;">
+            <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
+            <ion-icon ios="ios-star" md="md-star"></ion-icon>
+            <ion-icon ios="ios-star" md="md-star"></ion-icon>
+            <ion-icon ios="ios-star" md="md-star"></ion-icon>
+            <ion-icon ios="ios-star" md="md-star"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row  class="ro">
+        <ion-col >
+          <button class="btn" ion-button round (click)="creatdisorder()">{{'Order' |translate}}</button>
+        </ion-col>
+        <!-- <ion-col >
+          <button ion-button clear><img class="im" src="assets/imgs/whatsapp.png"></button>
+        </ion-col> -->
+        <ion-col>
+          <button ion-button clear (click)="sendSms()"><img class="im" src="assets/imgs/message.png"></button>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear (click)="call()"><img class="im" src="assets/imgs/call.png"></button>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-footer>
 </ion-content>
+

@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,ToastController,AlertController } from 'ionic-angular';
+import { NavController, NavParams,ToastController,AlertController,LoadingController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {HomePage} from "../home/home";
 import {TranslateService} from "@ngx-translate/core";
 import {MainPage} from "../main/main";
 import {Image} from "../../models/image";
+import { Storage } from '@ionic/storage';
+import {NativeStorage} from '@ionic-native/native-storage';
+import{HistoryPage} from "../history/history";
+import {DistHistoryPage} from "../dist-history/dist-history";
 
 @Component({
   selector: 'page-teamregister',
@@ -21,9 +25,18 @@ export class TeamregisterPage {
   public frontimage:Image=null;
   public phone ;
   
-  constructor(public translateService : TranslateService,public alertCtrl: AlertController,
-    private toastCtrl:ToastController,private camera: Camera,public navCtrl: NavController, public navParams: NavParams ,
-              private auth : AuthServiceProvider) {
+  constructor(public translateService : TranslateService,
+              public alertCtrl: AlertController,
+              private toastCtrl:ToastController,
+              private camera: Camera,
+              public navCtrl: NavController,
+              public navParams: NavParams ,
+              private auth : AuthServiceProvider,
+              private storage: Storage,
+              public nativeStorage:NativeStorage,
+              public loadingCtrl: LoadingController) {
+
+              
   }
 
   ionViewDidLoad() {
@@ -46,7 +59,8 @@ else{
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation:true
     };
 
     this.camera.getPicture(options).then((imageData) => {
@@ -66,7 +80,7 @@ else{
       destinationType: this.camera.DestinationType.DATA_URL ,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY ,
       allowEdit: true ,
-      targetWidth: 1000 ,
+      targetWidth: 1000,
       targetHeight: 1000
     }).then((imageData) => {
       this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
@@ -96,25 +110,48 @@ else{
     });
     confirm.present();
   }
+  DownloadImage(){}
   gotoconfirm()
   {
     this.auth.register("distributors",this.email,this.password,this.name,this.phone)
     .then(()=>{
+
+      this.storage.set('type','distributors');
+
+      this.nativeStorage.setItem('phone',this.phone);
+      this.nativeStorage.setItem('password',this.password);
       console.log("img str",this.profileimage.Image);
-      this.auth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile).then((sta)=>{
-        this.presentToast(sta.state);
-      }).catch( (err)=>{console.log(err);
-        this.translateAndToast(err.message+"err");
+
+      let promises : Promise<boolean>[] = [] ;
+      let loading = this.loadingCtrl.create({
+        content:'Please wait...'
       });
-      this.auth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front).then((sta)=>{
-        this.presentToast(sta.state+"err");
-      });
-      this.auth.joinTeamImgUpload(this.backimage.Image,this.Image.Back).then((sta)=>{
-        this.presentToast(sta.state+"err");
-      });
+      let promise = new Promise((resolve, reject) => {
+        loading.present();  
+        promises.push(this.auth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile));
+        promises.push(this.auth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front));
+        promises.push(this.auth.joinTeamImgUpload(this.backimage.Image,this.Image.Back));
+        Promise.all(promises).then(()=>{
+          resolve(true);
+          loading.dismiss();
+        }).catch((err)=>reject(err));
+      })
+
+      // this.auth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile).then((sta)=>{
+      //   this.presentToast(sta.state);
+      // }).catch( (err)=>{console.log(err);
+      //   this.translateAndToast(err.message+"err");
+      // });
+      // this.auth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front).then((sta)=>{
+      //   this.presentToast(sta.state+"err");
+      // });
+      // this.auth.joinTeamImgUpload(this.backimage.Image,this.Image.Back).then((sta)=>{
+      //   this.presentToast(sta.state+"err");
+      // });
       this.translateAndToast("Registration done");
-        this.navCtrl.push(MainPage);
-    })
+         this.navCtrl.push(DistHistoryPage);
+      
+      })
     .catch(
       (err)=>{console.log(err);
         this.translateAndToast(err.message+"err");

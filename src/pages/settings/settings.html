@@ -11,12 +11,10 @@
         <ion-col text-center col-1>
       <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-10>
-      {{'Settings'|translate}}
+       <ion-col class="titlename" col-11>
+        {{'Settings'|translate}}
        </ion-col>
-       <ion-col text-center col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+       </ion-row>
     </ion-title>
   </ion-navbar>
  
@@ -46,7 +44,7 @@
       {{'Language'|translate}}
     </ion-col>
     <ion-col col-2>
-      <ion-toggle [(ngModel)]="toggleStatus"  checked="true" (ionChange)="Change_Toggle('ar');"></ion-toggle>
+      <ion-toggle [(ngModel)]="toggleStatus"  checked="false" (ionChange)="Change_Toggle('ar')"></ion-toggle>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="MainService.lang == 'ar'"> 
@@ -57,7 +55,7 @@
         {{'Language'|translate}}
       </ion-col>
       <ion-col col-2>
-        <ion-toggle [(ngModel)]="toggleStatus"  checked="true" (ionChange)="Change_Toggle('en');"></ion-toggle>
+        <ion-toggle [(ngModel)]="toggleStatus"  checked="true" (ionChange)="Change_Toggle('en')"></ion-toggle>
       </ion-col>
     </ion-row>
   <hr>
@@ -87,7 +85,7 @@
   <hr>
   <ion-row (click)="gotocallus()">
     <ion-col col-1>
-      <img src="assets/imgs/profile_logout.png">
+      <img src="assets/imgs/phone.png">
     </ion-col>
     <ion-col col-10>
       {{'Call us'|translate}}

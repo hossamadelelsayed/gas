@@ -1,85 +1,145 @@
 
-<ion-header style="
-    background-color: white;">
-    <ion-navbar> <ion-buttons right>
+<ion-header style="background-color: white;">
+    <ion-navbar>
+      <ion-buttons right>
         <button ion-button navPop icon-only>
             <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
         </button>
-    </ion-buttons>
+      </ion-buttons>
  <ion-title >
-   
+
       <ion-row>
         <ion-col text-center  col-1>
            <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-10>
+       <ion-col class="titlename" col-11>
        {{'History'|translate}}
        </ion-col>
-       <ion-col text-center  col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row><hr>
+       </ion-row><hr>
     </ion-title>
     </ion-navbar>
   <ion-toolbar >
     <ion-segment style="background-color: white;" [(ngModel)]="requests" >
-      
-      <ion-segment-button style="text-transform: none;" class="segment-button activated" pressed="true;" > {{'Current Orders'|translate}}</ion-segment-button>
-      <ion-segment-button 
-       style="
-    font-size: 1.8rem;color: gray;text-align: center;text-transform: none;">{{'Orders History'|translate}}</ion-segment-button>
+
+      <ion-segment-button value="current" style="font-size: 1.8rem;text-transform: none;" pressed="true;" > {{'Current Orders'|translate}}</ion-segment-button>
+      <ion-segment-button value="last" style="font-size: 1.8rem;color: gray;text-align: center;text-transform: none;">{{'Orders History'|translate}}</ion-segment-button>
     </ion-segment>
-  
+
   </ion-toolbar>
-  
+
 </ion-header>
 <ion-content padding>
-<ion-list >
-  <ion-card class="card" >     
-  <ion-card-header class="head" >
-  </ion-card-header>
-  <ion-card-content (click)="gotodetailsrequest()">
-   <ion-row>
-     <ion-col col-3 style="height: 80px;">
-            <img style="height: 70px;
-            width: 70px;" src="assets/imgs/agent_pin.png"><br>
-     </ion-col>
-     <ion-col col-9>
-          <p class="ordernumber">  {{'Order Number'|translate}} 1454545 </p>
-   <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
-     </ion-col>
-      <p class="time">14 jan 2017 -10:45AM</p>
-   </ion-row>
-  </ion-card-content>
-</ion-card>
-<ion-row class="row">
-<img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 {{'Cylinder'|translate}}</p>
-<img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
-<img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
-</ion-row>
-<ion-card class="card" >
-      
-  <ion-card-header class="head" >
-  
-  </ion-card-header>
- <ion-card-content (click)="gotodetailsrequest()">
-   <ion-row>
-     <ion-col col-3 style="height: 80px;">
-            <img style="height: 70px;
-            width: 70px;" src="assets/imgs/agent_pin.png"><br>
-     </ion-col>
-     <ion-col col-9>
-          <p class="ordernumber"> {{'Order Number'|translate}}  1454545 </p>
-   <p class="agen">{{'agent name'|translate}}: احمد السعد</p>
-     </ion-col>
-      <p class="time">14 jan 2017 -10:45AM</p>
-   </ion-row>
-  </ion-card-content>
-</ion-card>
-<ion-row class="row">
-<img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">2 {{'Cylinder'|translate}}</p>
-<img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
-<img class="pending" src="assets/imgs/accept.png"><p class="pra">{{'Accepted'|translate}}</p>
-</ion-row>
-</ion-list>
+<div [ngSwitch]="requests">
+    <ion-list *ngSwitchDefault>
+      <div *ngFor="let noorder of noOrders" style="margin-bottom: 17px;">
+        <ion-card class="card" >
+            <ion-card-header class="head" >
+            </ion-card-header>
+            <ion-card-content (click)="goToDetails(noorder)">
+              <ion-row>
+                <ion-col col-3 style="height: 80px;">
+                        <img style="height: 70px;
+                        width: 70px;" src="assets/imgs/agent_pin.png"><br>
+                </ion-col>
+                <ion-col col-9>
+                      <p class="ordernumber">{{'Order Number'|translate}} <br> {{noorder.orderID}} </p>
+                      <p class="time">{{convertDate(noorder.deliveryDate)}}</p>
+                </ion-col>
+
+              </ion-row>
+            </ion-card-content>
+        </ion-card>
+        <ion-row class="row">
+        <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">{{noorder.pipesNo}}{{'Cylinder'|translate}}</p>
+        <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{noorder.paymentType}}</p>
+        <img class="pending" src="assets/imgs/pending.png"><p class="nores">{{noorder.status}}...</p>
+        </ion-row>
+      </div>
+      <div *ngFor="let penorder of pendingOrders" style="margin-bottom: 17px;">
+          <ion-card class="card" >
+            <ion-card-header class="head" >
+            </ion-card-header>
+            <ion-card-content (click)="goToDetails(penorder)">
+              <ion-row>
+                <ion-col col-3 style="height: 80px;">
+                        <img style="height: 70px;
+                        width: 70px;" src="assets/imgs/agent_pin.png"><br>
+                </ion-col>
+                <ion-col col-9>
+                      <p class="ordernumber">{{'Order Number'|translate}} <br> {{penorder.orderID}} </p>
+                      <p class="time">{{convertDate(penorder.deliveryDate)}}</p>
+                </ion-col>
+
+              </ion-row>
+            </ion-card-content>
+        </ion-card>
+        <ion-row class="row">
+        <img class="linder" src="assets/imgs/cylinder.png"><p class="pra">{{penorder.pipesNo}}{{'Cylinder'|translate}}</p>
+        <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{penorder.paymentType}}</p>
+        <img class="pending" src="assets/imgs/pending.png"><p class="pend">{{penorder.status}}</p>
+        </ion-row>
+      </div>
+
+
+
+
+
+
+
+    </ion-list>
+    <ion-list *ngSwitchCase="'last'" >
+        <div *ngFor="let delorder of deliveredOrders">
+            <ion-card class="card" >
+                <ion-card-header class="head" >
+                </ion-card-header>
+                <ion-card-content (click)="goToDetails(delorder)">
+                  <ion-row>
+                    <ion-col col-3 style="height: 80px;">
+                            <img style="height: 70px;
+                            width: 70px;" src="assets/imgs/agent_pin.png"><br>
+                    </ion-col>
+                    <ion-col col-9>
+                          <p class="ordernumber">{{'Order Number'|translate}} <br> {{delorder.orderID}} </p>
+                          <p class="time">{{convertDate(delorder.deliveryDate)}}</p>
+                    </ion-col>
+
+                  </ion-row>
+                </ion-card-content>
+            </ion-card>
+            <ion-row class="row">
+                <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">{{delorder.pipesNo}}{{'Cylinder'|translate}}</p>
+                <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{delorder.paymentType}}</p>
+                <img class="pending" src="assets/imgs/pending.png"><p class="nores">{{delorder.status}}</p>
+            </ion-row>
+        </div>
+
+
+        <div *ngFor="let reject of rejectedOrders" style="margin-bottom: 17px;">
+          <ion-card class="card" >
+            <ion-card-header class="head" >
+            </ion-card-header>
+            <ion-card-content (click)="goToDetails(reject)">
+              <ion-row>
+                <ion-col col-3 style="height: 80px;">
+                        <img style="height: 70px;
+                        width: 70px;" src="assets/imgs/agent_pin.png"><br>
+                </ion-col>
+                <ion-col col-9>
+                      <p class="ordernumber">{{'Order Number'|translate}} <br> {{reject.orderID}} </p>
+                      <p class="time">{{convertDate(reject.deliveryDate)}}</p>
+                </ion-col>
+
+              </ion-row>
+            </ion-card-content>
+        </ion-card>
+        <ion-row class="row">
+        <img class="linder" src="assets/imgs/cylinder.png"><p class="pra">{{reject.pipesNo}}{{'Cylinder'|translate}}</p>
+        <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{reject.paymentType}}</p>
+        <img class="pending" src="assets/imgs/pending.png"><p  style="color:gray">{{reject.status}}</p>
+        </ion-row>
+      </div>
+    </ion-list>
+   </div>
+
 </ion-content>
 

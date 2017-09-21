@@ -27,7 +27,17 @@
           </ion-col>
           <ion-col col-11>
             <ion-item>
-                <ion-input [(ngModel)]="custName" id="name" name="name" type="text" placeholder="{{'Full Name'| translate}}" ></ion-input>
+                <ion-input [(ngModel)]="custName" id="name" name="name" type="text" placeholder="{{myname}}" ></ion-input>
+            </ion-item>
+          </ion-col> 
+        </ion-row>
+        <ion-row>
+          <ion-col col-1>
+       <ion-icon class="icon" ios="ios-mail" md="ios-mail-outline"></ion-icon>
+          </ion-col>
+          <ion-col col-11>
+            <ion-item>
+         <ion-input [(ngModel)]="email" id="email"name="email" type="email" placeholder="{{myemail}}" ></ion-input>
             </ion-item>
           </ion-col> 
         </ion-row>
@@ -37,11 +47,11 @@
          </ion-col>
          <ion-col col-11>
             <ion-item>
-              <ion-input [(ngModel)]="custNumber" id="phone" name="phone" maxlength="10" type="tel" placeholder="{{'Phone Number'| translate}}" pattern="[0-9]*" maxlength="14"></ion-input>
+              <ion-input [(ngModel)]="custNumber" id="phone" name="phone" maxlength="10" type="tel" placeholder="{{myphone}}" pattern="[0-9]*" maxlength="14"></ion-input>
             </ion-item>
         </ion-col>
       </ion-row>
-      <!-- <ion-row>
+      <ion-row>
         <ion-col col-1>
           <ion-icon class="icon" ios="ios-lock" md="ios-lock-outline"></ion-icon>
         </ion-col>
@@ -50,9 +60,9 @@
               <ion-input  [(ngModel)]="password" id="password" name="password" type="password" placeholder="{{'Password'| translate}}" ></ion-input>
           </ion-item>
         </ion-col>  
-      </ion-row> -->
+      </ion-row>
 
-      <button class="enter" [disabled]="!custName||!custNumber" ion-button block round (click)="editAccount()"> {{'Update Account'| translate}}</button>
+      <button class="enter" [disabled]="!custName||!custNumber||!password||!email" ion-button block round (click)="editAccount()"> {{'Edit Profile'| translate}}</button>
       </ion-list>
    </form>
   </ion-content>

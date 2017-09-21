@@ -10,7 +10,12 @@ import {DistributorProvider} from'../../providers/distributor/distributor';
 
 import {Observable} from "rxjs/Observable";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-
+import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {Marker} from "@ionic-native/google-maps";
+import { SMS } from '@ionic-native/sms';
+import { CallNumber } from '@ionic-native/call-number';
+import {Subscription} from "rxjs/Subscription";
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the MainPage page.
@@ -18,128 +23,224 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
- declare let google;
+declare let google;
 
 @Component({
-  selector: 'page-main',
-  templateUrl: 'main.html',
+    selector: 'page-main',
+    templateUrl: 'main.html',
 })
 export class MainPage {
-  @ViewChild('map') mapElement: ElementRef;
-   map: any;
+    map: any;
+    markers : any[] = [];
+    markersTags : any[] = [];
+    distName:any;
+    distPhone:any;
+  // private sub: Subscription;
 
-  firebaseRef: any;
-  geoFire: any;
-  marker:any;
-  markerRef:any;
-  myLatLng:any;
-  hits = new BehaviorSubject([])
-  constructor(public geolocation: Geolocation,public navCtrl: NavController, public navParams: NavParams,
-              public menuCtrl: MenuController ,public distributor :DistributorProvider,) {
+  @ViewChild('map') mapElement: ElementRef;
+
+    firebaseRef: any;
+    geoFire: any;
+    marker:any;
+    markerRef:any=firebase.database().ref();
+    myLatLng:any;
+    smsMessage:any;
+    disId:string;
+    hits = new BehaviorSubject([])
+    constructor(private callNumber: CallNumber,private sms: SMS
+                ,public geolocation: Geolocation,
+                public navCtrl: NavController,
+                public navParams: NavParams,
+                public menuCtrl: MenuController ,
+                public distributor :DistributorProvider,
+                private authService:AuthServiceProvider, private storage: Storage) {
 /// Reference database location for GeoFire
 
 
-  }
-
-
-  gotoorderlater(){
-    this.navCtrl.push(OrderlaterPage);
+    }
+    gotoselrct(){
+        this.navCtrl.push(SelectagentPage);
     }
 
+    gotoorderlater(){
+        this.navCtrl.push(OrderlaterPage);
+    }
+    sendSms(){
+        this.sms.send(this.distPhone,'Hello');
+    }
+    call(){
+        this.callNumber.callNumber(this.distPhone, true)
+        .then(() => console.log('Launched dialer!'))
+        .catch(() => console.log('Error launching dialer'));
+    }
+    creatdisorder(){
+                console.log("IDDDDDDDDDDD"+this.disId);
+                this.navCtrl.push(CreateorderPage , {distId: this.disId});
+            }
+            latLng:any;
+    sendCurrentLoc(){
+        // get current position
+        this.geolocation.getCurrentPosition().then((resp) => {
+            //current latlng
+            this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+            //initialize map
+            let mapOptions = {
+                center: this.latLng,
+                zoom: 16,
+                disableDefaultUI: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            //listn to current location and send it as a distributor valid
+            // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+            //       this.distributor.onDistributorDisconnect();
+            //creat map
+            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+          google.maps.event.addListener(this.map, 'click', () => {
+            this.flag=true;
+          });
+        }).catch((error) => {
+            // console.log('Error getting location', error);
+        });
+    }
 
-  ionViewDidLoad(){
-    let self=this;
+    ionViewWillEnter(){
+        let self=this;
+        this.sendCurrentLoc();
+
+      this.geolocation.getCurrentPosition().then((resp) => {
+
+        //current latlng
+      this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
+      // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+      self.setMarkers(city);
+        this.storage.set('city',city);
+
+      }).catch(err=>{
+        self.setMarkers(err);
+
+      });     });
+      // });
+    }
+//listenTo markers
+
+    setMarkers(city:any){
+
+   // this.map.clear;
+
+        let self=this;
+      ///////////////////////////firebase markers ref
+        self.markerRef=firebase.database().ref('valid/'+city);
+
+        //getting all keys (distribuotors IDs)
+        self.markerRef.on('value', (snapshot)=> {
+       //empty our
+          for (var i = 0; i < this.markers.length; i++) {
+            this.markers[i].setMap(null);
+          }
+          self.markers=new Array();
+
+            //getting latlng for evry valid distributor
+            snapshot.forEach(key => {
+                // console.log('changed loc',key.key);
+
+                this. geoFire = new GeoFire(self.markerRef);
+//getting latlng using geofire
+                this.geoFire.get(key.key).then(function (location) {
+                    let latlng = new google.maps.LatLng(location[0],location[1]);
+
+                        self.addMarker(latlng,key.key);
+                        console.log('new marker',key.key);
 
 
-    ////////
-    this. firebaseRef = firebase.database().ref('/locations');
- this.markerRef=firebase.database().ref('/locations/some_key');
-// Create a GeoFire index
-    this. geoFire = new GeoFire(this.firebaseRef);
+                }, (error)=> {
+                    console.log("Error: " + error);
+                });
+            });
 
-    this.geolocation.getCurrentPosition().then((resp) => {
-      // this.loadMap();
-      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
 
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        disableDefaultUI: true,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-this.distributor.sendMyLoc();
-this.distributor.getCurrentIpLocation();
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        self. marker = new google.maps.Marker({
-        position:latLng,
-        map: self.map,
-        title: 'Hello World!'
-    });
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
+        });
+    }
+    gotocreatorder(){
+        // Create a Firebase reference where GeoFire will store its information
+                this.navCtrl.push(CreateorderPage);
+            }
 
-// ///////////////////////////////get firebase distributors locs
-//     this.markerRef.on("value"
-//       , (snapshot)=> {
-//         this.geoFire.get("some_key").then((location)=> {
-//
-//           if (location === null) {
-//             console.log("Provided key is not in GeoFire");
-//           }
-//           else {
-//             try{
-// self.myLatLng ={lat:location[0],lng:location[1]};
-//               let latlng = new google.maps.LatLng(location[0],location[1]);
-//               self. marker.setPosition(latlng);
-//               console.log("location changed to : ",location);
-//
-//             }catch (E){ console.log("Provided key has a location of " ,E);}
-//           }
-//         }, (error)=> {
-//           console.log("Error: " + error);
-//         });
-//       });
-// /////////////
-//     console.log("location of " +  self.myLatLng);
+    current:any;
+    toggleMenu()
+    {
+        this.menuCtrl.toggle();
+    }
+    removeMarker(marker:any){
+    }
 
-//////////////////////////////////////////// listen to the current location and sends it to firebase
-//     let watch = this.geolocation.watchPosition();
-//     watch.subscribe((data) => {
-//       console.log('location', data.coords.latitude);
-//       this.current= data.coords.latitude;
-//       // this.setLocation("some_key", [ data.coords.latitude,  data.coords.longitude]);
-//       this.geoFire.set("some_key", [ data.coords.latitude,  data.coords.longitude]).then(()=> {
-//
-//         console.log("Provided key has been added to GeoFire");
-//       }, (error)=> {
-//         console.log("Error: " + error);
-//       });
-//       // data can be a set of coordinates, or an error (if an error occurred).
-//       // data.coords.latitude
-//       // data.coords.longitude
-//     });
-    /////////////////////////////////////
-   }
-  /// Adds GeoFire data to database
-  // setLocation(key:string, coords: Array<number>):Promise <any> {
-  //   let promise=new Promise(resolve,reject)
-  //   this.geoFire.set(key, coords)
-  //     .then(_ => console.log('location updated'))
-  //     .catch(err => console.log(err))
-  //   return promise;
-  // }
+    addMarker(latlng:any,key:any){
 
-gotocreatorder(){
-// Create a Firebase reference where GeoFire will store its information
-this.navCtrl.push(CreateorderPage);
+      var marker = new google.maps.Marker({
+icon:'assets/imgs/map_cylinder.png',
+        tag:key
+      });
 
-}
-current:any;
-toggleMenu()
-  {
-    this.menuCtrl.toggle();
+        // marker.setMap(this.map);
+        this.markers.push(marker);
+        for(let i=0;i<this.markers.length;i++){
+
+        if(this.markers[i].tag==key){
+        //   this.markers[i].setMap(null);
+
+            this.markers[i].setPosition(latlng);
+          this.markers[i].setMap(this.map);
+
+          console.log('am in the if loop',this.markers);
+            // break;
   }
+}
+      google.maps.event.addListener(marker, 'click', () => {
+            this.flag=false;
+        this.geolocation.getCurrentPosition().then((resp) => {
 
-  
+          //current latlng
+          let latlng={lat:resp.coords.latitude,lng: resp.coords.longitude}
+          console.log('marker',marker.getPosition().lng['[[Scopes]]'])
+          console.log('latlng',latlng.lat)
+          // this.getDistance(marker,latlng)
+
+        })
+
+        // this.getDistance(marker,this.latLng)
+
+            this.distributor.getDistributorName(marker.tag).then((res)=>{
+                this.distName = res;
+                marker.setTitle(res);
+            });
+            this.distributor.getDistributorPhone(marker.tag).then((res)=>{
+                this.distPhone = res;
+            });
+            console.log(marker.tag);
+            this.disId=marker.tag;
+            console.log(this.disId);
+        });
+    }
+//////////////////////////////////////
+    flag=true;
+  // ionViewWillLeave()
+  // {
+  //   this.sub.unsubscribe();
+  // }
+  ionViewWillLeave()
+  {
+    // this.sub.unsubscribe();
+    this.markerRef.off();
+  // this.map.clear();
+  }
+  distance:any;
+  getDistance(currentLoc:any,distLoc:any){
+    var currentDistLoc = [currentLoc.position.lat,currentLoc.position.lng];
+    var customerLoc = [ distLoc.lat,distLoc.lng];
+    console.log('total distance',currentDistLoc, customerLoc)
+
+    this.distance= GeoFire.distance(customerLoc,currentDistLoc).toFixed(2);
+    if(this.distance<=5) {
+      // this.commonService.presentConfirm('wait till you get your pipe delevered','i didnet recive my order','i recived my order',this.orderIsDone());
+    }
+  }
 }

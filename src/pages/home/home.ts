@@ -1,12 +1,19 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import{MainPage} from "../main/main";
-import{ForgotpasswordPage} from "../forgotpassword/forgotpassword";
+import { NavController,Platform } from 'ionic-angular';
+import {MainPage} from "../main/main";
+import {ForgotpasswordPage} from "../forgotpassword/forgotpassword";
 import {RegistermemberPage} from "../registermember/registermember";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
+import {OrderlocationPage} from "../orderlocation/orderlocation"
+import { Storage } from '@ionic/storage';
+import {NativeStorage} from '@ionic-native/native-storage';
+import {HistoryPage} from "../history/history";
+import {DistHistoryPage} from "../dist-history/dist-history";
+import {OrderProvider} from "../../providers/order/order";
+
 
 @Component({
   selector: 'page-home',
@@ -15,26 +22,45 @@ import {TranslateService} from "@ngx-translate/core";
 export class HomePage {
 public mobile:any;
 public password:any;
-  constructor(public navCtrl: NavController,private auth:AuthServiceProvider,private events:Events,
-  private toastCtrl: ToastController,   public translateService : TranslateService ) {
-    this.auth.AnonymousSignIn();
+
+
+constructor( public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
+  private toastCtrl: ToastController,public translateService : TranslateService ,
+  private storage: Storage , public orderService : OrderProvider) {
+    // this.auth.AnonymousSignIn();
   }
 
 gotocreateorder()
 {
+  // var self = this;
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
-  
     console.log(user['uEmail']);
+    // this.auth.getUserId;
     console.log(user['uType']);
-    
-    this.navCtrl.push(MainPage);
+    if(user['uType']=='distributors'){
+      this.navCtrl.push(DistHistoryPage);
+      this.navCtrl.setRoot(DistHistoryPage);
+      this.orderService.attachDistListeners();
+    }
+    else{
+      this.navCtrl.push(MainPage);
+      this.navCtrl.setRoot(MainPage);
+      this.orderService.attachCustomerListeners();
+    }
+    this.storage.set('type',user['uType']);
+    this.nativeStorage.setItem('phone',this.mobile);
+    this.nativeStorage.setItem('password',this.password);
+    console.log(this.mobile);
   }).catch((err)=>{
     console.log(err.message);
     this.translateAndToast(err.message);
   });
+
 }
+
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
+
 }
 gotoreg(){
 this.navCtrl.push(RegistermemberPage);
@@ -56,4 +82,5 @@ toast.present();
       }
     );
   }
+
 }

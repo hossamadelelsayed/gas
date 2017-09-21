@@ -11,12 +11,10 @@
         <ion-col text-center col-1>
        <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-10>
+       <ion-col class="titlename" col-11>
 {{'New Order'|translate}}
        </ion-col>
-       <ion-col text-center col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+     </ion-row>
     </ion-title>
   </ion-navbar>
   
@@ -30,16 +28,22 @@
   <button class="plus" ion-button round icon-only (click)="add()">
 <ion-icon  name="ios-add"></ion-icon></button></ion-col>
  <ion-col col-4> <p class="no">{{counter}}</p></ion-col>
-<ion-col col-4><button class="minus" ion-button round icon-only (click)="minus()">
+<ion-col col-4><button [disabled]="counter == 0" class="minus" ion-button round icon-only (click)="minus()">
   <ion-icon  name="remove"></ion-icon></button>
   </ion-col>
 </ion-row>
   <hr>
-<ion-row style="height:34px;">
-<ion-col><h5>{{'Confirm your location'|translate}}</h5></ion-col>
-<ion-col><button class="btchange" ion-button round>{{'Change'|translate}}
-  </button></ion-col>
-    </ion-row><ion-row> <h4 style="color: gray;">شارع الملك سليمان حي العرب</h4></ion-row> 
+  <ion-row style="height: 50px;">
+      <ion-col col-7>
+        <h4>{{'Confirm your location'|translate}}</h4>
+      </ion-col>
+      <ion-col col-5>
+        <button class="btchange" ion-button round (click)="showUserLocations()">{{'Identify'|translate}}</button>
+      </ion-col>
+  </ion-row>
+  <ion-row> 
+    <h4 style="color: gray;">{{locname}}</h4>
+  </ion-row> 
   <hr>
   <ion-row style="height:34px;">
 <ion-col><h4 style="padding-top:5px" >{{'Date'|translate}}</h4></ion-col>
@@ -48,7 +52,7 @@
   </ion-datetime>
   </button></ion-col>
     </ion-row>
-    <ion-row> <h4 style="color: gray;">{{deliveryDate}}</h4></ion-row> 
+    <ion-row> <h4 style="color: gray;"></h4></ion-row> 
   <hr>
   <ion-row>
     <form radio-group style="font-size: 2.2rem; color: gray;" action="">
@@ -72,7 +76,7 @@
 </ion-item>
   <hr>
   <div class="d">
-    <button class="reqlater" ion-button round (click)="saveOrderLater()">{{'Save Order'|translate}} </button>
+    <button class="reqlater"  [disabled]="!locname" ion-button round (click)="saveOrderLater()">{{'Save Order'|translate}} </button>
   </div>
   </ion-list>
 </ion-grid>

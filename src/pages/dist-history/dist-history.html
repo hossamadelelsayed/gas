@@ -1,0 +1,89 @@
+
+<ion-header style="
+    background-color: white;">
+  <ion-navbar> <ion-buttons right>
+    <button ion-button navPop icon-only>
+      <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+    </button>
+  </ion-buttons>
+    <ion-title >
+      <ion-row>
+        <ion-col text-center  col-1>
+          <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
+        </ion-col>
+        <ion-col class="titlename" col-11>
+          {{'History'|translate}}
+        </ion-col>
+        </ion-row><hr>
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar >
+    <ion-segment style="background-color: white;" [(ngModel)]="showing" >
+      <ion-segment-button
+        value="current" style="text-transform: none;" class="segment-button activated" pressed="true;" > {{'Current Orders'|translate}}</ion-segment-button>
+      <ion-segment-button
+        value="last" style="
+    font-size: 1.8rem;color: gray;text-align: center;text-transform: none;">{{'Orders History'|translate}}</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <div [ngSwitch]="showing">
+    <ion-list *ngSwitchDefault>
+      <div *ngFor="let order of currentOrder">
+        <ion-card class="card" >
+          <ion-card-header class="head" >
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-3 style="height: 80px;" (click)="goToDetails(order)">
+                <img style="height: 70px;
+              width: 70px;" src="assets/imgs/agent_pin.png"><br>
+              </ion-col>
+              <ion-col col-6>
+                <p class="ordernumber">  {{'Order Number'|translate}} &nbsp; {{order.orderID}} </p>
+              </ion-col>
+              <ion-col col-3>
+                <button *ngIf="order.status == Order.NoResponseStatus" ion-button full (click)="acceptOrder(order.orderID)" >  قبول </button>
+                <button *ngIf="order.status == Order.PendingStatus" ion-button outline (click)="rejectOrder(order.orderID)" > الغاء </button>
+              </ion-col>
+              <p class="time">{{ convertDate(order.date) }}</p>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+        <ion-row class="row">
+          <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">{{order.pipesNo}} {{'Cylinder'|translate}}</p>
+          <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
+          <img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
+        </ion-row>
+      </div>
+    </ion-list>
+      <ion-list *ngSwitchCase="'last'" >
+        <div *ngFor="let order of lastOrder">
+          <ion-card class="card" >
+            <ion-card-header class="head" >
+            </ion-card-header>
+            <ion-card-content>
+              <ion-row>
+                <ion-col col-3 style="height: 80px;" (click)="goToDetails(order)">
+                  <img style="height: 70px;
+              width: 70px;" src="assets/imgs/agent_pin.png"><br>
+                </ion-col>
+                <ion-col col-9>
+                  <p class="ordernumber">  {{'Order Number'|translate}} &nbsp; {{order.orderID}} </p>
+                </ion-col>
+                <p class="time">{{ convertDate(order.date) }}</p>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+          <ion-row class="row">
+            <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">{{order.pipesNo}} {{'Cylinder'|translate}}</p>
+            <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
+            <img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
+          </ion-row>
+        </div>
+      </ion-list>
+  </div>
+</ion-content>
+
+

@@ -1,27 +1,79 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
-
-/**
- * Generated class for the CallusPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
+import { EmailComposer } from '@ionic-native/email-composer';
+import {TranslateService} from "@ngx-translate/core";
+import { ToastController } from 'ionic-angular';
 @Component({
   selector: 'page-callus',
   templateUrl: 'callus.html',
 })
 export class CallusPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
-  }
-
+  constructor(private emailComposer: EmailComposer,
+              public navCtrl: NavController,
+              public navParams: NavParams,
+              public menuCtrl: MenuController,
+              private toastCtrl: ToastController,
+              public translateService : TranslateService) {
+                this.emailComposer.isAvailable().then((available: boolean) =>{
+                  if(available) {
+                    //Now we know we can send
+                    
+                  }
+                });
+              }
+public onclick:boolean = true;
+currentEmail:string;
+  adminEmail:string='gasforksa@gmail.com';
+  msgBody:string;
+  msgTitle:string;
   ionViewDidLoad() {
     console.log('ionViewDidLoad CallusPage');
+
+
   }
   toggleMenu()
   {
     this.menuCtrl.toggle();
   }
+  sendEmail(){
+   let self=this;
+    let email = {
+      to: this.adminEmail,
+      // cc: 'erika@mustermann.de',
+      // bcc: ['john@doe.com', 'jane@doe.com'],
+      // attachments: [
+      //   'file://img/logo.png',
+      //   'res://icon.png',
+      //   'base64:icon.png//iVBORw0KGgoAAAANSUhEUg...',
+      //   'file://README.pdf'
+      // ],
+      subject: this.msgTitle,
+      body: this.msgBody,
+      isHtml: true
+    };
+    
+    self.emailComposer.open(email); 
+    this.translateAndToast("Your message has been sent.");
+    
+    this.onclick = false;
+   
+  }
+  presentToast(text:any) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'bottom'
+    });
+  toast.present();
+  }
+   translateAndToast(word : string)
+    {
+      this.translateService.get(word).subscribe(
+        value => {
+          // value is our translated string
+          this.presentToast(value);
+        }
+      );
+    }
 }
