@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {NavController, NavParams, Events} from 'ionic-angular';
+import {NavController, NavParams, Events, MenuController} from 'ionic-angular';
 import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
@@ -27,7 +27,8 @@ export class DistHistoryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public orderService : OrderProvider  ,
                public commonService : CommonServiceProvider ,
-              public zone: NgZone , public events : Events) {
+              public zone: NgZone , public events : Events ,
+              public menuCtrl : MenuController) {
       this.distUID = firebase.auth().currentUser.uid;
   }
 
@@ -112,5 +113,9 @@ export class DistHistoryPage {
       user : User.Distributor ,
       order : order
     });
+  }
+  toggleMenu()
+  {
+    this.menuCtrl.toggle();
   }
 }
