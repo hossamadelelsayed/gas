@@ -33,8 +33,6 @@ import * as firebase from "firebase";
 import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {User} from "../models/user";
-import {AddvaluationPage} from "../pages/addvaluation/addvaluation";
-import {Rate} from "../models/rate";
 @Component({
   templateUrl: 'app.html'
 })
@@ -77,13 +75,6 @@ export class MyApp {
         if(view.component != DistHistoryPage)
           this.newDistOrderAlert(order);
       });
-      this.orderService.subscribeToDistHistory((order : Order)=> {
-        if(order.status == Order.DeliveredStatus)
-          this.nav.push(AddvaluationPage,{
-            order : order ,
-            mode : Rate.rateCustomerType
-          });
-      });
       this.orderService.subscribeToCustomerHistory((order : Order)=> {
         switch(order.status)
         {
@@ -96,15 +87,11 @@ export class MyApp {
             break;
           }
           case Order.DeliveredStatus : {
-            this.nav.push(AddvaluationPage,{
-              order : order ,
-              mode : Rate.rateDistType
-            });
+            this.alertCustomerOrder(order);
             break;
           }
         }
       });
-
       this.orderService.login().then((dist)=>{
         console.log('login');
         // this.orderService.subscribeToDistOrder((order : Order)=> {

@@ -16,9 +16,6 @@ import {DetailsrequestPage} from "../../pages/detailsrequest/detailsrequest";
 export class CommonServiceProvider {
 
   public loader : Loading;
-  public readonly maxRate: number = 5;
-  public iconEmpty: string = 'star-outline';
-  public iconFull: string = 'star';
   constructor(public http: Http ,public toastCtrl : ToastController ,
               public translateService : TranslateService , public alertCtrl : AlertController ,
               public loadingCtrl : LoadingController) {
@@ -76,19 +73,6 @@ export class CommonServiceProvider {
 
   convertTimestampToDate(timestamp : Date) : Date{
     return new Date(timestamp)
-  }
-  // Rate Service
-  public icons(rate : number): string[] {
-    let icons = [];
-    for (let i = 1; i <= this.maxRate; i++) {
-      if (i <= rate) {
-        icons.push(this.iconFull);
-      }
-      else {
-        icons.push(this.iconEmpty);
-      }
-    }
-    return icons;
   }
 
 

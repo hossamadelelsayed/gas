@@ -1,5 +1,4 @@
 page-addvaluation {
-
 .content{
     background-color: $color-background;
 }
@@ -19,14 +18,10 @@ page-addvaluation {
 }
 .r{
         text-align: center;
-         margin: 0 auto;
+    margin: 0 auto;
     display: block;
         margin-top: 30px;
     margin-bottom: 30px;
-  ion-icon{
-    font-size: 4.2em;
-    padding: 5px;
-  }
 }
 .stars{
     font-size: 3rem;
@@ -35,8 +30,8 @@ page-addvaluation {
 .add{
     font-size: 2rem;
        border-radius: 20px;
-
-
+  
+    
     display: block;
     margin: 0 auto;
     height: 150px;
@@ -55,7 +50,7 @@ background-color: #F2F2F2;
     display: none;
 }
 .back-button-text-ios {
-
+ 
     display: none;
 }
 .back-button-ios.show-back-button{

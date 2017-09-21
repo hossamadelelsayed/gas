@@ -7,6 +7,8 @@ import {CustomerProvider} from "../../providers/customer/customer";
 import * as firebase from "firebase";
 import * as GeoFire from "geofire";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
+import {DistributorProvider} from "../../providers/distributor/distributor";
+import { Events } from 'ionic-angular';
 
 declare var google: any;
 
@@ -36,14 +38,18 @@ export class TrackingMapPage {
   private destination_longitude : any ;
   private oregin_latitude : any ;
   private oregin_longitude : any ;
-  constructor(public navCtrl: NavController,
+  RefresherRef=firebase.database().ref();
+  constructor(public event:Events,public distributorProvider:DistributorProvider,public navCtrl: NavController,
               public navParams :NavParams,public commonService:CommonServiceProvider,
 private customer:CustomerProvider,
               private geolocation: Geolocation) {
 
   }
+
   loadMap(){
     let latLng = new google.maps.LatLng(this.destination_latitude, this.destination_longitude);
+
+    let location={lat: latLng.latitude,lng: latLng.longitude}
 
     let mapOptions = {
       center: latLng,
@@ -137,28 +143,34 @@ private customer:CustomerProvider,
   order:any;
   ionViewWillEnter()
   {
+    //customer loc
+    this.order=this.navParams.get('order')
 
+    this.destination_latitude=this.order.location.lat
+    this.destination_longitude=this.order.location.lng
     this.loadMap();
     this.startNavigating();
 
+    // this.event.subscribe('cityLatlng',location=>{
+  console.log('event entered with loc',location)
     // destination: customer location from the order object
     // way points: valid dist loc changing on line map
+    this.distributorProvider.getCurrentIpLocation(this.order.location.lat, this.order.location.lng).then(city=>{
+      console.log('city',`${city}`)
 
-this.order=this.navParams.get('order')
+
     this.key=this.order.distributerID;
 
       console.log('oregin dist id '+`${this.key.distributerID}`)
       // oregin: dist loc when accepts
 
-      this.customer.distTracker("Alexandria Governorate",this.key)
+      this.customer.distTracker(`${city}`,this.key)
         .then((loc)=>{
           console.log(loc);
           //dist loc
           this.oregin_latitude = loc.lat
           this.oregin_longitude= loc.lng
-          //customer loc
-          this.destination_latitude=this.order.location.lat
-          this.destination_longitude=this.order.location.lng
+
           // let locationOptions = {  enableHighAccuracy: true };
 
 
@@ -168,26 +180,36 @@ this.order=this.navParams.get('order')
             this.destination_latitude,this.destination_longitude);
 
         });
+        });
+// });
+}
 
-  }
   key:any;
   ionViewDidLoad(){
+
     this.order=this.navParams.get('order')
 
     this.key=this.order.distributerID;
 
     console.log('RefresherRef key',this.key)
     //updateing waypoints when dist moves
-    let RefresherRef=firebase.database().ref("valid/Alexandria Governorate/"+this.key);
-    RefresherRef.on('value', (snapshot)=> {
+    // this.event.subscribe('cityLatlng',location=>{
+      // destination: customer location from the order object
+      // way points: valid dist loc changing on line map
+      this.distributorProvider.getCurrentIpLocation(this.order.location.lat, this.order.location.lng).then(city=>{
+        console.log('city',city)
+      this.RefresherRef = firebase.database().ref("valid/"+`${city}`+"/" + this.key);
+      this.RefresherRef.on('value', (snapshot) => {
 
-      this.customer.distTracker("Alexandria Governorate",this.key)
-        .then((loc)=>{
-          this.getPositionAndUpdate(loc);
+        this.customer.distTracker(`${city}`, this.key)
+          .then((loc) => {
+console.log('geo error loc',loc)
+            this.getPositionAndUpdate(loc);
 
-        });
+          });
+      });
     });
-
+    // });
   }
 
   // ionViewWillLeave()
@@ -213,8 +235,9 @@ this.order=this.navParams.get('order')
     console.log('total distance',currentDistLoc, customerLoc)
 
     var distance = GeoFire.distance(customerLoc,currentDistLoc).toFixed(2);
-    if(distance<=0.10) {
-this.commonService.presentConfirm('wait till you get your pipe delevered','i didnet recive my order','i recived my order',this.orderIsDone());
+    if(distance<=0.5) {
+this.commonService.presentConfirm('wait till you get your pipe delevered','Order Recieved','Not Recived',this.orderIsDone());
+this.RefresherRef.off();
     }
     console.log('total distance',distance)
     this.waypts.push({
