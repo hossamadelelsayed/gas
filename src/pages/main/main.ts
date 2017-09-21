@@ -108,12 +108,12 @@ export class MainPage {
         this.sendCurrentLoc();
 
       this.geolocation.getCurrentPosition().then((resp) => {
-
+console.log('loc resp lat',resp.coords.latitude)
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
       // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
-      self.setMarkers(city);
-        this.storage.set('city',city);
+      self.setMarkers(`${city}`);
+        this.storage.set('city',`${city}`);
 
       }).catch(err=>{
         self.setMarkers(err);
@@ -199,9 +199,9 @@ icon:'assets/imgs/map_cylinder.png',
         this.geolocation.getCurrentPosition().then((resp) => {
 
           //current latlng
-          let latlng={lat:resp.coords.latitude,lng: resp.coords.longitude}
-          console.log('marker',marker.getPosition().lng['[[Scopes]]'])
-          console.log('latlng',latlng.lat)
+          let latLng={lat:resp.coords.latitude,lng: resp.coords.longitude}
+          console.log('marker',latlng)
+          console.log('latlng',latLng.lat)
           // this.getDistance(marker,latlng)
 
         })
