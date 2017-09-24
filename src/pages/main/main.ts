@@ -110,7 +110,7 @@ export class MainPage {
         });
     }
 
-    ionViewWillEnter(){
+    ionViewDidLoad(){
         let self=this;
         this.sendCurrentLoc();
 

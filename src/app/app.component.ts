@@ -37,6 +37,8 @@ import {AddvaluationPage} from "../pages/addvaluation/addvaluation";
 import {Rate} from "../models/rate";
 import {Geolocation} from "@ionic-native/geolocation";
 import {DistributorProvider} from "../providers/distributor/distributor";
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -69,8 +71,35 @@ export class MyApp {
                public alertCtrl : AlertController ,public auth:AuthServiceProvider,
               private storage: Storage,public events:Events,
                public  geolocation: Geolocation ,
-               public distService : DistributorProvider) {
+               public distService : DistributorProvider,private androidPermissions: AndroidPermissions) {
+
     platform.ready().then(() => {
+      platform.pause.subscribe(() => {
+        console.log('[INFO] App paused');
+        this.nav.push(this.nav.getActive().component)
+
+        // return this.nav.getActive();
+
+      });
+      platform.resume.subscribe(() => {
+        this.nav.push(this.nav.getActive().component)
+
+        console.log('[INFO] App resumed');
+        // this.nav.getPrevious()
+        // return this.nav.getActive(;
+
+      });
+
+
+      if (platform.is('android') || platform.is('android')) {
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GPS).then(
+        success => console.log('Permission granted'),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GPS)
+      );
+
+      this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GPS, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
+    }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();

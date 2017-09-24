@@ -43,6 +43,7 @@ import {HistoryPage} from "../pages/history/history";
 import {TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
 import {OrderlaterPage} from "../pages/orderlater/orderlater";
 import{CustomerProvider} from "../providers/customer/customer";
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -187,6 +188,7 @@ firebase.initializeApp(firebaseConfig);
     FirebaseDatabaseProvider,
     IonicStorageModule,NativeStorage,
     DistributorProvider,
+    AndroidPermissions,
     CommonServiceProvider,
     LaunchNavigator,
     AboutusProvider,
