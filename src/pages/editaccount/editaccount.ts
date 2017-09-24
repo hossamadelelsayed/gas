@@ -25,7 +25,7 @@ export class EditaccountPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditaccountPage');
   }
- 
+
    editAccount(){
     let self = this;
     this.authService.editEmail('customers',this.userid,this.email,this.custNumber,this.password)
@@ -37,7 +37,7 @@ export class EditaccountPage {
     self.authService.editCustomerName(self.custName)
         .then((user)=>{
            self.translateAndToast('Name updated');
-           
+
         })
         .catch(function(error) {
           console.log(error);
@@ -53,8 +53,11 @@ export class EditaccountPage {
         console.log(res);
         console.log(self.password);
         self.translateAndToast("Password updated");
-      })
-     
+      }) .catch(function(error) {
+        console.log(error);
+        self.translateAndToast(error.message);
+      });
+
       })
         .catch(function(error) {
          console.log(error);
@@ -62,7 +65,7 @@ export class EditaccountPage {
        });
    }
    presentToast(txt:any) {
-    
+
       let toast = this.toastCtrl.create({
         message: txt,
         duration: 3000,
@@ -70,7 +73,7 @@ export class EditaccountPage {
       });
       toast.present();
     }
-    
+
     translateAndToast(word : string)
     {
       this.translateService.get(word).subscribe(

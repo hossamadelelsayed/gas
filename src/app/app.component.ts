@@ -74,6 +74,23 @@ export class MyApp {
                public distService : DistributorProvider,private androidPermissions: AndroidPermissions) {
 
     platform.ready().then(() => {
+      platform.pause.subscribe(() => {
+        console.log('[INFO] App paused');
+        this.nav.push(this.nav.getActive().component)
+
+        // return this.nav.getActive();
+
+      });
+      platform.resume.subscribe(() => {
+        this.nav.push(this.nav.getActive().component)
+
+        console.log('[INFO] App resumed');
+        // this.nav.getPrevious()
+        // return this.nav.getActive(;
+
+      });
+
+
       if (platform.is('android') || platform.is('android')) {
 
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GPS).then(

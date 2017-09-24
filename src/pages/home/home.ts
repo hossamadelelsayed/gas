@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,Platform } from 'ionic-angular';
+import {LoadingController, NavController, Platform} from 'ionic-angular';
 import {MainPage} from "../main/main";
 import {ForgotpasswordPage} from "../forgotpassword/forgotpassword";
 import {RegistermemberPage} from "../registermember/registermember";
@@ -24,7 +24,7 @@ public mobile:any;
 public password:any;
 
 
-constructor( public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
+constructor(public loadingCtrl: LoadingController, public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
   private storage: Storage , public orderService : OrderProvider) {
     // this.auth.AnonymousSignIn();
@@ -33,7 +33,19 @@ constructor( public platform: Platform,public navCtrl: NavController,private aut
 gotocreateorder()
 {
   // var self = this;
+  let loading = this.loadingCtrl.create({
+    // spinner: 'Bubbles'
+    content:'Please Wait'
+   });
+
+  // loading.onDidDismiss(() => {
+  //   console.log('Dismissed loading');
+  // });
+
+  loading.present();
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
+    loading.dismiss();
+
     console.log(user['uEmail']);
     // this.auth.getUserId;
     console.log(user['uType']);

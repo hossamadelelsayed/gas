@@ -75,12 +75,13 @@ page-main {
           margin: 0 auto;
           margin-bottom: -55px;
       }
-  .s{
-    height: 80px;
-    display: block;
-    margin: 0 auto;
-    margin-bottom: -55px;
-  }
+  //.s{
+  //  //height: 92px;
+  //  display: block;
+  //  //margin: 0 auto;
+  //
+  //  //margin-bottom: -55px;
+  //}
       .btn{
           background-color: $color-primary;
           font-family: cairo;
@@ -92,6 +93,11 @@ page-main {
           margin-top: 23px;
           color: gray;
       }
+  starsrate{
+      margin-top: -35px;
+      margin-right: auto;
+      display: block;
+  }
 
 
 }
