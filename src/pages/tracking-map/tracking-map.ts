@@ -9,6 +9,7 @@ import * as GeoFire from "geofire";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
 import {DistributorProvider} from "../../providers/distributor/distributor";
 import { Events } from 'ionic-angular';
+import {OrderProvider} from "../../providers/order/order";
 
 declare var google: any;
 
@@ -39,7 +40,7 @@ export class TrackingMapPage {
   private oregin_latitude : any ;
   private oregin_longitude : any ;
   RefresherRef=firebase.database().ref();
-  constructor(public event:Events,public distributorProvider:DistributorProvider,public navCtrl: NavController,
+  constructor(public orderService:OrderProvider,public event:Events,public distributorProvider:DistributorProvider,public navCtrl: NavController,
               public navParams :NavParams,public commonService:CommonServiceProvider,
 private customer:CustomerProvider,
               private geolocation: Geolocation) {
@@ -275,7 +276,9 @@ this.RefresherRef.off();
   orderIsDone():Promise<any>{
     let promise=new Promise((resolve,reject)=>{
       console.log('order delivered')
-
+this.orderService.orderDeliverConfirmation(this.order.orderID).then(()=>{
+        this.commonService.successToast();
+})
     });
   return promise
   }

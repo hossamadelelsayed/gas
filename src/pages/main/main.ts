@@ -16,6 +16,8 @@ import { SMS } from '@ionic-native/sms';
 import { CallNumber } from '@ionic-native/call-number';
 import {Subscription} from "rxjs/Subscription";
 import { Storage } from '@ionic/storage';
+import {OrderProvider} from "../../providers/order/order";
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 /**
  * Generated class for the MainPage page.
@@ -35,6 +37,8 @@ export class MainPage {
     markersTags : any[] = [];
     distName:any;
     distPhone:any;
+    starsArray:any[];
+    starsNo:any;
   // private sub: Subscription;
 
   @ViewChild('map') mapElement: ElementRef;
@@ -51,9 +55,12 @@ export class MainPage {
                 ,public geolocation: Geolocation,
                 public navCtrl: NavController,
                 public navParams: NavParams,
+                public commonService:CommonServiceProvider,
                 public menuCtrl: MenuController ,
                 public distributor :DistributorProvider,
-                private authService:AuthServiceProvider, private storage: Storage) {
+                private authService:AuthServiceProvider, private storage: Storage,
+                private order:OrderProvider
+    ) {
 /// Reference database location for GeoFire
 
 
@@ -170,14 +177,14 @@ console.log('loc resp lat',resp.coords.latitude)
     {
         this.menuCtrl.toggle();
     }
-    removeMarker(marker:any){
-    }
+
 
     addMarker(latlng:any,key:any){
 
       var marker = new google.maps.Marker({
 icon:'assets/imgs/map_cylinder.png',
-        tag:key
+        tag:key,
+        position:latlng
       });
 
         // marker.setMap(this.map);
@@ -200,13 +207,22 @@ icon:'assets/imgs/map_cylinder.png',
 
           //current latlng
           let latLng={lat:resp.coords.latitude,lng: resp.coords.longitude}
-          console.log('marker',latlng)
+          console.log('marker',marker.getPosition().lat())
           console.log('latlng',latLng.lat)
-          // this.getDistance(marker,latlng)
+          let loc={lat:marker.getPosition().lat(),lng:marker.getPosition().lng()}
+          this.getDistance(latLng,loc);
 
         })
 
         // this.getDistance(marker,this.latLng)
+        this.order.getDistData(marker.tag).then(user=>{
+          // console.log('User',user.rateInfo);
+          // console.log('User',user.rateInfo.rateNo);
+          // console.log('User',user.rateInfo.rateSum);
+          this.commonService.icons(user.rateInfo.rateSum/ user.rateInfo.rateNo)
+          console.log('User', this.commonService.icons(user.rateInfo.rateSum/ user.rateInfo.rateNo));
+this.starsArray=this.commonService.icons(user.rateInfo.rateSum/ user.rateInfo.rateNo)
+        })
 
             this.distributor.getDistributorName(marker.tag).then((res)=>{
                 this.distName = res;
@@ -234,7 +250,7 @@ icon:'assets/imgs/map_cylinder.png',
   }
   distance:any;
   getDistance(currentLoc:any,distLoc:any){
-    var currentDistLoc = [currentLoc.position.lat,currentLoc.position.lng];
+    var currentDistLoc = [currentLoc.lat,currentLoc.lng];
     var customerLoc = [ distLoc.lat,distLoc.lng];
     console.log('total distance',currentDistLoc, customerLoc)
 
@@ -242,5 +258,15 @@ icon:'assets/imgs/map_cylinder.png',
     if(this.distance<=5) {
       // this.commonService.presentConfirm('wait till you get your pipe delevered','i didnet recive my order','i recived my order',this.orderIsDone());
     }
+  }
+
+
+displayRate(starsNo){
+
+    for(let i; i<=starsNo;i++){
+this.starsArray.push(1);
+  }
+
+
   }
 }
