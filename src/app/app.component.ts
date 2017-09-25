@@ -146,46 +146,18 @@ export class MyApp {
       });
 
 
-      // this.nativeStorage.getItem('phone').then((res)=>{
-      //   this.presentToast(res);
-      //  this.phone=res;
-      // }).then(()=>{
-      //   this.nativeStorage.getItem('password').then((res)=>{
-      //     this.presentToast(res);
-      //     this.password=res;
-      //   }).then(()=>{
-      //     this.storage.get('type').then((res)=>{
-      //       this.presentToast(res);
-      //       if(res=='distributors'){
-      //         this.welcomePage=DistHistoryPage;
-      //       }
-      //       else{
-      //         this.welcomePage=MainPage;
-      //       }
-      //     })
-      //   })
-      // }).catch(()=>{
-      //   this.welcomePage=WelcomePage;
-      // });
-    this.translate.setDefaultLang('ar');
-    platform.setDir('rtl', true);
       this.nativeStorage.getItem('phone').then((res)=>{
-        console.log('auto login phone',res)
         this.presentToast(res);
-        this.phone=res;
+       this.phone=res;
       }).then(()=>{
         this.nativeStorage.getItem('password').then((res)=>{
-
           this.presentToast(res);
           this.password=res;
         }).then(()=>{
           this.storage.get('type').then((res)=>{
-
-
             this.presentToast(res);
             if(res=='distributors'){
-              this.welcomePage=HistoryPage;
-
+              this.welcomePage=DistHistoryPage;
             }
             else{
               this.welcomePage=MainPage;
@@ -195,19 +167,47 @@ export class MyApp {
       }).catch(()=>{
         this.welcomePage=WelcomePage;
       });
-
-    this.storage.get('lang').then((res)=>{
-      if(res =='ar'){
-        this.translate.setDefaultLang('ar');
-        platform.setDir('rtl', true);
-        console.log(res);
-      }
-      else{
-        this.translate.setDefaultLang('en');
-        platform.setDir('ltr', true);
-        console.log(res);
-      }
-    });
+    // this.translate.setDefaultLang('ar');
+    // platform.setDir('rtl', true);
+    //   this.nativeStorage.getItem('phone').then((res)=>{
+    //     console.log('auto login phone',res)
+    //     this.presentToast(res);
+    //     this.phone=res;
+    //   }).then(()=>{
+    //     this.nativeStorage.getItem('password').then((res)=>{
+    //
+    //       this.presentToast(res);
+    //       this.password=res;
+    //     }).then(()=>{
+    //       this.storage.get('type').then((res)=>{
+    //
+    //
+    //         this.presentToast(res);
+    //         if(res=='distributors'){
+    //           this.welcomePage=HistoryPage;
+    //
+    //         }
+    //         else{
+    //           this.welcomePage=MainPage;
+    //         }
+    //       })
+    //     })
+    //   }).catch(()=>{
+    //     this.welcomePage=WelcomePage;
+    //   });
+    //
+    // this.storage.get('lang').then((res)=>{
+    //   if(res =='ar'){
+    //     this.translate.setDefaultLang('ar');
+    //     platform.setDir('rtl', true);
+    //     console.log(res);
+    //   }
+    //   else{
+    //     this.translate.setDefaultLang('en');
+    //     platform.setDir('ltr', true);
+    //     console.log(res);
+    //   }
+    // });
 
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
