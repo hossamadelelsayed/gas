@@ -46,15 +46,17 @@
     <div *ngIf="!flag" >
       <img  class="m" src="assets/imgs/agent_pin.png">
       <ion-row class="ro2">
-        <ion-col class="km">km 3</ion-col>
+
+
+        <ion-col class="km">{{distance}} km</ion-col>
         <ion-col text-center >
-          <h6 style="margin-top: 42px; color:gray;">{{distName}}</h6><br>
-          <div style="margin-top: -20px;position: relative;font-size: 1.8rem;">
-            <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
-            <ion-icon ios="ios-star" md="md-star"></ion-icon>
+          <h6 style="margin-top: 35px; color:gray;">{{distName}}</h6><br>
+          <div >
+          <ion-row class="starsrate">
+
+            <ion-icon  *ngFor="let star of starsArray" ios="ios-star" md="md-{{star}}"  style="color:orange" [name]="icon"></ion-icon>
+
+    </ion-row>
           </div>
         </ion-col>
       </ion-row>

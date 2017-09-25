@@ -7,6 +7,7 @@ import {CommonServiceProvider} from "../../providers/common-service/common-servi
 import {User} from "../../models/user";
 import {OrderProvider} from "../../providers/order/order";
 import {LaunchNavigator, LaunchNavigatorOptions} from "@ionic-native/launch-navigator";
+import {TrackingMapPage} from "../tracking-map/tracking-map";
 
 
 @Component({
@@ -17,7 +18,9 @@ export class DetailsrequestPage {
   public userClass  =  User ;
   public mode : string ;
   public order : Order ;
+  public orderClass  = Order ;
   public user : User ;
+  public icons : string[] ;
   constructor(public navCtrl: NavController, public navParams: NavParams ,
               public commonService : CommonServiceProvider , public orderService : OrderProvider ,
               public launchNavigator : LaunchNavigator) {
@@ -29,13 +32,13 @@ export class DetailsrequestPage {
     console.log('ionViewDidLoad DetailsrequestPage');
     if(this.mode == User.Customer)
       this.orderService.getDistData(this.order.distributerID).then((dist : User)=>{
-         console.log(dist);
           this.user = dist ;
+          this.getIcons(this.user.rateInfo.rateSum/this.user.rateInfo.rateNo);
       }).catch((err)=>console.log(err));
     else
       this.orderService.getCustomerData(this.order.customerID).then((cust : User)=>{
-        console.log(cust);
         this.user = cust ;
+        this.getIcons(this.user.rateInfo.rateSum/this.user.rateInfo.rateNo);
       }).catch((err)=>console.log(err));
   }
   gotohistory(){
@@ -58,8 +61,23 @@ export class DetailsrequestPage {
       );
   }
   navigate(){
-    if(this.mode == User.Distributor)
+    if(this.mode == User.Distributor) {
       this.distNavigate();
+    }
+    else{
+      console.log( this.order)
+      console.log( this.order.customerID)
+      console.log( this.order.distributerID)
+      console.log( this.order.location.lat)
+      this.navCtrl.push(TrackingMapPage,{'order':this.order
+});
+    }
+  }
+  detailsrequest(){
 
+  }
+  getIcons(rate : number)
+  {
+    this.icons = this.commonService.icons(rate);
   }
 }

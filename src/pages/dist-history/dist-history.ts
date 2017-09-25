@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {NavController, NavParams, Events} from 'ionic-angular';
+import {NavController, NavParams, Events, MenuController} from 'ionic-angular';
 import {OrderProvider} from "../../providers/order/order";
 import {Order} from "../../models/order";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
@@ -27,7 +27,8 @@ export class DistHistoryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public orderService : OrderProvider  ,
                public commonService : CommonServiceProvider ,
-              public zone: NgZone , public events : Events) {
+              public zone: NgZone , public events : Events ,
+              public menuCtrl : MenuController ) {
       this.distUID = firebase.auth().currentUser.uid;
   }
 
@@ -48,17 +49,23 @@ export class DistHistoryPage {
 
     this.orderService.subscribeToDistHistory((order : Order)=> this.zone.run(()=>{
      if(order.status == Order.PendingStatus)
-        this.currentOrder.push(order);
+     {
+       this.currentOrder.push(order);
+       this.sortCurrentOrderByDeliveryDate();
+     }
     }));
-    this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=> this.currentOrder.push(order)));
+    this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=> {
+      this.currentOrder.push(order);
+      this.sortCurrentOrderByDeliveryDate();
+    }));
     this.orderService.subscribeToDistOrderRemoved((orderID : string)=> this.zone.run(()=>this.delOrder(orderID)));
     this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
       .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
     this.orderService.getOrdersByDist(this.distUID,Order.DeliveredStatus)
       .then((orders : Order[])=>{console.log(orders);this.pushToLastOrder(orders)}).catch((err)=>console.log(err));
-    this.orderService.getOrderAssignToAllDist("Alexandria Governorate")
+    this.orderService.getOrderAssignToAllDist(this.orderService.city)
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
-    this.orderService.getOrderAssignToSpecificDist("Alexandria Governorate",this.distUID)
+    this.orderService.getOrderAssignToSpecificDist(this.orderService.city,this.distUID)
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
   }
 
@@ -72,6 +79,7 @@ export class DistHistoryPage {
         console.log('after',this.currentOrder.length);
       }
     }
+    this.sortCurrentOrderByDeliveryDate();
     // let orderFilter :Order[]  ;
     // orderFilter = this.currentOrder.filter((order : Order) => {
     //   return (order.orderID != orderID);
@@ -82,20 +90,32 @@ export class DistHistoryPage {
   pushToLastOrder(orders : Order[]){
     orders.forEach((order  : Order)=>{
       this.lastOrder.push(order);
-    })
+    });
+    this.sortLastOrderByDeliveryDate();
   }
   pushToCurrentOrder(orders : Order[]){
     orders.forEach((order  : Order)=>{
       this.currentOrder.push(order);
-    })
+    });
+    this.sortCurrentOrderByDeliveryDate();
+  }
+  sortCurrentOrderByDeliveryDate(){
+    this.commonService.sortArray(this.currentOrder,'deliveryDate',this.commonService.SortDESC);
+  }
+  sortLastOrderByDeliveryDate(){
+    this.commonService.sortArray(this.lastOrder,'deliveryDate',this.commonService.SortDESC);
   }
   acceptOrder(orderID : string){
+    this.commonService.presentLoading("Please Wait ...");
     this.orderService.distOrderAccept(orderID,this.distUID).then(()=>{
+      this.commonService.dismissLoading();
       this.commonService.successToast();
     }).catch((err)=>console.log(err));
   }
   rejectOrder(orderID : string){
+    this.commonService.presentLoading("Please Wait ...");
     this.orderService.rejectOrder(orderID,this.distUID).then(()=>{
+      this.commonService.dismissLoading();
       this.commonService.successToast();
       this.delOrder(orderID);
     }).catch((err)=>console.log(err));
@@ -108,5 +128,9 @@ export class DistHistoryPage {
       user : User.Distributor ,
       order : order
     });
+  }
+  toggleMenu()
+  {
+    this.menuCtrl.toggle();
   }
 }

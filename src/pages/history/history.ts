@@ -29,7 +29,6 @@ export class HistoryPage {
 
 ionViewDidLoad() {
   console.log('ionViewDidLoad HistoryPage');
-  this.subscribeOrders();
 }
 
 gotodetailsrequest(){
@@ -45,15 +44,18 @@ listOrdersNow(){
     // this.noOrders = res;
     console.log(res);
     this.noOrders = res;
+    this.commonService.sortArray(this.noOrders,'deliveryDate',this.commonService.SortDESC);
     console.log(this.noOrders);
   });
   this.orderProv.getOrdersByCustomer(this.custId,Order.PendingStatus).then((res)=>{
     console.log(res);
     this.pendingOrders = res;
+    this.commonService.sortArray(this.pendingOrders,'deliveryDate',this.commonService.SortDESC);
   });
   this.orderProv.getOrdersByCustomer(this.custId,Order.RejectedStatus).then((res)=>{
     console.log(res);
     this.rejectedOrders = res;
+    this.commonService.sortArray(this.rejectedOrders,'deliveryDate',this.commonService.SortDESC);
   })
 }
 
@@ -61,14 +63,8 @@ listOrderDone(){
   this.orderProv.getOrdersByCustomer(this.custId,Order.DeliveredStatus).then((res)=>{
     console.log(res);
     this.deliveredOrders = res;
+    this.commonService.sortArray(this.deliveredOrders,'deliveryDate',this.commonService.SortDESC);
   });
-}
-
-subscribeOrders(){
-  console.log("DONE");
-  this.orderProv.subscribeToCustomerHistory((order : Order)=> this.zone.run(()=>{
-    console.log(order);
-  }));
 }
   convertDate(timestamp : Date) : Date {
     return this.commonService.convertTimestampToDate(timestamp);
@@ -79,4 +75,6 @@ subscribeOrders(){
       order : order
     });
   }
+
+
 }

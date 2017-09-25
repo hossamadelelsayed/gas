@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,Platform } from 'ionic-angular';
+import {LoadingController, NavController, Platform} from 'ionic-angular';
 import {MainPage} from "../main/main";
 import {ForgotpasswordPage} from "../forgotpassword/forgotpassword";
 import {RegistermemberPage} from "../registermember/registermember";
@@ -13,7 +13,7 @@ import {NativeStorage} from '@ionic-native/native-storage';
 import {HistoryPage} from "../history/history";
 import {DistHistoryPage} from "../dist-history/dist-history";
 import {OrderProvider} from "../../providers/order/order";
-
+import {CommonServiceProvider}from"../../providers/common-service/common-service"
 
 @Component({
   selector: 'page-home',
@@ -24,16 +24,18 @@ public mobile:any;
 public password:any;
 
 
-constructor( public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
+constructor(public commonService:CommonServiceProvider,public loadingCtrl: LoadingController, public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
   private storage: Storage , public orderService : OrderProvider) {
-    this.auth.AnonymousSignIn();
+    // this.auth.AnonymousSignIn();
   }
 
 gotocreateorder()
 {
-  // var self = this;
+
+this.commonService.presentLoading('Logging In');
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
+  this.commonService.dismissLoading();
     console.log(user['uEmail']);
     // this.auth.getUserId;
     console.log(user['uType']);
@@ -52,6 +54,7 @@ gotocreateorder()
     this.nativeStorage.setItem('password',this.password);
     console.log(this.mobile);
   }).catch((err)=>{
+    this.commonService.dismissLoading();
     console.log(err.message);
     this.translateAndToast(err.message);
   });
@@ -60,6 +63,7 @@ gotocreateorder()
 
 gotoforgotpassword(){
 this.navCtrl.push(ForgotpasswordPage);
+
 }
 gotoreg(){
 this.navCtrl.push(RegistermemberPage);
@@ -81,5 +85,4 @@ toast.present();
       }
     );
   }
-
 }

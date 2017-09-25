@@ -12,24 +12,20 @@
       </ion-row>
     </ion-title>
   </ion-navbar>
- 
 </ion-header>
-
 
 <ion-content padding>
   <ion-list >
  <img class="logo" src="assets/imgs/agent_pin.png">
- <h5 class="name">{{'agent name'|translate}}</h5>
+  <h5 *ngIf="mode == rateClass.rateCustomerType" style="font-family: cairo; color: gray">{{'Customer Name'|translate}} : {{user?.name}}</h5>
+  <h5 *ngIf="mode == rateClass.rateDistType" style="font-family: cairo; color: gray">{{'Distributor Name'|translate}} : {{user?.name}}</h5>
  <ion-row class="r">
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon style="font-size:3rem; color:gray;" ios="ios-star" md="ios-star-outline"></ion-icon>
+   <ion-icon  *ngFor="let icon of icons; let i = index;" style="color:orange" [name]="icon"
+             (click)="customerRate(i+1)"></ion-icon>
  </ion-row>
-   
-    <textarea class="add" placeholder="{{'Comment'|translate}}" ></textarea>
-       
-  <button class="btn" ion-button round >{{'Rate'|translate}}</button>
+
+    <textarea [(ngModel)]="comment" class="add" placeholder="{{'Comment'|translate}}" ></textarea>
+
+  <button class="btn" ion-button round (click)="rateConfirm()" >{{'Rate'|translate}}</button>
   </ion-list>
 </ion-content>

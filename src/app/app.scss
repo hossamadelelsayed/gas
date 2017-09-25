@@ -8,7 +8,7 @@
     font-family: cairo;
     color: gray;
     font-size: 1.7rem;
-} 
+}
 
 .header-md::after{
     background-image: none !important;
@@ -21,7 +21,7 @@
 }
 .toolbar-background-md {background-color: white;
 }
-.toolbar-ios { 
+.toolbar-ios {
     min-height: 60px;
 }
 .toolbar-ios ion-title{
@@ -43,7 +43,7 @@ padding: 24px 4px 11px 4px;}
     background-color: #ff8d15;
     float: right;
     font-family: cairo;
- 
+
 }
 [dir="rtl"] .btchange{
  background-color: #ff8d15;
@@ -84,13 +84,13 @@ padding: 24px 4px 11px 4px;}
 
 }
 [dir="rtl"] .has-title-only .tab-button-text {
-  
+
   white-space: normal;
   font-family: 'Cairo-Regular' !important;
   font-size: 1.5rem !important;
 }
 [dir="ltr"] .has-title-only .tab-button-text {
-  
+
   white-space: normal;
   font-family: 'Cairo-Regular' !important;
 }
@@ -102,8 +102,8 @@ padding: 24px 4px 11px 4px;}
   [dir="ltr"] .lab{
             padding-right: 30px;
        padding-left: 30px;
-        margin-bottom: -21px;
-    }  
+        margin-bottom: -39px;
+    }
      .lab2{
             padding-right: 30px;
        padding-left: 30px;
@@ -113,9 +113,9 @@ padding: 24px 4px 11px 4px;}
    [dir="ltr"]  .lab2{
             padding-right: 30px;
        padding-left: 30px;
-        margin-bottom: -21px;
+       
         direction: ltr;
-    } 
+    }
     .year{
     margin-top: 29px;
 }
@@ -174,6 +174,18 @@ ion-menu[side=left] > .menu-inner {
 .alert-md .alert-radio-icon {
     visibility:hidden;
 }
+//starsrate{
+//margin-top: -20px;
+//  font-size: 1.8rem;
+//  padding-left:37%;
+//}
+//
+//[dir='rtl'] starsrate{
+//  margin-top: -20px;
+//  font-size: 1.8rem;
+//  padding-right:40%;
+//}
+
 $color-primary :#ff8d15;
 $color-background:#f5f7f9;
 // App Global Sass

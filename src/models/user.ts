@@ -1,3 +1,4 @@
+import {RateInfo} from "./rateInfo";
 /**
  * Created by a4p2 on 8/28/2017.
  */
@@ -7,6 +8,7 @@ export class User {
   private _name : string ;
   private _phoneNo : number ;
   private _email : string ;
+  private _rateInfo : RateInfo ;
   constructor(){
   }
   get name():string {
@@ -18,5 +20,9 @@ export class User {
   get email():string {
     return this._email;
   }
+  get rateInfo(): RateInfo {
+    return this._rateInfo;
+  }
+
 
 }

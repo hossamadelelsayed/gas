@@ -15,6 +15,7 @@ import {Events} from "ionic-angular";
 export class OrderProvider {
   public fireDatabase : any;
   public fireAuth : any;
+  public city : string ;
   constructor(public http: Http,public events: Events) {
     console.log('Hello OrderProvider Provider');
     this.fireAuth = firebase.auth();
@@ -47,8 +48,8 @@ export class OrderProvider {
         OrderInstanceRef.child('orderID').set(orderSnapshot.key).then(()=>{
           let customerOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+orderSnapshot.key) ;
           if(distributerID != null)
-            this.publishOrderToSpecificDist('Alexandria Governorate',orderSnapshot.key,distributerID);
-          else this.publishOrderToAllDist('Alexandria Governorate',orderSnapshot.key);
+            this.publishOrderToSpecificDist(this.city,orderSnapshot.key,distributerID);
+          else this.publishOrderToAllDist(this.city,orderSnapshot.key);
           customerOrderRef.update({
             orderID : orderSnapshot.key ,
             status : Order.NoResponseStatus
@@ -66,6 +67,7 @@ export class OrderProvider {
   }
   getOrdersByCustomer(customerID : string , statusType : string) : Promise<Order[]>
   {
+    let ordersPromises : Promise<Order>[] = [] ;
     let orders : Order[] = [] ;
     let customerOrderRef = this.fireDatabase.ref('/customers/'+customerID+'/history');
     let promise = new Promise((resolve, reject) => {
@@ -73,11 +75,11 @@ export class OrderProvider {
         .then((snapshot)=>{
           snapshot.forEach((childSnapshot) => {
             let orderHistoryRef = this.fireDatabase.ref('/history/'+childSnapshot.key);
-            orderHistoryRef.once('value').then((orderSnapshot)=>{
-              orders.push(<Order>orderSnapshot.val())
-              }).catch((err)=>reject(err));
+            ordersPromises.push(this.getOrderData(orderHistoryRef));
           });
-        resolve(orders);
+          Promise.all(ordersPromises).then((res)=>{
+            resolve(<Order[]>res);
+          }).catch((err)=>reject(err));
         }).catch((err)=>reject(err));
     });
     return promise ;
@@ -127,6 +129,37 @@ export class OrderProvider {
     });
     return promise ;
   }
+  orderDeliverConfirmation(orderID : string) : Promise <boolean>
+  {
+    let promises : Promise<boolean>[] = [] ;
+    let promise = new Promise((resolve, reject) => {
+      let orderRef = this.fireDatabase.ref('/history/'+orderID);
+      promises.push(orderRef.child('status').set(Order.DeliveredStatus).catch((err)=>reject(err)));
+      promises.push(this.distAndCustToDeliverOrder(orderRef).catch((err)=>reject(err)));
+      Promise.all(promises).then(()=>{
+        resolve(true);
+      }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
+  private distAndCustToDeliverOrder(orderRef :  firebase.database.Reference)  : Promise <boolean>
+  {
+    let promises : Promise<boolean>[] = [] ;
+    let order : Order ;
+    let promise = new Promise((resolve, reject) => {
+      orderRef.once('value').then((orderSnapShot)=>{
+        order = orderSnapShot.val();
+        let customerOrderRef = this.fireDatabase.ref('customers/'+order.customerID+'/history/'+order.orderID);
+        let distOrderRef = this.fireDatabase.ref('distributors/'+order.distributerID+'/history/'+order.orderID);
+        promises.push(customerOrderRef.child('status').set(Order.DeliveredStatus).catch((err)=>reject(err)));
+        promises.push(distOrderRef.child('status').set(Order.DeliveredStatus).catch((err)=>reject(err)));
+        Promise.all(promises).then(()=>{
+          resolve(true);
+        }).catch((err)=>reject(err));
+      }).catch((err)=>reject(err));
+    });
+    return promise ;
+  }
   distOrderAccept(orderID : string , distributerID : string) : Promise <boolean>
   {
     let promises : Promise<boolean>[] = [] ;
@@ -154,8 +187,8 @@ export class OrderProvider {
         promises.push(distOrderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err)));
         promises.push(distOrderRef.child('orderID').set(order.orderID).catch((err)=>reject(err)));
         if(order.assignDistType == Order.AssignAllDist)
-          promises.push(this.removeOrderFromAllDist("Alexandria Governorate",order.orderID).catch((err)=>reject(err)));
-        else promises.push(this.removeOrderFromSpecificDist("Alexandria Governorate",order.orderID ,order.distributerID).catch((err)=>reject(err)));
+          promises.push(this.removeOrderFromAllDist(this.city,order.orderID).catch((err)=>reject(err)));
+        else promises.push(this.removeOrderFromSpecificDist(this.city,order.orderID ,order.distributerID).catch((err)=>reject(err)));
         Promise.all(promises).then(()=>{
           resolve(true);
         }).catch((err)=>reject(err));
@@ -237,7 +270,6 @@ export class OrderProvider {
   }
   listenToDistHistoryChange( distributerID : string)
   {
-    console.log(distributerID);
     let historyRef = this.fireDatabase.ref('distributors/' + distributerID + '/history') ;
     historyRef.on('child_changed', (data) => {
       let historyRef = firebase.database().ref('history/' + data.key);
@@ -323,8 +355,8 @@ export class OrderProvider {
         promises.push(orderRef.remove().catch((err)=> reject(err)));
         promises.push(customerOrderRef.remove().catch((err)=> reject(err)));
         if(order.assignDistType == Order.AssignAllDist)
-          promises.push(this.removeOrderFromAllDist("Alexandria Governorate",order.orderID).catch((err)=>reject(err)));
-        else promises.push(this.removeOrderFromSpecificDist("Alexandria Governorate",order.orderID ,order.assignDistID).catch((err)=>reject(err)));
+          promises.push(this.removeOrderFromAllDist(this.city,order.orderID).catch((err)=>reject(err)));
+        else promises.push(this.removeOrderFromSpecificDist(this.city,order.orderID ,order.assignDistID).catch((err)=>reject(err)));
         Promise.all(promises).then(()=>resolve(true)).catch((err)=>reject(err));
     });
     return promise ;
@@ -443,20 +475,27 @@ export class OrderProvider {
   }
   attachDistListeners(){
     let currentUser=firebase.auth().currentUser.uid;
-    this.listenToDistOrder('Alexandria Governorate',currentUser);
-    this.listenToDistOrderRemoved('Alexandria Governorate',currentUser);
+    console.log('current Dist' , currentUser);
+    this.listenToDistOrder(this.city,currentUser);
+    this.listenToDistOrderRemoved(this.city,currentUser);
     this.listenToDistHistoryChange(currentUser);
   }
   attachCustomerListeners(){
     let currentUser=firebase.auth().currentUser.uid;
+    console.log('current Customer' , currentUser);
     this.listenToCustomerHistoryChange(currentUser);
   }
   detachDistListeners(){
     let currentUser=firebase.auth().currentUser.uid;
-    this.detachDistOrder('Alexandria Governorate',currentUser);
+    this.detachDistOrder(this.city,currentUser);
   }
   detachCustomerListeners(){
+  }
 
+  getDistCity() : Promise<string>{
+    let promise = new Promise((resolve, reject) => {
+    });
+    return promise ;
   }
 
 

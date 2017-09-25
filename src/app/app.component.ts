@@ -33,6 +33,12 @@ import * as firebase from "firebase";
 import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {User} from "../models/user";
+import {AddvaluationPage} from "../pages/addvaluation/addvaluation";
+import {Rate} from "../models/rate";
+import {Geolocation} from "@ionic-native/geolocation";
+import {DistributorProvider} from "../providers/distributor/distributor";
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -45,14 +51,14 @@ export class MyApp {
   historyPage=HistoryPage;
   callusPage=CallusPage;
   notificationsPage=NotificationsPage;
-  aboutaprogramPage=AboutaprogramPage
+  aboutaprogramPage=AboutaprogramPage;
   teamregisterPage=TeamregisterPage;
   registermemberPage=RegistermemberPage;
   @ViewChild('nav') nav:NavController;
    public  MainService = MainService;
    public phone:string;
    public password:string;
-  appFlag:false;
+   appFlag:false;
 
   constructor( platform: Platform,
               statusBar: StatusBar,
@@ -63,17 +69,56 @@ export class MyApp {
               private toastCtrl: ToastController,
               public orderService : OrderProvider  ,
                public alertCtrl : AlertController ,public auth:AuthServiceProvider,
-              private storage: Storage,public events:Events) {
+              private storage: Storage,public events:Events,
+               public  geolocation: Geolocation ,
+               public distService : DistributorProvider,private androidPermissions: AndroidPermissions) {
+
     platform.ready().then(() => {
+      platform.pause.subscribe(() => {
+        console.log('[INFO] App paused');
+        // this.nav.push(this.nav.getActive().component)
+        // return this.nav.getActive();
+      });
+      platform.resume.subscribe(() => {
+        // this.nav.push(this.nav.getActive().component)
+        console.log('[INFO] App resumed');
+        // this.nav.getPrevious()
+        // return this.nav.getActive(;
+
+      });
+
+
+      if (platform.is('android') || platform.is('android')) {
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+        success => console.log('Permission granted'),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+      );
+      // this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GPS, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
+    }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      this.geolocation.getCurrentPosition().then((resp) => {
+        this.distService.getCurrentIpLocation(resp.coords.latitude ,resp.coords.longitude).then((city : string)=>{
+          this.orderService.city = city ;
+        }).catch((err)=>console.log(err));
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
       this.orderService.subscribeToDistOrder((order : Order)=> {
         let view = this.nav.getActive();
         console.log(view.component);
         if(view.component != DistHistoryPage)
           this.newDistOrderAlert(order);
+      });
+      this.orderService.subscribeToDistHistory((order : Order)=> {
+        if(order.status == Order.DeliveredStatus)
+          this.nav.push(AddvaluationPage,{
+            order : order ,
+            mode : Rate.rateCustomerType
+          });
       });
       this.orderService.subscribeToCustomerHistory((order : Order)=> {
         switch(order.status)
@@ -87,88 +132,86 @@ export class MyApp {
             break;
           }
           case Order.DeliveredStatus : {
-            this.alertCustomerOrder(order);
+            this.nav.push(AddvaluationPage,{
+              order : order ,
+              mode : Rate.rateDistType
+            });
             break;
           }
         }
       });
-      this.orderService.login().then((dist)=>{
-        console.log('login');
-        // this.orderService.subscribeToDistOrder((order : Order)=> {
-        //   let view = this.nav.getActive();
-        //   if(view.component.name != 'DistHistoryPage')
-        //     this.newOrderAlert(order);
-        // });
-        // this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistHistoryChange(dist.uid);
-        // this.orderService.listenToCustomerHistoryChange("");
-      }).catch((err)=>console.log(err));
 
-      // this.nativeStorage.getItem('phone').then((res)=>{
-      //   this.presentToast(res);
-      //  this.phone=res;
-      // }).then(()=>{
-      //   this.nativeStorage.getItem('password').then((res)=>{
-      //     this.presentToast(res);
-      //     this.password=res;
-      //   }).then(()=>{
-      //     this.storage.get('type').then((res)=>{
-      //       this.presentToast(res);
-      //       if(res=='distributors'){
-      //         this.welcomePage=DistHistoryPage;
-      //       }
-      //       else{
-      //         this.welcomePage=MainPage;
-      //       }
-      //     })
-      //   })
-      // }).catch(()=>{
-      //   this.welcomePage=WelcomePage;
-      // });
-    });
-    this.translate.setDefaultLang('ar');
-    platform.setDir('rtl', true);
+
       this.nativeStorage.getItem('phone').then((res)=>{
-        this.presentToast(res);
-        this.phone=res;
+        // this.presentToast(res);
+       this.phone=res;
       }).then(()=>{
         this.nativeStorage.getItem('password').then((res)=>{
-          this.presentToast(res);
+          // this.presentToast(res);
           this.password=res;
-        }).then(()=>{
-          this.storage.get('type').then((res)=>{
-
-
-            this.presentToast(res);
-            if(res=='distributors'){
-              this.welcomePage=HistoryPage;
-
-            }
-            else{
-              this.welcomePage=MainPage;
-            }
-          })
+          this.auth.doLogin(this.phone,this.password).then(()=>{
+            this.storage.get('type').then((res)=>{
+              // this.presentToast(res);
+              if(res=='distributors'){
+                this.welcomePage=DistHistoryPage;
+                this.orderService.attachDistListeners();
+              }
+              else{
+                this.welcomePage=MainPage;
+                this.orderService.attachCustomerListeners();
+              }
+            })
+          }).catch((err)=>console.log(err));
         })
       }).catch(()=>{
         this.welcomePage=WelcomePage;
       });
-
-    this.storage.get('lang').then((res)=>{
-      if(res =='ar'){
-        this.translate.setDefaultLang('ar');
-        platform.setDir('rtl', true);
-        console.log(res);
-      }
-      else{
-        this.translate.setDefaultLang('en');
-        platform.setDir('ltr', true);
-        console.log(res);
-      }
-    });
+/////////////////////////
+    // this.translate.setDefaultLang('ar');
+    // platform.setDir('rtl', true);
+    //   this.nativeStorage.getItem('phone').then((res)=>{
+    //     console.log('auto login phone',res)
+    //     this.presentToast(res);
+    //     this.phone=res;
+    //   }).then(()=>{
+    //     this.nativeStorage.getItem('password').then((res)=>{
+    //
+    //       this.presentToast(res);
+    //       this.password=res;
+    //     }).then(()=>{
+    //       this.storage.get('type').then((res)=>{
+    //
+    //
+    //         this.presentToast(res);
+    //         if(res=='distributors'){
+    //           this.welcomePage=HistoryPage;
+    //
+    //         }
+    //         else{
+    //           this.welcomePage=MainPage;
+    //         }
+    //       })
+    //     })
+    //   }).catch(()=>{
+    //     this.welcomePage=WelcomePage;
+    //   });
+    //
+    // this.storage.get('lang').then((res)=>{
+    //   if(res =='ar'){
+    //     this.translate.setDefaultLang('ar');
+    //     platform.setDir('rtl', true);
+    //     console.log(res);
+    //   }
+    //   else{
+    //     this.translate.setDefaultLang('en');
+    //     platform.setDir('ltr', true);
+    //     console.log(res);
+    //   }
+    // });
 
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
+    });
 
   }
   onLoad(page:any){

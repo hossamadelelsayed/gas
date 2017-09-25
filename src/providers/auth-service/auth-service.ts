@@ -5,6 +5,9 @@ import 'rxjs/add/operator/map';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {User} from "firebase/app";
+import {DistributorProvider} from'../../providers/distributor/distributor';
+import { Geolocation } from '@ionic-native/geolocation';
+declare let google;
 
 // import {NavController} from 'ionic-angular';
 
@@ -18,7 +21,7 @@ import {User} from "firebase/app";
 export class AuthServiceProvider {
   public fireAuth: any;
   public userData: any;
-  constructor(private storage:Storage, public http: Http,private events :Events) {
+  constructor(  public geolocation: Geolocation,private distributorProvider:DistributorProvider,private storage:Storage, public http: Http,private events :Events) {
     this.fireAuth = firebase.auth();
      this.userData = firebase.database().ref('customers');
   }
@@ -41,14 +44,14 @@ export class AuthServiceProvider {
       });
 
   }
-  phoneLogin(phoneNo:any,password :any): Promise <any>{
+  phoneLogin(phoneNo:any): Promise <any>{
 
     let self=this;
 
     let promise = new Promise((resolve, reject )=>{
       let typeRef = firebase.database().ref(phoneNo);
       typeRef.once("value")
-        .then(function(snapshot) {
+        .then((snapshot)=> {
 
           let type = snapshot.child("type").val();
 
@@ -80,13 +83,23 @@ let userdata={uEmail:email,uType:type};
   //login and returns err msg if err occare
   doLogin(phoneNo: string, password: string): Promise <string>{
     let promise = new Promise((resolve, reject )=>{
-      this.phoneLogin(phoneNo,password).then(userdata=>{
+      this.AnonymousSignIn().then((check)=>{
+        if(check==true){
+      this.phoneLogin(phoneNo).then(userdata=>{
         this.userDelet();
         this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;
             resolve(userdata);
-            
+            if(userdata.uType=="distributors"){
+              this.geolocation.getCurrentPosition().then((resp) => {
+                //current latlng
+                let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+
+             this.distributorProvider . sendMyLoc(resp.coords.latitude, resp.coords.longitude)
+               console.warn("hi am a distributor")
+                });
+            }
             console.log("loged in id",userId);
             // this.events.publish('user:created', user);
             // this.events.publish('userId', user.uid);
@@ -94,21 +107,29 @@ let userdata={uEmail:email,uType:type};
             resolve('logedIn');
           })  .catch((err)=>reject(err));
       }).catch((err)=>reject(err));
-    });
+        }
+      });
+        });
 
     return promise;
 
   }
 
   //signIn annonimously beforelogin
-  AnonymousSignIn(){
-    return this.fireAuth.signInAnonymously().catch(function(error) {
-     // Handle Errors here.
-     let errorCode = error.code;
-     let errorMessage = error.message;
-     console.log("error.message",error.message);
-     // ...
-   });
+  AnonymousSignIn():Promise<boolean>{
+    let promise=new Promise(((resolve, reject) => {
+      this.fireAuth.signInAnonymously().then(()=>{
+        resolve(true)
+      }).catch((error)=> {
+        reject(false)
+        // Handle Errors here.
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log("error.message",error.message);
+        // ...
+      });
+    }))
+    return promise;
   }
 
 
@@ -257,6 +278,7 @@ resetPassword(email: string): any {
 }
 //logout
 doLogout(): any {
+    this.distributorProvider.onDistributorDisconnect();
   return this.fireAuth.signOut();
 }
 
@@ -416,7 +438,22 @@ editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
         })  .then((msg)=>{
           resolve(msg);
 
-        }).catch((err)=>reject(err));
+        }).catch((err)=>{reject(err)
+            let ref=firebase.database().ref();
+
+            ref.once('value',(snapshot)=>{
+              ref.child(phoneNo+"/email").set(firebase.auth().currentUser.email);
+              ref.child(phoneNo+"/type").set(type);
+
+            });
+            let ref2=firebase.database().ref(type+"/"+uId+"/email");
+
+            ref2.once('value',(snapshot)=>{
+              ref2.set(firebase.auth().currentUser.email);
+
+            });
+          }
+        );
     //   }).catch(function(error) {
     //   // An error happened.
     //   reject(error);

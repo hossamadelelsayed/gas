@@ -1,7 +1,7 @@
 import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
 import {OrderlaterPage} from "../orderlater/orderlater";
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import {Component, ViewChild, ElementRef, NgZone} from '@angular/core';
 import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from "firebase";
@@ -16,6 +16,8 @@ import { SMS } from '@ionic-native/sms';
 import { CallNumber } from '@ionic-native/call-number';
 import {Subscription} from "rxjs/Subscription";
 import { Storage } from '@ionic/storage';
+import {OrderProvider} from "../../providers/order/order";
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 /**
  * Generated class for the MainPage page.
@@ -35,6 +37,8 @@ export class MainPage {
     markersTags : any[] = [];
     distName:any;
     distPhone:any;
+    starsArray:any[];
+    starsNo:any;
   // private sub: Subscription;
 
   @ViewChild('map') mapElement: ElementRef;
@@ -42,7 +46,7 @@ export class MainPage {
     firebaseRef: any;
     geoFire: any;
     marker:any;
-    markerRef:any;
+    markerRef:any=firebase.database().ref();
     myLatLng:any;
     smsMessage:any;
     disId:string;
@@ -51,9 +55,13 @@ export class MainPage {
                 ,public geolocation: Geolocation,
                 public navCtrl: NavController,
                 public navParams: NavParams,
+                public commonService:CommonServiceProvider,
                 public menuCtrl: MenuController ,
                 public distributor :DistributorProvider,
-                private authService:AuthServiceProvider, private storage: Storage) {
+                private authService:AuthServiceProvider, private storage: Storage,
+                private order:OrderProvider ,
+                public zone: NgZone
+    ) {
 /// Reference database location for GeoFire
 
 
@@ -77,14 +85,15 @@ export class MainPage {
                 console.log("IDDDDDDDDDDD"+this.disId);
                 this.navCtrl.push(CreateorderPage , {distId: this.disId});
             }
+            latLng:any;
     sendCurrentLoc(){
         // get current position
         this.geolocation.getCurrentPosition().then((resp) => {
             //current latlng
-            let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+            this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
             //initialize map
             let mapOptions = {
-                center: latLng,
+                center: this.latLng,
                 zoom: 16,
                 disableDefaultUI: true,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -95,7 +104,10 @@ export class MainPage {
             //creat map
             this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
           google.maps.event.addListener(this.map, 'click', () => {
-            this.flag=true;
+            this.zone.run(()=>{
+              if(!this.flag)
+                this.flag = true ;
+            });
           });
         }).catch((error) => {
             // console.log('Error getting location', error);
@@ -106,14 +118,13 @@ export class MainPage {
         let self=this;
         this.sendCurrentLoc();
 
-      let markerRef=firebase.database().ref('/valid/');
       this.geolocation.getCurrentPosition().then((resp) => {
-
+console.log('loc resp lat',resp.coords.latitude)
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
-      this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
-      self.setMarkers(city);
-        this.storage.set('city',city);
+      // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+      self.setMarkers(`${city}`);
+        this.storage.set('city',`${city}`);
 
       }).catch(err=>{
         self.setMarkers(err);
@@ -170,14 +181,14 @@ export class MainPage {
     {
         this.menuCtrl.toggle();
     }
-    removeMarker(marker:any){
-    }
+
 
     addMarker(latlng:any,key:any){
 
       var marker = new google.maps.Marker({
 icon:'assets/imgs/map_cylinder.png',
-        tag:key
+        tag:key,
+        position:latlng
       });
 
         // marker.setMap(this.map);
@@ -195,7 +206,28 @@ icon:'assets/imgs/map_cylinder.png',
   }
 }
       google.maps.event.addListener(marker, 'click', () => {
-            this.flag=false;
+        this.zone.run(()=>this.flag=false);
+        this.geolocation.getCurrentPosition().then((resp) => {
+
+          //current latlng
+          let latLng={lat:resp.coords.latitude,lng: resp.coords.longitude}
+          console.log('marker',marker.getPosition().lat())
+          console.log('latlng',latLng.lat)
+          let loc={lat:marker.getPosition().lat(),lng:marker.getPosition().lng()}
+          this.getDistance(latLng,loc);
+
+        })
+
+        // this.getDistance(marker,this.latLng)
+        this.order.getDistData(marker.tag).then(user=>{
+          // console.log('User',user.rateInfo);
+          // console.log('User',user.rateInfo.rateNo);
+          // console.log('User',user.rateInfo.rateSum);
+          this.commonService.icons(user.rateInfo.rateSum/ user.rateInfo.rateNo)
+          console.log('User', this.commonService.icons(user.rateInfo.rateSum/ user.rateInfo.rateNo));
+this.starsArray=this.commonService.icons(user.rateInfo.rateSum/ user.rateInfo.rateNo)
+        })
+
             this.distributor.getDistributorName(marker.tag).then((res)=>{
                 this.distName = res;
                 marker.setTitle(res);
@@ -214,4 +246,31 @@ icon:'assets/imgs/map_cylinder.png',
   // {
   //   this.sub.unsubscribe();
   // }
+  ionViewWillLeave()
+  {
+    // this.sub.unsubscribe();
+    this.markerRef.off();
+  // this.map.clear();
+  }
+  distance:any;
+  getDistance(currentLoc:any,distLoc:any){
+    var currentDistLoc = [currentLoc.lat,currentLoc.lng];
+    var customerLoc = [ distLoc.lat,distLoc.lng];
+    console.log('total distance',currentDistLoc, customerLoc)
+
+    this.distance= GeoFire.distance(customerLoc,currentDistLoc).toFixed(2);
+    if(this.distance<=5) {
+      // this.commonService.presentConfirm('wait till you get your pipe delevered','i didnet recive my order','i recived my order',this.orderIsDone());
+    }
+  }
+
+
+displayRate(starsNo){
+
+    for(let i; i<=starsNo;i++){
+this.starsArray.push(1);
+  }
+
+
+  }
 }
