@@ -65,7 +65,7 @@ export class EditaccountPage {
          console.log(error);
          self.translateAndToast(error.message);
        });
-  this.commonService.dismissLoading()
+  // this.commonService.dismissLoading()
   }
    presentToast(txt:any) {
 
