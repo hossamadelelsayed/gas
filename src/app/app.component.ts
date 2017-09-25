@@ -90,9 +90,9 @@ export class MyApp {
 
       if (platform.is('android') || platform.is('android')) {
 
-      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GPS).then(
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
         success => console.log('Permission granted'),
-        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GPS)
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
       );
       // this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GPS, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
     }
@@ -143,15 +143,15 @@ export class MyApp {
 
 
       this.nativeStorage.getItem('phone').then((res)=>{
-        this.presentToast(res);
+        // this.presentToast(res);
        this.phone=res;
       }).then(()=>{
         this.nativeStorage.getItem('password').then((res)=>{
-          this.presentToast(res);
+          // this.presentToast(res);
           this.password=res;
           this.auth.doLogin(this.phone,this.password).then(()=>{
             this.storage.get('type').then((res)=>{
-              this.presentToast(res);
+              // this.presentToast(res);
               if(res=='distributors'){
                 this.welcomePage=DistHistoryPage;
                 this.orderService.attachDistListeners();
