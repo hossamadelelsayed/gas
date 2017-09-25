@@ -278,6 +278,7 @@ resetPassword(email: string): any {
 }
 //logout
 doLogout(): any {
+    this.distributorProvider.onDistributorDisconnect();
   return this.fireAuth.signOut();
 }
 

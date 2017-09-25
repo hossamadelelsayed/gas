@@ -475,12 +475,14 @@ export class OrderProvider {
   }
   attachDistListeners(){
     let currentUser=firebase.auth().currentUser.uid;
+    console.log('current Dist' , currentUser);
     this.listenToDistOrder(this.city,currentUser);
     this.listenToDistOrderRemoved(this.city,currentUser);
     this.listenToDistHistoryChange(currentUser);
   }
   attachCustomerListeners(){
     let currentUser=firebase.auth().currentUser.uid;
+    console.log('current Customer' , currentUser);
     this.listenToCustomerHistoryChange(currentUser);
   }
   detachDistListeners(){

@@ -76,14 +76,11 @@ export class MyApp {
     platform.ready().then(() => {
       platform.pause.subscribe(() => {
         console.log('[INFO] App paused');
-        this.nav.push(this.nav.getActive().component)
-
+        // this.nav.push(this.nav.getActive().component)
         // return this.nav.getActive();
-
       });
       platform.resume.subscribe(() => {
-        this.nav.push(this.nav.getActive().component)
-
+        // this.nav.push(this.nav.getActive().component)
         console.log('[INFO] App resumed');
         // this.nav.getPrevious()
         // return this.nav.getActive(;
@@ -97,8 +94,7 @@ export class MyApp {
         success => console.log('Permission granted'),
         err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GPS)
       );
-
-      this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GPS, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
+      // this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GPS, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
     }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -153,20 +149,24 @@ export class MyApp {
         this.nativeStorage.getItem('password').then((res)=>{
           this.presentToast(res);
           this.password=res;
-        }).then(()=>{
-          this.storage.get('type').then((res)=>{
-            this.presentToast(res);
-            if(res=='distributors'){
-              this.welcomePage=DistHistoryPage;
-            }
-            else{
-              this.welcomePage=MainPage;
-            }
-          })
+          this.auth.doLogin(this.phone,this.password).then(()=>{
+            this.storage.get('type').then((res)=>{
+              this.presentToast(res);
+              if(res=='distributors'){
+                this.welcomePage=DistHistoryPage;
+                this.orderService.attachDistListeners();
+              }
+              else{
+                this.welcomePage=MainPage;
+                this.orderService.attachCustomerListeners();
+              }
+            })
+          }).catch((err)=>console.log(err));
         })
       }).catch(()=>{
         this.welcomePage=WelcomePage;
       });
+/////////////////////////
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
     //   this.nativeStorage.getItem('phone').then((res)=>{

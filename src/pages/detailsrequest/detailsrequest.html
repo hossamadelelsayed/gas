@@ -17,12 +17,7 @@
 <div class="dstar">
   <h5 *ngIf="mode == userClass.Distributor" style="font-family: cairo; color: gray">{{'Customer Name'|translate}} : {{user?.name}}</h5>
   <h5 *ngIf="mode == userClass.Customer" style="font-family: cairo; color: gray">{{'Distributor Name'|translate}} : {{user?.name}}</h5>
-
- <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-<ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-<ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-<ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-<ion-icon style="font-size: 25px;color: gray" ios="ios-star" md="md-star-outline"></ion-icon>
+  <ion-icon  *ngFor="let icon of icons; let i = index;" style="color:orange" [name]="icon"></ion-icon>
 </div>
  </ion-row>
   <hr>
