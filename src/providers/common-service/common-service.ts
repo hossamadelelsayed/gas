@@ -19,6 +19,8 @@ export class CommonServiceProvider {
   public readonly maxRate: number = 5;
   public iconEmpty: string = 'star-outline';
   public iconFull: string = 'star';
+  public readonly  SortASC = 'asc' ;
+  public readonly SortDESC = 'desc' ;
   constructor(public http: Http ,public toastCtrl : ToastController ,
               public translateService : TranslateService , public alertCtrl : AlertController ,
               public loadingCtrl : LoadingController) {
@@ -120,4 +122,18 @@ export class CommonServiceProvider {
     alert.present();
   }
 
+
+
+  sortArray(array : any[] , key , sortType : string){
+    if(sortType == this.SortDESC)
+      array.sort((a ,b )=> {
+        if (new Date(a[key]) <= new Date(b[key]))
+          return 1;
+      });
+    else
+      array.sort((a ,b)=> {
+        if (new Date(a[key]) > new Date(b[key]))
+          return 1;
+      });
+  }
 }

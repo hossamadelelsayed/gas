@@ -84,7 +84,7 @@ createOrderNow(){
   this.commonService.presentLoading('Please Wait...');
   console.log(this.deliveryDate);
   this.order.createOrder(new Order
-    (this.userId,this.counter,this.location,"cash",this.deliveryDate,this.sameDate))
+    (this.userId,this.counter,this.location,"cash",<any>Date.now(),this.sameDate))
       .then((Order)=>{
         console.log(Order.deliveryDate);
         console.log(Order.customerID);

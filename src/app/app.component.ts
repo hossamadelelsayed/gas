@@ -116,18 +116,6 @@ export class MyApp {
         }
       });
 
-      this.orderService.login().then((dist)=>{
-        console.log('login');
-        // this.orderService.subscribeToDistOrder((order : Order)=> {
-        //   let view = this.nav.getActive();
-        //   if(view.component.name != 'DistHistoryPage')
-        //     this.newOrderAlert(order);
-        // });
-        // this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistHistoryChange(dist.uid);
-        // this.orderService.listenToCustomerHistoryChange("");
-      }).catch((err)=>console.log(err));
 
       // this.nativeStorage.getItem('phone').then((res)=>{
       //   this.presentToast(res);

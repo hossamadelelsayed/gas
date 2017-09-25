@@ -20,7 +20,7 @@
   <h5 *ngIf="mode == rateClass.rateCustomerType" style="font-family: cairo; color: gray">{{'Customer Name'|translate}} : {{user?.name}}</h5>
   <h5 *ngIf="mode == rateClass.rateDistType" style="font-family: cairo; color: gray">{{'Distributor Name'|translate}} : {{user?.name}}</h5>
  <ion-row class="r">
-   <ion-icon  *ngFor="let icon of icons(user?.rateInfo?.rateSum / user?.rateInfo?.rateNo); let i = index;" style="color:orange" [name]="icon"
+   <ion-icon  *ngFor="let icon of icons; let i = index;" style="color:orange" [name]="icon"
              (click)="customerRate(i+1)"></ion-icon>
  </ion-row>
 

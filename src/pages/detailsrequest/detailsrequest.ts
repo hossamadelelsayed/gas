@@ -18,6 +18,7 @@ export class DetailsrequestPage {
   public userClass  =  User ;
   public mode : string ;
   public order : Order ;
+  public orderClass  = Order ;
   public user : User ;
   constructor(public navCtrl: NavController, public navParams: NavParams ,
               public commonService : CommonServiceProvider , public orderService : OrderProvider ,

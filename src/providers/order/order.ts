@@ -67,6 +67,7 @@ export class OrderProvider {
   }
   getOrdersByCustomer(customerID : string , statusType : string) : Promise<Order[]>
   {
+    let ordersPromises : Promise<Order>[] = [] ;
     let orders : Order[] = [] ;
     let customerOrderRef = this.fireDatabase.ref('/customers/'+customerID+'/history');
     let promise = new Promise((resolve, reject) => {
@@ -74,11 +75,11 @@ export class OrderProvider {
         .then((snapshot)=>{
           snapshot.forEach((childSnapshot) => {
             let orderHistoryRef = this.fireDatabase.ref('/history/'+childSnapshot.key);
-            orderHistoryRef.once('value').then((orderSnapshot)=>{
-              orders.push(<Order>orderSnapshot.val())
-              }).catch((err)=>reject(err));
+            ordersPromises.push(this.getOrderData(orderHistoryRef));
           });
-        resolve(orders);
+          Promise.all(ordersPromises).then((res)=>{
+            resolve(<Order[]>res);
+          }).catch((err)=>reject(err));
         }).catch((err)=>reject(err));
     });
     return promise ;
@@ -494,5 +495,6 @@ export class OrderProvider {
     });
     return promise ;
   }
+
 
 }

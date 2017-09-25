@@ -44,8 +44,8 @@
                 <p class="ordernumber">  {{'Order Number'|translate}} &nbsp; {{order.orderID}} </p>
               </ion-col>
               <ion-col col-3>
-                <button *ngIf="order.status == Order.NoResponseStatus" ion-button full (click)="acceptOrder(order.orderID)" >  قبول </button>
-                <button *ngIf="order.status == Order.PendingStatus" ion-button outline (click)="rejectOrder(order.orderID)" > الغاء </button>
+                <button *ngIf="order.status == Order.NoResponseStatus" ion-button full (click)="acceptOrder(order.orderID)" > {{ 'Accept' | translate}}   </button>
+                <button *ngIf="order.status == Order.PendingStatus" ion-button outline (click)="rejectOrder(order.orderID)" > {{ 'Reject' | translate}} </button>
               </ion-col>
               <p class="time">{{ convertDate(order.date) }}</p>
             </ion-row>
@@ -53,7 +53,7 @@
         </ion-card>
         <ion-row class="row">
           <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">{{order.pipesNo}} {{'Cylinder'|translate}}</p>
-          <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
+          <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{ 'On Deliver' | translate}}</p>
           <img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
         </ion-row>
       </div>
@@ -78,7 +78,7 @@
           </ion-card>
           <ion-row class="row">
             <img class="linder" src="assets/imgs/cylinder.png"> <p class="pra">{{order.pipesNo}} {{'Cylinder'|translate}}</p>
-            <img class="payment" src="assets/imgs/payment.png"><p class="pra">عند الاستلام</p>
+            <img class="payment" src="assets/imgs/payment.png"><p class="pra">{{ 'On Deliver' | translate}}</p>
             <img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
           </ion-row>
         </div>

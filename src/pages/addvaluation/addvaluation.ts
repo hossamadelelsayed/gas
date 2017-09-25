@@ -19,9 +19,10 @@ export class AddvaluationPage {
 
   public order : Order ;
   public mode : string ;
-  public user : User ;
+  // public user : User ;
   public rateClass = Rate ;
   public rateNo : number = 0 ;
+  public icons : string[] ;
   public comment : string  = '';
   constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController,
               public orderService : OrderProvider , public commonService : CommonServiceProvider ,
@@ -32,19 +33,20 @@ export class AddvaluationPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddvaluationPage');
-    if(this.mode == Rate.rateCustomerType)
-      this.orderService.getCustomerData(this.order.customerID).then((cust : User)=>this.user = cust).catch((err)=>console.log(err));
-    else
-      this.orderService.getDistData(this.order.distributerID).then((dist : User)=>this.user = dist ).catch((err)=>console.log(err));
-
+    this.getIcons(0);
+    // if(this.mode == Rate.rateCustomerType)
+    //   this.orderService.getCustomerData(this.order.customerID).then((cust : User)=>this.user = cust).catch((err)=>console.log(err));
+    // else
+    //   this.orderService.getDistData(this.order.distributerID).then((dist : User)=>this.user = dist ).catch((err)=>console.log(err));
   }
-  icons(rate : number)
+  getIcons(rate : number)
   {
-    return this.commonService.icons(rate);
+     this.icons = this.commonService.icons(rate);
   }
   customerRate(rateNo : number){
     this.rateNo = rateNo ;
-    this.commonService.successToast();
+    this.getIcons(rateNo);
+    // this.commonService.successToast();
   }
   rateConfirm(){
     let rate : Rate = new Rate(

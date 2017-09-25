@@ -33,7 +33,7 @@
 <ion-row><h6> {{'your location'|translate}}</h6><p style="color:gray">{{order.location.label}}</p></ion-row><hr>
 <ion-row (click)="gotoflloerequest()"><h6>{{'Pay way'|translate}}</h6><p style="color:gray" >{{order.paymentType}}</p></ion-row>
 <div class="d">
-<button class="reqnow" ion-button round (click)="navigate()" >{{'Navigate'|translate}}</button>
+<button class="reqnow" *ngIf="order.status == orderClass.PendingStatus" ion-button round (click)="navigate()" >{{'Navigate'|translate}}</button>
 <!--<button class="reqlater" ion-button round>{{'Cancel Order'|translate}}</button>-->
 </div>
 </ion-list>

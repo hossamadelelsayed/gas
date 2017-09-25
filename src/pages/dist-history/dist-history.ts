@@ -49,9 +49,15 @@ export class DistHistoryPage {
 
     this.orderService.subscribeToDistHistory((order : Order)=> this.zone.run(()=>{
      if(order.status == Order.PendingStatus)
-        this.currentOrder.push(order);
+     {
+       this.currentOrder.push(order);
+       this.sortCurrentOrderByDeliveryDate();
+     }
     }));
-    this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=> this.currentOrder.push(order)));
+    this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=> {
+      this.currentOrder.push(order);
+      this.sortCurrentOrderByDeliveryDate();
+    }));
     this.orderService.subscribeToDistOrderRemoved((orderID : string)=> this.zone.run(()=>this.delOrder(orderID)));
     this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
       .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
@@ -63,6 +69,7 @@ export class DistHistoryPage {
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
   }
 
+
   delOrder(orderID : string){
     console.log('delEnter');
     console.log('before',this.currentOrder.length);
@@ -72,6 +79,7 @@ export class DistHistoryPage {
         console.log('after',this.currentOrder.length);
       }
     }
+    this.sortCurrentOrderByDeliveryDate();
     // let orderFilter :Order[]  ;
     // orderFilter = this.currentOrder.filter((order : Order) => {
     //   return (order.orderID != orderID);
@@ -82,12 +90,20 @@ export class DistHistoryPage {
   pushToLastOrder(orders : Order[]){
     orders.forEach((order  : Order)=>{
       this.lastOrder.push(order);
-    })
+    });
+    this.sortLastOrderByDeliveryDate();
   }
   pushToCurrentOrder(orders : Order[]){
     orders.forEach((order  : Order)=>{
       this.currentOrder.push(order);
-    })
+    });
+    this.sortCurrentOrderByDeliveryDate();
+  }
+  sortCurrentOrderByDeliveryDate(){
+    this.commonService.sortArray(this.currentOrder,'deliveryDate',this.commonService.SortDESC);
+  }
+  sortLastOrderByDeliveryDate(){
+    this.commonService.sortArray(this.lastOrder,'deliveryDate',this.commonService.SortDESC);
   }
   acceptOrder(orderID : string){
     this.commonService.presentLoading("Please Wait ...");
