@@ -4,6 +4,7 @@ import {Image} from "../../models/image";
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 
 @Component({
@@ -28,6 +29,8 @@ export class EditaccountdisPage {
   public myemail:string;
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
+              public commonService:CommonServiceProvider,
+
      private camera: Camera,
      public alertCtrl: AlertController,
      private toastCtrl:ToastController,
@@ -43,7 +46,7 @@ export class EditaccountdisPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditaccountdisPage');
-    
+
   }
   createImage(Type:number,image:string,ImgSRC:string){
     if(Type==Image.Profile){
@@ -62,7 +65,7 @@ export class EditaccountdisPage {
 
     }
 
-    
+
       openCamera(TypeName:number){
         const options: CameraOptions = {
           quality: 100,
@@ -71,15 +74,15 @@ export class EditaccountdisPage {
           mediaType: this.camera.MediaType.PICTURE,
           correctOrientation:true
         };
-    
+
         this.camera.getPicture(options).then((imageData) => {
          // imageData is either a base64 encoded string or a file URI
          // If it's base64:
          let base64Image = 'data:image/jpeg;base64,' + imageData;
         //  this.sta = base64Image;
-        
+
          this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
-         
+
         }, (err) => {
           console.log(err);
         });
@@ -142,53 +145,65 @@ export class EditaccountdisPage {
       });
      }
       gotoconfirm() {
+      this.commonService.presentLoading("Please Wait ...")
         //Editname
         this.fireAuth.editdistributorName(this.name).then((res) => {
           console.log(res);
           console.log(this.name);
-            this.translateAndToast('Name updated');   
-           })
-           //edit phone
+            this.translateAndToast('Name updated');
+          this.commonService.dismissLoading();
+this.commonService.dismissLoading()
+        })
+        this.commonService.presentLoading('Please Wait...')
+
+        //edit phone
         // this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
         //     console.log(res)
         //     console.log(this.phone);
-        //     this.translateAndToast('Phone updated'); 
-        //   }) 
+        //     this.translateAndToast('Phone updated');
+        //   })
           //edit password
         this.fireAuth.editPassword(this.password).then((res)=>{
+          this.commonService.dismissLoading()
+
           console.log(res);
           console.log(this.password);
           this.translateAndToast("Password updated");
         })
         //edit email
+        this.commonService.presentLoading("Please Wait...")
+
         this.fireAuth.editEmail('distributors',this.userid,this.email,this.phone,this.password).then((res)=>{
+          this.commonService.dismissLoading()
+
           console.log(res);
           console.log(this.email);
           this.translateAndToast("Email updated");
         })
         .catch((err)=>{
-            console.log(err.message);
+
+          console.log(err.message);
             console.log(err);
-            loading.dismiss();
+          this.commonService.dismissLoading()
             this.translateAndToast(err.message);
           });
           let promises : Promise<boolean>[] = [] ;
-          let loading = this.loadingCtrl.create({
-            content: 'Please wait...'
-          });
-          let promise = new Promise((resolve, reject) => {
-            loading.present();  
+        this.commonService.presentLoading("Please Wait...")
+
+        let promise = new Promise((resolve, reject) => {
             promises.push(this.fireAuth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile));
             promises.push(this.fireAuth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front));
             promises.push(this.fireAuth.joinTeamImgUpload(this.backimage.Image,this.Image.Back));
             Promise.all(promises).then(()=>{
               resolve(true);
-              loading.dismiss();
+              this.commonService.dismissLoading()
             }).catch((err)=>reject(err));
+          this.commonService.dismissLoading()
+
           })
-      }  
+      }
       presentToast(txt:any) {
-        
+
           let toast = this.toastCtrl.create({
             message: txt,
             duration: 3000,
@@ -196,7 +211,7 @@ export class EditaccountdisPage {
           });
           toast.present();
         }
-        
+
       translateAndToast(word : string)
         {
             this.translateService.get(word).subscribe(
@@ -206,7 +221,7 @@ export class EditaccountdisPage {
             }
           );
         }
-      
+
 userInfo(){
   this.fireAuth.getUserInfo(this.userid,'distributors').then((res)=>{
     this.myname=res.name;

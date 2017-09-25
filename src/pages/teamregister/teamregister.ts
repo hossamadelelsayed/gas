@@ -10,6 +10,7 @@ import { Storage } from '@ionic/storage';
 import {NativeStorage} from '@ionic-native/native-storage';
 import{HistoryPage} from "../history/history";
 import {DistHistoryPage} from "../dist-history/dist-history";
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 @Component({
   selector: 'page-teamregister',
@@ -24,8 +25,9 @@ export class TeamregisterPage {
   public backimage:Image=null;
   public frontimage:Image=null;
   public phone ;
-  
+
   constructor(public translateService : TranslateService,
+              public commonService:CommonServiceProvider,
               public alertCtrl: AlertController,
               private toastCtrl:ToastController,
               private camera: Camera,
@@ -36,7 +38,7 @@ export class TeamregisterPage {
               public nativeStorage:NativeStorage,
               public loadingCtrl: LoadingController) {
 
-              
+
   }
 
   ionViewDidLoad() {
@@ -67,9 +69,9 @@ else{
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
      let base64Image = 'data:image/jpeg;base64,' + imageData;
-    
+
      this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
-     
+
     }, (err) => {
       console.log(err);
     });
@@ -84,7 +86,7 @@ else{
       targetHeight: 1000
     }).then((imageData) => {
       this.createImage(TypeName,imageData,'data:image/jpeg;base64,'+imageData);
-      
+
     }, (err) => {
       console.log(err);
     });
@@ -127,7 +129,7 @@ else{
         content:'Please wait...'
       });
       let promise = new Promise((resolve, reject) => {
-        loading.present();  
+        loading.present();
         promises.push(this.auth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile));
         promises.push(this.auth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front));
         promises.push(this.auth.joinTeamImgUpload(this.backimage.Image,this.Image.Back));
@@ -150,18 +152,18 @@ else{
       // });
       this.translateAndToast("Registration done");
          this.navCtrl.push(DistHistoryPage);
-      
+
       })
     .catch(
       (err)=>{console.log(err);
         this.translateAndToast(err.message+"err");
       }
   );
-    
+
   }
 
   presentToast(txt:any) {
-    
+
       let toast = this.toastCtrl.create({
         message: txt,
         duration: 3000,
@@ -169,7 +171,7 @@ else{
       });
       toast.present();
     }
-    
+
     translateAndToast(word : string)
     {
       this.translateService.get(word).subscribe(
