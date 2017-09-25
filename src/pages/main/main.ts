@@ -1,7 +1,7 @@
 import { SelectagentPage } from './../selectagent/selectagent';
 import { CreateorderPage } from './../createorder/createorder';
 import {OrderlaterPage} from "../orderlater/orderlater";
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import {Component, ViewChild, ElementRef, NgZone} from '@angular/core';
 import { IonicPage, NavController, NavParams ,MenuController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from "firebase";
@@ -59,7 +59,8 @@ export class MainPage {
                 public menuCtrl: MenuController ,
                 public distributor :DistributorProvider,
                 private authService:AuthServiceProvider, private storage: Storage,
-                private order:OrderProvider
+                private order:OrderProvider ,
+                public zone: NgZone
     ) {
 /// Reference database location for GeoFire
 
@@ -103,7 +104,10 @@ export class MainPage {
             //creat map
             this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
           google.maps.event.addListener(this.map, 'click', () => {
-            this.flag=true;
+            this.zone.run(()=>{
+              if(!this.flag)
+                this.flag = true ;
+            });
           });
         }).catch((error) => {
             // console.log('Error getting location', error);
@@ -202,7 +206,7 @@ icon:'assets/imgs/map_cylinder.png',
   }
 }
       google.maps.event.addListener(marker, 'click', () => {
-            this.flag=false;
+        this.zone.run(()=>this.flag=false);
         this.geolocation.getCurrentPosition().then((resp) => {
 
           //current latlng
