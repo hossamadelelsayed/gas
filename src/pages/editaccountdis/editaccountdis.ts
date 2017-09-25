@@ -160,7 +160,7 @@ export class EditaccountdisPage {
         //   })
           //edit password
         this.fireAuth.editPassword(this.password).then((res)=>{
-          this.commonService.dismissLoading()
+          // this.commonService.dismissLoading()
 
           console.log(res);
           console.log(this.password);
@@ -170,7 +170,7 @@ export class EditaccountdisPage {
         this.commonService.presentLoading("Please Wait...")
 
         this.fireAuth.editEmail('distributors',this.userid,this.email,this.phone,this.password).then((res)=>{
-          this.commonService.dismissLoading()
+          // this.commonService.dismissLoading()
 
           console.log(res);
           console.log(this.email);
@@ -180,7 +180,7 @@ export class EditaccountdisPage {
 
           console.log(err.message);
             console.log(err);
-          this.commonService.dismissLoading()
+          // this.commonService.dismissLoading()
             this.translateAndToast(err.message);
           });
           let promises : Promise<boolean>[] = [] ;
@@ -194,9 +194,9 @@ export class EditaccountdisPage {
             promises.push(this.fireAuth.joinTeamImgUpload(this.backimage.Image,this.Image.Back));
             Promise.all(promises).then(()=>{
               resolve(true);
-              this.commonService.dismissLoading()
+              // this.commonService.dismissLoading()
             }).catch((err)=>reject(err));
-          this.commonService.dismissLoading()
+          // this.commonService.dismissLoading()
 
           })
       }
