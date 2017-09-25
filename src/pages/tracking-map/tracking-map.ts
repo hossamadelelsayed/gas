@@ -259,8 +259,8 @@ this.RefresherRef.off();
     console.log('update entered yes');
     this.directionsService.route({
       //
-      origin  :{lat: originLat, lng: originLng},
-      destination   : {lat: destinationLat, lng: destinationLng},
+      destination    :{lat: originLat, lng: originLng},
+      origin    : {lat: destinationLat, lng: destinationLng},
       waypoints: this.waypts,
       optimizeWaypoints: true,
       travelMode: google.maps.TravelMode['DRIVING']
