@@ -215,6 +215,7 @@ this.commonService.dismissLoading()
 
           })
       }
+      
       presentToast(txt:any) {
 
           let toast = this.toastCtrl.create({
