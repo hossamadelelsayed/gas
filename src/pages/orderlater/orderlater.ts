@@ -81,19 +81,11 @@ saveOrderLater(){
         console.log(Order.monthly);
         this.translateAndToast('Order Done');
         this.navCtrl.push(HistoryPage);
-<<<<<<< HEAD
-        this.commonService.dismissLoading();
-      })
-      .catch((err)=>{
-        console.log(err.message);
-        this.commonService.dismissLoading();
-=======
         this.commonService.dismissLoading(true);
       })
       .catch((err)=>{
         console.log(err.message);
         this.commonService.dismissLoading(true);
->>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
       });
 }
 presentToast(txt:any) {

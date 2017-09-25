@@ -108,22 +108,14 @@ export class DistHistoryPage {
   acceptOrder(orderID : string){
     this.commonService.presentLoading("Please Wait ...");
     this.orderService.distOrderAccept(orderID,this.distUID).then(()=>{
-<<<<<<< HEAD
-      this.commonService.dismissLoading();
-=======
       this.commonService.dismissLoading(true);
->>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
       this.commonService.successToast();
     }).catch((err)=>console.log(err));
   }
   rejectOrder(orderID : string){
     this.commonService.presentLoading("Please Wait ...");
     this.orderService.rejectOrder(orderID,this.distUID).then(()=>{
-<<<<<<< HEAD
-      this.commonService.dismissLoading();
-=======
       this.commonService.dismissLoading(true);
->>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
       this.commonService.successToast();
       this.delOrder(orderID);
     }).catch((err)=>console.log(err));
