@@ -50,21 +50,14 @@
 
         <ion-col class="km">{{distance}} km</ion-col>
         <ion-col text-center >
-          <h6 style="margin-top: 42px; color:gray;">{{distName}}</h6><br>
-          <ion-row  class="m"  >
-          <!--<div  *ngFor="let star of starsArray" >-->
-
-            <!--<ion-icon ios="ios-star"  md="ios-star-outline" style="color:orange"></ion-icon>-->
+          <h6 style="margin-top: 35px; color:gray;">{{distName}}</h6><br>
+          <div class="starsrate">
+          <ion-row >
 
             <ion-icon  *ngFor="let star of starsArray" ios="ios-star" md="md-{{star}}"  style="color:orange" [name]="icon"></ion-icon>
-            <!--*ngFor="let icon of icons(user?.rateInfo?.rateSum / user?.rateInfo?.rateNo); let i = index;"-->
 
-            <!--<ion-icon ios="ios-star" md="md-star"></ion-icon>-->
-            <!--<ion-icon ios="ios-star" md="md-star"></ion-icon>-->
-            <!--<ion-icon ios="ios-star" md="md-star"></ion-icon>-->
-          <!--</div>            -->
     </ion-row>
-
+          </div>
         </ion-col>
       </ion-row>
       <ion-row  class="ro">

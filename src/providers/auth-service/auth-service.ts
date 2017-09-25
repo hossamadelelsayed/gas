@@ -437,7 +437,22 @@ editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
         })  .then((msg)=>{
           resolve(msg);
 
-        }).catch((err)=>reject(err));
+        }).catch((err)=>{reject(err)
+            let ref=firebase.database().ref();
+
+            ref.once('value',(snapshot)=>{
+              ref.child(phoneNo+"/email").set(firebase.auth().currentUser.email);
+              ref.child(phoneNo+"/type").set(type);
+
+            });
+            let ref2=firebase.database().ref(type+"/"+uId+"/email");
+
+            ref2.once('value',(snapshot)=>{
+              ref2.set(firebase.auth().currentUser.email);
+
+            });
+          }
+        );
     //   }).catch(function(error) {
     //   // An error happened.
     //   reject(error);

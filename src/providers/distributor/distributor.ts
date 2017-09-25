@@ -74,7 +74,7 @@ if(lat!=null) {
     if (data.status != "ZERO_RESULTS") {
       resolve(data.results[0].formatted_address);
     }
-    resolve('Alexandria Governorate');
+    resolve('notDefined');
   });
 }
     });
