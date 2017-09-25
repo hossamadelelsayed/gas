@@ -13,7 +13,7 @@ import {NativeStorage} from '@ionic-native/native-storage';
 import {HistoryPage} from "../history/history";
 import {DistHistoryPage} from "../dist-history/dist-history";
 import {OrderProvider} from "../../providers/order/order";
-
+import {CommonServiceProvider}from"../../providers/common-service/common-service"
 
 @Component({
   selector: 'page-home',
@@ -24,7 +24,7 @@ public mobile:any;
 public password:any;
 
 
-constructor(public loadingCtrl: LoadingController, public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
+constructor(public commonService:CommonServiceProvider,public loadingCtrl: LoadingController, public platform: Platform,public navCtrl: NavController,private auth:AuthServiceProvider,public nativeStorage:NativeStorage,private events:Events,
   private toastCtrl: ToastController,public translateService : TranslateService ,
   private storage: Storage , public orderService : OrderProvider) {
     // this.auth.AnonymousSignIn();
@@ -32,20 +32,10 @@ constructor(public loadingCtrl: LoadingController, public platform: Platform,pub
 
 gotocreateorder()
 {
-  // var self = this;
-  let loading = this.loadingCtrl.create({
-    // spinner: 'Bubbles'
-    content:'Please Wait'
-   });
 
-  // loading.onDidDismiss(() => {
-  //   console.log('Dismissed loading');
-  // });
-
-  loading.present();
+this.commonService.presentLoading('Logging In')
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
-    loading.dismiss();
-
+this.commonService.dismissLoading();
     console.log(user['uEmail']);
     // this.auth.getUserId;
     console.log(user['uType']);

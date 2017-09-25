@@ -26,7 +26,16 @@ export class CommonServiceProvider {
               public loadingCtrl : LoadingController) {
     console.log('Hello CommonServiceProvider Provider');
   }
+  errPresentToast(msg:string) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      showCloseButton:true,
+      closeButtonText:"ok",
+      position: 'top'
+    });
+    toast.present();
 
+  }
   presentLoading(txt:string) {
     this.loader = this.loadingCtrl.create({
       content: txt

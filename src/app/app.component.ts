@@ -167,14 +167,15 @@ export class MyApp {
       // }).catch(()=>{
       //   this.welcomePage=WelcomePage;
       // });
-    });
     this.translate.setDefaultLang('ar');
     platform.setDir('rtl', true);
       this.nativeStorage.getItem('phone').then((res)=>{
+        console.log('auto login phone',res)
         this.presentToast(res);
         this.phone=res;
       }).then(()=>{
         this.nativeStorage.getItem('password').then((res)=>{
+
           this.presentToast(res);
           this.password=res;
         }).then(()=>{
@@ -210,6 +211,7 @@ export class MyApp {
 
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
+    });
 
   }
   onLoad(page:any){
