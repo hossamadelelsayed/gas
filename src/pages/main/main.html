@@ -24,7 +24,6 @@
                           (markerClick)="updateDiv()" [latitude]="location.lat"
                           [longitude]="location.lng">
 
-<<<<<<< HEAD
   </sebm-google-map-marker>
   -->
 
@@ -51,8 +50,9 @@
         <ion-col class="km">{{distance}} km</ion-col>
         <ion-col text-center >
           <h6 style="margin-top: 35px; color:gray;">{{distName}}</h6><br>
-          <div class="starsrate">
-          <ion-row >
+
+          <div >
+          <ion-row class="starsrate">
 
             <ion-icon  *ngFor="let star of starsArray" ios="ios-star" md="md-{{star}}"  style="color:orange" [name]="icon"></ion-icon>
 

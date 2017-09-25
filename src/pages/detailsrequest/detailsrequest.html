@@ -21,12 +21,59 @@
 </div>
  </ion-row>
   <hr>
-<ion-row><h6> {{'Order Number'|translate}}</h6><p >{{order.orderID}}</p></ion-row> <hr>
-<ion-row><h6>{{'Order status'|translate}}</h6><p >{{order.status}}</p></ion-row><hr>
- <ion-row><h6>{{'Number of cylinders'|translate}}</h6><p >{{order.pipesNo}}</p></ion-row><hr>
-<ion-row><h6>{{'Time Order'|translate}}</h6><p>{{ convertDate(order.deliveryDate)}}</p></ion-row><hr>
-<ion-row><h6> {{'your location'|translate}}</h6><p style="color:gray">{{order.location.label}}</p></ion-row><hr>
-<ion-row (click)="gotoflloerequest()"><h6>{{'Pay way'|translate}}</h6><p style="color:gray" >{{order.paymentType}}</p></ion-row>
+<ion-row>
+  <ion-col col-6 class="side1">
+      {{'Order Number'|translate}}
+  </ion-col>
+  <ion-col col-6 class="side2">
+      {{order.orderID}}
+  </ion-col>
+</ion-row> 
+<hr>
+<ion-row>
+  <ion-col col-6 class="side1">
+      {{'Order status'|translate}}
+  </ion-col>
+  <ion-col col-6 class="side2">
+      {{order.status}}
+  </ion-col>
+</ion-row>
+<hr>
+ <ion-row>
+   <ion-col col-6 class="side1">
+      {{'Number of cylinders'|translate}}
+   </ion-col>
+  <ion-col col-6 class="side2">
+      {{order.pipesNo}}
+  </ion-col>
+  </ion-row>
+   <hr>
+<ion-row>
+<ion-col col-4 class="side1">
+    {{'Time Order'|translate}}
+</ion-col>
+  <ion-col col-8 class="side2">
+      {{ convertDate(order.deliveryDate)}}
+  </ion-col>
+</ion-row>
+<hr>
+<ion-row>
+  <ion-col col-6 class="side1">
+      {{'your location'|translate}}
+  </ion-col>
+  <ion-col col-6 class="side2">
+      {{order.location.label}}
+  </ion-col>
+</ion-row>
+<hr>
+<ion-row (click)="gotoflloerequest()">
+  <ion-col col-6 class="side1">
+      {{'Pay way'|translate}}
+  </ion-col>
+  <ion-col col-6 class="side2">
+      {{order.paymentType}}
+  </ion-col>
+</ion-row>
 <div class="d">
 <button class="reqnow" *ngIf="order.status == orderClass.PendingStatus" ion-button round (click)="navigate()" >{{'Navigate'|translate}}</button>
 <!--<button class="reqlater" ion-button round>{{'Cancel Order'|translate}}</button>-->

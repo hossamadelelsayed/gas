@@ -4,6 +4,7 @@ import {Image} from "../../models/image";
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 
 @Component({
@@ -28,6 +29,8 @@ export class EditaccountdisPage {
   public myemail:string;
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
+              public commonService:CommonServiceProvider,
+
      private camera: Camera,
      public alertCtrl: AlertController,
      private toastCtrl:ToastController,
@@ -142,6 +145,7 @@ export class EditaccountdisPage {
       });
      }
       gotoconfirm() {
+      this.commonService.presentLoading("Please Wait ...")
         //Editname
         this.fireAuth.editdistributorName(this.name).then((res) => {
           console.log(res);
@@ -156,20 +160,27 @@ export class EditaccountdisPage {
         //   })
           //edit password
         this.fireAuth.editPassword(this.password).then((res)=>{
+          // this.commonService.dismissLoading()
+
           console.log(res);
           console.log(this.password);
           this.translateAndToast("Password updated");
         })
         //edit email
+        this.commonService.presentLoading("Please Wait...")
+
         this.fireAuth.editEmail('distributors',this.userid,this.email,this.phone,this.password).then((res)=>{
+          // this.commonService.dismissLoading()
+
           console.log(res);
           console.log(this.email);
           this.translateAndToast("Email updated");
         })
         .catch((err)=>{
-            console.log(err.message);
+
+          console.log(err.message);
             console.log(err);
-            loading.dismiss();
+          // this.commonService.dismissLoading()
             this.translateAndToast(err.message);
           });
           let promises : Promise<boolean>[] = [] ;
@@ -183,8 +194,10 @@ export class EditaccountdisPage {
             promises.push(this.fireAuth.joinTeamImgUpload(this.backimage.Image,this.Image.Back));
             Promise.all(promises).then(()=>{
               resolve(true);
-              loading.dismiss();
+              // this.commonService.dismissLoading()
             }).catch((err)=>reject(err));
+          // this.commonService.dismissLoading()
+
           })
       }
       

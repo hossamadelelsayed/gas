@@ -72,4 +72,13 @@ color: $color-primary;
 .row{
     height: 47px;
 }
+.side1{
+    font-size: 1.6rem;
+    text-align: start;
+}
+.side2{
+    font-size: 1.5rem;
+    text-align: end;
+    color: $color-primary ;
+}
 }
