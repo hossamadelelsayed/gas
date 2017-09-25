@@ -187,6 +187,7 @@ export class EditaccountdisPage {
             }).catch((err)=>reject(err));
           })
       }
+      
       presentToast(txt:any) {
 
           let toast = this.toastCtrl.create({
