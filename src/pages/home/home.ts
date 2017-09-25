@@ -35,7 +35,7 @@ gotocreateorder()
 
 this.commonService.presentLoading('Logging In');
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
-  this.commonService.dismissLoading();
+  this.commonService.dismissLoading(true);
     console.log(user['uEmail']);
     // this.auth.getUserId;
     console.log(user['uType']);
@@ -54,7 +54,7 @@ this.commonService.presentLoading('Logging In');
     this.nativeStorage.setItem('password',this.password);
     console.log(this.mobile);
   }).catch((err)=>{
-    this.commonService.dismissLoading();
+    this.commonService.dismissLoading(true);
     console.log(err.message);
     this.translateAndToast(err.message);
   });

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import {TranslateService} from "@ngx-translate/core";
-import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 @Component({
   selector: 'page-editaccount',
@@ -17,7 +16,7 @@ export class EditaccountPage {
    public email:string;
    public myphone:number;
    public myemail:string;
-  constructor(public translateService : TranslateService ,private toastCtrl:ToastController,public commonService:CommonServiceProvider,
+  constructor(public translateService : TranslateService ,private toastCtrl:ToastController,
     private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
       this.userid=this.authService.getUserId();
       this.userInfo();
@@ -28,7 +27,6 @@ export class EditaccountPage {
   }
 
    editAccount(){
-    this.commonService.presentLoading("Pleasw Wait...")
     let self = this;
     this.authService.editEmail('customers',this.userid,this.email,this.custNumber,this.password)
     .then((res)=>{
@@ -65,8 +63,7 @@ export class EditaccountPage {
          console.log(error);
          self.translateAndToast(error.message);
        });
-  this.commonService.dismissLoading()
-  }
+   }
    presentToast(txt:any) {
 
       let toast = this.toastCtrl.create({

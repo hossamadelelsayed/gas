@@ -54,11 +54,11 @@ currentEmail:string;
        body: this.msgBody,
        isHtml: true
      };
-     this.translateAndToast("Your message has been sent.");
+     // this.translateAndToast("Your message has been sent.");
 
      self.emailComposer.open(email);
    }catch (E){
-     this.commonService.errPresentToast("E :"+E)
+     // this.commonService.errPresentToast("E :"+E)
      // this.translateAndToast('error :'+E);
 
    }

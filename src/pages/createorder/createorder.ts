@@ -91,11 +91,11 @@ createOrderNow(){
         console.log(Order.monthly);
         this.translateAndToast('Order Done');
         this.navCtrl.push(HistoryPage);
-        this.commonService.dismissLoading();
+        this.commonService.dismissLoading(true);
       })
       .catch((err)=>{
         console.log(err.message);
-        this.commonService.dismissLoading();
+        this.commonService.dismissLoading(true);
       });
 }
 presentToast(txt:any) {
