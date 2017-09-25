@@ -115,7 +115,7 @@ export class MainPage {
     }
 loadCheck:boolean;
     ionViewWillEnter(){
-      this.commonService.presentLoading("Please Wait...")
+      // this.commonService.presentLoading("Please Wait...")
       this.loadCheck=true;
 
       let self=this;
@@ -129,12 +129,12 @@ console.log('loc resp lat',resp.coords.latitude)
       self.setMarkers(`${city}`);
         this.storage.set('city',`${city}`);
 
-        this.commonService.dismissLoading(this.loadCheck);
+        // this.commonService.dismissLoading(this.loadCheck);
 self.loadCheck=false;
       }).catch(err=>{
         self.setMarkers(err);
 
-this.commonService.dismissLoading(this.loadCheck);
+// this.commonService.dismissLoading(this.loadCheck);
       });     });
       // });
     }
