@@ -145,18 +145,6 @@ export class MyApp {
         }
       });
 
-      this.orderService.login().then((dist)=>{
-        console.log('login');
-        // this.orderService.subscribeToDistOrder((order : Order)=> {
-        //   let view = this.nav.getActive();
-        //   if(view.component.name != 'DistHistoryPage')
-        //     this.newOrderAlert(order);
-        // });
-        // this.orderService.listenToDistOrder('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistOrderRemoved('Alexandria Governorate',dist.uid);
-        // this.orderService.listenToDistHistoryChange(dist.uid);
-        // this.orderService.listenToCustomerHistoryChange("");
-      }).catch((err)=>console.log(err));
 
       // this.nativeStorage.getItem('phone').then((res)=>{
       //   this.presentToast(res);
@@ -179,14 +167,15 @@ export class MyApp {
       // }).catch(()=>{
       //   this.welcomePage=WelcomePage;
       // });
-    });
     this.translate.setDefaultLang('ar');
     platform.setDir('rtl', true);
       this.nativeStorage.getItem('phone').then((res)=>{
+        console.log('auto login phone',res)
         this.presentToast(res);
         this.phone=res;
       }).then(()=>{
         this.nativeStorage.getItem('password').then((res)=>{
+
           this.presentToast(res);
           this.password=res;
         }).then(()=>{
@@ -222,6 +211,7 @@ export class MyApp {
 
     // this.translate.setDefaultLang('ar');
     // platform.setDir('rtl', true);
+    });
 
   }
   onLoad(page:any){

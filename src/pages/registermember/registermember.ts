@@ -8,6 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {TeamregisterPage} from "../teamregister/teamregister";
 import { Storage } from '@ionic/storage';
 import {NativeStorage} from '@ionic-native/native-storage';
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
 
 @Component({
   selector: 'page-registermember',
@@ -20,15 +21,16 @@ export class RegistermemberPage {
   private phone : any ;
 
   constructor(private storage: Storage,public nativeStorage:NativeStorage,public translateService : TranslateService ,private toastCtrl:ToastController,
-              private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
+         public commonService:CommonServiceProvider,     private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegistermemberPage');
   }
-  
+
 gotoconfirm(){
+
   let self = this;
     this.authService.register("customers",this.email,this.password,this.name,this.phone)
       .then((user) => {
@@ -48,7 +50,7 @@ gotoconfirm(){
       //   this.translateAndToast(error);
       //   if(error.code === "auth/invalid-email"){
       //     console.log("err",error.code);
-          
+
       //     this.translateAndToast(error.message);
       //   }
       // });
