@@ -33,9 +33,9 @@ constructor(public commonService:CommonServiceProvider,public loadingCtrl: Loadi
 gotocreateorder()
 {
 
-this.commonService.presentLoading('Logging In')
+this.commonService.presentLoading('Logging In');
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
-this.commonService.dismissLoading();
+  this.commonService.dismissLoading();
     console.log(user['uEmail']);
     // this.auth.getUserId;
     console.log(user['uType']);
@@ -54,8 +54,7 @@ this.commonService.dismissLoading();
     this.nativeStorage.setItem('password',this.password);
     console.log(this.mobile);
   }).catch((err)=>{
-    loading.dismiss();
-
+    this.commonService.dismissLoading();
     console.log(err.message);
     this.translateAndToast(err.message);
   });
@@ -86,5 +85,4 @@ toast.present();
       }
     );
   }
-
 }
