@@ -35,7 +35,11 @@ gotocreateorder()
 
 this.commonService.presentLoading('Logging In');
   this.auth.doLogin(this.mobile,this.password).then((user)=>{
+<<<<<<< HEAD
   this.commonService.dismissLoading();
+=======
+  this.commonService.dismissLoading(true);
+>>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
     console.log(user['uEmail']);
     // this.auth.getUserId;
     console.log(user['uType']);
@@ -54,7 +58,11 @@ this.commonService.presentLoading('Logging In');
     this.nativeStorage.setItem('password',this.password);
     console.log(this.mobile);
   }).catch((err)=>{
+<<<<<<< HEAD
     this.commonService.dismissLoading();
+=======
+    this.commonService.dismissLoading(true);
+>>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
     console.log(err.message);
     this.translateAndToast(err.message);
   });

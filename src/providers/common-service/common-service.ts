@@ -42,8 +42,14 @@ export class CommonServiceProvider {
     });
     this.loader.present();
   }
+<<<<<<< HEAD
   dismissLoading(){
     this.loader.dismiss();
+=======
+  dismissLoading(check:boolean){
+    if(check){
+    this.loader.dismiss();}
+>>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
   };
   presentToast(txt:string) {
     let toast = this.toastCtrl.create({

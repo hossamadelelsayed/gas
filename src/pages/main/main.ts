@@ -113,9 +113,12 @@ export class MainPage {
             // console.log('Error getting location', error);
         });
     }
+loadCheck:boolean;
+    ionViewWillEnter(){
+      // this.commonService.presentLoading("Please Wait...")
+      this.loadCheck=true;
 
-    ionViewDidLoad(){
-        let self=this;
+      let self=this;
         this.sendCurrentLoc();
 
       this.geolocation.getCurrentPosition().then((resp) => {
@@ -126,9 +129,12 @@ console.log('loc resp lat',resp.coords.latitude)
       self.setMarkers(`${city}`);
         this.storage.set('city',`${city}`);
 
+        // this.commonService.dismissLoading(this.loadCheck);
+self.loadCheck=false;
       }).catch(err=>{
         self.setMarkers(err);
 
+// this.commonService.dismissLoading(this.loadCheck);
       });     });
       // });
     }

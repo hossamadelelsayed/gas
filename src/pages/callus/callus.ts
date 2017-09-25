@@ -54,11 +54,19 @@ currentEmail:string;
        body: this.msgBody,
        isHtml: true
      };
+<<<<<<< HEAD
      this.translateAndToast("Your message has been sent.");
 
      self.emailComposer.open(email);
    }catch (E){
      this.commonService.errPresentToast("E :"+E)
+=======
+     // this.translateAndToast("Your message has been sent.");
+
+     self.emailComposer.open(email);
+   }catch (E){
+     // this.commonService.errPresentToast("E :"+E)
+>>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
      // this.translateAndToast('error :'+E);
 
    }

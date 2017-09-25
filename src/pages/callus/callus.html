@@ -24,13 +24,13 @@
        </ion-item> -->
 
        <ion-item class="other">
-        <!-- <ion-input   type="text" placeholder="اخر النوع" [(ngModel)]="msgTitle" name="msgTitle">
+        <ion-input   type="text" placeholder="اخر النوع" [(ngModel)]="msgTitle" name="msgTitle">
           {{msgTitle}}
-        </ion-input> -->
-        <ion-select [(ngModel)]="select">
-          <ion-option value="a">{{'Suggestion'|translate}}</ion-option>
-          <ion-option value="s">{{'Complaint'|translate}}</ion-option>
-        </ion-select>
+        </ion-input> &ndash;&gt;
+        <!--<ion-select [(ngModel)]="select">-->
+          <!--<ion-option value="a">{{'Suggestion'|translate}}</ion-option>-->
+          <!--<ion-option value="s">{{'Complaint'|translate}}</ion-option>-->
+        <!--</ion-select>-->
       </ion-item>
     <textarea class="in"  placeholder="{{'comment'|translate}}" [(ngModel)]="msgBody" name="msgBody"></textarea>
   <button [disabled]="!onclick" ion-button round class="btn" (click)="sendEmail()">{{'Send'|translate}}</button>

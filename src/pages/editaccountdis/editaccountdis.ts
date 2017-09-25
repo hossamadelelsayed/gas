@@ -151,12 +151,17 @@ export class EditaccountdisPage {
           console.log(res);
           console.log(this.name);
             this.translateAndToast('Name updated');
+<<<<<<< HEAD
           this.commonService.dismissLoading();
 this.commonService.dismissLoading()
         })
         this.commonService.presentLoading('Please Wait...')
 
         //edit phone
+=======
+           })
+           //edit phone
+>>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
         // this.fireAuth.editDistributorsPhoneNo(this.phone).then((res)=>{
         //     console.log(res)
         //     console.log(this.phone);
@@ -188,9 +193,17 @@ this.commonService.dismissLoading()
             this.translateAndToast(err.message);
           });
           let promises : Promise<boolean>[] = [] ;
+<<<<<<< HEAD
         this.commonService.presentLoading("Please Wait...")
 
         let promise = new Promise((resolve, reject) => {
+=======
+          let loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+          });
+          let promise = new Promise((resolve, reject) => {
+            loading.present();
+>>>>>>> ff8edbadb769e22c9f87933fe460f88d15b23a2a
             promises.push(this.fireAuth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile));
             promises.push(this.fireAuth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front));
             promises.push(this.fireAuth.joinTeamImgUpload(this.backimage.Image,this.Image.Back));
