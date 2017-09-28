@@ -44,6 +44,7 @@ import {TermsandprivacyPage} from "../pages/termsandprivacy/termsandprivacy";
 import {OrderlaterPage} from "../pages/orderlater/orderlater";
 import{CustomerProvider} from "../providers/customer/customer";
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -78,15 +79,14 @@ import {TrackingMapPage} from "../pages/tracking-map/tracking-map";
 import {LaunchNavigator} from "@ionic-native/launch-navigator";
 import { RateProvider } from '../providers/rate/rate';
 
-const firebaseConfig = {
-
-  apiKey: "AIzaSyABCYlsZaDjiORLZeTb6DtpCdEpkmD4-xk",
-      authDomain: "gasksa-f284a.firebaseapp.com",
-      databaseURL: "https://gasksa-f284a.firebaseio.com",
-      projectId: "gasksa-f284a",
-      storageBucket: "gasksa-f284a.appspot.com",
-      messagingSenderId: "783994879598"
-  };
+const  firebaseConfig = {
+  apiKey: "AIzaSyAzmtOBtWYDL4srdRqEfZFiwsq1rs2JHOA",
+  authDomain: "gasksa-de4ab.firebaseapp.com",
+  databaseURL: "https://gasksa-de4ab.firebaseio.com",
+  projectId: "gasksa-de4ab",
+  storageBucket: "gasksa-de4ab.appspot.com",
+  messagingSenderId: "193816669511"
+};
 firebase.initializeApp(firebaseConfig);
 
 @NgModule({
@@ -174,7 +174,8 @@ firebase.initializeApp(firebaseConfig);
     TrackingMapPage
   ],
   providers: [
-    StatusBar,
+ NativeGeocoder,
+StatusBar,
     SplashScreen,
     MainService,
     Geolocation,

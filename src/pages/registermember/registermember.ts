@@ -1,7 +1,7 @@
 import { HomePage } from './../home/home';
 import { ConfirmPage } from './../confirm/confirm';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import{MainPage} from "../main/main";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import {TranslateService} from "@ngx-translate/core";
@@ -21,7 +21,7 @@ export class RegistermemberPage {
   private phone : any ;
 
   constructor(private storage: Storage,public nativeStorage:NativeStorage,public translateService : TranslateService ,private toastCtrl:ToastController,
-         public commonService:CommonServiceProvider,     private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
+              public loadingCtrl: LoadingController,     public commonService:CommonServiceProvider,     private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
 
   }
 
@@ -30,19 +30,25 @@ export class RegistermemberPage {
   }
 
 gotoconfirm(){
-
+  let loading = this.loadingCtrl.create({
+    content:'Please wait...'
+  });
   let self = this;
     this.authService.register("customers",this.email,this.password,this.name,this.phone)
       .then((user) => {
+
       console.log('sfggd');
       console.log(user);
       //user.message;
         // this.authService.submitUserInfo()
+
         this.translateAndToast("Registration done");
-        this.navCtrl.push(MainPage);
+        this.navCtrl.setRoot(MainPage);
          this.storage.set('type','customers');
         this.nativeStorage.setItem('phone',this.phone);
         this.nativeStorage.setItem('password',this.password);
+        loading.dismiss();
+
       })
 
       // .catch(function(error) {
@@ -57,7 +63,10 @@ gotoconfirm(){
       .catch((err)=>{
         console.log(err.message);
         console.log(err);
+        if(err.message)
         this.translateAndToast(err.message);
+        else
+        this.translateAndToast(err);
       });
 
 }

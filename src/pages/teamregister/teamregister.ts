@@ -11,6 +11,10 @@ import {NativeStorage} from '@ionic-native/native-storage';
 import{HistoryPage} from "../history/history";
 import {DistHistoryPage} from "../dist-history/dist-history";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
+import {DistributorProvider} from "../../providers/distributor/distributor";
+import { Geolocation } from '@ionic-native/geolocation';
+
+declare let google;
 
 @Component({
   selector: 'page-teamregister',
@@ -26,7 +30,8 @@ export class TeamregisterPage {
   public frontimage:Image=null;
   public phone ;
 
-  constructor(public translateService : TranslateService,
+  constructor( public geolocation: Geolocation,
+    public translateService : TranslateService,
               public commonService:CommonServiceProvider,
               public alertCtrl: AlertController,
               private toastCtrl:ToastController,
@@ -36,7 +41,7 @@ export class TeamregisterPage {
               private auth : AuthServiceProvider,
               private storage: Storage,
               public nativeStorage:NativeStorage,
-              public loadingCtrl: LoadingController) {
+              public loadingCtrl: LoadingController,private distributorProvider:DistributorProvider) {
 
 
   }
@@ -115,6 +120,9 @@ else{
   DownloadImage(){}
   gotoconfirm()
   {
+    let loading = this.loadingCtrl.create({
+      content:'Please wait...'
+    });
     this.auth.register("distributors",this.email,this.password,this.name,this.phone)
     .then(()=>{
 
@@ -125,14 +133,19 @@ else{
       console.log("img str",this.profileimage.Image);
 
       let promises : Promise<boolean>[] = [] ;
-      let loading = this.loadingCtrl.create({
-        content:'Please wait...'
-      });
+
       let promise = new Promise((resolve, reject) => {
-        loading.present();
+        this.geolocation.getCurrentPosition().then((resp) => {
+          //current latlng
+          let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+
+          this.distributorProvider . sendMyLoc(resp.coords.latitude, resp.coords.longitude)
+          console.warn("hi am a distributor registered")
+        });        loading.present();
         promises.push(this.auth.joinTeamImgUpload(this.profileimage.Image,this.Image.Profile));
         promises.push(this.auth.joinTeamImgUpload(this.frontimage.Image,this.Image.Front));
         promises.push(this.auth.joinTeamImgUpload(this.backimage.Image,this.Image.Back));
+
         Promise.all(promises).then(()=>{
           resolve(true);
           loading.dismiss();
@@ -151,7 +164,7 @@ else{
       //   this.presentToast(sta.state+"err");
       // });
       this.translateAndToast("Registration done");
-         this.navCtrl.push(DistHistoryPage);
+         this.navCtrl.setRoot(DistHistoryPage);
 
       })
     .catch(

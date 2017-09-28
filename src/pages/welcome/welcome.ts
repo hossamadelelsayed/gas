@@ -21,7 +21,7 @@ export class WelcomePage {
     public navParams: NavParams,
     public menuCtrl: MenuController  ) {
 this.menuCtrl.swipeEnable(false);
-this.authService.AnonymousSignIn();
+// this.authService.AnonymousSignIn();
   // this.authService.phoneLogin("000000","123456");
 //
 // let user = firebase.auth().currentUser;
@@ -32,10 +32,10 @@ this.authService.AnonymousSignIn();
 //   });
 
 // this.register("hrhf0","0200","23789","jdhjhj");
-this.events.subscribe('user:created', (user) => {
-    // user and time are the same arguments passed in `events.publish(user, time)`
-    console.log("llll",user);
-  });
+// this.events.subscribe('user:created', (user) => {
+//     // user and time are the same arguments passed in `events.publish(user, time)`
+//     console.log("llll",user);
+//   });
 
 
 

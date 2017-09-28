@@ -6,6 +6,8 @@ import { Events } from 'ionic-angular';
 import * as GeoFire from "geofire";
 import { Geolocation } from '@ionic-native/geolocation';
 import {Observable} from "rxjs/Observable";
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
+
 // import {google} from "../../pages/main/main";
 // import {google} from "../../pages/main/main";
 
@@ -21,7 +23,10 @@ export class DistributorProvider {
   firebaseRef: any;
   city:string;
 id:any;
-  constructor(private _http: Http,public geolocation: Geolocation) {
+
+  constructor(private _http: Http,public geolocation: Geolocation,
+              public nativeGeocoder: NativeGeocoder
+  ) {
     console.log('Hello DistributorProvider Provider');
 
   }
@@ -32,7 +37,7 @@ id:any;
     this. firebaseRef = firebase.database().ref('/valid/'+`${city}`);
 this.city=`${city}`;
     this. geoFire = new GeoFire(this.firebaseRef);
-    let geo = this.geolocation.getCurrentPosition();
+    // let geo = this.geolocation.getCurrentPosition();
 
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
@@ -62,20 +67,28 @@ x:string;
     let promise = new Promise((resolve, reject )=>{
 
 if(lat!=null) {
-  this._http.get
-  ('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ','
-    + lng + '&location_type=APPROXIMATE&result_type=locality&'
-    +
-    'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
-    .map(response => response.json()
-    ).subscribe(data => {
-    // console.log("geolocation",data.results[0]. address_components[4].short_name);
-    console.log("geolocation result", data);
-    if (data.status != "ZERO_RESULTS") {
-      resolve(data.results[0].formatted_address);
-    }
-    resolve('notDefined');
-  });
+  this.nativeGeocoder.reverseGeocode(lat, lng)
+    .then((result: NativeGeocoderReverseResult) => {
+
+      console.log("CityCity",result.administrativeArea);
+
+        resolve(result.administrativeArea)
+    }).catch((error: any) => console.log(error));
+////////////////////////////////
+//   this._http.get
+//   ('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ','
+//     + lng + '&location_type=APPROXIMATE&result_type=locality&'
+//     +
+//     'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
+//     .map(response => response.json()
+//     ).subscribe(data => {
+//     // console.log("geolocation",data.results[0]. address_components[4].short_name);
+//     console.log("geolocation result", data);
+//     if (data.status != "ZERO_RESULTS") {
+//       resolve(data.results[0].formatted_address);
+//     }
+//     resolve('notDefined');
+//   });
 }
     });
     return promise;
@@ -104,13 +117,17 @@ if(lat!=null) {
 //       });
 // /////////////
 //   }
-  onDistributorDisconnect(){
+  onDistributorDisconnect():Promise <boolean>{
+    let promise=new Promise((resolve, reject )=>{
     this.id = firebase.auth().currentUser.uid;
+    console.warn('dist will removed from valid','/valid/'+this.city+"/"+this.id)
    let firebaseRef = firebase.database().ref('/valid/'+this.city+"/"+this.id);
    firebaseRef.once('value').then(snapshot=>{
      firebaseRef.remove();
    });
+    });
 
+return promise;
   }
 
   getDistributorsName(id:any):Promise<string>{

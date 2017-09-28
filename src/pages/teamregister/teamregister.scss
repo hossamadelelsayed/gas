@@ -1,7 +1,7 @@
 page-teamregister {
     .header-md::after{
         background-image: none !important;
-    
+
     }
     .col{
         height: 58px;
@@ -10,7 +10,7 @@ page-teamregister {
                display: block;
         margin: 0 auto;
         height: 110px;
-    
+
     }
     p{
         text-align: center;
@@ -22,11 +22,12 @@ page-teamregister {
         margin-top: 14px;
         font-size: 2.2rem;
     }
-    
+
     .enter{
         background-color:$color-primary;
         font-size: 1.8rem;
         height: 47px;
+      margin-top: 108px;
     }
     .fpass{
         font-size: 1.7rem;
@@ -45,7 +46,7 @@ page-teamregister {
         display: none;
     }
     .back-button-text-ios {
-     
+
         display: none;
     }
     .back-button-ios.show-back-button{

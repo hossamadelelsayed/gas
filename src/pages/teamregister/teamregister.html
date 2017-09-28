@@ -72,12 +72,12 @@
    </ion-row>
    <ion-row>
      <ion-col col-6>
-      <button ion-button clear (click)="galleryOrCamera(Image.Front)" style="width:100%;color:orange"> {{'Upload ID front'| translate}}</button>   
+      <button ion-button clear (click)="galleryOrCamera(Image.Front)" style="width:100%;color:orange"> {{'Upload ID front'| translate}}</button>
       <img *ngIf="frontimage!=null" [src]="frontimage?.ImgSRC">
-      
+
      </ion-col>
      <ion-col col-6>
-      <button ion-button clear (click)="galleryOrCamera(Image.Back)" style="width:100%;color:orange"> {{'Upload ID back'| translate}}</button>   
+      <button ion-button clear (click)="galleryOrCamera(Image.Back)" style="width:100%;color:orange"> {{'Upload ID back'| translate}}</button>
       <img *ngIf="backimage!=null" [src]="backimage?.ImgSRC">
      </ion-col>
    </ion-row>

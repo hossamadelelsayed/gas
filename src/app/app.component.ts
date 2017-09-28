@@ -76,10 +76,10 @@ export class MyApp {
     platform.ready().then(() => {
       platform.pause.subscribe(() => {
         console.log('[INFO] App paused');
-        // this.nav.push(this.nav.getActive().component)
-        // return this.nav.getActive();
+        this.distService.onDistributorDisconnect();
       });
       platform.resume.subscribe(() => {
+
         // this.nav.push(this.nav.getActive().component)
         console.log('[INFO] App resumed');
         // this.nav.getPrevious()
@@ -196,21 +196,33 @@ export class MyApp {
     //     this.welcomePage=WelcomePage;
     //   });
     //
-    // this.storage.get('lang').then((res)=>{
-    //   if(res =='ar'){
-    //     this.translate.setDefaultLang('ar');
-    //     platform.setDir('rtl', true);
-    //     console.log(res);
-    //   }
-    //   else{
-    //     this.translate.setDefaultLang('en');
-    //     platform.setDir('ltr', true);
-    //     console.log(res);
-    //   }
-    // });
+    this.storage.get('lang').then((res)=>{
+      console.log(res);
+      if(res =='ar'){
+        MainService.lang='ar';
+        this.translate.setDefaultLang('ar');
+        platform.setDir('rtl', true);
+        console.log(res);
+      }
+      else if(res=='en')
+      {
+        MainService.lang='en';
+        this.translate.setDefaultLang('en');
+        platform.setDir('ltr', true);
+        console.log(res);
+      }
+      else if(!res){
+        MainService.lang='ar';
+        this.translate.setDefaultLang('ar');
+        platform.setDir('rtl', true);
+        console.log(res);
+      }
+      else{
+        console.log(res);
+      }
+    });
 
-    // this.translate.setDefaultLang('ar');
-    // platform.setDir('rtl', true);
+
     });
 
   }

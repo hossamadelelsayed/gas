@@ -32,24 +32,26 @@ distTracker(city:any,key:any):Promise<any>{
   let self=this;
 
     let promise=new Promise((resolve,reject)=>{
-    self.markerRef=firebase.database().ref('valid/'+city);
+if(city!=null&&key!=null) {
+  self.markerRef = firebase.database().ref('valid/' + city);
 
 
-
-      self. geoFire = new GeoFire(self.markerRef);
+  self.geoFire = new GeoFire(self.markerRef);
 //getting latlng using geofire
-      self.geoFire.get(key).then(function (location) {
-        console.log('updated dist id',location);
+  self.geoFire.get(key).then(function (location) {
+    console.log('updated dist id', location);
 
-        resolve({lat: location[0], lng: location[1]});
-      console.log('updated dist id',key);
-
-
-    }, (error)=> {
-      console.log("Error: " + error);
-    });
+    resolve({lat: location[0], lng: location[1]});
+    console.log('updated dist id', key);
 
 
+  }, (error) => {
+    console.log("Error: " + error);
+  });
+
+}else {
+  console.warn('cant track dist city or key not valid',city,key)
+}
   });
   return promise;
 }

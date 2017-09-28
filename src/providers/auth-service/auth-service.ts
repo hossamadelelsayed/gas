@@ -200,12 +200,14 @@ let  imgRef = firebase.database().ref("distributors/"+user);
 
   register(type:any,email: string, password: string,name :string,phoneNo:any): Promise<any> {
     let promise = new Promise((resolve, reject )=>{
-
+this.AnonymousSignIn()
       let nameEmailRef = firebase.database().ref(phoneNo);
       //check  if phoneNo entered dont have an email in firebase
+
       nameEmailRef.once("value")
         .then((snapshot) => {
           if(snapshot.val() ==null ){
+            this.userDelet().then(()=>{
             this.fireAuth.createUserWithEmailAndPassword(email, password)
               .then((user)=>{
                 let userId=user.uid;
@@ -238,7 +240,7 @@ let  imgRef = firebase.database().ref("distributors/"+user);
 
                   });
                  resolve(user);
-              }).catch((err)=>{reject(err)});
+              }).catch((err)=>{reject(err)});})
             // resolve()
           }else{reject("phone taken")}
 
@@ -278,8 +280,11 @@ resetPassword(email: string): any {
 }
 //logout
 doLogout(): any {
-    this.distributorProvider.onDistributorDisconnect();
-  return this.fireAuth.signOut();
+    this.distributorProvider.onDistributorDisconnect().then(()=>{
+      this.fireAuth.signOut();
+      })
+
+
 }
 
 

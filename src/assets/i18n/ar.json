@@ -95,6 +95,7 @@
   "The email address is badly formatted":"البريد الالكتروني غير صحيح",
   "There is no user record corresponding to this identifier. The user may have been deleted.":"هذا البريد الالكتروني غير موجود",
   "phone taken":"برجاء ادخال رقم هاتف اخر",
+  "undefined":"برجاء أدخال رقم هاتف اخر",
   "You can not order later because you choose distributer":"لا يمكن الطلب لاحقا لانه قد تم تحديد الموزع",
   "Choose Order Location":"اختار مكان الطلب",
   "Success" : "تم بنجاح",
