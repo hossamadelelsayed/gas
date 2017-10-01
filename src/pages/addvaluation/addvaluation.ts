@@ -1,13 +1,15 @@
 import { ProfilePage } from './../profile/profile';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,MenuController } from 'ionic-angular';
+import {Order} from "../../models/order";
+import {OrderProvider} from "../../providers/order/order";
+import {User} from "../../models/user";
+import {Rate} from "../../models/rate";
+import {CommonServiceProvider} from "../../providers/common-service/common-service";
+import {RateInfo} from "../../models/rateInfo";
+import {RateProvider} from "../../providers/rate/rate";
 
-/**
- * Generated class for the AddvaluationPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 
 @Component({
   selector: 'page-addvaluation',
@@ -15,11 +17,51 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddvaluationPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public order : Order ;
+  public mode : string ;
+  // public user : User ;
+  public rateClass = Rate ;
+  public rateNo : number = 0 ;
+  public icons : string[] ;
+  public comment : string  = '';
+  constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController,
+              public orderService : OrderProvider , public commonService : CommonServiceProvider ,
+              public rateService : RateProvider) {
+    this.order = navParams.data.order ;
+    this.mode  = navParams.data.mode ;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddvaluationPage');
+    this.getIcons(0);
+    // if(this.mode == Rate.rateCustomerType)
+    //   this.orderService.getCustomerData(this.order.customerID).then((cust : User)=>this.user = cust).catch((err)=>console.log(err));
+    // else
+    //   this.orderService.getDistData(this.order.distributerID).then((dist : User)=>this.user = dist ).catch((err)=>console.log(err));
   }
-
+  getIcons(rate : number)
+  {
+     this.icons = this.commonService.icons(rate);
+  }
+  customerRate(rateNo : number){
+    this.rateNo = rateNo ;
+    this.getIcons(rateNo);
+    // this.commonService.successToast();
+  }
+  rateConfirm(){
+    let rate : Rate = new Rate(
+      this.order.customerID ,
+      this.order.distributerID ,
+      this.order.orderID ,
+      this.rateNo ,
+      this.comment  ) ;
+    this.rateService.rate(rate,this.mode).then(()=>{
+      this.commonService.successToast();
+      this.navCtrl.pop();
+    }).catch((err)=>console.log(err))
+  }
+  toggleMenu()
+  {
+    this.menuCtrl.toggle();
+  }
 }

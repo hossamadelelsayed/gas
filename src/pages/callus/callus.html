@@ -1,30 +1,38 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar> <ion-buttons right>
+      <button ion-button navPop icon-only>
+          <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
     <ion-title >
       <ion-row>
         <ion-col text-center col-1>
-       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+       <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename"  col-10>
+       <ion-col class="titlename"  col-11>
          {{'Call us'|translate}}
        </ion-col>
-       <ion-col text-center col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+       </ion-row>
     </ion-title>
   </ion-navbar>
-  
 </ion-header>
-
 <ion-content padding>
   <ion-list>
-    <ion-item class="other">
-    <ion-input   type="text" placeholder="اخر النوع"  >
-    </ion-input>
-       </ion-item>
+    <!-- <ion-item class="other">
+    <ion-input   type="text" placeholder="اخر النوع" [(ngModel)]="msgTitle" name="msgTitle">
+      {{msgTitle}}
+       </ion-item> -->
 
-    <textarea class="in"  placeholder="{{'comment'|translate}}"></textarea>
-      
-  <button ion-button round class="btn">{{'Send'|translate}}</button>
+       <ion-item class="other">
+        <ion-input   type="text" placeholder="اخر النوع" [(ngModel)]="msgTitle" name="msgTitle">
+          {{msgTitle}}
+        </ion-input> &ndash;&gt;
+        <!--<ion-select [(ngModel)]="select">-->
+          <!--<ion-option value="a">{{'Suggestion'|translate}}</ion-option>-->
+          <!--<ion-option value="s">{{'Complaint'|translate}}</ion-option>-->
+        <!--</ion-select>-->
+      </ion-item>
+    <textarea class="in"  placeholder="{{'comment'|translate}}" [(ngModel)]="msgBody" name="msgBody"></textarea>
+  <button [disabled]="!onclick" ion-button round class="btn" (click)="sendEmail()">{{'Send'|translate}}</button>
   </ion-list>
 </ion-content>

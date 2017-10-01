@@ -1,16 +1,18 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar> <ion-buttons right>
+      <button ion-button navPop icon-only>
+          <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
     <ion-title >
       <ion-row>
         <ion-col text-center col-1>
-       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+       <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-10>
+       <ion-col class="titlename" col-11>
          {{'Track'|translate}}
        </ion-col>
-       <ion-col text-center col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+      </ion-row>
     </ion-title>
   </ion-navbar>
  

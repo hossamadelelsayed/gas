@@ -11,8 +11,9 @@ page-addcard {
 .addcards{
     text-align: center;
     color: gray;
-
+    text-transform: lowercase;
 }
+
 .btn{
         background-color: $color-primary;
     font-size: 1.8rem;
@@ -29,13 +30,5 @@ page-addcard {
 
 .item {
     background-color: $color-background;
-}
-
-.back-button-text-ios {
- 
-    display: none;
-}
-.back-button.show-back-button{
-    color: $color-primary;
 }
 }

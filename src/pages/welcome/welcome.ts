@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {RegistermemberPage} from "../registermember/registermember";
 import {AuthServiceProvider} from'../../providers/auth-service/auth-service';
@@ -11,25 +11,32 @@ import * as firebase from "firebase";
   selector: 'page-welcome',
   templateUrl: 'welcome.html',
 })
+
 export class WelcomePage {
 
-  constructor(private events:Events,private storage:Storage ,private authService:AuthServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
-this.authService.AnonymousSignIn();
-  // this.authService.phoneLogin("0100","123456");
+  constructor(private events:Events,
+    private storage:Storage ,
+    private authService:AuthServiceProvider,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public menuCtrl: MenuController  ) {
+this.menuCtrl.swipeEnable(false);
+// this.authService.AnonymousSignIn();
+  // this.authService.phoneLogin("000000","123456");
 //
 // let user = firebase.auth().currentUser;
-<<<<<<< HEAD
+
 // this.events.subscribe('user:created', (user) => {
 //     // user and time are the same arguments passed in `events.publish(user, time)`
 //     console.log("llll",user);
 //   });
-=======
+
 // this.register("hrhf0","0200","23789","jdhjhj");
-this.events.subscribe('user:created', (user) => {
-    // user and time are the same arguments passed in `events.publish(user, time)`
-    console.log("llll",user);
-  });
->>>>>>> 404faa739428ba99c7c216f60059c8bf297e07ff
+// this.events.subscribe('user:created', (user) => {
+//     // user and time are the same arguments passed in `events.publish(user, time)`
+//     console.log("llll",user);
+//   });
+
 
 
 
@@ -47,4 +54,5 @@ gotohome(){
 gotoreg(){
   this.navCtrl.push(RegistermemberPage);
 }
+
 }

@@ -5,10 +5,11 @@ page-history {
     }
   .titlename{
       color: gray;
- 
       text-align: center;
   }
-
+.agen{
+    color: gray;
+}
   
 .logo{
      width: 20%;
@@ -29,28 +30,22 @@ page-history {
 
 .time{
     color: gray;
-
-    direction: ltr;
-    margin-left: 144px;
-    float: right;
+    margin-top: 15px;
+    text-align: end;
+    padding-top: 10px;
 }
 .card{
     border-radius: 10px;
     width: 100%;
-    margin-right: 0px;
+    margin:0 0 5px !important;
 }
 
-.reqno{
-     text-align: center;
-   
-       direction: ltr;
-    
 
-}
 .row{
-       background-color: white;
+    background-color: white;
     border-radius: 12px;
-    margin-top: -7px;
+    margin-top: 12px;
+    margin-top:0;
 }
 .linder{
      width: 8%;
@@ -65,21 +60,31 @@ page-history {
     display: block; 
    
 }
+.ordernumber{
+    margin-top: 10px;
+}
 .pending{
-   width: 8%;
+    width: 8%;
     height: 0%;
-margin: auto;
+    margin: auto;
     display: block;
 }
-.pra{
+.pra,.pend,.nores{
     margin-right: 2%;
     margin-top: 2%;
-   
+    margin-left: 2%;
 }
+.nores{
+    color: red;
+}
+.pend{
+    color:forestgreen;
+}
+
 .segment-md .segment-button.activated{
     border-color: $color-primary;
     color: gray;
-    font-size: 1.8rem;
+    text-transform: none;
 }
 .toolbar-ios .segment-button {
     max-width: none;

@@ -1,8 +1,19 @@
 <ion-header>
   <ion-navbar>
-    <ion-title style="text-align: center;"> <ion-icon style="float: left" ios="ios-menu" md="ios-menu"></ion-icon>
-      غاز السعودية
- <ion-icon style="float: right" ios="ios-search" md="md-search"></ion-icon>
+    <ion-buttons right>
+        <button ion-button navPop icon-only>
+            <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title >
+      <ion-row>
+        <ion-col text-center  col-1>
+       <ion-icon ios="ios-menu" md="md-menu" (click)="toggleMenu()"></ion-icon>
+       </ion-col>
+       <ion-col style="text-align: center;" col-11>
+      {{'Gas Ksa'|translate}} 
+       </ion-col>
+      </ion-row>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -13,7 +24,7 @@
        <ion-col class="km">km 3</ion-col>
 <ion-col text-center >
      <h6 style="margin-top: 42px; color:gray;">اسم الموزع</h6><br>
-     <div style="margin-top: -18px;
+     <div style="margin-top: -37px;
     font-size: 1.8rem;">
         <ion-icon ios="ios-star" md="ios-star-outline"></ion-icon>
         <ion-icon ios="ios-star" md="md-star"></ion-icon>

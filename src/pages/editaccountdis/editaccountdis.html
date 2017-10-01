@@ -1,0 +1,79 @@
+
+<ion-header>
+  <meta charset="utf-8">
+  <ion-navbar>
+      <ion-buttons right>
+          <button ion-button navPop icon-only>
+              <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+          </button>
+      </ion-buttons>
+    <ion-title style="background-color: white">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding >
+   <div  style="text-align: center;">
+     <!-- <img *ngIf="profileimage==null" src="assets/imgs/login_logo.png"> -->
+     <img  style="border-radius: 80px;
+     width: 120px;
+     height: 130px;" [src]="sta">
+     <button  class="upload"ion-button clear class="upload" (click)="galleryOrCamera(Image.Profile)">{{'Upload profile image'|translate}}</button>
+  </div>
+ <form #f="ngForm" >
+   <ion-list no-lines>
+   <ion-row>
+     <ion-col col-1>
+   <ion-icon ios="ios-person" md="ios-person-outline"></ion-icon>
+     </ion-col>
+     <ion-col col-11>
+       <ion-item>
+    <ion-input [(ngModel)]="name" id="name" name="name" type="text" placeholder="{{myname}}" ></ion-input>
+     <p style="color:orange;font-size:15px" *ngIf="name ==''">{{'Please enter Your Full Name'|translate}}</p>
+       </ion-item>
+     </ion-col>
+   </ion-row>
+   <ion-row>
+    <ion-col col-1>
+ <ion-icon class="icon" ios="ios-mail" md="ios-mail-outline"></ion-icon>
+    </ion-col>
+    <ion-col col-11>
+      <ion-item>
+   <ion-input [(ngModel)]="email" id="email"name="email" type="email" placeholder="{{myemail}}" ></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+     <ion-row>
+     <ion-col col-1>
+   <ion-icon ios="ios-call" md="ios-call-outline"></ion-icon>
+     </ion-col>
+     <ion-col col-11>
+       <ion-item>
+    <ion-input [(ngModel)]="phone" id="phone" name="phone" type="number" placeholder="{{myphone}}" pattern="[0-9]*" maxlength="14"></ion-input>
+       </ion-item>
+     </ion-col >  
+   </ion-row>
+   <ion-row>
+    <ion-col col-1>
+    <ion-icon class="icon" ios="ios-lock" md="ios-lock-outline"></ion-icon>
+    </ion-col>
+    <ion-col col-11>
+      <ion-item>
+   <ion-input  [(ngModel)]="password" id="password" name="password" type="password" placeholder="{{'Password'| translate}}" ></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+   <ion-row>
+     <ion-col col-6>
+      <button ion-button clear (click)="galleryOrCamera(Image.Front)" style="width:100%;color:orange"> {{'Upload ID front'| translate}}</button>   
+      <img [src]="sta2">
+     </ion-col>
+     <ion-col col-6>
+      <button ion-button clear (click)="galleryOrCamera(Image.Back)" style="width:100%;color:orange"> {{'Upload ID back'| translate}}</button>   
+      <img [src]="sta3">
+     </ion-col>
+   </ion-row>
+    <button class="enter" [disabled]="!name|| !password|| !phone|| !email" ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button>
+    <!-- <button class="enter"  [disabled]="!password"  ion-button block round (click)="gotoconfirm()" > {{'Edit Profile'| translate}}</button> -->
+    </ion-list>
+ </form>
+</ion-content>

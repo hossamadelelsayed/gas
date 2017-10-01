@@ -1,12 +1,22 @@
 
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar> <ion-buttons right>
+      <button ion-button navPop icon-only>
+          <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
     <ion-title class="titlename">{{'About'|translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
+  <div class="imgdiv">
+    <img src="assets/imgs/login_logo.png" height="100%">
+  </div>
+  <div>
+    <p style="margin-top: 40px;">{{aboutInfo}}</p>
+  </div>
+  
 </ion-content>

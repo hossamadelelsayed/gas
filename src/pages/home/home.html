@@ -3,7 +3,6 @@
   <meta charset="utf-8">
   <ion-navbar>
     <ion-title style="background-color: white">
-     <button ion-button clear class="Skip" (click)="gotocreateorder()" >{{'Skip'|translate}}</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -33,7 +32,7 @@
        </ion-item>
      </ion-col>  
    </ion-row> 
-   
+    
     <button [disabled]="!f.valid"  class="enter" ion-button block round (click)="gotocreateorder()" >{{'Login'|translate}}</button>
     <button class="fpass" ion-button  clear (click)="gotoforgotpassword()">{{'Forgot Password'|translate}}</button>
     <div class="new">
@@ -43,3 +42,4 @@
     </ion-list>
  </form>
 </ion-content>
+ 

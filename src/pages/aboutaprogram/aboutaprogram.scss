@@ -7,14 +7,13 @@ page-aboutaprogram {
 .content{
     background-color: $color-background;
 }
-.back-button-md.show-back-button {
-    display: none;
-}
-.back-button-text-ios {
- 
-    display: none;
-}
-.back-button-ios.show-back-button{
-    color: gray;
+.imgdiv{
+    margin-left: auto;
+    margin-right: auto;
+    height: 180px;
+    text-align: center;
+  }
+.about{
+    margin-top:40px;
 }
 }

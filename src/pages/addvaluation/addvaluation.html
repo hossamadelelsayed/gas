@@ -1,37 +1,31 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title  style="font-family: cairo" >
+    <ion-title  >
       <ion-row>
         <ion-col text-center col-1>
-      <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+      <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
-       <ion-col class="titlename" col-10>
+       <ion-col class="titlename" col-11>
          {{'Rate'|translate}}
        </ion-col >
-       <ion-col text-center col-1>
- <ion-icon (click)="gotoselrct()"  ios="ios-search" md="md-search"></ion-icon>
- </ion-col></ion-row>
+      </ion-row>
     </ion-title>
   </ion-navbar>
- 
 </ion-header>
-
 
 <ion-content padding>
   <ion-list >
  <img class="logo" src="assets/imgs/agent_pin.png">
- <h5 class="name">{{'agent name'|translate}}</h5>
+  <h5 *ngIf="mode == rateClass.rateCustomerType" style="font-family: cairo; color: gray">{{'Customer Name'|translate}} : {{user?.name}}</h5>
+  <h5 *ngIf="mode == rateClass.rateDistType" style="font-family: cairo; color: gray">{{'Distributor Name'|translate}} : {{user?.name}}</h5>
  <ion-row class="r">
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon class="stars" ios="ios-star" md="md-star"></ion-icon>
-   <ion-icon style="font-size:3rem; color:gray;" ios="ios-star" md="ios-star-outline"></ion-icon>
+   <ion-icon  *ngFor="let icon of icons; let i = index;" style="color:orange" [name]="icon"
+             (click)="customerRate(i+1)"></ion-icon>
  </ion-row>
-   
-    <textarea class="add" placeholder="{{'Comment'|translate}}" ></textarea>
-       
-  <button class="btn" ion-button round >{{'Rate'|translate}}</button>
+
+    <textarea [(ngModel)]="comment" class="add" placeholder="{{'Comment'|translate}}" ></textarea>
+
+  <button class="btn" ion-button round (click)="rateConfirm()" >{{'Rate'|translate}}</button>
   </ion-list>
 </ion-content>

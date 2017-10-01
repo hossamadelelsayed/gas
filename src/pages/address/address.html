@@ -1,45 +1,49 @@
 
 <ion-header>
-  <ion-navbar>
+  <ion-navbar><ion-buttons right>
+    <button ion-button navPop icon-only>
+        <ion-icon style="color:gray" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+    </button>
+</ion-buttons>
     <ion-title >
-      <ion-row>
+      <ion-row style="padding-top:10px;">
         <ion-col col-2>   
-       <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+       <ion-icon (click)="toggleMenu()" ios="ios-menu" md="md-menu"></ion-icon>
        </ion-col>
        <ion-col text-center col-8>
     {{'Addresses'|translate}}
        </ion-col>
        <ion-col col-2>
-           <P class="edite">{{'Edit'|translate}}</P>
+           <!-- <P class="edite">{{'Edit'|translate}}</P> -->
  </ion-col></ion-row>
     </ion-title>
   </ion-navbar>
  
 </ion-header>
 <ion-content padding >
-<ion-list radio-group>
-  <ion-row>
- <ion-radio color="orangee"  checked="fales"></ion-radio><br>
-<ion-label>
-  <p>{{'Home'|translate}}</p>
-   <h6> شارع الملك سليمان حي العرب .رقم الشقة6 </h6>
-   </ion-label>
-<ion-icon class="arrow" name="arrow-back"></ion-icon>
+<ion-list radio-group >
+  <div *ngFor="let location of locations">
+      <ion-item class="locitem">
+          <ion-label>{{location.label}}</ion-label>
+          <ion-radio (click)="selectLocation(location)"></ion-radio>
+      </ion-item>
+      <ion-icon name="trash" class="delicon" (click)="delPlace(location.locationID)"></ion-icon>
+  </div>
+     
+      
+    <!-- <ion-row *ngFor="let location of locations">
+       <ion-label>{{location.label}}</ion-label>
+       <ion-radio ></ion-radio>
+      <h6> شارع الملك سليمان حي العرب .رقم الشقة6 </h6>
+      <ion-icon class="arrow" name="arrow-back"></ion-icon>
+    </ion-row> -->
 
-  </ion-row>
-<hr>
-  <ion-row>
-  <ion-radio color="orangee"  checked="fales"></ion-radio><br>
-<ion-label><p>{{'Work'|translate}}</p> <h6> شارع الملك سليمان حي العرب </h6></ion-label>
-<ion-icon class="arrow" name="arrow-back"></ion-icon>
-  </ion-row>
-<hr>
-<ion-row>
+<ion-row  (click)="showMap()" style="padding-top: 35px;padding-bottom: 30px;">
     <ion-icon style="font-size:2.5rem;" name="ios-add"></ion-icon>
-    <ion-label>
-  <h5 style="margin-top: 2px;font-weight: bold;color: gray;">{{'Add new address'|translate}}</h5>
-
-   <h6 >اضف على الخريطة.الشارع.رقم البنانية.رقم الشقة</h6> </ion-label>
+    <ion-label style="margin: 0 20px;">
+  <h5>{{'Add new address'|translate}}</h5>
+ 
+   </ion-label>
 <ion-icon class="arrow" name="arrow-back"></ion-icon>
 
 </ion-row>
