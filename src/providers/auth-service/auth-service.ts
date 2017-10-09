@@ -7,6 +7,8 @@ import { Storage } from '@ionic/storage';
 import {User} from "firebase/app";
 import {DistributorProvider} from'../../providers/distributor/distributor';
 import { Geolocation } from '@ionic-native/geolocation';
+import { PushNotificationsProvider } from '../../providers/push-notifications/push-notifications';
+
 declare let google;
 
 // import {NavController} from 'ionic-angular';
@@ -21,7 +23,7 @@ declare let google;
 export class AuthServiceProvider {
   public fireAuth: any;
   public userData: any;
-  constructor(  public geolocation: Geolocation,private distributorProvider:DistributorProvider,private storage:Storage, public http: Http,private events :Events) {
+  constructor(public notifications:PushNotificationsProvider, public geolocation: Geolocation,private distributorProvider:DistributorProvider,private storage:Storage, public http: Http,private events :Events) {
     this.fireAuth = firebase.auth();
      this.userData = firebase.database().ref('customers');
   }
@@ -99,6 +101,22 @@ let userdata={uEmail:email,uType:type};
              this.distributorProvider . sendMyLoc(resp.coords.latitude, resp.coords.longitude)
                console.warn("hi am a distributor")
                 });
+            }else{
+              console.warn("hi am a customer")
+
+              ////////////////////////////////////////////////////////////////////////////listen to notifications
+              // this.geolocation.getCurrentPosition().then((resp) => {
+              //
+              //   this.distributorProvider.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then(city => {
+              //     console.warn("hi am a C "+city)
+              //
+              //     this.notifications.sendCustomerMsg("Hi", "Click To View ", city)
+              //
+              //
+              //   });
+              //
+              // });
+              ////////////////////////////////////////////////////////////////////////////
             }
             console.log("loged in id",userId);
             // this.events.publish('user:created', user);

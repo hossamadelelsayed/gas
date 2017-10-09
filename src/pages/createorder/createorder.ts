@@ -25,6 +25,7 @@ export class CreateorderPage {
  public location : Location;
  public locname : string;
  public distId:any;
+ public pipePrice=5;
 constructor(
             public toastCtrl : ToastController,
             public translateService :TranslateService ,
@@ -35,8 +36,9 @@ constructor(
             public menuCtrl: MenuController,
             public modalCtrl :ModalController ,
             public commonService : CommonServiceProvider) {
-              this.distId = this.navParams.data.disId;
-              console.log(this.navParams.data.disId);
+              // this.distId = this.navParams.data.disId;
+              // console.log('nav dist id',this.navParams.data.disId);
+              console.log('nav data',this.navParams.data);
               this.userId = this.auth.getUserId();
 }
 add(){
@@ -83,20 +85,41 @@ showUserLocations()
 createOrderNow(){
   this.commonService.presentLoading('Please Wait...');
   console.log(this.deliveryDate);
+if(this.navParams.data ) {
+  this.order.createOrder(new Order(this.userId, this.counter, this.location, "cash", <any>Date.now(), this.sameDate),
+    this.navParams.data)
+    .then((Order) => {
+
+      // console.log("distID",this.distId);
+      console.log(Order.deliveryDate);
+      console.log(Order.customerID);
+      console.log(Order.monthly);
+      this.translateAndToast('Order Done');
+      this.navCtrl.push(HistoryPage);
+      this.commonService.dismissLoading(true);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      this.commonService.dismissLoading(true);
+    });
+}else{
+
   this.order.createOrder(new Order
-    (this.userId,this.counter,this.location,"cash",<any>Date.now(),this.sameDate))
-      .then((Order)=>{
-        console.log(Order.deliveryDate);
-        console.log(Order.customerID);
-        console.log(Order.monthly);
-        this.translateAndToast('Order Done');
-        this.navCtrl.push(HistoryPage);
-        this.commonService.dismissLoading(true);
-      })
-      .catch((err)=>{
-        console.log(err.message);
-        this.commonService.dismissLoading(true);
-      });
+  (this.userId,this.counter,this.location,"cash",<any>Date.now(),this.sameDate),'no')
+    .then((Order)=>{
+
+      // console.log("distID",this.distId);
+      console.log(Order.deliveryDate);
+      console.log(Order.customerID);
+      console.log(Order.monthly);
+      this.translateAndToast('Order Done');
+      this.navCtrl.push(HistoryPage);
+      this.commonService.dismissLoading(true);
+    })
+    .catch((err)=>{
+      console.log(err.message);
+      this.commonService.dismissLoading(true);
+    });}
 }
 presentToast(txt:any) {
     let toast = this.toastCtrl.create({

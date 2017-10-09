@@ -45,13 +45,15 @@ import {OrderlaterPage} from "../pages/orderlater/orderlater";
 import{CustomerProvider} from "../providers/customer/customer";
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { Firebase } from '@ionic-native/firebase';
+import { FCM } from '@ionic-native/fcm';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+// import { AngularFireDatabaseModule } from 'angularfire2/database';
+// import { AngularFireModule } from 'angularfire2';
+// import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
@@ -78,6 +80,7 @@ import {CommonServiceProvider} from "../providers/common-service/common-service"
 import {TrackingMapPage} from "../pages/tracking-map/tracking-map";
 import {LaunchNavigator} from "@ionic-native/launch-navigator";
 import { RateProvider } from '../providers/rate/rate';
+import { PushNotificationsProvider } from '../providers/push-notifications/push-notifications';
 
 const  firebaseConfig = {
   apiKey: "AIzaSyAzmtOBtWYDL4srdRqEfZFiwsq1rs2JHOA",
@@ -179,10 +182,12 @@ StatusBar,
     SplashScreen,
     MainService,
     Geolocation,
-    OrderProvider,
+    OrderProvider,PushNotificationsProvider,
     CustomerLocationProvider,
     Camera,
-    SMS,
+    SMS,Firebase
+    ,FCM
+    ,
     CallNumber,EmailComposer,CustomerProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
@@ -193,6 +198,7 @@ StatusBar,
     CommonServiceProvider,
     LaunchNavigator,
     AboutusProvider,
-    RateProvider ]
+    RateProvider,
+     ]
 })
 export class AppModule {}

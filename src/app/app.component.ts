@@ -29,8 +29,8 @@ import {OrderProvider} from "../providers/order/order";
 import {Order} from "../models/order";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import { Events } from 'ionic-angular';
-import * as firebase from "firebase";
-import {CommonServiceProvider} from "../providers/common-service/common-service";
+// import * as firebase from "firebase";
+// import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
 import {User} from "../models/user";
 import {AddvaluationPage} from "../pages/addvaluation/addvaluation";
@@ -38,6 +38,8 @@ import {Rate} from "../models/rate";
 import {Geolocation} from "@ionic-native/geolocation";
 import {DistributorProvider} from "../providers/distributor/distributor";
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { Firebase } from '@ionic-native/firebase';
+import { PushNotificationsProvider } from '../providers/push-notifications/push-notifications';
 
 @Component({
   templateUrl: 'app.html'
@@ -60,7 +62,9 @@ export class MyApp {
    public password:string;
    appFlag:false;
 
-  constructor( platform: Platform,
+  constructor( public notifications:PushNotificationsProvider,
+    platform: Platform,
+               private firebase: Firebase,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
                public translate : TranslateService ,
@@ -74,6 +78,7 @@ export class MyApp {
                public distService : DistributorProvider,private androidPermissions: AndroidPermissions) {
 
     platform.ready().then(() => {
+
       platform.pause.subscribe(() => {
         console.log('[INFO] App paused');
         this.distService.onDistributorDisconnect();
@@ -87,9 +92,12 @@ export class MyApp {
 
       });
 
-
-      if (platform.is('android') || platform.is('android')) {
-
+      if (platform.is('android') || platform.is('ios')) {
+        try {
+          this.notifications.onTokenRecived();
+        }catch(E) {
+          console.log(E)
+        }
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
         success => console.log('Permission granted'),
         err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)

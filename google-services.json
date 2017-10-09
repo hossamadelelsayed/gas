@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "193816669511",
+    "firebase_url": "https://gasksa-de4ab.firebaseio.com",
+    "project_id": "gasksa-de4ab",
+    "storage_bucket": "gasksa-de4ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193816669511:android:d1f2c02ec1eec491",
+        "android_client_info": {
+          "package_name": "com.gas.ksa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193816669511-je9l6l257iot951g0mqie26mipiade1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuwv4pbrZ6bZz72G5DAaVlAGR2JBIz6UM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
