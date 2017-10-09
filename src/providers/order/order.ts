@@ -5,6 +5,7 @@ import {Order} from "../../models/order";
 import {User} from "../../models/user";
 import * as firebase from "firebase";
 import {Events} from "ionic-angular";
+import { PushNotificationsProvider } from '../../providers/push-notifications/push-notifications';
 
 /*
   Generated class for the OrderProvider provider.
@@ -16,7 +17,8 @@ export class OrderProvider {
   public fireDatabase : any;
   public fireAuth : any;
   public city : string ;
-  constructor(public http: Http,public events: Events) {
+  constructor(  public notifications:PushNotificationsProvider,
+                public http: Http,public events: Events) {
     console.log('Hello OrderProvider Provider');
     this.fireAuth = firebase.auth();
     this.fireDatabase = firebase.database();
@@ -47,9 +49,9 @@ export class OrderProvider {
         let OrderInstanceRef = this.fireDatabase.ref('/history/'+orderSnapshot.key);
         OrderInstanceRef.child('orderID').set(orderSnapshot.key).then(()=>{
           let customerOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+orderSnapshot.key) ;
-          if(distributerID != null)
-            this.publishOrderToSpecificDist(this.city,orderSnapshot.key,distributerID);
+          if(distributerID != 'no')this.publishOrderToSpecificDist(this.city,orderSnapshot.key,distributerID);
           else this.publishOrderToAllDist(this.city,orderSnapshot.key);
+
           customerOrderRef.update({
             orderID : orderSnapshot.key ,
             status : Order.NoResponseStatus
@@ -201,6 +203,7 @@ export class OrderProvider {
     let promise = new Promise((resolve, reject ) => {
       let AllDistCityOrderRef = this.fireDatabase.ref('ordersToAllDist/'+city +'/' +orderID) ;
       AllDistCityOrderRef.child('orderID').set(orderID).then(()=>{
+        this.notifications.sendCustomerMsg('لديك طلب توصيل قم بالموافقة لبدأ العملية',city)
         resolve(true);
       }).catch((err) => reject(err));
     });
@@ -212,6 +215,7 @@ export class OrderProvider {
       let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification/' +orderID) ;
       orderNotificationDistRef.child('orderID').set(orderID).then(()=>{
         resolve(true);
+        this.notifications.sendToOneDist('يوجد لديك طلب خاص',city,distributerID)
       }).catch((err) => reject(err));
     });
     return promise ;

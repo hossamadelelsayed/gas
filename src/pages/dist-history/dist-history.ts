@@ -6,6 +6,8 @@ import {CommonServiceProvider} from "../../providers/common-service/common-servi
 import {DetailsrequestPage} from "../detailsrequest/detailsrequest";
 import * as firebase from "firebase";
 import {User} from "../../models/user";
+import { PushNotificationsProvider } from '../../providers/push-notifications/push-notifications';
+import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 
 /**
  * Generated class for the DistHistoryPage page.
@@ -24,12 +26,15 @@ export class DistHistoryPage {
    public currentOrder : Order[] = [] ;
   public lastOrder : Order[] = [] ;
   public distUID : string ;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public notification:PushNotificationsProvider,public navCtrl: NavController, public navParams: NavParams,
               public orderService : OrderProvider  ,
                public commonService : CommonServiceProvider ,
+              private fireAuth : AuthServiceProvider,
+
               public zone: NgZone , public events : Events ,
               public menuCtrl : MenuController ) {
       this.distUID = firebase.auth().currentUser.uid;
+
   }
 
   ionViewDidLoad() {
@@ -58,6 +63,9 @@ export class DistHistoryPage {
       this.currentOrder.push(order);
       this.sortCurrentOrderByDeliveryDate();
     }));
+    //sending device token id to db
+    this.notification.sendDistToken(this.orderService.city);
+
     this.orderService.subscribeToDistOrderRemoved((orderID : string)=> this.zone.run(()=>this.delOrder(orderID)));
     this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
       .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
@@ -74,9 +82,12 @@ export class DistHistoryPage {
     console.log('delEnter');
     console.log('before',this.currentOrder.length);
     for(let i = 0; i < this.currentOrder.length; i++){
+
       if(this.currentOrder[i].orderID == orderID ) {
         this.currentOrder.splice(i, 1);
         console.log('after',this.currentOrder.length);
+ //test
+        //
       }
     }
     this.sortCurrentOrderByDeliveryDate();
@@ -90,6 +101,7 @@ export class DistHistoryPage {
   pushToLastOrder(orders : Order[]){
     orders.forEach((order  : Order)=>{
       this.lastOrder.push(order);
+
     });
     this.sortLastOrderByDeliveryDate();
   }
@@ -133,4 +145,5 @@ export class DistHistoryPage {
   {
     this.menuCtrl.toggle();
   }
+
 }

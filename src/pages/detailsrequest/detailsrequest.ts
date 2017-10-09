@@ -8,6 +8,7 @@ import {User} from "../../models/user";
 import {OrderProvider} from "../../providers/order/order";
 import {LaunchNavigator, LaunchNavigatorOptions} from "@ionic-native/launch-navigator";
 import {TrackingMapPage} from "../tracking-map/tracking-map";
+import { CallNumber } from '@ionic-native/call-number';
 
 
 @Component({
@@ -21,7 +22,9 @@ export class DetailsrequestPage {
   public orderClass  = Order ;
   public user : User ;
   public icons : string[] ;
-  constructor(public navCtrl: NavController, public navParams: NavParams ,
+  flag:boolean=false;
+  custPhone:any;
+  constructor(private callNumber: CallNumber,public navCtrl: NavController, public navParams: NavParams ,
               public commonService : CommonServiceProvider , public orderService : OrderProvider ,
               public launchNavigator : LaunchNavigator) {
     this.mode = navParams.data.user ;
@@ -38,6 +41,10 @@ export class DetailsrequestPage {
     else
       this.orderService.getCustomerData(this.order.customerID).then((cust : User)=>{
         this.user = cust ;
+        //
+
+        this.flag=true;
+        this.custPhone=this.user.phoneNo;
         this.getIcons(this.user.rateInfo.rateSum/this.user.rateInfo.rateNo);
       }).catch((err)=>console.log(err));
   }
@@ -45,7 +52,7 @@ export class DetailsrequestPage {
     this.navCtrl.push(HistoryPage);
   }
   gotoflloerequest(){
-    this.navCtrl.push(FollowrequestPage);
+    // this.navCtrl.push(FollowrequestPage);
   }
   convertDate(timestamp : Date) : Date {
     return this.commonService.convertTimestampToDate(timestamp);
@@ -79,5 +86,10 @@ export class DetailsrequestPage {
   getIcons(rate : number)
   {
     this.icons = this.commonService.icons(rate);
+  }
+  call(){
+    this.callNumber.callNumber(this.custPhone, true)
+      .then(() => console.log('Launched dialer!'))
+      .catch(() => console.log('Error launching dialer'));
   }
 }

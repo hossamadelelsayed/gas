@@ -33,6 +33,7 @@
     <ion-list *ngSwitchDefault>
       <div *ngFor="let order of currentOrder">
         <ion-card class="card" >
+          <!--{{this.downloadImage()}}-->
           <ion-card-header class="head" >
           </ion-card-header>
           <ion-card-content>
@@ -40,6 +41,9 @@
               <ion-col col-3 style="height: 80px;" (click)="goToDetails(order)">
                 <img style="height: 70px;
               width: 70px;" src="assets/imgs/agent_pin.png"><br>
+                <!--<img  style="border-radius: 80px;-->
+     <!--width: 80px;-->
+     <!--height: 85px;" [src]="sta">-->
               </ion-col>
               <ion-col col-6>
                 <p class="ordernumber">  {{'Order Number'|translate}} &nbsp; {{order.orderID}} </p>
@@ -68,7 +72,11 @@
               <ion-row>
                 <ion-col col-3 style="height: 80px;" (click)="goToDetails(order)">
                   <img style="height: 70px;
-              width: 70px;" src="assets/imgs/agent_pin.png"><br>
+              width: 70px;" src="assets/imgs/agent_pin.png">
+                  <!--<img  style="border-radius: 80px;-->
+     <!--width: 80px;-->
+     <!--height: 85px;" [src]="sta">-->
+                  <br>
                 </ion-col>
                 <ion-col col-9>
                   <p class="ordernumber">  {{'Order Number'|translate}} &nbsp; {{order.orderID}} </p>

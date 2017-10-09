@@ -112,5 +112,7 @@
   "delivered" : "تم توصيل الطلب رقم" ,
   "Accept" : "قبول" ,
   "Reject" : "الغاء" ,
-  "On Deliver" : "عند الاستلام"
+  "On Deliver" : "عند الاستلام",
+  "Delivery Price":"سعر التوصيل",
+  "SAR":"ريال"
 }

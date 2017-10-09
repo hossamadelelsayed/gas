@@ -18,6 +18,7 @@ import {Subscription} from "rxjs/Subscription";
 import { Storage } from '@ionic/storage';
 import {OrderProvider} from "../../providers/order/order";
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
+import { PushNotificationsProvider } from '../../providers/push-notifications/push-notifications';
 
 /**
  * Generated class for the MainPage page.
@@ -60,7 +61,7 @@ export class MainPage {
                 public distributor :DistributorProvider,
                 private authService:AuthServiceProvider, private storage: Storage,
                 private order:OrderProvider ,
-                public zone: NgZone
+                public zone: NgZone,public notifications:PushNotificationsProvider
     ) {
 /// Reference database location for GeoFire
 
@@ -83,7 +84,7 @@ export class MainPage {
     }
     creatdisorder(){
                 console.log("IDDDDDDDDDDD"+this.disId);
-                this.navCtrl.push(CreateorderPage , {distId: this.disId});
+                this.navCtrl.push(CreateorderPage , this.disId);
             }
             latLng:any;
     sendCurrentLoc(){
@@ -125,7 +126,9 @@ loadCheck:boolean;
 console.log('loc resp lat',resp.coords.latitude)
         //current latlng
       this.distributor.getCurrentIpLocation(resp.coords.latitude, resp.coords.longitude).then((city)=>{
-      // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
+        // this.notifications.sendCustomerMsg("Hi", "Click To View ", city)
+
+        // this.distributor.sendMyLoc(resp.coords.latitude, resp.coords.longitude);
       self.setMarkers(`${city}`);
         this.storage.set('city',`${city}`);
 
@@ -167,19 +170,15 @@ self.loadCheck=false;
 
                         self.addMarker(latlng,key.key);
                         console.log('new marker',key.key);
-
-
                 }, (error)=> {
                     console.log("Error: " + error);
                 });
             });
-
-
         });
     }
     gotocreatorder(){
         // Create a Firebase reference where GeoFire will store its information
-                this.navCtrl.push(CreateorderPage);
+                this.navCtrl.push(CreateorderPage,'no');
             }
 
     current:any;

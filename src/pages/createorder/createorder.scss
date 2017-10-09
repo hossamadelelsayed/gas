@@ -1,88 +1,91 @@
 page-createorder {
-    .content{
-        background-color:$color-background;
-    }
-    .titlename{
-        text-align: center;
-        color: gray;
-           
-    }
+  .content {
+    background-color: $color-background;
+  }
+  .titlename {
+    text-align: center;
+    color: gray;
+
+  }
   .back-button-md.show-back-button {
     display: none;
-}
-.back-button-text-ios {
- 
+  }
+  .back-button-text-ios {
+
     display: none;
-}
-.back-button-ios.show-back-button{
+  }
+  .back-button-ios.show-back-button {
     color: gray;
-}
-.addpay{
+  }
+  .addpay {
     margin-left: -28px;
-        margin-right: -28px;
+    margin-right: -28px;
     color: gray;
     font-size: 2rem;
-}
-.plusicon{
+  }
+  .plusicon {
     font-size: 30px;
-       margin-right: 6px;
+    margin-right: 6px;
     margin-left: 6px;
-}
-    [dir="ltr"] .plusicon{
+  }
+  [dir="ltr"] .plusicon {
     font-size: 30px;
-     padding: 0 0px 0 10px;
-}
-.no{
+    padding: 0 0px 0 10px;
+  }
+  .no {
     text-align: center;
     border: 1px solid;
     border-color: gray;
     border-radius: 36px;
-        height: 30px;
+    height: 30px;
     margin-top: 6px;
     padding-top: 1px;
     color: $color-primary;
-        font-size: 1.7rem;
-}
-.d{
-   text-align: center;
+    font-size: 1.7rem;
+  }
+  .d {
+    text-align: center;
 
-}
+  }
 
-.minus{
+  .minus {
     background-color: $color-primary;
-     width: 37px;
-     height: 37px;
-}
-.reqnow{
+    width: 37px;
+    height: 37px;
+  }
+  .reqnow {
     background-color: $color-primary;
     height: 59px;
     width: 40%;
     font-size: 2rem;
- 
-}
-.reqlater{
-        background-color: rgba(51, 51, 51, 0.91);
+
+  }
+  .reqlater {
+    background-color: rgba(51, 51, 51, 0.91);
     height: 59px;
     width: 40%;
     font-size: 2rem;
-      
-}
- 
-    h4{
-      
-            font-size: 1.8rem;
-    }
-    span{
-      
-            font-size: 1.8rem;
-    }
-    .check{
-     background-color:$color-background;
+
+  }
+
+  h4 {
+
+    font-size: 1.8rem;
+  }
+  span {
+
+    font-size: 1.8rem;
+  }
+  .check {
+    background-color: $color-background;
     margin-right: -33px;
     color: gray;
-   
-   
-    }
- 
-  
-} 
+
+  }
+  .pricde{
+  font-size: 1rem;
+  color: green;
+  padding: 0;
+  margin: 0;
+}
+}
