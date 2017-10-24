@@ -32,13 +32,13 @@ export class AuthServiceProvider {
 
   getLogInEmail(phoneNo:any){
 
-    let emailRef = firebase.database().ref(phoneNo);
+    let emailRef = firebase.database().ref('users/'+phoneNo);
 
 
     emailRef.once("value")
       .then(function(snapshot) {
 
-        let email = snapshot.child(phoneNo+"/email").val(); // "Ada"
+        let email = snapshot.child('users/'+phoneNo+"/email").val(); // "Ada"
 
         console.log("id     :  ",email);
         return  email;
@@ -51,7 +51,7 @@ export class AuthServiceProvider {
     let self=this;
 
     let promise = new Promise((resolve, reject )=>{
-      let typeRef = firebase.database().ref(phoneNo);
+      let typeRef = firebase.database().ref('users/'+phoneNo);
       typeRef.once("value")
         .then((snapshot)=> {
 
@@ -98,7 +98,7 @@ let userdata={uEmail:email,uType:type};
                 //current latlng
                 let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
 
-             this.distributorProvider . sendMyLoc(resp.coords.latitude, resp.coords.longitude)
+             // this.distributorProvider . sendMyLoc(resp.coords.latitude, resp.coords.longitude)
                console.warn("hi am a distributor")
                 });
             }else{
@@ -219,7 +219,7 @@ let  imgRef = firebase.database().ref("distributors/"+user);
   register(type:any,email: string, password: string,name :string,phoneNo:any): Promise<any> {
     let promise = new Promise((resolve, reject )=>{
 this.AnonymousSignIn()
-      let nameEmailRef = firebase.database().ref(phoneNo);
+      let nameEmailRef = firebase.database().ref('users/'+phoneNo);
       //check  if phoneNo entered dont have an email in firebase
 
       nameEmailRef.once("value")
@@ -234,7 +234,7 @@ this.AnonymousSignIn()
                 rootRef.child("email").set(email).then(()=>{resolve()}).catch((err)=>{reject(err)});
                 rootRef.child("phoneNo").set(phoneNo).then(()=>{resolve()}).catch((err)=>{reject(err)});
 
-                let nameEmailRef = firebase.database().ref(phoneNo);
+                let nameEmailRef = firebase.database().ref('users/'+phoneNo);
                 //check  if phoneNo entered dont have an email in firebase
                 nameEmailRef.once("value")
                   .then((snapshot) =>{
@@ -274,7 +274,7 @@ this.AnonymousSignIn()
      rootRef.child("email").set(email);
      rootRef.child("phoneNo").set(phoneNo);
 
-    let nameEmailRef = firebase.database().ref(phoneNo+"/email");
+    let nameEmailRef = firebase.database().ref('users/'+phoneNo+"/email");
     //check  if phoneNo entered dont have an email in firebase
     nameEmailRef.once("value")
       .then(function(snapshot) {

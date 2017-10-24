@@ -23,7 +23,8 @@ export class DistributorProvider {
   firebaseRef: any;
   city:string;
 id:any;
-
+// status:boolean=true;
+  // statusLabel:string='متاح';
   constructor(private _http: Http,public geolocation: Geolocation,
               public nativeGeocoder: NativeGeocoder
   ) {
@@ -123,7 +124,9 @@ if(lat!=null) {
     console.warn('dist will removed from valid','/valid/'+this.city+"/"+this.id)
    let firebaseRef = firebase.database().ref('/valid/'+this.city+"/"+this.id);
    firebaseRef.once('value').then(snapshot=>{
+     //console.log('')
      firebaseRef.remove();
+     resolve(true);
    });
     });
 

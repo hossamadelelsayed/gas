@@ -86,7 +86,7 @@
 </ion-row>
 <div class="d">
 <button class="reqnow" *ngIf="order.status == orderClass.PendingStatus" ion-button round (click)="navigate()" >{{'Navigate'|translate}}</button>
-<!--<button class="reqlater" ion-button round>{{'Cancel Order'|translate}}</button>-->
+<button class="reqlater" *ngIf="order.status == orderClass.NoResponseStatus"  (click)="cancel()"  ion-button round>{{'Cancel Order'|translate}}</button>
 </div>
 </ion-list>
 </ion-content>

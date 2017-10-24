@@ -40,6 +40,7 @@ import {DistributorProvider} from "../providers/distributor/distributor";
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { Firebase } from '@ionic-native/firebase';
 import { PushNotificationsProvider } from '../providers/push-notifications/push-notifications';
+declare let google;
 
 @Component({
   templateUrl: 'app.html'
@@ -61,8 +62,11 @@ export class MyApp {
    public phone:string;
    public password:string;
    appFlag:false;
-
-  constructor( public notifications:PushNotificationsProvider,
+   status:boolean;
+  onlineFlag:boolean=true;
+  Online:string='online';
+ distFlag:boolean=false;
+  constructor( public distributorProvider:DistributorProvider,public notifications:PushNotificationsProvider,
     platform: Platform,
                private firebase: Firebase,
               statusBar: StatusBar,
@@ -78,10 +82,11 @@ export class MyApp {
                public distService : DistributorProvider,private androidPermissions: AndroidPermissions) {
 
     platform.ready().then(() => {
-
+      // this.events.publish('onlineflag',this.onlineFlag);
+this.toggleDistStatus();
       platform.pause.subscribe(() => {
         console.log('[INFO] App paused');
-        this.distService.onDistributorDisconnect();
+        // this.distService.onDistributorDisconnect();
       });
       platform.resume.subscribe(() => {
 
@@ -121,6 +126,13 @@ export class MyApp {
         if(view.component != DistHistoryPage)
           this.newDistOrderAlert(order);
       });
+
+
+      this.events.subscribe('distflag', (res)=>{
+        this.distFlag=true;
+          this.events.unsubscribe('distflag');
+      });
+
       this.orderService.subscribeToDistHistory((order : Order)=> {
         if(order.status == Order.DeliveredStatus)
           this.nav.push(AddvaluationPage,{
@@ -161,10 +173,12 @@ export class MyApp {
             this.storage.get('type').then((res)=>{
               // this.presentToast(res);
               if(res=='distributors'){
+                this.distFlag=true;
                 this.welcomePage=DistHistoryPage;
                 this.orderService.attachDistListeners();
               }
               else{
+                this.distFlag=false;
                 this.welcomePage=MainPage;
                 this.orderService.attachCustomerListeners();
               }
@@ -174,36 +188,7 @@ export class MyApp {
       }).catch(()=>{
         this.welcomePage=WelcomePage;
       });
-/////////////////////////
-    // this.translate.setDefaultLang('ar');
-    // platform.setDir('rtl', true);
-    //   this.nativeStorage.getItem('phone').then((res)=>{
-    //     console.log('auto login phone',res)
-    //     this.presentToast(res);
-    //     this.phone=res;
-    //   }).then(()=>{
-    //     this.nativeStorage.getItem('password').then((res)=>{
-    //
-    //       this.presentToast(res);
-    //       this.password=res;
-    //     }).then(()=>{
-    //       this.storage.get('type').then((res)=>{
-    //
-    //
-    //         this.presentToast(res);
-    //         if(res=='distributors'){
-    //           this.welcomePage=HistoryPage;
-    //
-    //         }
-    //         else{
-    //           this.welcomePage=MainPage;
-    //         }
-    //       })
-    //     })
-    //   }).catch(()=>{
-    //     this.welcomePage=WelcomePage;
-    //   });
-    //
+
     this.storage.get('lang').then((res)=>{
       console.log(res);
       if(res =='ar'){
@@ -303,4 +288,30 @@ export class MyApp {
       }
     );
   }
+  toggleDistStatus(){
+    console.log('online flag',this.onlineFlag);
+// this.events.subscribe('onlineflag',flag=>{
+  if(this.onlineFlag){
+
+    this.distributorProvider.onDistributorDisconnect().then(res=>{
+        this.onlineFlag=false;
+        this.Online='offline'
+    })
+  }else if(!this.onlineFlag){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      //current latlng
+      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+
+      this.distributorProvider . sendMyLoc(resp.coords.latitude, resp.coords.longitude)
+      console.warn("hi am a distributor")
+        this.Online='online'
+        this.onlineFlag=true;
+
+    });
+  }
+// });
+
+  }
+
+
 }

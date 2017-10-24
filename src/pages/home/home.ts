@@ -14,6 +14,7 @@ import {HistoryPage} from "../history/history";
 import {DistHistoryPage} from "../dist-history/dist-history";
 import {OrderProvider} from "../../providers/order/order";
 import {CommonServiceProvider}from"../../providers/common-service/common-service"
+import {MyApp} from "../../app/app.component";
 
 @Component({
   selector: 'page-home',
@@ -40,11 +41,14 @@ this.commonService.presentLoading('Logging In');
     // this.auth.getUserId;
     console.log(user['uType']);
     if(user['uType']=='distributors'){
+      this.events.publish('distflag',true);
       this.navCtrl.push(DistHistoryPage);
       this.navCtrl.setRoot(DistHistoryPage);
       this.orderService.attachDistListeners();
     }
     else{
+
+
       this.navCtrl.push(MainPage);
       this.navCtrl.setRoot(MainPage);
       this.orderService.attachCustomerListeners();

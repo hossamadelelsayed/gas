@@ -114,5 +114,8 @@
   "Reject" : "الغاء" ,
   "On Deliver" : "عند الاستلام",
   "Delivery Price":"سعر التوصيل",
-  "SAR":"ريال"
+  "SAR":"ريال",
+  "online":"متاح",
+  "offline":"غير متاح",
+  "Canceled":"تم الالغاء بنجاح"
 }

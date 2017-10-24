@@ -8,6 +8,14 @@
     <ion-content>
       <img class="logo" src="assets/imgs/agent_pin.png">
       <ion-list no-lines>
+
+        <ion-item   *ngIf="distFlag" >
+
+              <ion-label>{{Online|translate}}
+              </ion-label>
+          <ion-toggle   (ionChange)="toggleDistStatus()" checked="{{onlineFlag}}"   ></ion-toggle>
+        </ion-item>
+
         <button ion-item class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
         <button ion-item class="menu" (click)="onLoad(profilePage)">{{'Profile'|translate}}</button>
         <button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notifications'|translate}}</button>
@@ -27,6 +35,12 @@
         <ion-content>
           <img class="logo" src="assets/imgs/agent_pin.png">
           <ion-list no-lines>
+            <ion-item   *ngIf="distFlag" >
+
+              <ion-label>{{Online|translate}}
+              </ion-label>
+              <ion-toggle (ionChange)="toggleDistStatus()"   checked="{{onlineFlag}}"   ></ion-toggle>
+            </ion-item>
             <button ion-item class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
             <button ion-item class="menu" (click)="onLoad(profilePage)">{{'Profile'|translate}}</button>
             <button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notifications'|translate}}</button>

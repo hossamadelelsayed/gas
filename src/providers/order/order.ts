@@ -212,10 +212,10 @@ export class OrderProvider {
   private publishOrderToSpecificDist(city : string , orderID : string , distributerID : string) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject ) => {
-      let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification/' +orderID) ;
+      let orderNotificationDistRef = this.fireDatabase.ref('valid-notifications/'+  distributerID + '/notification/' +orderID) ;
       orderNotificationDistRef.child('orderID').set(orderID).then(()=>{
         resolve(true);
-        this.notifications.sendToOneDist('يوجد لديك طلب خاص',city,distributerID)
+       this.notifications.sendToOneDist('يوجد لديك طلب خاص',city,distributerID)
       }).catch((err) => reject(err));
     });
     return promise ;
@@ -298,12 +298,12 @@ export class OrderProvider {
     this.detachOrderAssignToSpecificDist(city , distributerID);
   }
   detachOrderAssignToSpecificDist(city : string , distributerID : string){
-    let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
+    let orderNotificationDistRef = this.fireDatabase.ref('valid-notifications/' + distributerID + '/notification') ;
     orderNotificationDistRef.off();
   }
   listenToOrderAssignToSpecificDist(city : string , distributerID : string)
   {
-    let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
+    let orderNotificationDistRef = this.fireDatabase.ref('valid-notifications/' + distributerID + '/notification') ;
     orderNotificationDistRef.on('child_added', (data) => {
       let historyRef = firebase.database().ref('history/' + data.key);
       historyRef.once('value').then((orderSnapShot)=>{
@@ -325,7 +325,7 @@ export class OrderProvider {
   }
   listenToSpecificDistOrderRemoved(city : string , distributerID : string)
   {
-    let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
+    let orderNotificationDistRef = this.fireDatabase.ref('valid-notifications/' + distributerID + '/notification') ;
     orderNotificationDistRef.on('child_removed', (data) => {
         this.events.publish(Order.ordersToSpecificDistRemovedEvent,data.key);
     });
@@ -343,14 +343,14 @@ export class OrderProvider {
   private removeOrderFromSpecificDist(city : string , orderID : string ,  distributerID : string) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject ) => {
-      let orderNotificationDistRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification/' +orderID) ;
+      let orderNotificationDistRef = this.fireDatabase.ref('valid-notifications/' + distributerID + '/notification/' +orderID) ;
       orderNotificationDistRef.remove().then(()=>{
         resolve(true);
       }).catch((err) => reject(err));
     });
     return promise ;
   }
-  private rejectOrderNoResponseCase(order : Order) : Promise <boolean>
+  public rejectOrderNoResponseCase(order : Order) : Promise <boolean>
   {
     let promises : Promise<any>[] = [] ;
     let promise = new Promise((resolve, reject) => {
@@ -462,7 +462,7 @@ export class OrderProvider {
   getOrderAssignToSpecificDist(city : string , distributerID : string): Promise<Order[]>
   {
     let ordersPromises : Promise<Order>[] = [] ;
-    let ordersRef = this.fireDatabase.ref('valid/'+ city +'/' + distributerID + '/notification') ;
+    let ordersRef = this.fireDatabase.ref('valid-notifications/' + distributerID + '/notification') ;
     let promise = new Promise((resolve, reject) => {
       ordersRef.once("value")
         .then((snapshot)=>{
@@ -471,6 +471,7 @@ export class OrderProvider {
             ordersPromises.push(this.getOrderData(orderHistoryRef));
           });
           Promise.all(ordersPromises).then((res)=>{
+              console.log('orders specifi dist ',res);
             resolve(<Order[]>res);
           }).catch((err)=>reject(err));
         }).catch((err)=>reject(err));

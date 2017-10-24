@@ -9,6 +9,7 @@ import {OrderProvider} from "../../providers/order/order";
 import {LaunchNavigator, LaunchNavigatorOptions} from "@ionic-native/launch-navigator";
 import {TrackingMapPage} from "../tracking-map/tracking-map";
 import { CallNumber } from '@ionic-native/call-number';
+import {MainPage} from "../main/main";
 
 
 @Component({
@@ -24,13 +25,20 @@ export class DetailsrequestPage {
   public icons : string[] ;
   flag:boolean=false;
   custPhone:any;
+
   constructor(private callNumber: CallNumber,public navCtrl: NavController, public navParams: NavParams ,
               public commonService : CommonServiceProvider , public orderService : OrderProvider ,
               public launchNavigator : LaunchNavigator) {
     this.mode = navParams.data.user ;
     this.order = navParams.data.order ;
-  }
 
+  }
+cancel(){
+  this.orderService.rejectOrderNoResponseCase(this.order).then(()=>{
+    this.commonService.translateAndToast('تم الالغاء بنجاح')
+    // this.navCtrl.push();
+  });
+}
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetailsrequestPage');
     if(this.mode == User.Customer)

@@ -36,12 +36,13 @@
   </div>
   </ion-footer> -->
   <ion-footer>
+    <!-- this section is for order now or later 
     <div *ngIf="flag" class="buttons">
       <button class="reqnow" ion-button round (click)="gotocreatorder()" >{{'Order now'|translate}}</button>
       <button class="reqlater" (click)="gotoorderlater()" ion-button round>{{'Order later'|translate}}</button>
 
 
-    </div>
+    </div> -->
     <div *ngIf="!flag" >
       <img  class="m" src="assets/imgs/agent_pin.png">
       <ion-row class="ro2">
@@ -77,4 +78,3 @@
     </div>
   </ion-footer>
 </ion-content>
-
