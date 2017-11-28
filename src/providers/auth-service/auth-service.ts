@@ -192,6 +192,7 @@ let  imgRef = firebase.database().ref("distributors/"+user);
         console.log('ref', storageRef.bucket);
 
         imgRef.child("imgType/"+imgType).set(user+"/"+imgType);
+
         resolve(snapshot);
       }).catch((err)=>{reject(err)});
 
@@ -484,4 +485,17 @@ editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
   });});
   return promise;
 }
+checkDistState(id):Promise<boolean>{
+    let promise=new Promise((resolve,reject)=>{
+        let ref=firebase.database().ref('distributors/'+id+'/state')
+        ref.once('value',(snapshot)=> {
+console.log('state',0)
+            if(snapshot.val()==0){
+    resolve(false)
+}else if (snapshot.val()==1){
+    resolve(true)
+}});});
+return promise;
+}
+
 }

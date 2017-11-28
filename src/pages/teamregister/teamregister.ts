@@ -164,7 +164,7 @@ else{
       //   this.presentToast(sta.state+"err");
       // });
       this.translateAndToast("Registration done");
-         this.navCtrl.setRoot(DistHistoryPage);
+         this.navCtrl.setRoot(HomePage);
 
       })
     .catch(

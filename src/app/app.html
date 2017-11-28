@@ -16,13 +16,13 @@
           <ion-toggle   (ionChange)="toggleDistStatus()" checked="{{onlineFlag}}"   ></ion-toggle>
         </ion-item>
 
-        <button ion-item class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
+        <button ion-item *ngIf="!distFlag" class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
         <button ion-item class="menu" (click)="onLoad(profilePage)">{{'Profile'|translate}}</button>
-        <button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notifications'|translate}}</button>
+        <!--<button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notifications'|translate}}</button>-->
         <button ion-item class="menu" (click)="onLoad(settingsPage)">{{'Settings'|translate}}</button>
         <button ion-item class="menu" (click)="onLoad(callusPage)">{{'Call us'|translate}}</button>
         <button ion-item class="menu" (click)="onLoad(aboutaprogramPage)">{{'About'|translate}}</button>
-        <button ion-item class="menu" (click)="onLoad(teamregisterPage)">{{'Join Our Team'|translate}}</button>
+        <button ion-item *ngIf="!distFlag" class="menu" (click)="onLoad(teamregisterPage)">{{'Join Our Team'|translate}}</button>
       </ion-list>
     </ion-content>
   </ion-menu>
@@ -41,13 +41,13 @@
               </ion-label>
               <ion-toggle (ionChange)="toggleDistStatus()"   checked="{{onlineFlag}}"   ></ion-toggle>
             </ion-item>
-            <button ion-item class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
+            <button ion-item *ngIf="!distFlag" class="menu" (click)="onLoad(historyPage)">{{'History'|translate}}</button>
             <button ion-item class="menu" (click)="onLoad(profilePage)">{{'Profile'|translate}}</button>
-            <button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notifications'|translate}}</button>
+            <!--<button ion-item class="menu" (click)="onLoad(notificationsPage)">{{'Notifications'|translate}}</button>-->
             <button ion-item class="menu" (click)="onLoad(settingsPage)">{{'Settings'|translate}}</button>
             <button ion-item class="menu" (click)="onLoad(callusPage)">{{'Call us'|translate}}</button>
             <button ion-item class="menu" (click)="onLoad(aboutaprogramPage)">{{'About'|translate}}</button>
-            <button ion-item class="menu" (click)="onLoad(teamregisterPage)">{{'Join Our Team'|translate}}</button>
+            <button ion-item *ngIf="!distFlag" class="menu" (click)="onLoad(teamregisterPage)">{{'Join Our Team'|translate}}</button>
           </ion-list>
         </ion-content>
       </ion-menu>

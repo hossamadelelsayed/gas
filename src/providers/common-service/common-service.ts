@@ -107,7 +107,7 @@ export class CommonServiceProvider {
 
 
 
-  presentConfirm(msg:string,cancelTxt:string,confirmTxt:string, x :Promise<any>) {
+  presentConfirm(msg:string,cancelTxt:string,confirmTxt:string, x ?:Promise<any>) {
     let alert = this.alertCtrl.create({
      // title: 'غاز السعودية',
       message: msg,
@@ -122,6 +122,7 @@ export class CommonServiceProvider {
         {
           text: confirmTxt,
           handler: () => {
+
             x.then(()=>{
               console.log('confirmed');
             });

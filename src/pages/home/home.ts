@@ -41,9 +41,19 @@ this.commonService.presentLoading('Logging In');
     // this.auth.getUserId;
     console.log(user['uType']);
     if(user['uType']=='distributors'){
+
       this.events.publish('distflag',true);
-      this.navCtrl.push(DistHistoryPage);
-      this.navCtrl.setRoot(DistHistoryPage);
+      this.auth.checkDistState(firebase.auth().currentUser.uid).then(state=>{
+
+        // if(state){
+            this.navCtrl.push(DistHistoryPage);
+            this.navCtrl.setRoot(DistHistoryPage);
+        // }else {
+           alert('عفوا لا يوجد رصيد لمزيد من التفاصيل اذهب الي موقعنا www.gasksa.com')
+        // }
+      });
+
+
       this.orderService.attachDistListeners();
     }
     else{
