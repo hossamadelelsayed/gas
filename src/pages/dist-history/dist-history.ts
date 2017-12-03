@@ -26,18 +26,46 @@ export class DistHistoryPage {
    public currentOrder : Order[] = [] ;
   public lastOrder : Order[] = [] ;
   public distUID : string ;
-  constructor(public notification:PushNotificationsProvider,public navCtrl: NavController, public navParams: NavParams,
+  disableDistFlag:boolean
+  constructor(private auth:AuthServiceProvider,public notification:PushNotificationsProvider,public navCtrl: NavController, public navParams: NavParams,
               public orderService : OrderProvider  ,
                public commonService : CommonServiceProvider ,
               private fireAuth : AuthServiceProvider,
 
               public zone: NgZone , public events : Events ,
               public menuCtrl : MenuController ) {
-      this.distUID = firebase.auth().currentUser.uid;
+
 
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    this.disableDistFlag=true;
+      this.distUID = firebase.auth().currentUser.uid;
+      let ref=firebase.database().ref('distributors/')
+///////////////////
+    let self =this;
+      ///////////
+      ref.child(this.distUID+'/credit').on('value',(dataSnapshot)=>{
+          self.auth.checkDistState(firebase.auth().currentUser.uid).then(state=>{
+              console.log(state)
+              if(state){
+                  // this.navCtrl.push(DistHistoryPage);
+                  // this.navCtrl.setRoot(DistHistoryPage);
+
+              }else {
+                  alert('الحساب معطل لمزيد من التفاصيل برجاء زيارة موقعنا www.gasksa.com')
+              }
+          });
+          if(dataSnapshot.val()==0){
+              this.disableDistFlag=false;
+          }else{
+              this.disableDistFlag=true;
+
+          }
+          console.log('credit',dataSnapshot.val())
+
+      })
+
     console.log('ionViewDidLoad DistHistoryPage');
       this.initSubscriptions();
     // you have to get geolocation then reverse via geocoder
@@ -51,28 +79,35 @@ export class DistHistoryPage {
   initSubscriptions()
   {
     // you have to get geolocation then reverse via geocoder
-
+      this.currentOrder=[]
     this.orderService.subscribeToDistHistory((order : Order)=> this.zone.run(()=>{
      if(order.status == Order.PendingStatus)
      {
+       console.log(order)
        this.currentOrder.push(order);
        this.sortCurrentOrderByDeliveryDate();
      }
     }));
     this.orderService.subscribeToDistOrder((order : Order)=> this.zone.run(()=> {
-      this.currentOrder.push(order);
-      this.sortCurrentOrderByDeliveryDate();
+      console.log('order h',order)
+        if(order.status != Order.PendingStatus)
+        {
+            console.log(order)
+            this.currentOrder.push(order);
+            this.sortCurrentOrderByDeliveryDate();
+        }
     }));
     //sending device token id to db
     this.notification.sendDistToken(this.orderService.city);
 
     this.orderService.subscribeToDistOrderRemoved((orderID : string)=> this.zone.run(()=>this.delOrder(orderID)));
-    this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
-      .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
+    //دي مش عارف لازمة امها ايه
+    // this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
+    //   .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
     this.orderService.getOrdersByDist(this.distUID,Order.DeliveredStatus)
       .then((orders : Order[])=>{console.log(orders);this.pushToLastOrder(orders)}).catch((err)=>console.log(err));
-    this.orderService.getOrderAssignToAllDist(this.orderService.city)
-      .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
+    // this.orderService.getOrderAssignToAllDist(this.orderService.city)
+    //   .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
     this.orderService.getOrderAssignToSpecificDist(this.orderService.city,this.distUID)
       .then((orders : Order[]) => this.pushToCurrentOrder(orders)).catch((err)=>console.log(err));
   }
@@ -99,6 +134,7 @@ export class DistHistoryPage {
 
   }
   pushToLastOrder(orders : Order[]){
+      this.lastOrder=[]
     orders.forEach((order  : Order)=>{
       this.lastOrder.push(order);
 
@@ -106,6 +142,7 @@ export class DistHistoryPage {
     this.sortLastOrderByDeliveryDate();
   }
   pushToCurrentOrder(orders : Order[]){
+    this.currentOrder=[]
     orders.forEach((order  : Order)=>{
       this.currentOrder.push(order);
     });
@@ -120,6 +157,26 @@ export class DistHistoryPage {
   acceptOrder(orderID : string){
     this.commonService.presentLoading("Please Wait ...");
     this.orderService.distOrderAccept(orderID,this.distUID).then(()=>{
+
+      //هنا بيقبل الorder
+        this.distUID = firebase.auth().currentUser.uid;
+        let creditRef=firebase.database().ref('distributors/')
+
+        creditRef.child(this.distUID+'/credit').once('value').then(dataSnapshot=>{
+          let credit=dataSnapshot.val()-1
+            creditRef.child(this.distUID+'/credit').set(credit)
+            // if(dataSnapshot.val()==0){
+            //     this.disableDistFlag=false;
+            // }
+            console.log('credit',dataSnapshot.val())
+
+        })
+//         let ref=firebase.database().ref('distributors/')
+//         ref.child(this.distUID).once('value',dataSnapshot=>{
+//           ref.child('credit').once('value',credit=>{
+// console.log('credit',credit.val())
+//           })
+//         })
       this.commonService.dismissLoading(true);
       this.commonService.successToast();
     }).catch((err)=>console.log(err));

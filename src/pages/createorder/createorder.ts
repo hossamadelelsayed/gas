@@ -11,7 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 import { DatePipe } from '@angular/common';
 import {AddressPage} from '../address/address';
 import {CommonServiceProvider} from "../../providers/common-service/common-service";
-
+import * as firebase from "firebase";
 
 @Component({
   selector: 'page-createorder',
@@ -25,7 +25,7 @@ export class CreateorderPage {
  public location : Location;
  public locname : string;
  public distId:any;
- public pipePrice=5;
+ public pipePrice:any;
 constructor(
             public toastCtrl : ToastController,
             public translateService :TranslateService ,
@@ -40,6 +40,12 @@ constructor(
               // console.log('nav dist id',this.navParams.data.disId);
               console.log('nav data',this.navParams.data);
               this.userId = this.auth.getUserId();
+
+let self=this;
+    this.order.getPrice().then(res=>{
+        self.pipePrice=res
+        console.log('price',res)
+    })
 }
 add(){
   this.counter++;
@@ -52,8 +58,12 @@ sameChange()
 {
   this.sameDate = true;
 }
-ionViewDidLoad() {
-  console.log('ionViewDidLoad CreateorderPage');
+IonViewWillEnter() {
+  this.order.getPrice().then(res=>{
+      this.pipePrice=res
+      console.log('price',res)
+  })
+
 }
 
 changeLocation(){

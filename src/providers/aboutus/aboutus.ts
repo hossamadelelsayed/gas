@@ -21,9 +21,9 @@ let paragraph='هذا التطبيق لخدمات توزيع انابيب الغ
     let about=this.firebaseRef.ref("ar_about");
     about.once("value")
       .then(function(snapshot) {
-        about.child('title').set(title);
-
-about.child('paragraph').set(paragraph);
+        // about.child('title').set(title);
+//
+// about.child('paragraph').set(paragraph);
 
       });
   }
@@ -33,9 +33,9 @@ about.child('paragraph').set(paragraph);
     let about=this.firebaseRef.ref("ar_terms");
     about.once("value")
       .then(function(snapshot) {
-        about.child('title').set(title);
-
-        about.child('paragraph').set(paragraph);
+        // about.child('title').set(title);
+        //
+        // about.child('paragraph').set(paragraph);
 
       });
   }
@@ -45,9 +45,9 @@ about.child('paragraph').set(paragraph);
     let about=this.firebaseRef.ref("en_about");
     about.once("value")
       .then(function(snapshot) {
-        about.child('title').set(title);
-
-about.child('paragraph').set(paragraph);
+//         about.child('title').set(title);
+//
+// about.child('paragraph').set(paragraph);
 
       });
   }
@@ -57,9 +57,9 @@ about.child('paragraph').set(paragraph);
     let about=this.firebaseRef.ref("en_terms");
     about.once("value")
       .then(function(snapshot) {
-        about.child('title').set(title);
-
-        about.child('paragraph').set(paragraph);
+        // about.child('title').set(title);
+        //
+        // about.child('paragraph').set(paragraph);
 
       });
   }

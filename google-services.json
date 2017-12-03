@@ -36,6 +36,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193816669511:android:46e9660cde9c688c",
+        "android_client_info": {
+          "package_name": "com.gasksa.ksa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193816669511-je9l6l257iot951g0mqie26mipiade1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuwv4pbrZ6bZz72G5DAaVlAGR2JBIz6UM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

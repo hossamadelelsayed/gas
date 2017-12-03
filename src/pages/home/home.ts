@@ -15,6 +15,7 @@ import {DistHistoryPage} from "../dist-history/dist-history";
 import {OrderProvider} from "../../providers/order/order";
 import {CommonServiceProvider}from"../../providers/common-service/common-service"
 import {MyApp} from "../../app/app.component";
+import * as firebase from "firebase";
 
 @Component({
   selector: 'page-home',
@@ -44,13 +45,13 @@ this.commonService.presentLoading('Logging In');
 
       this.events.publish('distflag',true);
       this.auth.checkDistState(firebase.auth().currentUser.uid).then(state=>{
-
-        // if(state){
+console.log(state)
+        if(state){
             this.navCtrl.push(DistHistoryPage);
             this.navCtrl.setRoot(DistHistoryPage);
-        // }else {
-           alert('عفوا لا يوجد رصيد لمزيد من التفاصيل اذهب الي موقعنا www.gasksa.com')
-        // }
+        }else {
+            alert('الحساب معطل لمزيد من التفاصيل برجاء زيارة موقعنا www.gasksa.com')
+        }
       });
 
 

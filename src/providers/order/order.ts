@@ -188,9 +188,10 @@ export class OrderProvider {
         promises.push(customerOrderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err)));
         promises.push(distOrderRef.child('status').set(Order.PendingStatus).catch((err)=>reject(err)));
         promises.push(distOrderRef.child('orderID').set(order.orderID).catch((err)=>reject(err)));
-        if(order.assignDistType == Order.AssignAllDist)
-          promises.push(this.removeOrderFromAllDist(this.city,order.orderID).catch((err)=>reject(err)));
-        else promises.push(this.removeOrderFromSpecificDist(this.city,order.orderID ,order.distributerID).catch((err)=>reject(err)));
+        // if(order.assignDistType == Order.AssignAllDist)
+          // promises.push(this.removeOrderFromAllDist(this.city,order.orderID).catch((err)=>reject(err)));
+        // else
+          promises.push(this.removeOrderFromSpecificDist(this.city,order.orderID ,order.distributerID).catch((err)=>reject(err)));
         Promise.all(promises).then(()=>{
           resolve(true);
         }).catch((err)=>reject(err));
@@ -222,35 +223,36 @@ export class OrderProvider {
   }
   listenToDistOrder(city : string , distributerID : string)
   {
-      this.listenToOrderAssignToAllDist(city) ;
+      // this.listenToOrderAssignToAllDist(city) ;
       this.listenToOrderAssignToSpecificDist(city , distributerID);
   }
 
   subscribeToDistOrder(callBack : (order: Order) => void){
-    this.subscribeToOrderAssignToAllDist(callBack);
+    // this.subscribeToOrderAssignToAllDist(callBack);
     this.subscribeToOrderAssignToSpecificDist(callBack);
   }
   subscribeToOrderAssignToSpecificDist(callBack : (order: Order) => void)
   {
+    console.log(callBack)
     this.events.subscribe(Order.ordersToSpecificDistCreatedEvent,callBack);
   }
-  subscribeToOrderAssignToAllDist(callBack : (order: Order) => void)
-  {
-    this.events.subscribe(Order.ordersToAllDistCreatedEvent,callBack);
-  }
+  // subscribeToOrderAssignToAllDist(callBack : (order: Order) => void)
+  // {
+  //   this.events.subscribe(Order.ordersToAllDistCreatedEvent,callBack);
+  // }
 
   subscribeToDistOrderRemoved(callBack : (orderID : string) => void){
-    this.subscribeToOrderToAllDistRemoved(callBack);
+    // this.subscribeToOrderToAllDistRemoved(callBack);
     this.subscribeToOrderToSpecificDistRemoved(callBack);
   }
   subscribeToOrderToSpecificDistRemoved(callBack : (orderID: string) => void)
   {
     this.events.subscribe(Order.ordersToSpecificDistRemovedEvent,callBack);
   }
-  subscribeToOrderToAllDistRemoved(callBack : (orderID: string) => void)
-  {
-    this.events.subscribe(Order.ordersToAllDistRemovedEvent,callBack);
-  }
+  // subscribeToOrderToAllDistRemoved(callBack : (orderID: string) => void)
+  // {
+    // this.events.subscribe(Order.ordersToAllDistRemovedEvent,callBack);
+  // }
   subscribeToDistHistory(callBack : (order: Order) => void){
     this.events.subscribe(Order.distHistoryChangeEvent,callBack);
   }
@@ -261,17 +263,17 @@ export class OrderProvider {
     let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
     ordersRef.off();
   }
-  listenToOrderAssignToAllDist(city : string)
-  {
-    let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
-    ordersRef.on('child_added', (data) => {
-      console.log('key order',data.key);
-      let historyRef = firebase.database().ref('history/' + data.key);
-      historyRef.once('value').then((orderSnapShot)=>{
-        this.events.publish(Order.ordersToAllDistCreatedEvent,<Order>orderSnapShot.val());
-      });
-    });
-  }
+  // listenToOrderAssignToAllDist(city : string)
+  // {
+  //   let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
+  //   ordersRef.on('child_added', (data) => {
+  //     console.log('key order',data.key);
+  //     let historyRef = firebase.database().ref('history/' + data.key);
+  //     historyRef.once('value').then((orderSnapShot)=>{
+  //       this.events.publish(Order.ordersToAllDistCreatedEvent,<Order>orderSnapShot.val());
+  //     });
+  //   });
+  // }
   listenToDistHistoryChange( distributerID : string)
   {
     let historyRef = this.fireDatabase.ref('distributors/' + distributerID + '/history') ;
@@ -313,16 +315,16 @@ export class OrderProvider {
   }
   listenToDistOrderRemoved(city : string , distributerID : string)
   {
-    this.listenToAllDistOrderRemoved(city);
+    // this.listenToAllDistOrderRemoved(city);
     this.listenToSpecificDistOrderRemoved(city , distributerID);
   }
-  listenToAllDistOrderRemoved(city : string)
-  {
-    let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
-    ordersRef.on('child_removed', (data) => {
-        this.events.publish(Order.ordersToAllDistRemovedEvent,data.key);
-    });
-  }
+  // listenToAllDistOrderRemoved(city : string)
+  // {
+  //   let ordersRef = firebase.database().ref('ordersToAllDist/' + city);
+  //   ordersRef.on('child_removed', (data) => {
+  //       this.events.publish(Order.ordersToAllDistRemovedEvent,data.key);
+  //   });
+  // }
   listenToSpecificDistOrderRemoved(city : string , distributerID : string)
   {
     let orderNotificationDistRef = this.fireDatabase.ref('valid-notifications/' + distributerID + '/notification') ;
@@ -330,16 +332,16 @@ export class OrderProvider {
         this.events.publish(Order.ordersToSpecificDistRemovedEvent,data.key);
     });
   }
-  private removeOrderFromAllDist(city : string , orderID : string) : Promise <boolean>
-  {
-    let promise = new Promise((resolve, reject ) => {
-      let AllDistCityRef = this.fireDatabase.ref('/ordersToAllDist/'+city +'/' +orderID) ;
-      AllDistCityRef.remove().then(()=>{
-        resolve(true);
-      }).catch((err) => reject(err));
-    });
-    return promise ;
-  }
+  // private removeOrderFromAllDist(city : string , orderID : string) : Promise <boolean>
+  // {
+  //   let promise = new Promise((resolve, reject ) => {
+  //     let AllDistCityRef = this.fireDatabase.ref('/ordersToAllDist/'+city +'/' +orderID) ;
+  //     AllDistCityRef.remove().then(()=>{
+  //       resolve(true);
+  //     }).catch((err) => reject(err));
+  //   });
+  //   return promise ;
+  // }
   private removeOrderFromSpecificDist(city : string , orderID : string ,  distributerID : string) : Promise <boolean>
   {
     let promise = new Promise((resolve, reject ) => {
@@ -358,9 +360,10 @@ export class OrderProvider {
       let customerOrderRef = this.fireDatabase.ref('/customers/'+order.customerID+'/history/'+order.orderID);
         promises.push(orderRef.remove().catch((err)=> reject(err)));
         promises.push(customerOrderRef.remove().catch((err)=> reject(err)));
-        if(order.assignDistType == Order.AssignAllDist)
-          promises.push(this.removeOrderFromAllDist(this.city,order.orderID).catch((err)=>reject(err)));
-        else promises.push(this.removeOrderFromSpecificDist(this.city,order.orderID ,order.assignDistID).catch((err)=>reject(err)));
+        // if(order.assignDistType == Order.AssignAllDist)
+          // promises.push(this.removeOrderFromAllDist(this.city,order.orderID).catch((err)=>reject(err)));
+        // else
+          promises.push(this.removeOrderFromSpecificDist(this.city,order.orderID ,order.assignDistID).catch((err)=>reject(err)));
         Promise.all(promises).then(()=>resolve(true)).catch((err)=>reject(err));
     });
     return promise ;
@@ -503,5 +506,17 @@ export class OrderProvider {
     return promise ;
   }
 
+getPrice():Promise<any>{
+    let promise=new Promise((resolve,reject)=>{
+        let ref=firebase.database().ref('pipeprice');
+        let self=this;
+        ref.once('value').then( (price) =>{
+            // self.pipePrice=price.val()
+            resolve(price.val());
+            console.log('ppppppppppppppppppppppp',price.val());
 
+        })
+    })
+    return promise;
+}
 }

@@ -89,7 +89,8 @@ let userdata={uEmail:email,uType:type};
         if(check==true){
       this.phoneLogin(phoneNo).then(userdata=>{
         this.userDelet();
-        this.fireAuth.signInWithEmailAndPassword(userdata.uEmail, password)
+
+        firebase.auth().signInWithEmailAndPassword(userdata.uEmail, password)
           .then(user=>{
             let userId=user.uid;
             resolve(userdata);
@@ -232,6 +233,8 @@ this.AnonymousSignIn()
                 let userId=user.uid;
                 let rootRef = firebase.database().ref(type+"/"+userId);
                 rootRef.child("name").set(name).then(()=>{resolve()}).catch((err)=>{reject(err)});
+                rootRef.child("credit").set(0).then(()=>{resolve()}).catch((err)=>{reject(err)});
+                rootRef.child("state").set(0).then(()=>{resolve()}).catch((err)=>{reject(err)});
                 rootRef.child("email").set(email).then(()=>{resolve()}).catch((err)=>{reject(err)});
                 rootRef.child("phoneNo").set(phoneNo).then(()=>{resolve()}).catch((err)=>{reject(err)});
 
@@ -459,9 +462,8 @@ editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
 
           });
 
-        })  .then((msg)=>{
-          resolve(msg);
-
+        }).then((smsg)=>{
+// resolve(smsg)
         }).catch((err)=>{reject(err)
             let ref=firebase.database().ref();
 
@@ -486,10 +488,11 @@ editEmail(type:any,uId:any,newEmail:any,phoneNo:any,password:any):Promise<any>{
   return promise;
 }
 checkDistState(id):Promise<boolean>{
+
     let promise=new Promise((resolve,reject)=>{
         let ref=firebase.database().ref('distributors/'+id+'/state')
         ref.once('value',(snapshot)=> {
-console.log('state',0)
+console.log('state',id)
             if(snapshot.val()==0){
     resolve(false)
 }else if (snapshot.val()==1){
