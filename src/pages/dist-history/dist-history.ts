@@ -39,6 +39,8 @@ export class DistHistoryPage {
   }
 
   ionViewWillEnter() {
+     this.currentOrder = [] ;
+    this.lastOrder  = [] ;
     this.disableDistFlag=true;
       this.distUID = firebase.auth().currentUser.uid;
       let ref=firebase.database().ref('distributors/')
@@ -66,7 +68,6 @@ export class DistHistoryPage {
 
       })
 
-    console.log('ionViewDidLoad DistHistoryPage');
       this.initSubscriptions();
     // you have to get geolocation then reverse via geocoder
   }
@@ -81,6 +82,8 @@ export class DistHistoryPage {
     // you have to get geolocation then reverse via geocoder
       this.currentOrder=[]
     this.orderService.subscribeToDistHistory((order : Order)=> this.zone.run(()=>{
+      console.log('order before filtration',order)
+
      if(order.status == Order.PendingStatus)
      {
        console.log(order)
@@ -102,8 +105,8 @@ export class DistHistoryPage {
 
     this.orderService.subscribeToDistOrderRemoved((orderID : string)=> this.zone.run(()=>this.delOrder(orderID)));
     //دي مش عارف لازمة امها ايه
-    // this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
-    //   .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
+    this.orderService.getOrdersByDist(this.distUID,Order.PendingStatus)
+      .then((orders : Order[])=>{console.log(orders);this.pushToCurrentOrder(orders)}).catch((err)=>console.log(err));
     this.orderService.getOrdersByDist(this.distUID,Order.DeliveredStatus)
       .then((orders : Order[])=>{console.log(orders);this.pushToLastOrder(orders)}).catch((err)=>console.log(err));
     // this.orderService.getOrderAssignToAllDist(this.orderService.city)
@@ -144,7 +147,9 @@ export class DistHistoryPage {
   pushToCurrentOrder(orders : Order[]){
     this.currentOrder=[]
     orders.forEach((order  : Order)=>{
+      if(order !=null){
       this.currentOrder.push(order);
+    }
     });
     this.sortCurrentOrderByDeliveryDate();
   }
@@ -177,6 +182,11 @@ export class DistHistoryPage {
 // console.log('credit',credit.val())
 //           })
 //         })
+////////////////
+//////
+///
+//order list rerender
+this.initSubscriptions();
       this.commonService.dismissLoading(true);
       this.commonService.successToast();
     }).catch((err)=>console.log(err));
@@ -184,6 +194,13 @@ export class DistHistoryPage {
   rejectOrder(orderID : string){
     this.commonService.presentLoading("Please Wait ...");
     this.orderService.rejectOrder(orderID,this.distUID).then(()=>{
+
+
+      ////////////////
+      //////
+      ///
+      //order list rerender
+      this.initSubscriptions();
       this.commonService.dismissLoading(true);
       this.commonService.successToast();
       this.delOrder(orderID);

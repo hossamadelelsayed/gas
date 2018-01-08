@@ -32,11 +32,15 @@
   <div [ngSwitch]="showing">
     <ion-list *ngSwitchDefault>
       <div *ngFor="let order of currentOrder">
+        <div  *ngIf="order != null">
+
         <ion-card class="card" >
           <!--{{this.downloadImage()}}-->
           <ion-card-header class="head" >
           </ion-card-header>
           <ion-card-content>
+
+
             <ion-row>
               <ion-col col-3 style="height: 80px;" (click)="goToDetails(order)">
                 <img style="height: 70px;
@@ -48,13 +52,17 @@
               <ion-col col-6>
                 <p class="ordernumber">  {{'Order Number'|translate}} &nbsp; {{order.orderID}} </p>
               </ion-col>
+              <div *ngIf="order != null">
               <ion-col col-3>
                 <button  *ngIf="order.status == Order.NoResponseStatus && disableDistFlag" ion-button full (click)="acceptOrder(order.orderID)" > {{ 'Accept' | translate}}   </button>
                 <p  *ngIf="order.status == Order.NoResponseStatus && !disableDistFlag" > {{ 'Recharge' | translate}}   </p>
                 <button *ngIf="order.status == Order.PendingStatus" ion-button outline (click)="rejectOrder(order.orderID)" > {{ 'Reject' | translate}} </button>
               </ion-col>
+            </div>
               <p class="time">{{ convertDate(order.date) }}</p>
             </ion-row>
+
+
           </ion-card-content>
         </ion-card>
         <ion-row class="row">
@@ -63,6 +71,9 @@
           <img class="pending" src="assets/imgs/pending.png"><p class="pra"> {{'Waiting'|translate}}</p>
         </ion-row>
       </div>
+</div>
+
+
     </ion-list>
       <ion-list *ngSwitchCase="'last'" >
         <div *ngFor="let order of lastOrder">
@@ -95,5 +106,3 @@
       </ion-list>
   </div>
 </ion-content>
-
-

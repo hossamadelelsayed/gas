@@ -37,8 +37,9 @@ gotoconfirm(){
     this.authService.register("customers",this.email,this.password,this.name,this.phone)
       .then((user) => {
 
-      console.log('sfggd');
-      console.log(user);
+
+      //console.log('sfggd');
+      //console.log(user);
       //user.message;
         // this.authService.submitUserInfo()
 

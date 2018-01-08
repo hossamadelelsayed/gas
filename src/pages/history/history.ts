@@ -21,14 +21,17 @@ export class HistoryPage {
   constructor(public zone: NgZone , public events : Events,public auth:AuthServiceProvider,
               public orderProv:OrderProvider,public navCtrl: NavController, public navParams: NavParams,
               public menuCtrl: MenuController , public commonService : CommonServiceProvider) {
-   this.custId = this.auth.getUserId();
-   this.listOrdersNow();
-   this.listOrderDone();
+   // this.custId = this.auth.getUserId();
+   // this.listOrdersNow();
+   // this.listOrderDone();
 
   }
 
-ionViewDidLoad() {
+ionViewWillEnter() {
   console.log('ionViewDidLoad HistoryPage');
+  this.custId = this.auth.getUserId();
+  this.listOrdersNow();
+  this.listOrderDone();
 }
 
 gotodetailsrequest(){

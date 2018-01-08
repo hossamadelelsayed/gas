@@ -68,28 +68,33 @@ x:string;
     let promise = new Promise((resolve, reject )=>{
 
 if(lat!=null) {
-  this.nativeGeocoder.reverseGeocode(lat, lng)
-    .then((result: NativeGeocoderReverseResult) => {
-
-      console.log("CityCity",result.administrativeArea);
-
-        resolve(result.administrativeArea)
-    }).catch((error: any) => console.log(error));
+  // this.nativeGeocoder.reverseGeocode(lat, lng)
+  //   .then((result: NativeGeocoderReverseResult) => {
+  //
+  //     console.log("CityCity",result.administrativeArea);
+  //
+  //       resolve(result.administrativeArea)
+  //   })
+    //.catch((error: any) => console.log(error));
 ////////////////////////////////
-//   this._http.get
-//   ('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ','
-//     + lng + '&location_type=APPROXIMATE&result_type=locality&'
-//     +
-//     'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
-//     .map(response => response.json()
-//     ).subscribe(data => {
-//     // console.log("geolocation",data.results[0]. address_components[4].short_name);
-//     console.log("geolocation result", data);
-//     if (data.status != "ZERO_RESULTS") {
-//       resolve(data.results[0].formatted_address);
-//     }
-//     resolve('notDefined');
-//   });
+  this._http.get
+  ('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ','
+    + lng + '&location_type=APPROXIMATE&result_type=locality&'
+    +
+    'key=AIzaSyBSSYckZ59ZW5MBPlGmPDvZu5Rzh9snPaQ&language=ar&region=EG"')
+    //  'key=AIzaSyBl7DifXZ_qNlyuHVpFzUV9ga8vvIIkteQ')
+    .map(response => response.json()
+    ).subscribe(data => {
+    console.log("geolocation",data.results[0].address_components[0]['short_name']);
+    // console.log("geolocation result", data.results[0].adress_components[0].long_name);
+    resolve(data.results[0].address_components[0]['short_name']);
+
+    if (data.status != "ZERO_RESULTS") {
+      resolve(data.results[0].formatted_address);
+    }
+    resolve('notDefined');
+  });
+///////////////
 }
     });
     return promise;

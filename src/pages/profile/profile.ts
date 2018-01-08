@@ -14,6 +14,8 @@ import {TranslateService} from "@ngx-translate/core";
 import { NativeStorage } from '@ionic-native/native-storage';
 import {MainPage} from "../main/main";
 import {OrderProvider} from "../../providers/order/order";
+import { WelcomePage } from './../welcome/welcome';
+
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -81,8 +83,8 @@ gotoeditaccountdis(){
 }
 presentConfirm() {
   let alert = this.alertCtrl.create({
-    title: "Logout",
-    message: 'Do you want to Logout ?',
+    //title: "Logout",
+    message: '  هل تريد الخروج',
     buttons: [
       {
         text: 'Cancel',
@@ -97,6 +99,7 @@ presentConfirm() {
         handler: () => {
           console.log('logout clicked');
           this.fireAuth.doLogout();
+          //this.navCtrl.setRoot(WelcomePage);
           this.storage.clear();
           this.nativeStorage.clear();
           this.platform.exitApp();
