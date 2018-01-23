@@ -84,6 +84,7 @@ export class MyApp {
                public distService : DistributorProvider,private androidPermissions: AndroidPermissions) {
 
     platform.ready().then(() => {
+
       this.backgroundMode.enable();
 
       // this.events.publish('onlineflag',this.onlineFlag);

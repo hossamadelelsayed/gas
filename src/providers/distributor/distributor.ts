@@ -125,6 +125,7 @@ if(lat!=null) {
 //   }
   onDistributorDisconnect():Promise <boolean>{
     let promise=new Promise((resolve, reject )=>{
+      if(firebase.auth().currentUser!=null){
     this.id = firebase.auth().currentUser.uid;
     console.warn('dist will removed from valid','/valid/'+this.city+"/"+this.id)
    let firebaseRef = firebase.database().ref('/valid/'+this.city+"/"+this.id);
@@ -132,7 +133,7 @@ if(lat!=null) {
      //console.log('')
      firebaseRef.remove();
      resolve(true);
-   });
+   });}
     });
 
 return promise;
