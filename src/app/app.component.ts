@@ -29,6 +29,8 @@ import {OrderProvider} from "../providers/order/order";
 import {Order} from "../models/order";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import { Events } from 'ionic-angular';
+import { BackgroundMode } from '@ionic-native/background-mode';
+
 // import * as firebase from "firebase";
 // import {CommonServiceProvider} from "../providers/common-service/common-service";
 import {DetailsrequestPage} from "../pages/detailsrequest/detailsrequest";
@@ -66,7 +68,7 @@ export class MyApp {
   onlineFlag:boolean=true;
   Online:string='online';
  distFlag:boolean=false;
-  constructor( public distributorProvider:DistributorProvider,public notifications:PushNotificationsProvider,
+  constructor(private backgroundMode: BackgroundMode, public distributorProvider:DistributorProvider,public notifications:PushNotificationsProvider,
     platform: Platform,
                private firebase: Firebase,
               statusBar: StatusBar,
@@ -82,6 +84,8 @@ export class MyApp {
                public distService : DistributorProvider,private androidPermissions: AndroidPermissions) {
 
     platform.ready().then(() => {
+      this.backgroundMode.enable();
+
       // this.events.publish('onlineflag',this.onlineFlag);
 this.toggleDistStatus();
       platform.pause.subscribe(() => {

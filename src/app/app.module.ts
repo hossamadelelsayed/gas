@@ -47,6 +47,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { Firebase } from '@ionic-native/firebase';
 import { FCM } from '@ionic-native/fcm';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -187,7 +188,7 @@ StatusBar,
     Camera,
     SMS,Firebase
     ,FCM
-    ,
+    ,BackgroundMode,
     CallNumber,EmailComposer,CustomerProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,Events,
