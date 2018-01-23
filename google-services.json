@@ -1,27 +1,58 @@
 {
   "project_info": {
-    "project_number": "476131137040",
-    "firebase_url": "https://souq-bb9e1.firebaseio.com",
-    "project_id": "souq-bb9e1",
-    "storage_bucket": "souq-bb9e1.appspot.com"
+    "project_number": "193816669511",
+    "firebase_url": "https://gasksa-de4ab.firebaseio.com",
+    "project_id": "gasksa-de4ab",
+    "storage_bucket": "gasksa-de4ab.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:476131137040:android:f65dd8e6a112fc0c",
+        "mobilesdk_app_id": "1:193816669511:android:d1f2c02ec1eec491",
         "android_client_info": {
-          "package_name": "com.souq.souq123"
+          "package_name": "com.gas.ksa"
         }
       },
       "oauth_client": [
         {
-          "client_id": "476131137040-3pnrk6quepkr0dd01756bqi9mcbjv9ve.apps.googleusercontent.com",
+          "client_id": "193816669511-je9l6l257iot951g0mqie26mipiade1p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAfP3Q5E7yxFcZJNED1pYFPaGaq6CrQwpo"
+          "current_key": "AIzaSyDuwv4pbrZ6bZz72G5DAaVlAGR2JBIz6UM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193816669511:android:46e9660cde9c688c",
+        "android_client_info": {
+          "package_name": "com.gasksa.ksa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193816669511-je9l6l257iot951g0mqie26mipiade1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuwv4pbrZ6bZz72G5DAaVlAGR2JBIz6UM"
         }
       ],
       "services": {
